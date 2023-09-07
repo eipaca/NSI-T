@@ -144,4 +144,113 @@ On peut aussi représenter un programme sous la forme d’un graphe orienté ave
 ![Un schéma de machine de Turing](assets/1-machine-turing-graphe-light-mode.png#only-light){align=center}
 ![Un schéma de machine de Turing](assets/1-machine-turing-graphe-dark-mode.png#only-dark){align=center}
 
+Prenons l'exemple d'une machine de Turing permettant d'écrire $1/3$ en binaire[^1.6], c'est à dire une suite de 0 et de 1 consécutifs, 010101010101..., sur un ruban vide. Elle peut se représenter sous la forme d'une table d'action ou d'un graphe :
+
+[^1.6]: Source: [https://fr.wikipedia.org/wiki/Machine_de_Turing](https://fr.wikipedia.org/wiki/Machine_de_Turing).
+
+![Table d'action d'une machine de Turing pour construire 1/3 en binaire](assets/1-machine-turing-un-tiers-table.png){align=left}
+
+
+![Un schéma de machine de Turing](assets/1-machine-turing-un-tiers-graphe-light-mode.png#only-light)
+![Un schéma de machine de Turing](assets/1-machine-turing-un-tiers-graphe-dark-mode.png#only-dark)
+
+L’exécution de cette machine serait (la position de la tête de lecture/écriture sur le ruban est inscrite en caractères surlignés) :
+
+|Étape|État|Ruban|
+|:-:|:-:|:-|
+| 1 |	e1|	0 |
+| 2 |	e2|	0{==1==} |
+| 3 |	e1|	01{==0==} |
+| 4 |	e2|	010{==1==} |
+| 5	| e1|	0101{==0==} |
+| 6	| e2|	01010{==1==} |
+|...|	e1|	010101...|
+
+
+
+
+Le comportement de cette machine peut être décrit comme une boucle infinie :
+
+-	Elle démarre son exécution dans l’état e1, ajoute un 0 et se déplace à droite.
+-	Puis elle passe à l'état e2, ajoute un 1 et se déplace à droite.
+-	Elle revient dans l'état e1 et réitère la première étape.
+
+
+!!! question "Exercice corrigé" 
+	Construire une machine de Turing qui ajoute 1 à un nombre binaire.
+
+??? Success "Aide"
+    Si le nombre binaire se termine par 0, par exemple : 1001010 + 1 = 1001011, dans ce cas il suffit de remplacer le dernier 0 par un 1. On parcourt le nombre de gauche à droite jusqu’à la fin, si on trouve un 0, on le remplace par un 1 et on passe à l’état final.
+
+    Si le nombre binaire se termine par 1, par exemple : 1001011 + 1 = 1001100, dans ce cas après avoir parcouru le nombre de gauche à droite, on revient de droite à gauche, tant qu’on trouve un 1, on le remplace par un 0, lorsqu’on trouve la première occurrence de 0, on la remplace par 1 puis on passe à l’état final.
+  
+    Cas particulier de nombre se terminant par 1, un nombre peut être formé seulement par des 1, par exemple : 1111111 + 1 = 10000000 dans ce cas, on remplace tous les 1 par 0 et on insère un 1 dans la première case vide à gauche.
+
+
+??? Success "Réponse"
+    La machine de Turing se comporte de la façon suivante:
+    
+    - Au début elle est dans l'état e1 et parcourt le ruban vide, de la gauche vers la droite sans modifier le ruban, jusqu'à trouver un nombre en binaire. Elle passe alors dans l'état e2.
+    - Dans l'état e2, elle parcourt le nombre en binaire, de la gauche vers la droite sans modifier les chiffres du ruban, jusqu'à trouber le dernier bit. Elle passe alors dans l'état e3.
+    - Dans l'état e3, elle parcourt les chiffres du nombre en binaire de la droite vers la gauche cette fois ci : 
+
+        - si elle lit un 1, elle écrit 0, se déplace à gauche et reste à l’état e3.
+        - si elle lit un 0, elle écrit 1, se déplace à gauche et passe à l’état final.
+        - si elle trouve une case vide, c'est qu'elle a parcouru tout le nombre sans trouver de 0, elle écrit donc un 1, se déplace à gauche et passe à l’état final.
+
+
+    ![Table d'action d'une machine de Turing pour ajouter 1 en binaire](assets/1-machine-turing-ajoute-1-table.png)
+
+##	Thèse de Church ou Turing-Church
+Turing montra, en 1937, que la classe des fonctions calculables, au sens de Church, était équivalente à la classe des fonctions programmables sur les machines imaginaires qu’il avait conçues ce qui a conduit à la  « Thèse de Church ou Turing-Church» : pour certaines fonctions il n'existe pas d'algorithme capable de calculer l'image d’un nombre, ces fonctions sont dites non-calculables. Réciproquement, s'il existe un algorithme capable de calculer l'image d’un nombre par une fonction, alors cette fonction  est dite calculable.
+
+!!! abstract "Cours" 
+    Ils énoncent le principe selon lequel tout ce qui est calculable peut être calculé indifféremment sur l’un de ces deux modèles et donc **la notion de calculabilité ne dépend pas du langage de programmation utilisé**.
+
+
+Aujourd’hui, la thèse de Turing-Church est remise en cause par les circuits quantiques[^1.7].
+
+[^1.7]: [https://interstices.info/algorithmes-quantiques-quand-la-physique-quantique-defie-la-these-de-church-turing](https://interstices.info/algorithmes-quantiques-quand-la-physique-quantique-defie-la-these-de-church-turing)
+
+
+
+##	Le problème de l’arrêt
+Un programme qui permettrait de tester si un autre programme va finir par s'arrêter, quel que soit le cas traité, serait d'une grande aide pour tous les développeurs du monde !  Grace aux travaux d'Alonzo Church et d'Alan Turing, on sait qu'un tel programme ne peut pas exister. 
+
+!!! abstract "Cours" 
+    Le **problème de l’arrêt est indécidable**.
+
+Partons du principe que ce programme "Arrêt?" existe (raisonnement par l'absurde). "Arrêt?" prend en entrée un programme P et répond True si le programme P s'arrête, et False s’il ne s'arrête jamais.
+
+
+![Le programme "Arrêt?" qui répond True si un programme P s'arrête](assets/1-probleme-arret-1-light-mode.png#only-light)
+![Le programme "Arrêt?" qui répond True si un programme P s'arrête](assets/1-probleme-arret-1-dark-mode.png#only-dark)
+
+
+
+Construisons maintenant un autre programme "Paradoxe" qui  prend en entrée un programme P et lui applique le programme Arrêt:
+•	Si "Arrêt?" renvoie True, "Paradoxe" entre dans une boucle infinie (il ne s'arrête jamais)
+•	Si "Arrêt?" renvoie False,  "Paradoxe" s'arrête.
+
+![Le programme "Paradoxe" qui utilise "Arrêt?" ](assets/1-probleme-arret-2-light-mode.png#only-light)
+![Le programme "Paradoxe" qui utilise "Arrêt?" ](assets/1-probleme-arret-2-dark-mode.png#only-dark)
+
+
+"Paradoxe" est un programme comme les autres, on peut donc l’utiliser en entrée de lui-même. 
+
+![Le programme "Paradoxe" avec lui-même en entrée](assets/1-probleme-arret-3-light-mode.png#only-light)
+![Le programme "Paradoxe" avec lui-même en entrée](assets/1-probleme-arret-3-dark-mode.png#only-dark)
+
+
+Analysons ce qui se passe :
+
+- Si le programme "Paradoxe" en entrée est un programme qui s'arrête, alors "Arrêt?" répond "True", donc  "Paradoxe" tombe dans une boucle infinie, donc "Paradoxe"  ne s'arrête pas. C'est une contradiction !
+-	Si "Paradoxe" en entrée est un programme qui ne s'arrête pas, alors "Arrêt?" répond "False", donc "Paradoxe"  s'arrête. C'est aussi une contradiction !
+
+Dans les deux cas, nous avons une contradiction, nous pouvons donc en conclure que le programme "Paradoxe"  ne peut pas exister. Et si le programme "Paradoxe" ne peut pas exister, cela signifie que le programme "Arrêt?" ne peut pas exister non plus (puisque « Paradoxe » se base sur "Arrêt?").
+
+Nous venons donc bien de démontrer que le programme "Arrêt?" ne peut pas exister. Le **problème de l'arrêt est donc indécidable**.
+
+Cette idée d'avoir un problème indécidable, autrement dit qui ne peut pas être résolu par un algorithme, peut être généralisée : il existe en effet une série de problèmes indécidables, par exemple montrer que l’image de deux fonctions est la même pour tous les nombres. 
+
 
