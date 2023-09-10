@@ -277,7 +277,7 @@ def fib(n):
     $C_{n}^{k}$ ou $\begin{pmatrix}n\\k\end{pmatrix}$. Les coefficients binomiaux interviennent dans de nombreux domaines des mathématiques : développement du binôme en algèbre, dénombrements, développement en série, lois de probabilités, etc.
 
     1 ) Écrire une fonction récursive `C(n, k)`  qui renvoie la valeur des coefficients binomiaux en utilisant la formule du triangle de Pascal : 
-    $C_{n}^{k} = C_{n-1}^{k} + C_{n-1}^{k-1}$
+    $C_{n}^{k} = C_{n-1}^{k-1} + C_{n-1}^{k}$
 
     ![Triangle de Pascal](assets/2-triangle-pascal-light-mode.png#only-light)
     ![Pile d'appel de fact(4)](assets/2-triangle-pascal-dark-mode.png#only-dark)
@@ -290,7 +290,7 @@ def fib(n):
     ``` py
     def C(n, k):
         if k == 0 or k == n: return 1
-        else: return C(n-1, k) + C(n-1, k-1)
+        else: return C(n-1, k-1) + C(n-1, k)
 
     for i in range (11):
         for j in range(i+1):
@@ -307,7 +307,7 @@ def fib(n):
         if k == 0 or k == n:
             coef =  1
         else: 
-            coef =  C(n-1, k) + C(n-1, k-1)
+            coef =  C(n-1, k-1) + C(n-1, k)
         memoire[(n, k)] = coef
         return coef
 
