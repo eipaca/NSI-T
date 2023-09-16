@@ -5,7 +5,7 @@ Le modèle relationnel proposé par Edgard Franck Codd en 1970 est la traduction
     Dans le modèle relationnel, toutes les **entités-types** et les **associations** de la modélisation conceptuelle sont transformées en tableaux à deux dimensions, appelés **relations**.
 
 
-Reprenons l'exemple précédent de l'entité-type `Auteur`. Elle se traduit dans le modèle relation par une relation `Auteur` que l'on peut représenter avec ses données dans tableau, chaque ligne est appelée un **tuple** et chaque colonne un **attribut**.
+Reprenons l'exemple précédent de l'entité-type `Auteur`. Elle se traduit dans le modèle relation par une relation `Auteur` dont les données peuvent être représentées sous la forme tableau, chaque ligne est appelée un **tuple** et chaque colonne un **attribut**.
 
 ![tableau des données de la relation Auteur](assets/2-relation-auteur-light-mode.png#only-light){width="80%"}
 ![tableau des données de la relation Auteur](assets/2-relation-auteur-dark-mode.png#only-dark){width="80%"}
@@ -16,18 +16,17 @@ Reprenons l'exemple précédent de l'entité-type `Auteur`. Elle se traduit dans
 
     Le schéma d'une relation se représente en précisant les attributs et leur domaine :
 
-    - sous forme textuelle :  `NomRelation(attribut1 domaine1, attribut2 domaine2….)`.
+    - sous forme textuelle :  `NomRelation(attribut1 : DOMAINE1, attribut2 : DOMAINE2….)`.
 
     - sous forme graphique : 
 
      ![Schéma d'une relation représenté sous forme graphique](assets/2-schema-relation-light-mode.png#only-light){width="30%"}
     ![Schéma d'une relation représenté sous forme graphique](assets/2-schema-relation-dark-mode.png#only-dark){width="30%"}
 
-    Le schéma de la relation donne la forme de la relation « vide » dans laquelle des données peuvent être stockées (sous forme de tuples).
+    Le schéma de la relation décrit une relation « vide » dans laquelle des données peuvent ensuite être stockées (sous forme de tuples).
 
 
-
-Par exemple ici : `Auteur(Num_auteur : entier, Nom : chaine de caractères, Prenom: chaine de caractères, Date_naissance : date)`,
+Par exemple ici : `Auteur(Num_auteur : INT, Nom : TEXT, Prenom : TEXT, Date_naissance : DATE)`,
 
 ou encore de façon plus succincte en omettant le domaine des attributs :  `Auteur(Num_auteur, Nom, Prenom, Date_naissance)`.
 
@@ -43,17 +42,17 @@ On transforme une entité-type en relation avec les mêmes attributs. L’identi
 ![L'entité-type Pays représentée par une relation](assets/2-entite-type-sous-forme-relation-light-mode.png#only-light){width="80%"}
 ![L'entité-type Pays représentée par une relation](assets/2-entite-type-sous-forme-relation-dark-mode.png#only-dark){width="80%"}
 
-La clé primaire est mise en évidence souvent en **étant soulignée**, ou parfois avec le dessin d'une **clé**, ou du symbole **CP** ou encore **PK** (pour *primary key*). 
+La clé primaire est mise en évidence souvent en **étant soulignée**, ou parfois avec le dessin d'une **clé**, ou à l'aide du symbole **CP** ou encore **PK** (pour *primary key*). 
 
-Par exemple ici : `Pays({++Nom_pays++}, Population, Superficie)`.
+Par exemple ici : `Pays({++Nom_pays++} : TEXT, Population : INT, Superficie: INT)`.
  
 ##	Association représentée par une relation
 
 ###	Association possédant au moins une cardinalité 0,1 ou 1,1
 
-Dans ce cas, chaque tuple de la relation possédant une cardinalité `0,1` ou `1,1` est associé à au plus un tuple de la seconde relation concernée par l'association. Il suffit donc de ajouter un attribut dans la première relation (celle possédant une cardinalité `0,1` ou `1,1`) pour identifier le tuple de la seconde relation. Cet attribut doit permettre d'identifier de façon unique le tuple de la seconde relation, il faut choisir une clé primaire de la seconde relation. CE nouvel attribut est appelé une **clé étrangère** de la première relation.
+Dans ce cas, chaque tuple de la relation possédant une cardinalité `0,1` ou `1,1` est associé à au plus un tuple de la seconde relation concernée par l'association. Il suffit donc de ajouter un attribut dans la première relation (celle possédant une cardinalité `0,1` ou `1,1`) pour identifier le tuple de la seconde relation. Cet attribut doit permettre d'identifier de façon unique le tuple de la seconde relation, il faut choisir une clé primaire de la seconde relation. Ce nouvel attribut devient une **clé étrangère** de la première relation.
 
-Dans notre exemple, un attribut `Nom_pays` peut-être ajouté dans la relation `Auteur`, cet attribut correspond à la clé primaire de la relation `Pays`. `Nom_pays` est la clé primaire de la relation `Auteur` et une clé étrangère de la relation `Auteur`. 
+Dans notre exemple, un attribut `Nom_pays` peut-être ajouté dans la relation `Auteur`, cet attribut correspond à la clé primaire de la relation `Pays`. `Nom_pays` est la clé primaire de la relation `Pays` et une clé étrangère de la relation `Auteur`. 
 
 ![L'association Originaire de représentée par un nouvel attribut](assets/2-association-sous-forme-relation-light-mode.png#only-light){width="80%"}
 ![L'association Originaire de représentée par un nouvel attribut](assets/2-association-sous-forme-relation-dark-mode.png#only-dark){width="80%"}
@@ -67,7 +66,7 @@ A noter: Dans cet exemple, les  attributs `Nom_pays` ont le même nom dans les d
 
 La clé étrangère est mise en évidence souvent avec le symbole **#**, ou en **étant soulignée en pointillé**, et parfois avec le symbole **FK**  (pour *foreign key*). 
 
-Par exemple ici : `Auteur({++Num_auteur++}, #Nom_pays,  Nom, Prenom, Date_naissance)`. 
+Par exemple ici : `Auteur({++Num_auteur++} : INT, #Nom_pays : TEXT,  Nom : TEXT, Prenom : TEXT, Date_naissance : DATE)`. 
 
 ###	Association sans cardinalité 0,1 ou 1,1
 
@@ -85,7 +84,7 @@ Dans notre exemple, une nouvelle relation `Ecrit` est ajoutée possedant deux cl
  
 En notation textuelle, les deux clés étrangères de la nouvelle relation sont indiquées par le caractère **#** (ou soulignées en pointillé) et elles sont toutes les deux soulignées par un trait continu pour indiquer qu'elles forment ensembles la clé primaire.
 
-Dans notre exemple : `Ecrit({++#Num_ISBN++}, {++#Num_auteur++})`.
+Dans notre exemple : `Ecrit({++#Num_ISBN++} : INT, {++#Num_auteur++} : INT)`.
 
 
 ###	Schéma relationnel d’une base de données
@@ -98,20 +97,21 @@ Ce qui donne dans notre exemple sous forme graphique :
 ![Le schéma relationnel complet de la base de données](assets/2-schema-relationnel-complet-dark-mode.png#only-dark){width="80%"}
 
 et en notation textuelle :
-`Auteur({++Num_auteur++}, #Nom_pays,  Nom, Prenom, Date_naissance)`
+`Auteur({++Num_auteur++} : INT, #Nom_pays : TEXT,  Nom : TEXT, Prenom : TEXT, Date_naissance : DATE)`
 
-`Pays({++Nom_pays++}, Population, Superficie)`
+`Pays({++Nom_pays++} : TEXT, Population : INT, Superficie : INT)`
 
-`Livre({++Num_ISBN++}, Titre, Editeur, Annee)`
+`Livre({++Num_ISBN++} : INT, Titre TEXT, Editeur TEXT, Annee DATE)`
 
-`Ecrit({++#Num_ISBN++}, {++#Num_auteur++})`
+`Ecrit({++#Num_ISBN++} : INT, {++#Num_auteur++} : INT)`
 
  
 
 A noter :
-•	deux relations ne peuvent pas avoir le même nom dans une base de données (car une relation est identifiée par son nom), et
-•	deux attributs ne peuvent pas avoir le même nom dans une relation, mais
-•	deux attributs appartenant à des relations différentes peuvent avoir le même nom sans être liés. Par exemple on aurait pu utiliser Nom au lieu de Nom_pays dans la relation Pays.
+
+-	deux relations ne peuvent pas avoir le même nom dans une base de données (car une relation est identifiée par son nom), et
+-	deux attributs ne peuvent pas avoir le même nom dans une relation, mais
+-	deux attributs appartenant à des relations différentes peuvent avoir le même nom sans être liés. Par exemple on aurait pu utiliser Nom au lieu de Nom_pays dans la relation Pays.
  
 ## Les contraintes d'intégrité
 
