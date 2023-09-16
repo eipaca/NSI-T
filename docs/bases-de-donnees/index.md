@@ -13,17 +13,14 @@ De nos jours les bases de données sont omniprésentes : un smartphone utilise u
 
 Quand une base de données est stockée dans un système informatique, les données ne sont en général pas lisibles par un humain : il est nécessaire d’utiliser un système de base de données (SGBD) pour les exploiter.
 
-!!! abstract "Cours" 
-    Un  système de gestion de base de données (SGBD) est le logiciel qui permet de gérer une base de données sur un support informatique.
-
-Un SGBD permet  la structuration, le stockage, la mise à jour et la maintenance des données. C’est l’interface entre la base de données et les utilisateurs.
-
-Exemple de SGBD : MySQL, MS Access, Oracle, Sybase, SQLite
 
 Dans une base de données, les données doivent être organisées de façon logique et utilisable pour les utilisateurs. C’est la conception de la base de données. Elle se fait en trois étapes :
+
 1.	Modélisation conceptuelle : définition abstraite des données et de comment elles s’organisent.
+
 2.	Conception logique : le modèle relationnel (ou autres[^0.1] ) modélise la structure selon laquelle les données seront
 stockées. 
+
 3.	Conception physique : l’implémentation dans un logiciel informatique (un Système de Gestion de Bases de Données ou SGBD).
 
 [^0.1]: Il exsite d'autres modèle d'organisation de données, par exemple sous forme d’arbre (JSON, XML) ou de graphes.
