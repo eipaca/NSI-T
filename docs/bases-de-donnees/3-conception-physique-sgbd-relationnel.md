@@ -24,11 +24,13 @@ Un SGBD fait l'interface entre la base de données et les utilisateurs. Il perme
 
 
 Même si historiquement beaucoup de SGBDR sont des entreprises commerciales utilisant chacune ses propres définitions, les termes suivants, qui sont un peu différents de ceux définis dans le modèle relationnel, sont communément utilisés :
-- 	les relations sont implémentées par des **tables** ;
+
+-   les relations sont implémentées par des **tables** ;
 - 	un tuple devient une **ligne** de la table ;
 - 	un attribut devient une **colonne** de la table.
 
 Il existe quelques différences entre relations et tables, par exemple :
+
 - L’ordre des attributs dans une relation n’a pas d’importance alors que dans un SGBD les attributs d’une table ont un ordre.
 - Une table dans un SGBD peut ne pas avoir de clé, alors qu’une relation a forcément une clé.
 
