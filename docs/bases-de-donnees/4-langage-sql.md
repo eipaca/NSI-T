@@ -126,7 +126,8 @@ CREATE TABLE "Ecrit" (
         …
         PRIMARY KEY(cle_primaire_1, cle_primaire_2, …)    
         FOREIGN KEY(cle_etrangere_1) REFERENCES nom_table(cle_etrangere_1),
-    …)
+		…
+	);
     ```
 
 Les commandes `ALTER TABLE` et `DROP TABLE` permettent de modifier ou supprimer une table. 
@@ -134,13 +135,13 @@ Les commandes `ALTER TABLE` et `DROP TABLE` permettent de modifier ou supprimer 
 - 	Admettons qu’on veuille changer la base de données pour ne plus enregistrer les pays : 
 
 ```sql
-DROP TABLE Pays
+DROP TABLE Pays;
 ```
 
 - 	Pour le chapitre suivant, on va supprimer la colonne Date_naissance :
 
 ``` sql
-ALTER TABLE Auteurs DROP COLUMN Date_naissance
+ALTER TABLE Auteurs DROP COLUMN Date_naissance;
 ```
 
 Le schéma de la base de données complet a été créé, il peut être enregistré (menu  « `File/Save All` »).
@@ -161,7 +162,7 @@ La mise à jour la base de données se fait à travers le SGBD par le biais de c
 
     ``` sql
     INSERT INTO nom_table 
-    VALUES (valeur_1,  valeur_2, …)
+    VALUES (valeur_1,  valeur_2, …);
     ```
 
 À noter : 
@@ -268,7 +269,7 @@ WHERE Nom_Pays = "France";
     ``` sql
     UPDATE nom_table 
     SET  nom_colonne1 = nouvelle_valeur
-    WHERE nom_colonne2 =  identifiant
+    WHERE nom_colonne2 =  identifiant;
     ```
 
     :warning: Il ne faut pas oublier de préciser la ligne ou les lignes à modifier avec la clause `WHERE` au rique de modifier toutes les lignes de la table avec la `nouvelle_valeur`.
@@ -288,8 +289,7 @@ WHERE Nom_Pays = "France";
 
     ``` sql
     DELETE FROM nom_table  
-    WHERE nom_colonne =  identifiant
-    
+    WHERE nom_colonne =  identifiant;
     ```
 
 Imaginons que l’on veuille supprimer un livre ainsi que son auteur s’il n’a pas écrit d’autres livres dans la base de données. Par exemple le livre Akira dont l’ISBN est 978-2723428262. 
@@ -343,14 +343,14 @@ SELECT Titre, Editeur FROM Livre;
     La commande (ou **requête**) SQL pour sélectionner des données est :
 
     ``` sql
-    SELECT * FROM nom_table
+    SELECT * FROM nom_table;
     ```
 
     ou 
 
     ``` sql
     SELECT nom_colonne_1, nom_colonne_1 
-    FROM nom_table 
+    FROM nom_table;
     ```
 
 Il est aussi possible de changer l'affichage du nom des colonnes en leur donnant un alias avec `AS`
@@ -367,7 +367,7 @@ FROM Livre;
 
     ``` sql
     SELECT * FROM nom_table
-    WHERE nom_colonne1 = valeur
+    WHERE nom_colonne1 = valeur;
     ```
 
 
@@ -435,7 +435,7 @@ ORDER BY Population DESC;
     
     ``` sql
     SELECT DISCTINCT nom_colonne
-    FROM nom_table 
+    FROM nom_table;
     ```
 
     La clause `ORDER BY` permet de trier le resultat d'une requête en ordre croissant (`ASC` par défaut) ou decroissant (`DESC`) :
@@ -443,7 +443,7 @@ ORDER BY Population DESC;
     ``` sql
     SELECT nom_colonne1, nom_colonne2
     FROM nom_table 
-    ORDER BY nom_colonne
+    ORDER BY nom_colonne;
     ```
 
 
@@ -454,7 +454,7 @@ ORDER BY Population DESC;
 
     ``` sql
     SELECT MIN(nom_colonne)
-    FROM Nom_table 
+    FROM Nom_table; 
     ```
     
 
@@ -521,7 +521,7 @@ Il faut croiser les informations provenant des tables `Ecrit` et `Auteur` ensemb
     SELECT nom_table1.nom_colonne1, nom_table2.nom_colonne2 
     FROM nom_table1
     JOIN nom_table2 
-    ON nom_table1.cle1 = nom_table2.cle_2
+    ON nom_table1.cle1 = nom_table2.cle_2;
 
 Ce qui donne dans notre exemple :
 ``` sql
@@ -535,7 +535,7 @@ Noter que `JOIN` a remplacé l’ancienne syntaxe pour les jointures avec `WHERE
 ``` sql
 SELECT nom_table1.nom_colonne1, nom_table2.nom_colonne2 
 FROM nom_table1, nom_table2
-WHERE nom_table1.cle1 = nom_table2.cle2
+WHERE nom_table1.cle1 = nom_table2.cle2;
 ```
 
 Ce qui donnait dans notre exemple :
