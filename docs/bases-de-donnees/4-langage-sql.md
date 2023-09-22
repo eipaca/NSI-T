@@ -40,7 +40,7 @@ CREATE TABLE Pays (
 	Population	INTEGER,
 	Superficie	INTEGER,
 	PRIMARY KEY(Nom_pays)
-)
+);
 ```
 
 À noter : 
@@ -170,7 +170,7 @@ La mise à jour la base de données se fait à travers le SGBD par le biais de c
 Entrons la commande SQL dans l’onglet « `Execute SQL` » :
 
 ``` sql
-INSERT INTO Pays VALUES ("France", 66, 643) 
+INSERT INTO Pays VALUES ("France", 66, 643);
 ```
 
 et observons le résultat dans « `Browse Data` » : 
@@ -279,7 +279,7 @@ WHERE Nom_Pays = "France";
 
     
 ??? Success "Réponse"
-    UPDATE Livre SET Editeur = "Le Livre de Poche" WHERE Editeur = "LGF/Le Livre de Poche"
+    UPDATE Livre SET Editeur = "Le Livre de Poche" WHERE Editeur = "LGF/Le Livre de Poche";
 
 ## Supprimer des données avec `DELETE`
 
@@ -592,7 +592,7 @@ L’ordre des tables n’a pas d’importance. On peut donc aussi écrire :
     SELECT E.Num_ISBN, A.Nom, A.Prenom 
     FROM Ecrit AS E
     JOIN Auteur AS A
-    ON E.Num_auteur = A.Num_auteur	
+    ON E.Num_auteur = A.Num_auteur;	
     ``` 
 
 === "avec `...FROM Auteur JOIN Ecrit`"
@@ -600,7 +600,7 @@ L’ordre des tables n’a pas d’importance. On peut donc aussi écrire :
     SELECT E.Num_ISBN, A.Nom, A.Prenom 
     FROM Auteur AS A
     JOIN Ecrit AS E
-    ON E.Num_auteur = A.Num_auteur
+    ON E.Num_auteur = A.Num_auteur;
     ```
 
 Le résultat est le même.
