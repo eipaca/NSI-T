@@ -2,7 +2,7 @@
 
 
 !!! abstract "Cours"
-    L’interaction avec un SGBD se fait dans un language informatique dédié appelé **Structured Query Langage** ou **SQL**. 
+    L’interaction avec un SGBD se fait dans un language informatique dédié appelé ***Structured Query Language*** ou **SQL**. 
 
 SQL est un langage déclaratif, il n'est donc pas a proprement parlé un langage de programmation, mais plutôt une interface standard pour accéder aux bases de données.
 
@@ -26,7 +26,7 @@ Créons une première table qui représente la relation: `Pays({++Nom_pays++}, P
         nom_colonne1 	domaine1, 
         nom_colonne2	domaine2,
         …
-    )
+    );
     ```
 
 ![Pour créer une nouvelle table](assets/4-creation-table.png){width="40%" align=right}
@@ -40,11 +40,12 @@ CREATE TABLE Pays (
 	Population	INTEGER,
 	Superficie	INTEGER,
 	PRIMARY KEY(Nom_pays)
-);
+)
 ```
 
 À noter : 
->  Le langage SQL n’est pas sensible à la casse, mais les requêtes SQL sont écrites en majuscule par convention.
+> 	Le langage SQL n’est pas sensible à la casse, mais les requêtes SQL sont écrites en majuscule par convention.
+>	Les commandes SQL sont séparées par des point-virgules « `;` »
 
 Puis le bouton «`run`» :arrow_forward: pour exécuter la commande :
 
@@ -57,11 +58,11 @@ Noter l’icone devant `Nom_pays` indiquant la clé primaire.
 
 SQLite permet de générer automatiquement les requêtes pour créer les tables suivantes avec le menu « `Create Table` ».
 
-Maintenant que la table `Pays` a été créée, il est possible d'ajouter la table `Auteur({++Num_auteur++}, #Nom_pays, Nom, Prenom, Date_naissance)`. Il n'était pas possible de crééer la table `Auteur` avant `Pays` car elle contient un clé étrangère (`Nom_ Pays`) qui fait référence à `Pays` (**contrainte d'intégrité référentielle**).
+Maintenant que la table `Pays` a été créée, il est possible d'ajouter la table `Auteur({++Num_auteur++}, #Nom_pays, Nom, Prenom, Date_naissance)`. Il n'était pas possible de créer la table `Auteur` avant `Pays` car elle contient une clé étrangère (`Nom_ Pays`) qui fait référence à `Pays` (**contrainte d'intégrité référentielle**).
 
 !!! abstract "Cours"
 
-    Contrainte d'intégrité référentielle : Pour créer une nouvelle table contennatt une clé étrangère en référence à une autre table, il faut que cette autre table ait **déjà été créée avant**.
+    Contrainte d'intégrité référentielle : Pour créer une nouvelle table contenant une clé étrangère en référence à une autre table, il faut que cette autre table soit **créée avant** la nouvelle table.
 
 
 - Saisir le nom de la table (`Auteur`), les noms colonnes (`Num_auteur`, `Nom_pays`, `Nom`, `Prenom`, `Date_naissance`), leur domaine respectifs (`INTEGER`, `TEXT`, `TEXT`, `TEXT`, `NUMERIC`).
@@ -73,10 +74,6 @@ Maintenant que la table `Pays` a été créée, il est possible d'ajouter la tab
 A noter :
 > Les domaines proposés par SQLite (dépendent du SGBD) sont INTEGER pour les entiers, TEXT  pour les chaînes de caractères, BLOB pour *binary large object*, REAL pour le flottants et enfin NUMERIC qui convertit en l’un des types précédents en fonction de la valeur donnée.
 
->    Il est possible d'ajouter des contraintes d’intégrité : 
-     `ON UPDATE CASCADE` si un nom est modifié dans la table des pays alors cela est répercutée dans Auteurs, 
-     `ON DELETE CASCADE` si un pays est supprimé alors les auteurs correspondants seront supprimés.
-
 
 La commande SQL est générée automatiquement :
 
@@ -87,7 +84,7 @@ CREATE TABLE "Auteur" (
 	"Nom"	TEXT,
 	"Prenom"	TEXT,
 	"Date_naissance"	NUMERIC,
-	FOREIGN KEY("Nom_pays") REFERENCES "Pays"("Nom_pays") ON UPDATE CASCADE ON DELETE CASCADE ,
+	FOREIGN KEY("Nom_pays") REFERENCES "Pays"("Nom_pays"),
 	PRIMARY KEY("Num_auteur")
 ); 
 ```
@@ -146,7 +143,7 @@ DROP TABLE Pays
 ALTER TABLE Auteurs DROP COLUMN Date_naissance
 ```
 
-Le schéma de base de données complet a été créé, il peut être enregistré (menu  « `File/Save All` »).
+Le schéma de la base de données complet a été créé, il peut être enregistré (menu  « `File/Save All` »).
 
 
 ## 	Insérer des données avec `INSERT`
@@ -167,6 +164,9 @@ La mise à jour la base de données se fait à travers le SGBD par le biais de c
     VALUES (valeur_1,  valeur_2, …)
     ```
 
+À noter : 
+>  Les valeurs doivent être dans l'ordre des attributs correspondant dans la table.
+	
 Entrons la commande SQL dans l’onglet « `Execute SQL` » :
 
 ``` sql
@@ -202,7 +202,7 @@ VALUES ("Italie", 60);
 Observons ce qui se passe si on essaie d’insérer un doublon, c’est-à-dire une ligne avec une clé primaire déjà existante, ici `Nom_pays("France")` :
 
 ``` sql
-INSERT INTO Pays VALUES ("France", 67, 640) ;
+INSERT INTO Pays VALUES ("France", 67, 640);
 ```
 
 Le SGBD génère une erreur pour violation de la contrainte d’entité : 
@@ -249,7 +249,7 @@ INSERT INTO Auteur VALUES (1, "Russie", "Asimov", "Isaac");
     Contrainte d’intégrité référentielle : Il n'est pas possible d'insérer une ligne dans une table avec une valeur de clé étrangère qui n’existe pas dans la table à laquelle elle fait référence.
 
 
-Pour la suite du chapitre, importons des données plsu complètes (25 lignes de Pays, 119 auteurs et 129 livres) dans la base de données à partir du fichier [« `LivresAuteurs.sql` »](assets/LivresAuteur.sql).
+Pour la suite du chapitre, importons des données plus complètes (25 lignes de Pays, 119 auteurs et 129 livres) dans la base de données à partir du fichier [« `LivresAuteurs.sql` »](assets/LivresAuteur.sql).
 
 
 ##	Mettre à jour des données avec `UPDATE`
@@ -275,7 +275,7 @@ WHERE Nom_Pays = "France";
     
 
 !!! question "Exercice corrigé"
-    Certains livres de la base de données ont pour éditeur LGF/ Le Livre de Poche et d’autres Le Livre de Poche. Quelle commande permet de tous les réunir sous un même nom d’éditeur ?.
+    Certains livres de la base de données ont pour éditeur LGF/ Le Livre de Poche et d’autres Le Livre de Poche. Quelle commande permet de tous les réunir sous un même nom d’éditeur ?
 
     
 ??? Success "Réponse"
@@ -329,7 +329,7 @@ DELETE FROM Auteur WHERE Num_auteur = 2;
 Une façon simple de connaître tous les livres de la base de données est la commande (ou **requête**) SQL suivante :
 
 ``` sql
-SELECT * FROM Livre ;
+SELECT * FROM Livre;
 ```
 
 Elle affiche toute la table. Pour voir seulement certaines colonnes, par exemple les titres et éditeurs des livres,  il faut écrire la requête :
@@ -419,14 +419,14 @@ De la même façon, `ORDER BY` permet de trier les résultats d'une requête sel
 ``` sql
 SELECT Nom_pays, Population
 FROM Pays 
-ORDER BY Population ;
+ORDER BY Population;
 ``` 
 Le tri se fait par défaut en ordre croissant, mais il est possible de préciser l'ordre voulu, `ASC` pour l'ordre croissant ou `DESC` pour l'ordre décroissant : 
 
 ``` sql
 SELECT Nom_pays, Population
 FROM Pays 
-ORDER BY Population DESC ; 
+ORDER BY Population DESC; 
 ``` 
 
 
@@ -464,7 +464,7 @@ En voici quelques exemples :
 SELECT COUNT(Titre) FROM Livre;
 SELECT COUNT(Editeur) FROM Livre; 
 SELECT MIN(Population) AS Minimum FROM Pays;
-SELECT MIN(Population) AS Min, MAX(Population) as Max, AVG(Population) AS Moyenne FROM Pays ;
+SELECT MIN(Population) AS Min, MAX(Population) as Max, AVG(Population) AS Moyenne FROM Pays;
 ```
 
 `GROUP BY` (hors programme) permet de regrouper certains résultats ensembles :
@@ -496,13 +496,13 @@ WHERE Population = (SELECT MIN(Population) FROM Pays);
 
 ``` sql
 SELECT Pays, MIN(Population) 
-FROM Pays
+FROM Pays;
 ```
 Mais ce n’est pas le cas de tous les SGBD. Il suffit de tester la requête suivante pour comprendre que cette flexibilité est souvent à éviter !
 
 ``` sql
 SELECT Pays, MIN(Population), MAX(Population) 
-FROM Pays
+FROM Pays;
 ```
 
 ## Jointures
@@ -528,7 +528,7 @@ Ce qui donne dans notre exemple :
 SELECT Ecrit.Num_ISBN, Auteur.Nom, Auteur.Prenom 
 FROM Ecrit
 JOIN Auteur
-ON Ecrit.Num_auteur = Auteur.Num_auteur ;
+ON Ecrit.Num_auteur = Auteur.Num_auteur;
 ```
 
 Noter que `JOIN` a remplacé l’ancienne syntaxe pour les jointures avec `WHERE`  :
@@ -542,7 +542,7 @@ Ce qui donnait dans notre exemple :
 ```
 SELECT Num_ISBN, Nom, Prenom 
 FROM Ecrit, Auteur
-WHERE Ecrit.Num_auteur = Auteur.Num_auteur ;
+WHERE Ecrit.Num_auteur = Auteur.Num_auteur;
 ```
 
 Quand il n’y a pas d’ambiguïté sur les noms de colonne entre les deux tables, par exemple ici `Num_ISBN` n’apparaît que dans `Ecrit` et `Nom` et `Prenom` que dans `Auteur`, il est possible d’écrire plus simplement :
@@ -550,7 +550,7 @@ Quand il n’y a pas d’ambiguïté sur les noms de colonne entre les deux tabl
 SELECT Num_ISBN, Nom, Prenom 
 FROM Ecrit
 JOIN Auteur
-ON Ecrit.Num_auteur = Auteur.Num_auteur ;
+ON Ecrit.Num_auteur = Auteur.Num_auteur;
 ```
 
 Dans le cas où on utilise les noms de tables, l’utilisation des alias est particulièrement recommandée ici :
@@ -558,7 +558,7 @@ Dans le cas où on utilise les noms de tables, l’utilisation des alias est par
 SELECT E.Num_ISBN, A.Nom, A.Prenom 
 FROM Ecrit AS E
 JOIN Auteur AS A 
-ON E.Num_auteur = A.Num_auteur ;
+ON E.Num_auteur = A.Num_auteur;
 ```
 
 Il est aussi possible d'ajouter des clauses, par exemple pour les auteurs françqis seulement.
@@ -567,7 +567,7 @@ SELECT Ecrit.Num_ISBN, Auteur.Nom, Auteur.Prenom
 FROM Ecrit
 JOIN Auteur 
 ON Ecrit.Num_auteur = Auteur.Num_auteur
-WHERE Auteur.Nom_pays = "France" ;
+WHERE Auteur.Nom_pays = "France";
 ```
 
 Enfin, les noms des livres et de leurs auteurs de la table `Ecrit` s'obtiennent par une **double jointure**.

@@ -9,7 +9,7 @@ L’implémentation physique d'une base de données se fait dans un logiciel inf
 
 Exemples de SGBD parmi les plus connus : MySQL, PostegreSQL, SQLite, Oracle, sybase, Microsoft SQL Server, MS Access
 
-![Logos de SGBD](assets/3-SGBD-logo.png){width="80%"}
+![Logos de SGBD](assets/3-SGBD-logo.png){width="60%"}
 
 
 Un SGBD fait l'interface entre la base de données et les utilisateurs. Il permet de gérer la lecture, l'écriture ou la modification des données contenues dans une base de données, et garantit en particulier :
