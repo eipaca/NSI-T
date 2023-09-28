@@ -522,8 +522,9 @@ Il faut croiser les informations provenant des tables `Ecrit` et `Auteur` ensemb
     FROM nom_table1
     JOIN nom_table2 
     ON nom_table1.cle1 = nom_table2.cle_2;
+    ```
 
-Ce qui donne dans notre exemple :
+Ce qui donne dans notre exemple[^4.2] :
 ``` sql
 SELECT Ecrit.Num_ISBN, Auteur.Nom, Auteur.Prenom 
 FROM Ecrit
@@ -531,19 +532,21 @@ JOIN Auteur
 ON Ecrit.Num_auteur = Auteur.Num_auteur;
 ```
 
-Noter que `JOIN` a remplacé l’ancienne syntaxe pour les jointures avec `WHERE`  :
-``` sql
-SELECT nom_table1.nom_colonne1, nom_table2.nom_colonne2 
-FROM nom_table1, nom_table2
-WHERE nom_table1.cle1 = nom_table2.cle2;
-```
 
-Ce qui donnait dans notre exemple :
-```
-SELECT Num_ISBN, Nom, Prenom 
-FROM Ecrit, Auteur
-WHERE Ecrit.Num_auteur = Auteur.Num_auteur;
-```
+[^4.2]:
+    Noter que `JOIN` a remplacé l’ancienne syntaxe pour les jointures avec `WHERE`  :
+    ``` sql
+    SELECT nom_table1.nom_colonne1, nom_table2.nom_colonne2 
+    FROM nom_table1, nom_table2
+    WHERE nom_table1.cle1 = nom_table2.cle2;
+    ```
+
+    Ce qui donnait dans notre exemple :
+    ```
+    SELECT Num_ISBN, Nom, Prenom 
+    FROM Ecrit, Auteur
+    WHERE Ecrit.Num_auteur = Auteur.Num_auteur;
+    ```
 
 Quand il n’y a pas d’ambiguïté sur les noms de colonne entre les deux tables, par exemple ici `Num_ISBN` n’apparaît que dans `Ecrit` et `Nom` et `Prenom` que dans `Auteur`, il est possible d’écrire plus simplement :
 ``` sql
@@ -553,7 +556,7 @@ JOIN Auteur
 ON Ecrit.Num_auteur = Auteur.Num_auteur;
 ```
 
-Dans le cas où on utilise les noms de tables, l’utilisation des alias est particulièrement recommandée ici :
+Dans le cas où les noms de tables sont utilisés, l’utilisation des alias améliore la lisibilité :
 ``` sql
 SELECT E.Num_ISBN, A.Nom, A.Prenom 
 FROM Ecrit AS E
@@ -561,7 +564,7 @@ JOIN Auteur AS A
 ON E.Num_auteur = A.Num_auteur;
 ```
 
-Il est aussi possible d'ajouter des clauses, par exemple pour les auteurs françqis seulement.
+Il est aussi possible d'ajouter des clauses habituelles, par exemple pour n'avoir que les auteurs français : 
 ``` sql
 SELECT Ecrit.Num_ISBN, Auteur.Nom, Auteur.Prenom 
 FROM Ecrit
@@ -570,7 +573,8 @@ ON Ecrit.Num_auteur = Auteur.Num_auteur
 WHERE Auteur.Nom_pays = "France";
 ```
 
-Enfin, les noms des livres et de leurs auteurs de la table `Ecrit` s'obtiennent par une **double jointure**.
+Enfin, les noms des livres et de leurs auteurs de la table `Ecrit` s'obtiennent par une **double jointure** :
+
 ``` sql
 SELECT L.Titre, A.Nom, A.Prenom 
 FROM Ecrit AS E
@@ -581,12 +585,13 @@ ON E.Num_ISBN = L.Num_ISBN;
 ```
 
 ## Autres types de jointures (hors programme)
-La jointure JOIN, aussi appelée INNER JOIN réunit seulement les lignes qui apparaissent dans les deux tables.
+
+La jointure avec `JOIN`, qui peut aussi s'écrire `INNER JOIN`, réunit seulement les lignes qui apparaissent dans les deux tables :
 
 ![Une jointure INNER JOIN](assets/4-inner-join-light-mode.png#only-light){width="80%"}
 ![Une jointure INNER JOIN](assets/4-inner-join-dark-mode.png#only-dark){width="80%"}
 
-L’ordre des tables n’a pas d’importance. On peut donc aussi écrire :
+L’ordre des tables n’a donc pas d’importance. Les deux requêtes suivantes sont équivalentes :
 === "avec `...FROM Ecrit JOIN Auteur`"
     ``` sql
     SELECT E.Num_ISBN, A.Nom, A.Prenom 
@@ -605,7 +610,7 @@ L’ordre des tables n’a pas d’importance. On peut donc aussi écrire :
 
 Le résultat est le même.
 
-Il existe d’autres types de jointures, `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN` (hors programme) qui permettent d’obtenir des résultats différents.
+Mais il existe aussi d’autres types de jointures, `LEFT JOIN`, `RIGHT JOIN`, `FULL OUTER JOIN` (hors programme) qui permettent d’obtenir des résultats différents.
 
 ![Une jointure LEFT JOIN](assets/4-left-join-light-mode.png#only-light){width="80%"}
 ![Une jointure LEFT JOIN](assets/4-left-join-dark-mode.png#only-dark){width="80%"}
