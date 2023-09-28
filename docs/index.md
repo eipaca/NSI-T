@@ -2,12 +2,12 @@
 Bienvenue sur le site de ressources du cours de Terminale NSI de l'[Ecole Internationale PACA](https://www.ecoleinternationalepaca.fr) .
 
 
->L'image `gif` ci-dessous présente un Jeu de la vie réalisé par un groupe d'élèves dans le cadre de leur projet en classe de 1ère NSI. Le [jeu de la vie](https://fr.wikipedia.org/wiki/Jeu_de_la_vie) un automate cellulaire imaginé par le célèbre mathématicien John Horton Conway. 
+>L'image `gif` ci-dessous présente un programme Python de résolution automatique de jeux de [Démineurs](https://fr.wikipedia.org/wiki/Démineur_(genre_de_jeu_vidéo)) par intelligence artificielle (AI) réalisé par un élève dans le cadre de son projet en classe de Terminale NSI. 
 
 
 <figure markdown>
-  ![jeu-de-la-vie](assets/jeu-de-la-vie-antoine-octave-nsi-2022.gif){ width="80%" }
-  <figcaption >Jeu de la vie par Antoine et Octave, 1ère NSI, 2021-22</figcaption>
+  ![demineur](assets/demineur-louis-nsi-2023.gif){ width="80%" }
+  <figcaption >"Résolution de Démineurs par intelligence artificielle (AI)" par Louis, élève de Terminale NSI, 2022-23</figcaption>
 </figure>
 
 
