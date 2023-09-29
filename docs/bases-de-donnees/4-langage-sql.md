@@ -584,7 +584,7 @@ JOIN Livre AS L
 ON E.Num_ISBN = L.Num_ISBN;
 ```
 
-## Autres types de jointures (hors programme)
+### Autres types de jointures (hors programme)
 
 La jointure avec `JOIN`, qui peut aussi s'écrire `INNER JOIN`, réunit seulement les lignes qui apparaissent dans les deux tables :
 
