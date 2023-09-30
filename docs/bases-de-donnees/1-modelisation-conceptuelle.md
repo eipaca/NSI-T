@@ -5,7 +5,7 @@ Prenons l’exemple d’une base de données d’auteurs et de livres.
 !!! abstract "Cours" 
     Les données ayant des caractéristiques similaires sont regroupées dans une **entité-type**. 
 
-    Chaque **occurrence** d’une entité-types est appelée une **entité**[^1.1]  (ou une **instance* ou encore un **tuple**).
+    Chaque **occurrence** d’une entité-types est appelée une **entité**[^1.1]  (ou une **instance** ou encore un **tuple**).
 
 [^1.1]: Par abus de langages on mélange souvent les termes entités et entités-types.
 
