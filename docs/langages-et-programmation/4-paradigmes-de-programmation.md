@@ -323,8 +323,8 @@ Après une phase d’initialisation, le programme  « tourne » en permanence  �
 
 
 
-![Capture d'évènement en programmation évènementielle](assets/2-programmation-evenementielle-light-mode.png#only-light){width="80%"}
-![Capture d'évènement en programmation évènementielle](assets/2-programmation-evenementielle-dark-mode.png#only-dark){width="80%"}
+![Capture d'évènement en programmation évènementielle](assets/4-programmation-evenementielle-light-mode.png#only-light){width="80%"}
+![Capture d'évènement en programmation évènementielle](assets/4-programmation-evenementielle-dark-mode.png#only-dark){width="80%"}
 
 
 
