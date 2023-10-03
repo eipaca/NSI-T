@@ -364,11 +364,11 @@ Observons que la propriété `n == q * d + r` reste vraie à chaque retour dans 
         i = 0
         j = len(mot) - 1
         while i <= j:
-        if mot[i] == mot[j]:
-            i = i + 1
-            j = j - 1
-        else:
-            return False
+            if mot[i] == mot[j]:
+                i = i + 1
+                j = j - 1
+            else:
+                return False
         return True
     ```
 
@@ -401,17 +401,15 @@ Observons que la propriété `n == q * d + r` reste vraie à chaque retour dans 
     ```
 
 ??? Success "Réponse 2"
-    A chaque itération `j - i`  diminue de 2 , c’est un **variant de boucle** qui finira par devenir négatif, autrement dit la condition `i <= j` deviendra fausse et la boucle s’arrêtera (à moins qu’elle se termine plus tôt si mot n’est pas un palindrome), donc **le programme se terminera**.
+    A chaque itération `j - i`  diminue de 2 , c’est un **variant de boucle** qui finira par devenir négatif, autrement dit la condition `i <= j` deviendra fausse et la boucle s’arrêtera (à moins qu’elle se termine plus tôt si mot n’est pas un palindrome), donc **le programme se terminera**. 
 
-    Il est aussi possible de le démontrer formellement. Supposons que l’on rentre dans la boucle à la ligne 5 avec `i` et `j` ayant des valeurs appelées $x$ et $y$.  `j - i`  est égal à $y - x$.  Après les lignes 7 et 8,  `i` devient égal à $x + 1$ et `j` à $y - 1$, donc  `j - i`  devient bien égal à $(y  - 1) – (x + 1) = y – x- 2$.  `j - i`  a bien diminué de $2$.
+    Il est aussi possible de le démontrer formellement. Supposons que l’on rentre dans la boucle à la ligne 5 avec `i` et `j` ayant des valeurs appelées $x$ et $y$.  `j - i`  est égal à $y - x$.  Après les lignes 7 et 8,  `i` devient égal à $x + 1$ et `j` à $y - 1$, donc  `j - i`  devient bien égal à $(y - 1) – (x + 1) = (y – x) - 2$.  `j - i`  a bien diminué de $2$.
 
 ??? Success "Réponse 3"
     De la même façon, il est possible de démontrer que `i + j == len(mot) - 1`   est un invariant de boucle :
 
     - Au début du programme, avant de rentrer dans la boucle, `i` est égal à 0 et  j est égal à `len(mot)- 1` donc  `i + j` est bien égal à `len(mot) - 1`.   
     - Lorsqu’on rentre dans la boucle à la ligne 5 avec `i` et `j` ayant des valeurs $x$ et $y$ telles que $x + y$ est égal à `len(mot) - 1` , après les lignes 7 et 8, `i` devient égal à $x + 1$ et `j` à $y - 1$, donc  `i + j`  est toujours égal à $(x + 1) + (y - 1) = x + y $ c'est-à-dire à `len(mot)  – 1`.
-
-
 
 
 
