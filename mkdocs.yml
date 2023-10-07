@@ -126,12 +126,16 @@ nav:
     - Conception logique - le modèle relationnel: bases-de-donnees/2-conception-logique-modele-relationnel.md
     - Conception physique - SGBD relationnel: bases-de-donnees/3-conception-physique-sgbd-relationnel.md
     - Langage SQL: bases-de-donnees/4-langage-sql.md
-  # - Structures de données:
-  # - Structures de données, interface et implémentation
-  #  - Vocabulaire de la programmation objet
- #  - Listes, piles, files 
- #  - Arbres 
- #  - Graphes
+  - Structures de données:
+    - structures-de-donnees/index.md
+    #- Vocabulaire de la programmation objet: structures-de-donnees/1-poo.md
+    #- Structures de données, interface et implémentation: structures-de-donnees/2-structures-interface-implementation.md
+    #- Listes: structures-de-donnees/3-listes.md
+    #- Piles: structures-de-donnees/4-piles.md
+    #- Files: structures-de-donnees/5-files.md
+    #- Dictionnaires: structures-de-donnees/6-dictionnaires.md
+    #- Arbres: structures-de-donnees/7-arbres.md
+    #- Graphes: structures-de-donnees/8-graphes.md
   # Architectures matérielles, systèmes d'exploitation et réseaux:
  #  -Composants intégrés d’un système sur puce.
  # -Gestion des processus et des ressources par un système d'exploitation
