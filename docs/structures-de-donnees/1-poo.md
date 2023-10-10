@@ -24,7 +24,8 @@ Prenons l'exemple d'un programme pour aider un collectionneur de vielles voiture
 ##	Les classes et objets
 
 Commençons par créer la classe `Voiture` qui décrit les caractéritiques d'une voiture de collection :   
-!!! tip "PEP 8" 
+
+!!! tip inline end "PEP 8" 
     Les noms de classes s'écrivent en [CamelCase](https://fr.wikipedia.org/wiki/Camel_case) : [https://www.python.org/dev/peps/pep-0008/#class-names](https://www.python.org/dev/peps/pep-0008/#class-names)
   
 ``` py
@@ -40,6 +41,12 @@ Créons les deux premières voitures du collectionneur, c'est-à-dire deux **ins
 voiture_1 = Voiture()
 voiture_2 = Voiture()
 ```
+
+!!! abstract "Cours" 
+    Pour créer un objet, ou **instancier**, `nom_objet` depuis la classe `NomClasse`, il faut écrire :
+    ```nom_objet = NomClasse()```
+    
+
 
 ##	Les attributs
 
@@ -59,7 +66,7 @@ et ensuite de lire les attributs d'un objet ainsi :
 'Citroen'
 ```
 
-Mais les attributs `marque`, `modele` et `km`  ont été créé pour l'objet `voiture_1`, ils n'existent pas pour les autres instances de `Voiture`, par exemple pour l'objet `voiture_2` : 
+Mais les attributs `marque`, `modele` et `km`  ont été créés pour l'objet `voiture_1`, ils n'existent pas pour les autres instances de `Voiture`, par exemple pour l'objet `voiture_2` : 
 
 ``` py
 >>> voiture_2.marque
@@ -67,6 +74,9 @@ Traceback (most recent call last):
   File "<interactive input>", line 1, in <module>
 AttributeError: 'Voiture' object has no attribute 'marque'
 ```
+
+!!! abstract "Cours" 
+    Pour utiliser l'attribut  `nom_attribut` d'un objet `nom_objet`, il faut écrire : ```nom_objet.nom_attribut```
 
 ##	Constructeur
 
@@ -81,7 +91,7 @@ class Voiture:
         self.km = 0
 ```
 
-Noter le paramètre `self` représente l'objet qui est instancié par la méthode `__init__`.
+Noter le paramètre `self` de la fonction qui représente l'objet qui est instancié par la méthode `__init__`.
 
 Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs seront différentes pour chaque instance qui pourra évoluer de façon indépendante.
 
@@ -91,6 +101,7 @@ Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs s
 ''
 >>> voiture_1.modele = "2 CV"
 >>> voiture_1.modele 
+'2 CV'
 ```
 
 Avec ce constructeur, tous les objets sont créés avec les attributs initiés à la même valeur (`""` ou `0`). Ce n'est pas pratique. La méthode `__init__` est une méthode comme les autres, elle peut avoir des paramètres, par exemple la marque et le modèle de la voiture, ainsi que le nombre de km qui reste par défaut à 0 s'il n'est pas renseigné.
@@ -112,7 +123,7 @@ class Voiture:
         self.km = k
 ```
 
-L'instruction `Voiture('Citroen', '2 CV')` appelle le constructeur  `__init__`  créant ainsi un nouvel objet `Voiture` en lui donnat les valeurs de ses attributs `'Citroen'` et `'2 CV'`.
+L'instruction `Voiture('Citroen', '2 CV')` appelle le constructeur  `__init__`  créant ainsi un nouvel objet `Voiture` en lui donnant les valeurs de ses attributs `'Citroen'` et `'2 CV'`.
 
 ``` py
 >>> voiture_1 = Voiture('Citroen', '2 CV')
@@ -129,7 +140,7 @@ Définir une classe c'est aussi définir les comportements communs aux objets de
 !!! abstract "Cours" 
     Les méthodes prennent toujours comme **premier paramètre le mot réservé `self`** de façon à désigner l'objet sur lequel va s'appliquer la méthode.
 
-Par exemple une méthode `roule(k)` permettant d'ajouter `k` kilomètres quand un voiture roule s'écrit  :
+Par exemple une méthode `roule(k)`, permettant d'ajouter `k` kilomètres quand un voiture, roule s'écrit  :
 
 ``` py
 class Voiture:
