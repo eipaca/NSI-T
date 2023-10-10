@@ -16,14 +16,14 @@ Exemple de langages orientés objets : Java, Javascript C++, Python, PHP
 
     Une fois une classe d'objet définie, il est possible de créer des objets sur le modèle de cette classe, c'est  **l'instanciation**. **Les objets sont des instances de la classe**. 
 
-Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 000 km, une Peugeot Dauphine avec 75 000 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chacun représentant l'une de ses voitures : la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
+Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 000 km, une Peugeot Dauphine avec 75 000 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chaque objet représentant une voiture : la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
 
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-light-mode.png#only-light){width="80%"}
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-dark-mode.png#only-dark){width="80%"}
 
 ##	Les classes et objets
 
-Commençons par créer la classe `Voiture` qui décrit les caractéritiques d'une voiture de collection :   
+Commençons par créer la classe `Voiture` qui décrit les caractéristiques d'une voiture :   
 
 !!! tip inline end "PEP 8" 
     Les noms de classes s'écrivent en [CamelCase](https://fr.wikipedia.org/wiki/Camel_case) : [https://www.python.org/dev/peps/pep-0008/#class-names](https://www.python.org/dev/peps/pep-0008/#class-names)
@@ -50,7 +50,7 @@ voiture_2 = Voiture()
 
 ##	Les attributs
 
-Pour l'instant notre classe `Voiture` est une coquille vide, les deux objets instanciés à partir de cette classe, `voiture_1` et `voiture_2`, ne décrivent pas grand chose sur les voitures. Il est possible de leur rajouter des caractéristiques les décrivant en leur ajoutant des **attributs**, par exemple les attributs `marque`, `modele` et `km` : 
+Pour l'instant notre classe `Voiture` est une coquille vide et les deux objets instanciés à partir de cette classe, `voiture_1` et `voiture_2`, ne décrivent pas grand chose sur les voitures. Il est possible de leur rajouter des caractéristiques les décrivant avec des **attributs**, par exemple les attributs `marque`, `modele` et `km` pour l'instance `voiture_1` : 
 
 ``` py
 >>> voiture_1 = Voiture()
@@ -59,7 +59,7 @@ Pour l'instant notre classe `Voiture` est une coquille vide, les deux objets ins
 >>> voiture_1.km = 152000
 ```
 
-et ensuite de lire les attributs d'un objet ainsi :
+et ensuite de lire les attributs ainsi :
 
 ``` py
 >>> voiture_1.marque
@@ -76,12 +76,14 @@ AttributeError: 'Voiture' object has no attribute 'marque'
 ```
 
 !!! abstract "Cours" 
-    Pour utiliser l'attribut  `nom_attribut` d'un objet `nom_objet`, il faut écrire : ```nom_objet.nom_attribut```
+    Un attribut  `nom_attribut` d'un objet `nom_objet` s'obtient avec : ```nom_objet.nom_attribut```
 
 ##	Constructeur
 
 La création d'un nouvel objet avec l'instruction `voiture_1 = Voiture()` appelle une méthode particulière nommée `__init__`. C'est le **constructeur** de la classe. Il est possible de le modifier pour définir des attributs pour toutes les instances de `Voiture` dès leur instanciation :
 
+!!! tip inline end "" 
+    :warning: Attention aux deux blancs soulignés (ou tirets bas) au début et à la fin d'`init`, c'est souvent une erreur diffile à déceler quand il en manque un !
 
 ``` py
 class Voiture:
@@ -93,7 +95,7 @@ class Voiture:
 
 Noter le paramètre `self` de la fonction qui représente l'objet qui est instancié par la méthode `__init__`.
 
-Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs seront différentes pour chaque instance qui pourra évoluer de façon indépendante.
+Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs peuvent être différentes pour chaque instance et évoluer différemment.
 
 ``` py
 >>> voiture_1 = Voiture()
@@ -104,7 +106,7 @@ Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs s
 '2 CV'
 ```
 
-Avec ce constructeur, tous les objets sont créés avec les attributs initiés à la même valeur (`""` ou `0`). Ce n'est pas pratique. La méthode `__init__` est une méthode comme les autres, elle peut avoir des paramètres, par exemple la marque et le modèle de la voiture, ainsi que le nombre de km qui reste par défaut à 0 s'il n'est pas renseigné.
+Avec ce constructeur, tous les objets sont créés avec les attributs initiés à la même valeur (`""` ou `0`). Ce n'est pas pratique. La méthode `__init__` est une méthode comme les autres, elle peut avoir des paramètres, par exemple la marque et le modèle de la voiture, ainsi que le nombre de kilomètre (assigné à la valeur 0 par défaut s'il n'est pas renseigné).
 
 !!! tip inline end "PEP 8" 
     Comme les fonctions et les modules, les classes et les méthodes publiques comportent une docstring. Voir [https://peps.python.org/pep-0008/#documentation-strings](https://peps.python.org/pep-0008/#documentation-strings)
@@ -185,9 +187,9 @@ Appelons la méthode `roule(self, k)` :
 167000
 ```
 
-Ici `voiture_1.methode roule(self, k)` est exécuté, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `15000`.
+Ici quand la méthode `voiture_1.roule(15000)` est exécuté, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `15000`.
 
-Notons aussi qu'une méthode peut renvoyer une valeur. Par exemple `revision`, une méthode qui renvoie les kilomètres avant la prochaine révision  : 
+Notons aussi qu'une méthode peut renvoyer une valeur. Prenons l'exemple de `revision`, une méthode qui renvoie les kilomètres avant la prochaine révision  : 
 
 ``` py
 class Voiture:
@@ -222,11 +224,12 @@ class Voiture:
 
 Il existe en Python quelques méthodes particulières. Comme `__init__()`, leur nom est entouré de deux paires de blancs soulignés. Par exemple l'instruction `>>> dir(list)` dans la console permet observer les méthodes des variables de type `list`.
 
-Les paires de blancs soulignés indiquent que ces méthodes ne sont pas appelées directement (elles sont privées) mais plutôt par le biais de fonctions particulières : 
+Les paires de blancs soulignés (ou tirets bas) indiquent que ces méthodes ne sont pas appelées directement (elles sont privées) mais plutôt par le biais de fonctions particulières : 
 
 -	`__init__(self)` est appelée à l'instanciation par `nom_objet = nom_classe()`.
 
 -	`__str__(self)` est appelée par la fonction `print()`. La valeur renvoyée par `__str__()` sera affichée quand on fera `print(nom_objet)` ou bien la chaîne de caractère renvoyée par `str(nom_objet)`.
+
     ```
     def __str__(self):
         return self.modele + ' '+ self.marque
@@ -260,7 +263,7 @@ Les deux variables `voiture_2` et `v` pointent maintenant sur le même objet :
 >>>
 ```
 
-Et par conséquent une modification de l'un modifie l'autre : 
+Et par conséquent, une modification de l'un modifie l'autre : 
 
 ``` py
 >>> voiture_2.km
@@ -362,7 +365,7 @@ Pour éviter ce genre de problème, il faut « protéger » la variable de class
        
 
 
-En Python, un **simple blanc souligné** au début d'un nom d'attribut indique que cet attribut est privé, par exemple dans notre exemple `self._km`.
+En Python, un **simple blanc souligné**, ou tiret bas, au début d'un nom d'attribut indique que cet attribut est privé, par exemple dans notre exemple `self._km`.
 
 ``` py
 class Voiture:
@@ -415,7 +418,7 @@ class Voiture:
         Voiture.total_km += k
 ```
 
-Noter que ce **simple blanc souligné** au début du nom de l'attribut n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
+Noter que ce **simple blanc souligné**, ou tiret bas, au début du nom de l'attribut n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
 
 ```
 >>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
