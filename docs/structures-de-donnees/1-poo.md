@@ -268,7 +268,7 @@ Et par conséquent une modification de l'un modifie l'autre :
 
 ##	Variable de classe
 
-Nous avons défini une classe comportant des attributs et des méthodes. Les attributs sont déclarés à l'intérieur du constructeur de l'objet et prennent donc une valeur qui est propre à chaque objet instancié de la classe. Deux objets différents appartenant à la même classe ont des valeurs d'attributs qui peuvent être différents. C'est pourquoi les attributs sont aussi appelé des **variables d'instance**. 
+Nous avons défini une classe comportant des attributs et des méthodes. Les attributs sont déclarés à l'intérieur du constructeur de l'objet et prennent donc une valeur qui est propre à chaque objet instancié de la classe. Deux objets différents appartenant à la même classe ont des valeurs d'attributs qui peuvent être différents. C'est pourquoi les attributs sont aussi appelés des **variables d'instance**. 
 
 Dans notre exemple, la classe  `Voiture` définit les attributs et les méthodes qui s'appliquent à chaque voiture, c'est-à-dire à chaque instance de cette classe. Mais comment connaître le nombre total d'instances qui ont été créées à partir ce cette classe ?  Ce n'est pas une valeur qui est propre à une instance en particulier. Elle concerne plutôt toute la classe.
 
@@ -286,7 +286,7 @@ class Voiture:
         self.km = k
         Voiture.total_voiture += 1
 ```
-puis `NomClasse.nom_variable_de_classe` permet d'utiliser cette variable de classe (en opposition à `nom_objet.nom_variable_d_instance` pour une variable d'instance) :
+puis `NomClasse.nom_variable_de_classe` permet d'utiliser cette variable de classe (en opposition à `nom_objet.nom_attribut` pour une variable d'instance) :
 
 
 ``` py
@@ -322,7 +322,7 @@ class Voiture:
         Voiture.total_km += k
 ```
 
-puis créons deux voiture et faisons rouler une des deux :
+puis créons deux voitures et faisons rouler une des deux :
 
 ``` py
 >>> Voiture.total_km
@@ -334,7 +334,7 @@ puis créons deux voiture et faisons rouler une des deux :
 50000
 ```
 
-Jusqu'ici tout va bien. Mais que se passe-t-il si on change les kilomètres d'une instance de `Voiture` directement ?
+Jusqu'ici tout va bien. Mais que se passe-t-il si on change la valeur de l'attribut `km` d'une instance de `Voiture` directement ?
 
 ``` py
 >>> voiture_1.km = 30000
@@ -344,11 +344,11 @@ Jusqu'ici tout va bien. Mais que se passe-t-il si on change les kilomètres d'un
 
 La valeur de la variable de classe `total_km` n'est plus correcte ! C'est un problème. 
 
-Pour éviter ce genre de problème, il faut « protéger » la variable `total_km` pour que sa valeur ne soit pas modifiée directement. La variable `total_km` doit être gardée à « l'intérieur » d'une sorte de boîte interne à l'objet, cachée de « l'exterieur », afin qu'elle ne soit lue et modifiée qu'à travers des méthodes qui garantissent que sa valeur reste correcte. C'est l'encapsulation.
+Pour éviter ce genre de problème, il faut « protéger » la variable `total_km` pour que sa valeur ne soit pas modifiée directement. La variable `total_km` doit être conservée à « l'intérieur » d'une sorte de boîte interne à l'objet, cachée de « l'exterieur », afin qu'elle ne soit lue et modifiée qu'à travers des méthodes qui garantissent que sa valeur reste correcte. C'est l'encapsulation.
 
 
 !!! abstract "Cours" 
-    L'**encapsulation** consiste à « enfermer » certains attributs et certaines méthodes à l'intérieur d'un objet pour qu'ils ne soient pas accessibles depuis « l'extérieur » de cet objet. 
+    L'**encapsulation** consiste à « enfermer » certains attributs et certaines méthodes à l'intérieur d'un objet pour qu'ils ne soient pas accessibles directement depuis « l'extérieur » de cet objet. 
 
     Les attributs et méthodes qui ne sont pas accessibles depuis l'extérieur de l'objet sont des **attributs et méthodes privés**.
     Ceux qui restent accessibles sont des **attributs et méthodes publics**.
@@ -380,6 +380,7 @@ Pour respecter le principe de l'encapsulation, il faut éviter de lire ou écrir
 
 !!! abstract "Cours" 
     Une classe doit fournir des méthodes (publiques) qui font l'**interface** avec l'extérieur :
+
     -	**accesseurs** (ou ***getters*** par convention leur nom commence par **get**) les méthodes permettant d'obtenir la valeur d'un attribut, et
     -	**mutateurs** (ou ***setters***, par convention leur nom commence par **set**) pour en modifier la valeur.
 
@@ -408,7 +409,7 @@ class Voiture:
         Voiture.total_km += k
 ```
 
-Noter que ce **simple blanc souligné** au début de nom de variable n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et oil est toujours possible de lire et modifier l'attribut. 
+Noter que ce **simple blanc souligné** au début du nom de l'attribut n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
 
 ```
 >>> voiture_1._km = 30000
@@ -485,7 +486,7 @@ Pour aller encore plus loin (hors programme) une autre manière « Pythonesque �
 
 Cela permet de définir de nouveaux attributs et de nouvelles méthodes pour la classe fille, qui s'ajoutent à ceux et celles héritées de la classe mère sans avoir à les réécrire.
 
-Admettons que l'on veille créer un classe de voiture électrique qui a les propriétés de la classe `Voiture` plus un certain nombre de kWh pour 100 kilomètres.
+Admettons que l'on veuille créer une classe de voiture électrique qui a les propriétés de la classe `Voiture` plus un certain nombre de kWh pour 100 kilomètres.
 
 La définition de la classe fille mentionne la mère. La méthode `__init__` appelle le constructeur de la mère et permet d'ajouter des attributs. On pourrait aussi ajouter des méthodes propres à la classe fille.
 
@@ -497,7 +498,7 @@ class VoitureElectrique(Voiture):
         self.kwh = kwh
 ```
 
-Créons une instance de `VoitureElectrique` : 
+Noter la syntaxe `class VoitureElectrique(Voiture)` qui indique le lien mère-fille entre les classe `Voiture` et `VoitureElectrique`. Créons maintenant une instance de `VoitureElectrique` : 
 
 ``` py
 >>> voiture_3 = VoitureElectrique('TESLA', 'S', kwh=18)
@@ -514,7 +515,7 @@ Toutes les méthodes de la classe mère s'appliquent à la fille :
 !!! abstract "Cours"
     Le **polymorphisme** permet de modifier le comportement d'une classe fille par rapport à sa classe mère.
 
-Cela permet d'adapter le comportement des objets. Par exemple, créons une classe fille pour des voitures qui ne roulent plus, appelée `Epave` : 
+Cela permet d'adapter le comportement des objets. Par exemple, créons une classe fille pour des voitures qui ne roulent plus, appelée `Epave` et modifions la méthode `roule()` de cette classe : 
 
 ``` py
 class Epave(Voiture):
@@ -523,8 +524,11 @@ class Epave(Voiture):
 
     def roule(self, k):
         pass
+```
 
+La méthode `roule()` d'une instance d'`Epave` n'est plus héritée de celle de la classe mère `Voiture`, elle se comporte différement :
 
+``` py
 >>> voiture_4 = Epave('Trabant','601', 150000)
 >>> voiture_4.roule(10000)
 >>> voiture_4.get_km()
