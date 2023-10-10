@@ -16,7 +16,7 @@ Exemple de langages orientés objets : Java, Javascript C++, Python, PHP
 
     Une fois une classe d'objet définie, il est possible de créer des objets sur le modèle de cette classe, c'est  **l'instanciation**. **Les objets sont des instances de la classe**. 
 
-Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 856 km, une Peugeot Dauphine avec 75 254 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chacun représentant une de ses voitures: la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
+Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 856 km, une Peugeot Dauphine avec 75 254 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chacun représentant l'une de ses voitures : la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
 
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-light-mode.png#only-light){width="80%"}
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-dark-mode.png#only-dark){width="80%"}
@@ -56,7 +56,7 @@ Pour l'instant notre classe `Voiture` est une coquille vide, les deux objets ins
 >>> voiture_1 = Voiture()
 >>> voiture_1.marque = "Citroen"
 >>> voiture_1.modele = "2 CV"
->>> voiture_1.km = 55000
+>>> voiture_1.km = 152856
 ```
 
 et ensuite de lire les attributs d'un objet ainsi :
@@ -172,12 +172,12 @@ class Voiture:
 Appelons la méthode `roule(self, k)` :
 
 ``` py
->>> voiture_1 = Voiture('Citroen', '2 CV')
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152856)
 >>> voiture_1.km
-0
+152856
 >>> voiture_1.roule(10000)
 >>> voiture_1.km
-10000
+162856
 ```
 
 Ici `voiture_1.methode roule(self, k)` est exécuté, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `10000`.
@@ -210,10 +210,10 @@ class Voiture:
     def revision(self):
         return 15000 - self.km % 15000
 
->>> voiture_1 = Voiture('Citroen', '2 CV')
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152856)
 >>> voiture_1.roule(20000)
 >>> voiture_1.revision()
-10000
+12144
 ```
 
 Il existe en Python quelques méthodes particulières. Comme `__init__()`, leur nom est entouré de deux paires de blancs soulignés. Par exemple on peut tester `dir(list)` dans la console pour observer les méthodes du type `list`.
@@ -242,7 +242,7 @@ Les paires de blancs soulignés indiquent que ces méthodes ne sont pas appelée
 Lorsqu'un objet est assigné à une variable, par exemple  `voiture_1 = Voiture('Citroen', '2 CV')`, la variable est une référence à cet objet, c'est-à-dire son adresse mémoire. Dès lors, deux variables peuvent faire référence au même objet, ce sont des **alias**. On peut accéder ou modifier l'objet par l'une ou l'autre. :warning: Cela mène à de nombreuses erreurs de programmation.
 
 ``` py
->>> voiture_2 = Voiture('Peugeot','Dauphine')
+>>> voiture_2 = Voiture('Peugeot','Dauphine', 75254)
 >>> v = voiture_2
 ```
 
@@ -260,10 +260,10 @@ Et par conséquent une modification de l'un modifie l'autre :
 
 ``` py
 >>> voiture_2.km
-0
->>> v.roule(50000)
+75254
+>>> v.roule(10000)
 >>> voiture_2.km
-50000
+85254
 ```
 
 ##	Variable de classe
@@ -292,10 +292,10 @@ puis `NomClasse.nom_variable_de_classe` permet d'utiliser cette variable de clas
 ``` py
 >>> Voiture.total_voiture
 0
->>> voiture_1 = Voiture('PEUGEOT','DAUPHINE')
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152856)
 >>> Voiture.total_voiture
 1
->>> voiture_2 = Voiture('Citroen', '2 CV')
+>>> voiture_1 = Voiture('Peugeot','Dauphine', 72254)
 >>> Voiture.total_voiture
 2
 >>>
@@ -327,22 +327,24 @@ puis créons deux voitures et faisons rouler une des deux :
 ``` py
 >>> Voiture.total_km
 0
->>> voiture_1 = Voiture('Peugeot','Dauphine', 20000)
->>> voiture_2 = Voiture('Citroen', '2 CV')
+>>> voiture_1 = Voiture('Citroen', '2 CV', 75254)
+>>> voiture_2 = Voiture('Peugeot','Dauphine', 152856)
+>>> Voiture.total_km
+380966
 >>> voiture_2.roule(30000)
 >>> Voiture.total_km
-50000
+410966
 ```
 
 Jusqu'ici tout va bien. Mais que se passe-t-il si on change la valeur de l'attribut `km` d'une instance de `Voiture` directement ?
 
 ``` py
->>> voiture_1.km = 30000
+>>> voiture_1.km = 80000
 >>> Voiture.total_km
-50000
+410966
 ```
 
-La valeur de la variable de classe `total_km` n'est plus correcte ! C'est un problème. 
+L'attribut `km` de `voiture_1` a changé mais pas la valeur de la variable de classe `total_km`, elle n'est plus correcte ! C'est un problème. 
 
 Pour éviter ce genre de problème, il faut « protéger » la variable `total_km` pour que sa valeur ne soit pas modifiée directement. La variable `total_km` doit être conservée à « l'intérieur » d'une sorte de boîte interne à l'objet, cachée de « l'exterieur », afin qu'elle ne soit lue et modifiée qu'à travers des méthodes qui garantissent que sa valeur reste correcte. C'est l'encapsulation.
 
@@ -412,7 +414,7 @@ class Voiture:
 Noter que ce **simple blanc souligné** au début du nom de l'attribut n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
 
 ```
->>> voiture_1._km = 30000
+>>> voiture_1._km = 80000
 ```
 Certains utilisent un **double blanc souligné** au début de nom de variable.  
 
@@ -430,15 +432,15 @@ Mais cette variable pourra toujours être lue ou modifiée par `nomobjet.__nomva
  Voir PEP 8 « Generally, double leading underscores should be used only to avoid name conflicts with attributes in classes designed to be subclassed. Note: there is some controversy about the use of __names (see below). »
 
 
-```
->>> voiture_1 = Voiture('Peugeot','Dauphine', 20000)
+``` py
+>>> voiture_1 = Voiture('Citroen', '2 CV', 75254)
 >>> voiture_1.get_km())
-20000
->>> voiture_1.__km = 30000
+75254
+>>> voiture_1.__km = 80000
 >>> voiture_1.__km
-30000
+80000
 >>> voiture_1.get_km())
-20000
+80000
 ```
 
 Pour aller encore plus loin (hors programme) une autre manière « Pythonesque » de respecter le principe d'encapsulation est d'utiliser des décorateurs pour transformer les attributs en propriétés (hors programme)[^1.2] .
@@ -473,8 +475,8 @@ Pour aller encore plus loin (hors programme) une autre manière « Pythonesque �
                 self._km=self._km + k
                 Voiture.total_km += k
 
-        v = Voiture('Peugeot','Dauphine', 20000)
-        v.km = 30000
+        voiture_1 = Voiture('Citroen','2 CV')
+        v.km = 152856
         ```
 
   
