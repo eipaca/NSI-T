@@ -16,7 +16,7 @@ Exemple de langages orientés objets : Java, Javascript C++, Python, PHP
 
     Une fois une classe d'objet définie, il est possible de créer des objets sur le modèle de cette classe, c'est  **l'instanciation**. **Les objets sont des instances de la classe**. 
 
-Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 856 km (`voiture_1`), une Peugeot Dauphine avec 75 254 km (`voiture_2`), etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusiseurs objets, chacun représentant une de ses voitures.
+Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 856 km, une Peugeot Dauphine avec 75 254 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chacun représentant une de ses voitures: la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
 
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-light-mode.png#only-light){width="80%"}
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-dark-mode.png#only-dark){width="80%"}
@@ -35,7 +35,7 @@ class Voiture:
 
 La classe `Voiture` n'est pas une voiture, c'est une sorte « d'usine à créer des voitures » ! Elle permet de créer par la suite des d'objets, des instances de la classe `Voiture`, sur le modèle de cette classe.
 
-Créons les deux premières voitures du collectionneur, c'est-à-dire deux **instances** de la classe `Voiture` :
+Créons maintenant les deux premières voitures du collectionneur, c'est-à-dire deux **instances** de la classe `Voiture` :
 
 ``` py
 voiture_1 = Voiture()
