@@ -16,7 +16,7 @@ Exemple de langages orientés objets : Java, Javascript C++, Python, PHP
 
     Une fois une classe d'objet définie, il est possible de créer des objets sur le modèle de cette classe, c'est  **l'instanciation**. **Les objets sont des instances de la classe**. 
 
-Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 856 km, une Peugeot Dauphine avec 75 254 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chacun représentant l'une de ses voitures : la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
+Prenons l'exemple d'un programme pour aider un collectionneur de vielles voitures qui possède une Citroen 2CV avec 152 000 km, une Peugeot Dauphine avec 75 000 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chacun représentant l'une de ses voitures : la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
 
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-light-mode.png#only-light){width="80%"}
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-dark-mode.png#only-dark){width="80%"}
@@ -56,7 +56,7 @@ Pour l'instant notre classe `Voiture` est une coquille vide, les deux objets ins
 >>> voiture_1 = Voiture()
 >>> voiture_1.marque = "Citroen"
 >>> voiture_1.modele = "2 CV"
->>> voiture_1.km = 152856
+>>> voiture_1.km = 152000
 ```
 
 et ensuite de lire les attributs d'un objet ainsi :
@@ -106,6 +106,11 @@ Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs s
 
 Avec ce constructeur, tous les objets sont créés avec les attributs initiés à la même valeur (`""` ou `0`). Ce n'est pas pratique. La méthode `__init__` est une méthode comme les autres, elle peut avoir des paramètres, par exemple la marque et le modèle de la voiture, ainsi que le nombre de km qui reste par défaut à 0 s'il n'est pas renseigné.
 
+!!! tip inline end "PEP 8" 
+    Comme les fonctions et les modules, les classes et les méthodes publiques comportent une docstring. Voir [https://peps.python.org/pep-0008/#documentation-strings](https://peps.python.org/pep-0008/#documentation-strings)
+  
+
+
 ``` py
 class Voiture:
     """ 
@@ -123,14 +128,14 @@ class Voiture:
         self.km = k
 ```
 
-L'instruction `Voiture('Citroen', '2 CV')` appelle le constructeur  `__init__`  créant ainsi un nouvel objet `Voiture` en lui donnant les valeurs de ses attributs `'Citroen'` et `'2 CV'`.
+L'instruction `Voiture('Citroen', '2 CV')` appelle le constructeur  `__init__`  créant ainsi un nouvel objet `Voiture` en lui donnant les valeurs de ses attributs `'Citroen'`, `'2 CV'` et `152000`.
 
 ``` py
->>> voiture_1 = Voiture('Citroen', '2 CV')
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
 >>> voiture_1.modele
 '2 CV'
 >>> voiture_1.km
-0
+152000
 ```
 
 ##	Les méthodes
@@ -172,17 +177,17 @@ class Voiture:
 Appelons la méthode `roule(self, k)` :
 
 ``` py
->>> voiture_1 = Voiture('Citroen', '2 CV', 152856)
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
 >>> voiture_1.km
-152856
->>> voiture_1.roule(10000)
+152000
+>>> voiture_1.roule(15000)
 >>> voiture_1.km
-162856
+167000
 ```
 
-Ici `voiture_1.methode roule(self, k)` est exécuté, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `10000`.
+Ici `voiture_1.methode roule(self, k)` est exécuté, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `15000`.
 
-Notons aussi qu'une méthode peut renvoyer une valeur. Par exemple : 
+Notons aussi qu'une méthode peut renvoyer une valeur. Par exemple `revision`, une méthode qui renvoie les kilomètres avant la prochaine révision  : 
 
 ``` py
 class Voiture:
@@ -210,15 +215,14 @@ class Voiture:
     def revision(self):
         return 15000 - self.km % 15000
 
->>> voiture_1 = Voiture('Citroen', '2 CV', 152856)
->>> voiture_1.roule(20000)
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
 >>> voiture_1.revision()
-12144
+13000
 ```
 
-Il existe en Python quelques méthodes particulières. Comme `__init__()`, leur nom est entouré de deux paires de blancs soulignés. Par exemple on peut tester `dir(list)` dans la console pour observer les méthodes du type `list`.
+Il existe en Python quelques méthodes particulières. Comme `__init__()`, leur nom est entouré de deux paires de blancs soulignés. Par exemple l'instruction `>>> dir(list)` dans la console permet observer les méthodes des variables de type `list`.
 
-Les paires de blancs soulignés indiquent que ces méthodes ne sont pas appelées directement  (on dit qu'elles sont privées) mais plutôt par le biais de fonctions particulières : 
+Les paires de blancs soulignés indiquent que ces méthodes ne sont pas appelées directement (elles sont privées) mais plutôt par le biais de fonctions particulières : 
 
 -	`__init__(self)` est appelée à l'instanciation par `nom_objet = nom_classe()`.
 
@@ -292,10 +296,10 @@ puis `NomClasse.nom_variable_de_classe` permet d'utiliser cette variable de clas
 ``` py
 >>> Voiture.total_voiture
 0
->>> voiture_1 = Voiture('Citroen', '2 CV', 152856)
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
 >>> Voiture.total_voiture
 1
->>> voiture_1 = Voiture('Peugeot','Dauphine', 72254)
+>>> voiture_1 = Voiture('Peugeot','Dauphine', 75000)
 >>> Voiture.total_voiture
 2
 >>>
@@ -327,26 +331,26 @@ puis créons deux voitures et faisons rouler une des deux :
 ``` py
 >>> Voiture.total_km
 0
->>> voiture_1 = Voiture('Citroen', '2 CV', 75254)
->>> voiture_2 = Voiture('Peugeot','Dauphine', 152856)
+>>> voiture_1 = Voiture('Citroen', '2 CV', 125000)
+>>> voiture_2 = Voiture('Peugeot','Dauphine', 75000)
 >>> Voiture.total_km
-380966
->>> voiture_2.roule(30000)
+200000
+>>> voiture_2.roule(10000)
 >>> Voiture.total_km
-410966
+230000
 ```
 
 Jusqu'ici tout va bien. Mais que se passe-t-il si on change la valeur de l'attribut `km` d'une instance de `Voiture` directement ?
 
 ``` py
->>> voiture_1.km = 80000
+>>> voiture_2.km = 100000
 >>> Voiture.total_km
-410966
+230000
 ```
 
-L'attribut `km` de `voiture_1` a changé mais pas la valeur de la variable de classe `total_km`, elle n'est plus correcte ! C'est un problème. 
+L'attribut `km` de `voiture_2` a changé mais pas la valeur de la variable de classe `total_km`, elle n'est plus correcte ! C'est un problème. 
 
-Pour éviter ce genre de problème, il faut « protéger » la variable `total_km` pour que sa valeur ne soit pas modifiée directement. La variable `total_km` doit être conservée à « l'intérieur » d'une sorte de boîte interne à l'objet, cachée de « l'exterieur », afin qu'elle ne soit lue et modifiée qu'à travers des méthodes qui garantissent que sa valeur reste correcte. C'est l'encapsulation.
+Pour éviter ce genre de problème, il faut « protéger » la variable de classe `total_km` pour que sa valeur ne soit pas modifiée directement. C'est comme si cette variable `total_km` était mise à « l'intérieur d'une boîte interne » à l'objet, cachée de « l'exterieur », afin qu'elle ne soit lue et modifiée qu'en utilisant des méthodes qui garantissent que sa valeur reste correcte. C'est le méchanisme d'encapsulation.
 
 
 !!! abstract "Cours" 
@@ -358,7 +362,7 @@ Pour éviter ce genre de problème, il faut « protéger » la variable `total_k
        
 
 
-En Python, un **simple blanc souligné** au début d'un nom de variable indique qu'un attribut est privé, par exemple dans notre exemple `self._km`.
+En Python, un **simple blanc souligné** au début d'un nom d'attribut indique que cet attribut est privé, par exemple dans notre exemple `self._km`.
 
 ``` py
 class Voiture:
@@ -414,9 +418,17 @@ class Voiture:
 Noter que ce **simple blanc souligné** au début du nom de l'attribut n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
 
 ```
->>> voiture_1._km = 80000
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
+>>> voiture_1._km
+152000
+>>> voiture_1._km = 160000
+>>> voiture_1._km
+160000
 ```
-Certains utilisent un **double blanc souligné** au début de nom de variable.  
+
+Le problème persiste !
+
+Pour aller plus loin, certains programmeurs utilisent aussi un **double blanc souligné** au début d'un nom d'attribut privé.  
 
 ``` py
 class Voiture:
@@ -426,22 +438,28 @@ class Voiture:
         #...
 ```
 
-Mais cette variable pourra toujours être lue ou modifiée par `nomobjet.__nomvariable` et a des effets indésirables[^1.1] :
-
-[^1.1]: Il faudrait utiliser `v._Voiture__km` au lieu de `v.__km`. Cette utilisation est contestée (règle du « name mangling »).
- Voir PEP 8 « Generally, double leading underscores should be used only to avoid name conflicts with attributes in classes designed to be subclassed. Note: there is some controversy about the use of __names (see below). »
-
+Dans ce cas, l'attribut `__km` ne peut plus être lu par ```voiture_1.__km` :
+``` py
+>>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
+>>> voiture_1.__km
+Traceback (most recent call last):
+  File "<interactive input>", line 1, in <module>
+AttributeError: 'Voiture' object has no attribute '__km'
+```
+mais il peut encore être modifié avec des effets indésirables :
 
 ``` py
->>> voiture_1 = Voiture('Citroen', '2 CV', 75254)
->>> voiture_1.get_km())
-75254
->>> voiture_1.__km = 80000
+>>> voiture_1.__km = 160000
 >>> voiture_1.__km
-80000
->>> voiture_1.get_km())
-80000
+160000
+>>> voiture_1.get_km()
+152000
 ```
+
+Le problème persiste, cette utilisation est contestée[^1.1] :
+
+[^1.1]: Règle du « name mangling » :  Voir PEP 8 « Generally, double leading underscores should be used only to avoid name conflicts with attributes in classes designed to be subclassed. Note: there is some controversy about the use of __names (see below). »
+
 
 Pour aller encore plus loin (hors programme) une autre manière « Pythonesque » de respecter le principe d'encapsulation est d'utiliser des décorateurs pour transformer les attributs en propriétés (hors programme)[^1.2] .
 
@@ -476,7 +494,7 @@ Pour aller encore plus loin (hors programme) une autre manière « Pythonesque �
                 Voiture.total_km += k
 
         voiture_1 = Voiture('Citroen','2 CV')
-        v.km = 152856
+        voiture_1.km = 152000
         ```
 
   
