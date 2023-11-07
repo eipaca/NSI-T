@@ -32,7 +32,7 @@ Les piles trouvent de nombreuses applications en informatique, par exemple :
 
 ##	Interface
 
-Les principales primitives constitant l'interface d'une pile sont :
+Les principales primitives constituant l'interface d'une pile sont :
 
 
 - `creer() → pile` : construire une pile vide.

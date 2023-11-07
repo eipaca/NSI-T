@@ -3,14 +3,14 @@
 !!! abstract "Cours"
     Une **liste**[^3.1] est une structure abstraite de données constituée d'éléments d'un même type, chacun possédant une position (ou rang) dans la liste. 
 
-    Une liste peut être **éventuellement vide**.  Une liste est évolutive : on peut  **ajouter** ou **supprimer** n'importe lequel de ses éléments. 
+    La composition d'une liste change quand de nouveaux éléments sont **ajoutés** à la liste ou des éléments sont **supprimés** de la liste. Une liste peut éventuellement être **vide**.  
     
-    Une liste non vide comprend de deux parties :
+    Une liste (non vide) est composée de deux parties :
 
-    -	La **tête** (notée *car*[^3.2]), qui est le **dernier élément ajouté** à la liste;
-    -   La **queue** (note *cdr*[^3.3] ), qui contient le reste de la liste, elle-même une liste .
+    -	La **tête** (notée *car*[^3.2]), qui est le **dernier élément ajouté** à la liste ;
+    -   La **queue** (note *cdr*[^3.3] ), qui contient le reste de la liste, elle-même une liste.
 
-    La **longueur** de la liste est le nombre d'éléments composant la liste. Une liste de longueur zéro est une liste vide.
+    La **longueur** de la liste est le nombre d'éléments composant la liste. Une liste vide a une longueur zéro.
 
 
 Notons ici le caractère récursif de cette définition où la queue d'une liste est elle-même une liste ! 
@@ -25,7 +25,7 @@ Notons ici le caractère récursif de cette définition où la queue d'une liste
 
 ## Interface 
 
-Les principales primitives constitant l'interface d'une liste sont :
+Les principales primitives constituant l'interface d'une liste sont :
 
 -	`creer() → liste` : construire une liste vide.
 -	`est_vide() → bool` : vérifier si une liste est vide ou non.
@@ -54,7 +54,7 @@ Une liste peut être implémentée sous la forme :
 -	d'un tuple vide `()`, si la liste est vide ; ou sinon
 -	d'un couple composé de la tête de la liste et de sa queue : `(car, cdr)`.
 
-Prenons par exemple une liste vide implémentée par le tuple `()`, et insérons l'élément `'a'` en tête, la nouvelle liste obtenue est `('a', ())`, sa tête est `'a'` et sa queue `()`. Insérons maintenant un élément `'b'` dans cette liste, la nouvelle liste obtenue est `('b', ('a', ()))`, sa tête est `'b'` et sa queue `('a', ())`. Puis insérons succéssivement les éléments `'c'` et `'d'`, la nouvelle liste  est `('d', ('d', ('b', ('a', ()))))`, la tête est `'d'` et la queue `('d', ('b', ('a', ())))`.
+Prenons par exemple une liste vide implémentée par le tuple `()`, et insérons l'élément `'a'` en tête, la nouvelle liste obtenue est `('a', ())`, sa tête est `'a'` et sa queue `()`. Insérons maintenant un élément `'b'` dans cette liste, la nouvelle liste obtenue est `('b', ('a', ()))`, sa tête est `'b'` et sa queue `('a', ())`. Puis insérons successivement les éléments `'c'` et `'d'`, la nouvelle liste  est `('d', ('d', ('b', ('a', ()))))`, la tête est `'d'` et la queue `('d', ('b', ('a', ())))`.
 
 Ecrivons en Python ces premières primitives de liste qui permettent de créer une liste vide puis d'insérer un élément en tête de liste :
 
@@ -229,7 +229,7 @@ Il est aussi possible de rajouter quelques primitives pour :
 - 	insére un élément en ième position ;
 -	etc.
 
-Pour aller plus loin,  on peut écrire une classe `Liste` avec des méthodes similaire.
+Pour aller plus loin, il est aussi possible d'écrire une classe `Liste` avec des méthodes similaire.
 
 ###  Avec le type `list` de Python
 
@@ -291,7 +291,7 @@ C'est donc la même chose que d'écrire :
 Le nombre d'opérations est proportionnel à la taille du tableau. Ajouter ou supprimer le premier élément d'un tableau d'un million d'éléments nécessite près d'un million d'opérations. C'est donc une complexité en $O(n)$ [^3.5].
 
 [^3.5]: 
-    On peut facilement observer que le coût d'insérer un élement en début de tableau est proportionnel à la taille du tableau avec le module `time`: 
+    Le coût d'insertion d'un élement en début de tableau est proportionnel à la taille du tableau, ce qui peut être observé avec le module `time`: 
     ``` py
     import time
 
@@ -496,9 +496,9 @@ Complétons l'interface avec une primitive pour ajouter un élément en position
         self._longueur += 1
 ```
 
-En moyenne, comme pour la recherche on peut ajouter immédiatement l'élément de tête, il faut $n$ opérations pour ajouter le dernier élément dans une liste de longueur $n$, donc en moyenne $n/2$, la complexité est en $O(n)$ est comparable au tableau dynamique, mais le nombre d'écritures est grandement réduit.
+En moyenne, comme pour la recherche , un élément est ajouté immédiatement en tête de liste, et après $n$ opérations en dernère position dans une liste de longueur $n$, donc en moyenne après $n/2$ opérations. La complexité est en $O(n)$ est comparable au tableau dynamique, mais le nombre d'écritures est grandement réduit.
 
-Pour aller plus loin,  on peut définir une méthode pour supprimer l'élément en position `n`, vérifier la présence d'une valeur dans la liste, trier une liste, concaténer deux listes, etc.
+Pour aller plus loin,  il est possible de définir une méthode pour supprimer l'élément en position `n`, vérifier la présence d'une valeur dans la liste, trier une liste, concaténer deux listes, etc.
 
 A noter que cette implémentation permet de créer une liste muable (*mutable* en anglais) ce qui permet par exemple d'insérer un élément en tête de liste ou même au milieu.
 
