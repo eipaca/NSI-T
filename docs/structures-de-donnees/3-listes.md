@@ -247,12 +247,13 @@ Le type `list` en Python offre toutes les primitives de base d'une liste (notons
 |:--|:--|
 |`creer() → liste` : constructeur d'une liste vide|`L = []`|
 |`est_vide() → bool` : vérification si une liste est vide ou non|`L == []  ou len(L) ==0`|
-|`inserer_tete(element)` : insertion d'un élément en tête|`L.append('a')`|
-|`supprimer_tete() →  element` : suppression de l'élément de tête|`L.pop()`|
+|`inserer_tete(element)` : insertion d'un élément en tête|`L.insert(0, 'a')`|
+|`supprimer_tete() →  element` : suppression de l'élément de tête|`L.pop(0)`|
 |`taille() → int` : nombre d'éléments dans la pile|`len(L)`|
 |`tete() →  element` : lire le premier élément de la liste|`L[-1]`|
 |`queue() → liste` : accès au reste de la liste|`L[:-1]`|
 
+Note : Ce choix d'implémentation est suis les implémentations précédentes mais il etait bien sûr possible d'inverser l'ordre de la liste dans le tableau et d'utiliser `L.append('a')` et `L.pop()` pour `inserer_tete` et `supprimer_tete`.
 
 Le type `list` propose bien d'autres opérateurs que les listes : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc.
 
@@ -261,7 +262,7 @@ Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les ta
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-light-mode.png#only-light){width="25%" align=right}
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-dark-mode.png#only-dark){width="25%" align=right}
 
-Par exemple pour insérer la valeur `'e'` en queue d'une liste implémentée par un tableau Python `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau, la méthode `insert()` semble tout à fait adaptée :
+Par exemple pour insérer la valeur `'e'` en tête d'une liste implémentée par un tableau Python `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau, la méthode `insert()` semble tout à fait adaptée :
 
 ``` py
 >>> L = ['d', 'c', 'b', 'a']
