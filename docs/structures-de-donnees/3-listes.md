@@ -253,16 +253,13 @@ Le type `list` en Python offre toutes les primitives de base d'une liste (notons
 |`tete() →  element` : lire le premier élément de la liste|`L[-1]`|
 |`queue() → liste` : accès au reste de la liste|`L[:-1]`|
 
-Note : Ce choix d'implémentation est suis les implémentations précédentes mais il etait bien sûr possible d'inverser l'ordre de la liste dans le tableau et d'utiliser `L.append('a')` et `L.pop()` pour `inserer_tete` et `supprimer_tete`.
 
-Le type `list` propose bien d'autres opérateurs que les listes : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc.
-
-Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
+Le type `list` propose bien d'autres opérateurs que les listes : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc. Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
 
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-light-mode.png#only-light){width="25%" align=right}
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-dark-mode.png#only-dark){width="25%" align=right}
 
-Par exemple pour insérer la valeur `'e'` en tête d'une liste implémentée par un tableau Python `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau, la méthode `insert()` semble tout à fait adaptée :
+Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste implémentée par un tableau Python `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau, avec la méthode `insert()` :
 
 ``` py
 >>> L = ['d', 'c', 'b', 'a']
@@ -271,7 +268,7 @@ Par exemple pour insérer la valeur `'e'` en tête d'une liste implémentée par
 ['e', 'd', 'c', 'b', 'a']
 ```
 
-Cette opération est néanmoins très couteuse car elle consiste à :
+c'est une opération qui est en réalité très couteuse, car elle consiste à :
 
 1. agrandir le tableau ; 
 2. déplacer tous les éléments du tableau d'une case vers la droite, en commençant par la fin ; 
@@ -289,7 +286,7 @@ C'est donc la même chose que d'écrire :
 ['e', 'd', 'b', 'c', 'a']
 ```
 
-Le nombre d'opérations est proportionnel à la taille du tableau. Ajouter ou supprimer le premier élément d'un tableau d'un million d'éléments nécessite près d'un million d'opérations. C'est donc une complexité en $O(n)$ [^3.5].
+Le nombre d'opérations est proportionnel à la taille du tableau. Ajouter ou supprimer le premier élément d'un tableau d'un million d'éléments nécessite près d'un million d'opérations. C'est une complexité en $O(n)$ [^3.5].
 
 [^3.5]: 
     Le coût d'insertion d'un élement en début de tableau est proportionnel à la taille du tableau, ce qui peut être observé avec le module `time`: 
@@ -305,6 +302,8 @@ Le nombre d'opérations est proportionnel à la taille du tableau. Ajouter ou su
     ```
     Pour en savoir plus sur le coût des opérations sur les listes : [https://wiki.python.org/moin/TimeComplexity](https://wiki.python.org/moin/TimeComplexity)
 
+
+Le choix d'implémentation qui a été fait ici de placer la tête de liste en position 0 d'un tableau Python suis suis les implémentations précédentes, il aurait été plus optimal d'inverser l'ordre de la liste dans le tableau et d'utiliser `L.append('a')` et `L.pop()` pour `inserer_tete` et `supprimer_tete`.
 
 
 ### Avec une liste chaînée 
