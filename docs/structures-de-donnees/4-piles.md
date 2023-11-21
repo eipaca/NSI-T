@@ -154,7 +154,7 @@ False
 'c''
 >>>
 ```
-Pour faire encore plus simple, il possible de programmer la pile  avec la même idée sans utiliser la POO : 
+Pour faire encore plus simple, programmons une pile avec la même idée, mais sans utiliser la POO : 
 
 ``` py
 def creer():
@@ -197,4 +197,17 @@ IndexError: la pile est vide
 'c'
 >>> taille(p)
 2
+```
+
+Finalement en Python, une simple variable de type `list` avec la fonction `len()` et les méthodes `.append()` et `.pop()` est une façon rapide et simple de créer une pile avec toutes ses primitives : 
+``` py
+>>> p = []           # creer()
+>>> len(p) == 0      # est_vide()
+True
+>>> p.append('a')    # empiler()
+>>> p.append('b')    # empiler()
+>>> p.append('c')    # empiler()
+>>> len(p)           # taille()
+3
+>>> p.pop()          # depiler()
 ```
