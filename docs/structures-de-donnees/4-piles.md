@@ -39,7 +39,7 @@ Les principales primitives constituant l'interface d'une pile sont :
 - `est_vide() → bool` : vérifier si une pile est vide ou non.
 - `empiler(element)` : ajouter un élément sur la pile (*Push* en anglais).
 - `dépiler() → element` : enlèver un élément de la pile et le renvoyer (*Pop* en anglais).
-- `taille() → int` : renvoyer le nombre d'éléments dans la pile.
+- `taille() → int` : renvoyer le nombre d'éléments dans la pile (la hauteur).
 
 Exemple :
 
@@ -61,32 +61,32 @@ Sur la même idée que la classe `ListeChainee` vue précédemment, il est possi
 class Cellule:
     '''Cellule de Pile '''
 
-    def __init__(self, v, d):
-        self.valeur = v
-        self.dessous = d
+    def __init__(self, v, d=None):
+        self.valeur = v      # Valeur de la Cellule
+        self.dessous = d     # Cellule de dessous
 
 class Pile:
     '''Pile sous forme d'une liste chainee de cellules'''
     def __init__(self):
         self.sommet = None
-        self._hauteur= 0
+        self._hauteur = 0          # Nombre d'élément de la Pile
 
     def est_vide(self):
         return self.sommet == None
 
     def empiler(self, v):
-        self.sommet= Cellule(v, self.sommet)
-        self._hauteur+=1
+        self.sommet = Cellule(v, self.sommet)
+        self._hauteur += 1
 
     def depiler(self):
         if self.est_vide(): raise IndexError("la pile est vide")
-        v= self.sommet.valeur
+        v = self.sommet.valeur
         self.sommet = self.sommet.dessous
-        self._hauteur-=1
+        self._hauteur -= 1
         return v
 
     def taille(self):
-        return self._longueur
+        return self._hauteur
 ```
 
 Créons maintenant une instance de `Pile` :
@@ -94,13 +94,13 @@ Créons maintenant une instance de `Pile` :
 >>> p = Pile()
 >>> p.taille()
 0
->>> p.empiler(8)
->>> p.empiler(12)
->>> p.empiler(14)
+>>> p.empiler('a')
+>>> p.empiler('b')
+>>> p.empiler('c')
 >>> p.depiler()
-14
+'c'
 >>> p.taille()
-4
+2
 ```
 ###	Avec le type `list` de Python
 
@@ -119,7 +119,6 @@ class Pile:
     def empiler(self, v):
         self.pile.append(v)
 
-
     def depiler(self):
         if self.est_vide(): raise IndexError("la pile est vide")
         return self.pile.pop()
@@ -130,7 +129,7 @@ class Pile:
     def __str__(self):
         ch = ''
         for v in self.pile:
-            ch = ch + "|\t" + str(v) + "\t|\n"
+            ch = ch + "|\t" + str(v) + "\t|\n"   # Affiche les élements de la pile : |  v  |
         ch = ch + "---------"
         return ch
 ```
@@ -146,13 +145,56 @@ Traceback (most recent call last):
   File "<interactive input>", line 1, in <module>
   File "<module1>", line 15, in depiler
 IndexError: la pile est vide
->>> p.empiler(12)
->>> p.empiler(14)
->>> p.empiler(8)
+>>> p.empiler('a')
+>>> p.empiler('b')
+>>> p.empiler('c')
 >>> p.est_vide()
 False
 >>> p.depiler()
-8
+'c''
 >>>
 ```
+Pour faire encore plus simple, il possible de programmer la pile  avec la même idée sans utiliser la POO : 
 
+``` py
+def creer():
+    return  []
+
+def est_vide(p):
+    return len(p) == 0
+
+def empiler(p, v):
+    p.append(v)         # Inutile de renvoyer p, le type list est muable
+
+def depiler(p):
+    if est_vide(p): raise IndexError("la pile est vide")
+    return p.pop()
+
+def taille(p):
+    return len(p)
+
+def affciher(p):
+    for v in p:
+        print("|\t", v, "\t|\n")   # Affiche les élements de la pile : |  v  |
+    print("---------")
+        
+```
+puis
+
+``` py
+>>> p = creer()
+>>> est_vide(p)
+True
+>>> depiler(p)
+Traceback (most recent call last):
+  File "<interactive input>", line 1, in <module>
+  File "<module1>", line 11, in depiler
+IndexError: la pile est vide
+>>> empiler(p, 'a')
+>>> empiler(p, 'b')
+>>> empiler(p, 'c')
+>>> depiler(p)
+'c'
+>>> taille(p)
+2
+```
