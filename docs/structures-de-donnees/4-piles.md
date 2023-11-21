@@ -210,4 +210,5 @@ True
 >>> len(p)           # taille()
 3
 >>> p.pop()          # depiler()
+'c'
 ```
