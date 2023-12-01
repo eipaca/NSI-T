@@ -142,7 +142,7 @@ La méthode `est_vide` est immédiate, il suffit que les deux piles soient vides
         return self.entrante.est_vide() and self.sortante.est_vide()
 
 
->>> f=File()
+>>> f = File()
 >>> f.est_vide()
 True
 ```
@@ -154,7 +154,7 @@ Pour enfiler un élément dans la file, il suffit de l'empiler dans la pile entr
         self.entrante.empiler(v)
 
 
->>> f=File()
+>>> f = File()
 >>> f.est_vide()
 True
 >>> f.enfiler('a')
@@ -173,7 +173,7 @@ Mais pour défiler, il faut gérer les deux cas vus précédemment :
                 self.sortante.empiler(self.entrante.depiler())
         return self.sortante.depiler()
 
->>> f=File()
+>>> f = File()
 >>> f.enfiler('a')
 >>> f.enfiler('b')
 >>> f.enfiler('c')
