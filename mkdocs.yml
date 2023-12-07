@@ -90,8 +90,9 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - pymdownx.emoji:
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   # enables native support for Mermaid.js diagrams
   - pymdownx.superfences:
       custom_fences:
@@ -133,9 +134,10 @@ nav:
     - Listes: structures-de-donnees/3-listes.md
     - Piles: structures-de-donnees/4-piles.md
     - Files: structures-de-donnees/5-files.md
-    #- Dictionnaires: structures-de-donnees/6-dictionnaires.md
-    #- Arbres: structures-de-donnees/7-arbres.md
-    #- Graphes: structures-de-donnees/8-graphes.md
+    - Dictionnaires: structures-de-donnees/6-dictionnaires.md
+    - Arbres: structures-de-donnees/7-arbres.md
+    - Graphes: structures-de-donnees/8-graphes.md
+ 
   # Architectures matérielles, systèmes d'exploitation et réseaux:
  #  -Composants intégrés d’un système sur puce.
  # -Gestion des processus et des ressources par un système d'exploitation
