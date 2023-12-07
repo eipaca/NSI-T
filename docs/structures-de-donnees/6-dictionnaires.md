@@ -23,7 +23,7 @@ Les principales primitives constituant l'interface d'un dictionnaire sont :
 
 ##	Implémentation
 
-Prenons l'exemple d'une situation dans laquelle il est nécessaire de stocker des informations concernant les pays du monde : la capitale, la superficie, le nombre d'habitant, etc. Ni les listes chaînées, ni les tableaux, ne semblent offrir une solution efficace pour manipuler ces données :
+Prenons l'exemple d'une situation dans laquelle il est nécessaire de stocker les capitales des pays du monde. Ni les listes chaînées, ni les tableaux, ne semblent offrir une solution efficace pour manipuler ces données :
 
 - Les pays ne sont pas classés dans un ordre particulier, un tableau ne permettrait donc pas d'accéder facilement aux informations concernant un pays identifié par son nom.
 
@@ -36,197 +36,191 @@ Plusieurs implémentations de dictionnaires sont possibles, par exemple en utili
 
 ###	Avec le type `dict` de Python
 
-Un dictionnaire Python est déclaré par une série d'éléments sous la forme couples clés-valeurs (*key-value* en anglais) séparés par des virgules, et le tout encadré par des accolades “{ }”.
+Le type `dict` Python offre toutes les primitives d'un dictionnaire : 
 
 ``` py
->>> capitale = {'France': 'Paris', 'Allemagne': 'Berlin', 'Italie': 'Rome'}
->>> capitale
-{'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
-```
-
-Noter que les éléments affichés n'ont pas d'ordre particulier.
-
-Un dictionnaire vide peut être créé avec les accolades `{}`.
-
-``` py
->>> population = {}
-```
-
-Des valeurs peuvent être ajoutées par la suite au dictionnaire avec leur clé respective associée.
-
-``` py
->>> population['France'] = 66
->>> population["Allemagne"] = 82
->>> population
-{'France': 66, 'Allemagne': 82}
-```
-
-Comme pour les tableaux, un dictionnaire peut aussi être créé par compréhension :
-
-``` py
->>> carres = {x:x**2 for x in range(10)}
->>> carres
-{0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81} 
-```
-
-Pour récupérer la valeur associée à une clé donnée, il suffit d'utiliser la syntaxe `nom_dictionnaire[nom_cle]`. 
-
-``` py
->>> capitale["France"]
-'Paris'
-```
-
-On accède à une valeur d'un dictionnaire ***uniquement par sa clé, mais pas par sa position**, les valeurs d'un dictionnaire n'ont pas de position :
-
-``` py
->>> capitale[0]
-Traceback (most recent call last):
-  File "<pyshell#12>", line 1, in <module>
-    capitale[0]
-KeyError: 0
-```
-Dans ce cas, l'interpréteur renvoie un message d'erreur car la clé `0` n'existe pas dans le dictionnaire `capitale`. 
-
-La méthode `get()` permet aussi de récupérer une valeur associée à une clé sans lever d'erreur si la clé n'existe pas.
-
-``` py
->>> capitale.get('France')
-'Paris'
->>> capitale.get(0)
->>> capitale.get('Espagne', 'Non défini')
-Non défini
-```
-
-Pour vérifier si une clé est présente dans un dictionnaire ou parcourir les éléments d'un dictionnaire on utilise le mot clé `in`.
-
-
-``` py
->>> "France" in capitale
+>>> capitale = {}           # creer()
+>>> len(capitale) == 0      # est_vide()
 True
->>> "Espagne" in capitale
-False
-```
-:warning: Les mot clé `in` s'applique seulement aux clés d'un dictionnaire, pas à ses valeurs :
-``` py
->>> "Paris" in capitale
-False
+>>> capitale["France"] = "Paris"     # ajouter(cle, valeur)
+>>> capitale["Allemagne"] = "Berlin"     # ajouter(cle, valeur)
+>>> capitale["Italie"] = "Rome"     # ajouter(cle, valeur)
+>>> capitale["France"]              # lire(cle)
+'Paris'
+>>> len(capitale)           # taille()
+3
+>>> capitale.pop("Italie")          # supprimer(clé) 
+'Rome'
 ```
 
-De la même façon, `for` permet d'itérer sur les clés d'un dictionnaire :  
-``` py
->>> for cle in capitale:
-...     print(cle, capitale[cle])
-...
-Allemagne Berlin
-France Paris
-Italie Rome
-```
-[^6.1]
+Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons quelques caractéristiques vues en classe de première : 
+
+-   Un dictionnaire peut être créer avec plusieurs éléments de clés-valeurs (*key-value* en anglais) séparés par des virgules, et le tout encadré par des accolades “{ }”.
+
+    ``` py
+    >>> capitale = {'France': 'Paris', 'Allemagne': 'Berlin', 'Italie': 'Rome'}
+    ```
+
+-   Les éléments sont affichés sans ordre particulier.
+    ``` py
+    >>> capitale
+    {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
+    ```
+
+-   On accède à une valeur d'un dictionnaire ***uniquement par sa clé, mais pas par sa position**, les valeurs d'un dictionnaire n'ont pas de position :
+
+    ``` py
+    >>> capitale[0]
+    Traceback (most recent call last):
+    File "<pyshell#12>", line 1, in <module>
+        capitale[0]
+    KeyError: 0
+    ```
+    Dans ce cas, l'interpréteur renvoie un message d'erreur car la clé `0` n'existe pas dans le dictionnaire `capitale`. 
+
+-   La méthode `get()` permet aussi de récupérer une valeur associée à une clé sans lever d'erreur si la clé n'existe pas.
+
+    ``` py
+    >>> capitale.get('France')
+    'Paris'
+    >>> capitale.get(0)
+    >>> capitale.get('Espagne', 'Non défini')
+    Non défini
+    ```
+
+-   Le mot clé `in` permet de vérifier si une clé est présente dans un dictionnaire.
+
+    ``` py
+    >>> "France" in capitale
+    True
+    >>> "Espagne" in capitale
+    False
+    ```
+    :warning: Les mot clé `in` s'applique seulement aux clés d'un dictionnaire, pas à ses valeurs :
+    ``` py
+    >>> "Paris" in capitale
+    False
+    ```
+
+-   De la même façon, `for` permet d'itérer sur les clés d'un dictionnaire :  
+
+    ``` py
+    >>> for cle in capitale:
+    ...     print(cle, capitale[cle])
+    ...
+    Allemagne Berlin
+    France Paris
+    Italie Rome
+    ```
+    [^6.1]
 
 [^6.1]: Il est aussi possible d'utiliser la méthode `items()` et d'écrire : : `>>> for cle, val in 'capitale.items():
 
 
-Les méthodes `.keys()` et `.values()` renvoient les clés et les valeurs d'un dictionnaire :
+-   Les méthodes `.keys()` et `.values()` renvoient les clés et les valeurs d'un dictionnaire :
 
-``` py
->>> capitale.keys()
-dict_keys(['Allemagne', 'France', 'Italie'])
->>> capitale.values()
-dict_values(['Berlin', 'Paris', 'Rome'])
-```
-et la méthode `.items()` renvoie tous les couples de clé-valeur d'un dictionnaire :
+    ``` py
+    >>> capitale.keys()
+    dict_keys(['Allemagne', 'France', 'Italie'])
+    >>> capitale.values()
+    dict_values(['Berlin', 'Paris', 'Rome'])
+    ```
+    et la méthode `.items()` renvoie tous les couples de clé-valeur d'un dictionnaire :
 
-``` py
->>> capitale.items()
-dict_items([('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')])
-```
+    ``` py
+    >>> capitale.items()
+    dict_items([('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')])
+    ```
 
-:warning: Les objets renvoyés par ces trois méthodes sont de types Python un peu particuliers : `dict_keys`, `dict_values` et `dict_items`. Pour les utiliser, il faut souvent les transformer en tableaux avec la fonction `list()` :
+    :warning: Les objets renvoyés par ces trois méthodes sont de types Python un peu particuliers : `dict_keys`, `dict_values` et `dict_items`. Pour les utiliser, il faut souvent les transformer en tableaux avec la fonction `list()` :
 
-``` py
->>> list(capitale.values())
-['Berlin', 'Paris', 'Rome']
->>> list(capitale.items())
-[('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')]
-```
+    ``` py
+    >>> list(capitale.values())
+    ['Berlin', 'Paris', 'Rome']
+    >>> list(capitale.items())
+    [('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')]
+    ```
 
-Comme pour les tableaux, il est possible de modifier une valeur dans un dictionnaire (mais à la différence des tableaux, la valeur est identifiée par sa clé, pas par sa position dans le tableau) : 
+-   Il est possible de modifier la valeur associée à une clé  : 
 
-``` py
-population["Allemagne"] = 83
->>> population
-{'France': 66, 'Allemagne': 83}
-```
+    ``` py
+    capitale["Italie"] = "Roma"
+    ```
 
-et si la clé associée à une valeur n'existe pas, alors elle est créée : 
-``` py 
->>> population["Italie"] = 59
->>> population
-{'France': 66, 'Allemagne': 83, 'Italie': 59}
-```
 
-Comme pour les tableaux, on peut utiliser les méthodes `pop()` et `clear()` (mais pas `remove()`) :
+-   Les méthodes `pop()` et `clear()` permettent de supprimer des éléments d'un dictionnaire (pas de méthode `remove()`).
 
-||||
-|:-:|:--|:--|
-|`dico.pop(clé)`|Supprime du dictionnaire `dico` le couple clé-valeur associé à `clé` et le renvoie la valeur|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.pop('two')`<br>`2`<br>`>>> d`<br>`{'one': 1, 'three': 3}`|
-|`dico.clear()`|Supprime tous les éléments du dictionnaire `dico`|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.clear()`<br>`>>> d`<br>`{}`|
+    ||||
+    |:-:|:--|:--|
+    |`dico.pop(clé)`|Supprime du dictionnaire `dico` le couple clé-valeur associé à `clé` et le renvoie la valeur|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.pop('two')`<br>`2`<br>`>>> d`<br>`{'one': 1, 'three': 3}`|
+    |`dico.clear()`|Supprime tous les éléments du dictionnaire `dico`|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.clear()`<br>`>>> d`<br>`{}`|
 
-et comme pour les tableaux, le mot clé `del` permet de supprimer un élément d'un dictionnaire :
+-   Ainsi que le mot clé `del`.
 
-``` py
->>> population
-{'France': 66, 'Allemagne': 83, 'Italie': 59}
->>> del population["Allemagne"]
->>> population
-{'France': 66, 'Italie': 59}
-```
+    ``` py
+    >>> capitale
+    {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Roma'}
+    >>> del capitale["Italie"]
+    >>> capitale
+    {'Allemagne': 'Berlin', 'France': 'Paris'}
+    ```
 
-Ou encore le dictionnaire entier avec l'instruction `del population`, alors la variable `population` n'existe plus.
+-   Ou encore le dictionnaire entier avec l'instruction `del capitale`, alors la variable `capitale` n'existe plus.
 
-Les dictionnaires, comme les tableaux, sont muables donc les mêmes limites que pour copier un tableau ou passer un tableau en argument d'une fonction s'appliquent pour les dictionnaires.
 
-``` py
->>> d1 = {'one':1, 'two':2, 'three':3}
->>> d2 = d1
->>> d2['three'] = 4
->>> d1 
-{'one':1, 'two':2, 'three':4}
-```
-Comme avec les tableaux, `d1` a aussi été modifiée quand on a modifié `d2` ! Les deux variables `d1` et `d2` sont en fait deux noms qui font référence vers le même objet. Pour remédier à ce problème, il faut utiliser aussi la fonction `dict()` qui renvoie un nouveau dictionnaire :
+Rappelons d'autres particularités vues en classe de première :
+-   Un dictionnaire peut être créé par compréhension.
 
-``` py
->>> d1 = {'one':1, 'two':2, 'three':3}
->>> d2 = dict(d1)
->>> d2['three'] = 4
->>> d1 
-{'one':1, 'two':2, 'three':3}
->>> d2 
-{'one':1, 'two':2, 'three':4}
-```
+    ``` py
+    >>> carres = {x:x**2 for x in range(10)}
+    >>> carres
+    {0: 0, 1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64, 9: 81} 
+    ```
 
-Ou encore utiliser la méthode `.copy()` :
 
-``` py
->>> d1 = {'one':1, 'two':2, 'three':3}
->>> d2 = d1.copy()
-```
+- Les dictionnaires, comme les tableaux, sont muables donc les mêmes limites que pour copier un tableau ou passer un tableau en argument d'une fonction s'appliquent pour les dictionnaires.
 
-:warning: Attention, si le dictionnaire contient des tableaux, on est dans le même cas que les tableaux de tableaux et les deux méthodes ci-dessus ne fonctionnent plus, il faut à nouveau utiliser `deepcopy`.
+    ``` py
+    >>> d1 = {'one':1, 'two':2, 'three':3}
+    >>> d2 = d1
+    >>> d2['three'] = 4
+    >>> d1 
+    {'one':1, 'two':2, 'three':4}
+    ```
+    `d1` a aussi été modifiée quand on a modifié `d2` ! Les deux variables `d1` et `d2` sont en fait deux noms qui font référence vers le même objet. Pour remédier à ce problème, il faut utiliser aussi la fonction `dict()` qui renvoie un nouveau dictionnaire :
 
-:warning: Attention aussi aux dictionnaires passés en paramètre de fonction :
+    ``` py
+    >>> d1 = {'one':1, 'two':2, 'three':3}
+    >>> d2 = dict(d1)
+    >>> d2['three'] = 4
+    >>> d1 
+    {'one':1, 'two':2, 'three':3}
+    >>> d2 
+    {'one':1, 'two':2, 'three':4}
+    ```
 
-``` py
-def test(var):
-    print("Adresse de la variable passée en argument: ", hex(id(var))  )
-    var['3'] = 3
-    print("Adresse de la variable une fois modifiée: ", hex(id(var)))
+    Ou encore utiliser la méthode `.copy()` :
 
-dico = {'1': 1, '2':2}
-print("Adresse de la variable dictionnaire: ", hex(id(dico)) )
-test(dico)
-print("dictionnaire=", dico)
-```
+    ``` py
+    >>> d1 = {'one':1, 'two':2, 'three':3}
+    >>> d2 = d1.copy()
+    ```
+
+    :warning: Attention, si le dictionnaire contient des tableaux, on est dans le même cas que les tableaux de tableaux et les deux méthodes ci-dessus ne fonctionnent plus, il faut à nouveau utiliser `deepcopy`.
+
+    :warning: Attention aussi aux dictionnaires passés en paramètre de fonction :
+
+    ``` py
+    def test(var):
+        print("Adresse de la variable passée en argument: ", hex(id(var))  )
+        var['3'] = 3
+        print("Adresse de la variable une fois modifiée: ", hex(id(var)))
+
+    dico = {'1': 1, '2':2}
+    print("Adresse de la variable dictionnaire: ", hex(id(dico)) )
+    test(dico)
+    print("dictionnaire=", dico)
+    ```
 
 ###	Avec un tableau et une fonction de hachage
 
