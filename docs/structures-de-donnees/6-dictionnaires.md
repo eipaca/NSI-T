@@ -26,6 +26,7 @@ Les principales primitives constituant l'interface d'un dictionnaire sont :
 Prenons l'exemple d'une situation dans laquelle il est nécessaire de stocker des informations concernant les pays du monde : la capitale, la superficie, le nombre d'habitant, etc. Ni les listes chaînées, ni les tableaux, ne semblent offrir une solution efficace pour manipuler ces données :
 
 - Les pays ne sont pas classés dans un ordre particulier, un tableau ne permettrait donc pas d'accéder facilement aux informations concernant un pays identifié par son nom.
+
 - Une liste chaînée aurait l'inconvénient de devoir parcourir toute la liste pour accéder aux informations concernant un pays donné.
 
 Dans ce cas, un dictionnaire est la structure de donnée la mieux adaptée à cette situation.
@@ -92,7 +93,7 @@ La méthode `get()` permet aussi de récupérer une valeur associée à une clé
 >>> capitale.get('France')
 'Paris'
 >>> capitale.get(0)
->>> capitale.get('Madrid', 'Non défini')
+>>> capitale.get('Espagne', 'Non défini')
 Non défini
 ```
 
@@ -119,9 +120,10 @@ De la même façon, `for` permet d'itérer sur les clés d'un dictionnaire :
 Allemagne Berlin
 France Paris
 Italie Rome
-```[6.1]
+```
+[^6.1]
 
-[6.1]: Il est aussi possible d'utiliser la méthode `items()` et d'écrire : : `>>> for cle, val in 'capitale.items():
+[^6.1]: Il est aussi possible d'utiliser la méthode `items()` et d'écrire : : `>>> for cle, val in 'capitale.items():
 
 
 Les méthodes `.keys()` et `.values()` renvoient les clés et les valeurs d'un dictionnaire :
@@ -139,7 +141,7 @@ et la méthode `.items()` renvoie tous les couples de clé-valeur d'un dictionna
 dict_items([('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')])
 ```
 
-:warning: Les objets renvoyés par ces trois méthodes sont de types Python un peu particulier : `dict_keys`, `dict_values` et `dict_items`. Pour les utiliser, il faut souvent les transformer en tableaux avec la fonction `list()` :
+:warning: Les objets renvoyés par ces trois méthodes sont de types Python un peu particuliers : `dict_keys`, `dict_values` et `dict_items`. Pour les utiliser, il faut souvent les transformer en tableaux avec la fonction `list()` :
 
 ``` py
 >>> list(capitale.values())
@@ -170,7 +172,7 @@ Comme pour les tableaux, on peut utiliser les méthodes `pop()` et `clear()` (ma
 |`dico.pop(clé)`|Supprime du dictionnaire `dico` le couple clé-valeur associé à `clé` et le renvoie la valeur|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.pop('two')`<br>`2`<br>`>>> d`<br>`{'one': 1, 'three': 3}`|
 |`dico.clear()`|Supprime tous les éléments du dictionnaire `dico`|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.clear()`<br>`>>> d`<br>`{}`|
 
-et comme pour les tableaux, le mot clé “del” permet de supprimer un élément d'un dictionnaire :
+et comme pour les tableaux, le mot clé `del` permet de supprimer un élément d'un dictionnaire :
 
 ``` py
 >>> population
@@ -241,11 +243,18 @@ class dico:
 
 !!! abstract "Cours"
 
-    Une fonction de hachage transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en un nombre, appelé valeur de hachage ou *hash* en anglais.
+    Une fonction de hachage est un algorithme mathématique qui transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en une chaîne alphanumérique, appelée valeur de hachage ou *hash* en anglais. L'opération inverse qui permet de retrouver la valeur initiale à partir de la valeur de hachage est en principe difficile à réaliser.
 
-Il existe des méthodes mathématiques complexes[6.2] pour définir des fonctions de hachage efficaces. Pour notre exemple, nous utilisons une fonction très simple qui additionne les valeurs Unicode de chaque lettre, le tout modulo 100 :
+Il existe des méthodes mathématiques complexes[^6.2] pour définir des fonctions de hachage efficaces. Pour notre exemple, nous utilisons une fonction très simple qui additionne les valeurs Unicode de chaque lettre, le tout modulo 100 :
 
-[6.2]: Message Digest 5 (MD5) et  Secure Hash Algorithm (SHA1) sont les deux algorithmes de hachage les plus utilisés au monde.
+[^6.2]: 
+    Il existe de nombreux algorithme de hachage : 
+
+    -	MD5 : un des premiers algorithmes de hachage, il est aujourd’hui considéré comme peu sûr.
+    -	SHA-1  (SHA est l’acronyme de Secure Hashing Algorithm) : il n’est plus recommandé pour le stockage sécurisé des mots de passe car il est sujet à des attaques.
+    -	SHA-2 : une famille d’algorithmes de hachage, comprenant SHA-256 et SHA-512. Plus sécurisé que SHA-1, il est aussi très utilisé en cryptographie, par exemple, le Bitcoin utilise SHA-256.
+    -	NTLM : utilisé dans les environnements Microsoft Windows.
+
 
 ``` py
 def hachage(chaine):
