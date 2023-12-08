@@ -78,7 +78,7 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     ```
     Dans ce cas, l'interpréteur renvoie un message d'erreur car la clé `0` n'existe pas dans le dictionnaire `capitale`. 
 
--   La méthode `get()` permet aussi de récupérer une valeur associée à une clé sans lever d'erreur si la clé n'existe pas.
+-   La méthode `.get()` permet aussi de récupérer une valeur associée à une clé sans lever d'erreur si la clé n'existe pas.
 
     ``` py
     >>> capitale.get('France')
@@ -141,14 +141,14 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     [('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')]
     ```
 
--   Il est possible de modifier la valeur associée à une clé  : 
+-   Il est possible de modifier la valeur associée à une clé existante (mais si la clé n'existe pas elle est créée) : 
 
     ``` py
     capitale["Italie"] = "Roma"
     ```
 
 
--   La méthode `.pop(clé)` et l'instruction `del` permettent de supprimer une entrée.
+-   La méthode `.pop(clé)` ou l'instruction `del` permettent de supprimer une entrée :
     
     ``` py
     >>> capitale
