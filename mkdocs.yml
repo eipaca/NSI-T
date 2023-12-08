@@ -67,7 +67,24 @@ theme:
       example: octicons/beaker-16
       quote: octicons/quote-16
 
-
+plugins:
+  # An Mkdocs plugin to generate a PDF file for each MkDocs
+  # https://github.com/brospars/mkdocs-page-pdf
+  - page-to-pdf:
+      disableOnServe: true
+      displayHeaderFooter: true
+      printBackground: true
+      scale: 1.0
+      headerTemplate: '<header style="width:100%;font-size:10px;font-weight:600;color:white;background:#4051b5;margin-top:-20px;padding:10px;-webkit-print-color-adjust: exact">
+                        <span style="display:inline-block;vertical-align:middle;margin-top:-4px;margin-left:40px;">Cours de Terminale NSI</span>
+                     </header>'
+      footerTemplate: '<footer style="position:relative;width:100%;font-size:6px;color:#999999;margin:10px 20px 0px 50px;-webkit-print-color-adjust: exact">
+                        <span> 
+                        Ecole Internationale PACA | CC-BY-NC-SA 4.0</span>
+                        <span class="page" style="position:absolute;bottom:0;right:0;">
+                          <span class="pageNumber"></span>/<span class="totalPages"></span>
+                        </span>
+                      </footer>'
 
 
 extra_css:
