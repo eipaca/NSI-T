@@ -213,10 +213,10 @@ Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire par
 		var['3'] = 3
 		print("Adresse de la variable une fois modifiée: ", hex(id(var)))
 
-	dico = {'1': 1, '2':2}
-	print("Adresse de la variable dictionnaire: ", hex(id(dico)) )
-	test(dico)
-	print("dictionnaire=", dico)
+	d = {'1': 1, '2':2}
+	print("Adresse de la variable dictionnaire: ", hex(id(d)) )
+	test(d)
+	print("dictionnaire=", d)
 	```
 
 ###	Avec un tableau et une fonction de hachage
