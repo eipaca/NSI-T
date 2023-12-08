@@ -7,7 +7,7 @@
     ![Animation sur enfiler et défiler un élement dans une file](assets/5-enfiler-defiler-dark-mode.gif#only-dark){width="45%" align=right}
 
 
-    En informatique, une **file** (en anglais ***queue***) est un type abstrait de données sur le principe « dernier arrivé, premier sorti » (ou **FIFO** pour ***First In, First Out***).
+    En informatique, une **file** (en anglais ***queue***) est un type abstrait de données sur le principe « premier arrivé, premier sorti » (ou **FIFO** pour ***First In, First Out***).
 
     Le premier élément ajouté à la file, ou **enfilé**, est le premier qui sera sorti, ou **défilé**.
 
@@ -31,8 +31,8 @@ Les principales primitives constituant l'interface d'une file sont :
 
 - `creer() → file` : construire d'une file vide.
 - `est_vide() → bool` : vérifier si une file est vide ou non.
-- `enfiler(element)` : ajouter un élément sur la file (*enqueue* en anglais).
-- `défiler() → element` : enlèver un élément de la file et le renvoier (*dequeue* en anglais).
+- `enfiler(element)` : ajouter un élément dans la file (*enqueue* en anglais).
+- `défiler() → element` : enlèver un élément de la file et le renvoyer (*dequeue* en anglais).
 - `taille() → int` : renvoyer le nombre d'éléments dans la file.
 
 Exemples :
@@ -41,7 +41,7 @@ Soit une file `F` composée des éléments suivants : 12, 14, 8, 7, 19 et 22 (le
 
 -	`enfiler(F,42)` la file `F` est maintenant composée des éléments suivants : 42, 12, 14, 8, 7, 19 et 22 (le premier élément rentré dans la file est 22 ; le dernier élément rentré dans la file est 42)
 
--	`défiler(F)` la file F est maintenant composée des éléments suivants : 12, 14, 8, 7, et 19 (le premier élément rentré dans la file est 19 ; le dernier élément rentré dans la file est 12)
+-	`défiler(F)` la file `F` est maintenant composée des éléments suivants : 12, 14, 8, 7, et 19 (le premier élément rentré dans la file est 19 ; le dernier élément rentré dans la file est 12)
 
 -	après `défiler(F)` 6 fois de suite, `est_vide(F)` renvoie vrai.
 
@@ -115,7 +115,7 @@ Transcrivons cela en Python en créant un nouveau fichier « file.py » dans le 
 import pile
 ```
 
-Il est maintenant possible d'instancier des objets de al classe `Cellule` ou `Pile` et d'utiliser les méthodes associées :
+Il est maintenant possible d'instancier des objets de la classe `Cellule` ou `Pile` et d'utiliser les méthodes associées :
 
 ``` py
 c = pile.Cellule('a', None)
