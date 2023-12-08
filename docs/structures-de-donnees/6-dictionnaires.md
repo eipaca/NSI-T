@@ -258,12 +258,12 @@ def hachage(chaine):
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-light-mode.png#only-light){width="28%" align="right"}
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-dark-mode.png#only-dark){width="28%" align="right"}
 
-Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de la France sera stockée dans le tableau à la position d'indice 91, la capitale de l'Allemagne à l'indice 2, etc. :
+Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de "France" sera stockée dans le tableau à la position d'indice 91, la capitale d'"Allemagne" à l'indice 2, etc. :
 
 ``` py
->>> hachage('France')
+>>> hachage("France")
 91
->>> hachage('Allemagne')
+>>> hachage("Allemagne")
 2
 ```
 
