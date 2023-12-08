@@ -173,9 +173,9 @@ Autre particularité vue en classe de première, un dictionnaire peut être cré
     ```
 
 
-Enfin, les dictionnaires sont de types muables :warning:, il faut donc fair particulièrment attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.3].
+Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire particulièrment attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.2].
 
-[^6.3]:	
+[^6.2]:	
 	:warning: Attention au signe `=` pour copier un dictionnaire :
 	``` py
 	>>> d1 = {'one':1, 'two':2, 'three':3}
