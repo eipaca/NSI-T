@@ -6,7 +6,7 @@
     Un dictionnaire est un type abstrait de données formé de couples **clé-valeur**. Chaque couple est une **entrée** du dictionnaire.
     Un dictionnaire n'a **pas d'ordre**, on accède à **chaque valeur par sa clé**. 
 
-La clé d'un dictionnaire peut être un mot (de type `str`), un nombre (de type `int` ou `float`), un p-uplet, etc., mais pas un tableau (type `list`) car c'est un type muable.
+La clé d'un dictionnaire peut être un mot (de type `str`), un nombre (de type `int` ou `float`), un p-uplet, etc., mais pas un tableau (type `list`) ou un autre dictionnaire car ce sont des types muables.
 
 ##	Interface
 
@@ -17,7 +17,7 @@ Les principales primitives constituant l'interface d'un dictionnaire sont :
 - `ajouter(clé, valeur)` : ajouter un couple clé-valeur.
 - `supprimer(clé) → valeur` : supprimer une entrée associée à une clé.
 - `lire(clé) → valeur` : Lire la valeur associée à une clé.
-- `taille() → int` : renvoyer le nombre d'éléments dans un dictionnaire.
+- `taille() → int` : renvoyer le nombre d'entrées dans un dictionnaire.
 
 
 
@@ -55,13 +55,13 @@ True
 
 Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons quelques caractéristiques vues en classe de première : 
 
--   Un dictionnaire peut être créer avec plusieurs éléments de clés-valeurs (*key-value* en anglais) séparés par des virgules, et le tout encadré par des accolades “{ }”.
+-   Un dictionnaire peut être créer avec plusieurs couples de clés-valeurs (*key-value* en anglais) séparés par des virgules, et le tout encadré par des accolades “{ }”.
 
     ``` py
     >>> capitale = {'France': 'Paris', 'Allemagne': 'Berlin', 'Italie': 'Rome'}
     ```
 
--   Les éléments sont affichés sans ordre particulier.
+-   Les entrées sont affichées sans ordre particulier.
     ``` py
     >>> capitale
     {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
@@ -148,28 +148,23 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     ```
 
 
--   Les méthodes `pop()` et `clear()` permettent de supprimer des éléments d'un dictionnaire (pas de méthode `remove()`).
-
-    ||||
-    |:-:|:--|:--|
-    |`dico.pop(clé)`|Supprime du dictionnaire `dico` le couple clé-valeur associé à `clé` et le renvoie la valeur|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.pop('two')`<br>`2`<br>`>>> d`<br>`{'one': 1, 'three': 3}`|
-    |`dico.clear()`|Supprime tous les éléments du dictionnaire `dico`|`>>> d = {'one': 1, 'two': 2, 'three': 3}`<br>`>>> d.clear()`<br>`>>> d`<br>`{}`|
-
--   Ainsi que le mot clé `del`.
-
+-   La méthode `.pop(clé)` et l'instruction `del` permettent de supprimer une entrée.
+    
     ``` py
     >>> capitale
     {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Roma'}
-    >>> del capitale["Italie"]
-    >>> capitale
+	>>> capitale.pop("Italie")
+	>>> capitale
     {'Allemagne': 'Berlin', 'France': 'Paris'}
+    >>> del capitale["France"]
+    >>> capitale
+    {'Allemagne': 'Berlin'}
     ```
 
--   Ou encore le dictionnaire entier avec l'instruction `del capitale`, alors la variable `capitale` n'existe plus.
+	Ou encore le dictionnaire entier avec l'instruction `del capitale`, alors la variable `capitale` n'existe plus.
 
 
-Rappelons d'autres particularités vues en classe de première :
--   Un dictionnaire peut être créé par compréhension.
+Autre particularité vue en classe de première, un dictionnaire peut être créé par compréhension :
 
     ``` py
     >>> carres = {x:x**2 for x in range(10)}
@@ -178,49 +173,51 @@ Rappelons d'autres particularités vues en classe de première :
     ```
 
 
-- Les dictionnaires, comme les tableaux, sont muables donc les mêmes limites que pour copier un tableau ou passer un tableau en argument d'une fonction s'appliquent pour les dictionnaires.
+Enfin, les dictionnaires sont de types muables :warning:, il faut donc fair particulièrment attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.3].
 
-    ``` py
-    >>> d1 = {'one':1, 'two':2, 'three':3}
-    >>> d2 = d1
-    >>> d2['three'] = 4
-    >>> d1 
-    {'one':1, 'two':2, 'three':4}
-    ```
-    `d1` a aussi été modifiée quand on a modifié `d2` ! Les deux variables `d1` et `d2` sont en fait deux noms qui font référence vers le même objet. Pour remédier à ce problème, il faut utiliser aussi la fonction `dict()` qui renvoie un nouveau dictionnaire :
+[^6.3]:	
+	:warning: Attention au signe `=` pour copier un dictionnaire :
+	``` py
+	>>> d1 = {'one':1, 'two':2, 'three':3}
+	>>> d2 = d1
+	>>> d2['three'] = 4
+	>>> d1 
+	{'one':1, 'two':2, 'three':4}
+	```
+	`d1` a aussi été modifiée quand on a modifié `d2` ! Les deux variables `d1` et `d2` sont en fait deux noms qui font référence vers le même objet. Pour remédier à ce problème, il faut utiliser aussi la fonction `dict()` qui renvoie un nouveau dictionnaire :
 
-    ``` py
-    >>> d1 = {'one':1, 'two':2, 'three':3}
-    >>> d2 = dict(d1)
-    >>> d2['three'] = 4
-    >>> d1 
-    {'one':1, 'two':2, 'three':3}
-    >>> d2 
-    {'one':1, 'two':2, 'three':4}
-    ```
+	``` py
+	>>> d1 = {'one':1, 'two':2, 'three':3}
+	>>> d2 = dict(d1)
+	>>> d2['three'] = 4
+	>>> d1 
+	{'one':1, 'two':2, 'three':3}
+	>>> d2 
+	{'one':1, 'two':2, 'three':4}
+	```
 
-    Ou encore utiliser la méthode `.copy()` :
+	Ou encore utiliser la méthode `.copy()` :
 
-    ``` py
-    >>> d1 = {'one':1, 'two':2, 'three':3}
-    >>> d2 = d1.copy()
-    ```
+	``` py
+	>>> d1 = {'one':1, 'two':2, 'three':3}
+	>>> d2 = d1.copy()
+	```
 
-    :warning: Attention, si le dictionnaire contient des tableaux, on est dans le même cas que les tableaux de tableaux et les deux méthodes ci-dessus ne fonctionnent plus, il faut à nouveau utiliser `deepcopy`.
+	Note: Si le dictionnaire contient des tableaux, les deux méthodes ci-dessus ne fonctionnent plus, il faut utiliser `deepcopy`.
 
-    :warning: Attention aussi aux dictionnaires passés en paramètre de fonction :
+	:warning: Attention aussi aux dictionnaires passés en paramètre de fonction :
 
-    ``` py
-    def test(var):
-        print("Adresse de la variable passée en argument: ", hex(id(var))  )
-        var['3'] = 3
-        print("Adresse de la variable une fois modifiée: ", hex(id(var)))
+	``` py
+	def test(var):
+		print("Adresse de la variable passée en argument: ", hex(id(var))  )
+		var['3'] = 3
+		print("Adresse de la variable une fois modifiée: ", hex(id(var)))
 
-    dico = {'1': 1, '2':2}
-    print("Adresse de la variable dictionnaire: ", hex(id(dico)) )
-    test(dico)
-    print("dictionnaire=", dico)
-    ```
+	dico = {'1': 1, '2':2}
+	print("Adresse de la variable dictionnaire: ", hex(id(dico)) )
+	test(dico)
+	print("dictionnaire=", dico)
+	```
 
 ###	Avec un tableau et une fonction de hachage
 
@@ -239,9 +236,9 @@ class dico:
 
     Une fonction de hachage est un algorithme mathématique qui transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en une chaîne alphanumérique, appelée valeur de hachage ou *hash* en anglais. L'opération inverse qui permet de retrouver la valeur initiale à partir de la valeur de hachage est en principe difficile à réaliser.
 
-Il existe des méthodes mathématiques complexes[^6.2] pour définir des fonctions de hachage efficaces. Pour notre exemple, nous utilisons une fonction très simple qui additionne les valeurs Unicode de chaque lettre, le tout modulo 100 :
+Il existe des méthodes mathématiques complexes[^6.3] pour définir des fonctions de hachage efficaces. Pour notre exemple, nous utilisons une fonction très simple qui additionne les valeurs Unicode de chaque lettre, le tout modulo 100 :
 
-[^6.2]: 
+[^6.3]: 
     Il existe de nombreux algorithme de hachage : 
 
     -	MD5 : un des premiers algorithmes de hachage, il est aujourd’hui considéré comme peu sûr.
