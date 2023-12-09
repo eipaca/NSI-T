@@ -3,10 +3,10 @@
 
 !!! abstract "Cours"
     
-    Un dictionnaire est un type abstrait de données formé de couples **clé-valeur**. Chaque couple est une **entrée** du dictionnaire.
+    Un dictionnaire est un type abstrait de données formé de couples **clé-valeur** (*key-value* en anglais). Chaque couple est une **entrée** du dictionnaire.
     Un dictionnaire n'a **pas d'ordre**, on accède à **chaque valeur par sa clé**. 
 
-La clé d'un dictionnaire peut être un mot (de type `str`), un nombre (de type `int` ou `float`), un p-uplet, etc., mais pas un tableau (type `list`) ou un autre dictionnaire car ce sont des types muables.
+La clé d'un dictionnaire peut être un mot (de type `str`), un nombre (de type `int` ou `float`), un p-uplet, etc., mais pas un tableau (type `list`) ni un autre dictionnaire car ce sont des types muables.
 
 ##	Interface
 
@@ -15,23 +15,23 @@ Les principales primitives constituant l'interface d'un dictionnaire sont :
 - `creer() → dict` : construire d'un dictionnaire vide.
 - `est_vide() → bool` : vérifier si un dictionnaire est vide ou non.
 - `ajouter(clé, valeur)` : ajouter un couple clé-valeur.
-- `supprimer(clé) → valeur` : supprimer une entrée associée à une clé.
-- `lire(clé) → valeur` : Lire la valeur associée à une clé.
+- `supprimer(clé) → valeur` : supprimer une entrée identifiée par sa clé.
+- `lire(clé) → valeur` : lire la valeur associée à une clé.
 - `taille() → int` : renvoyer le nombre d'entrées dans un dictionnaire.
 
 
 
 ##	Implémentation
 
-Prenons l'exemple d'une situation dans laquelle il est nécessaire de stocker les capitales des pays du monde. Ni les listes chaînées, ni les tableaux, ne semblent offrir une solution efficace pour manipuler ces données :
+Prenons pour exemple de vouloir stocker les capitales de pays. Ni les listes chaînées, ni les tableaux, ne semblent offrir une solution efficace pour manipuler ces données :
 
-- Les pays ne sont pas classés dans un ordre particulier, un tableau ne permettrait donc pas d'accéder facilement aux informations concernant un pays identifié par son nom.
+- Les pays ne sont pas classés dans un ordre particulier, un tableau ne permettrait donc pas d'accéder facilement à la capitale d'un pays donné.
 
-- Une liste chaînée aurait l'inconvénient de devoir parcourir toute la liste pour accéder aux informations concernant un pays donné.
+- Une liste chaînée aurait l'inconvénient de devoir parcourir toute la liste pour accéder à la capitale d'un pays donné.
 
-Dans ce cas, un dictionnaire est la structure de donnée la mieux adaptée à cette situation.
+Dans ce cas, un dictionnaire est la structure de donnée la mieux adaptée.
 
-Plusieurs implémentations de dictionnaires sont possibles, par exemple en utilisant une fonction de hachage. Python possède naturellement cette structure avec le type `dict`, mais ce  n'est pas le cas dans tous les langages.  
+Python possède naturellement une structure de dictionnaire (le type `dict`), mais ce  n'est pas le cas dans tous les langages. Dans ce cas, plusieurs implémentations sont possibles, par exemple en utilisant une fonction de hachage. 
 
 
 ###	Avec le type `dict` de Python
@@ -53,9 +53,9 @@ True
 'Rome'
 ```
 
-Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons quelques caractéristiques vues en classe de première : 
+Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons en quelques unes déja vues en classe de première : 
 
--   Un dictionnaire peut être créer avec plusieurs couples de clés-valeurs (*key-value* en anglais) séparés par des virgules, et le tout encadré par des accolades “{ }”.
+-   Un dictionnaire peut être créé avec plusieurs couples de clés-valeurs séparés par des virgules, le tout encadré par des accolades “{ }”.
 
     ``` py
     >>> capitale = {'France': 'Paris', 'Allemagne': 'Berlin', 'Italie': 'Rome'}
@@ -67,7 +67,7 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
     ```
 
--   On accède à une valeur d'un dictionnaire ***uniquement par sa clé, mais pas par sa position**, les valeurs d'un dictionnaire n'ont pas de position :
+-   On accède à une valeur d'un dictionnaire **uniquement par sa clé, mais pas par sa position**, les valeurs d'un dictionnaire n'ont pas de position :
 
     ``` py
     >>> capitale[0]
@@ -97,6 +97,7 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     False
     ```
     :warning: Les mot clé `in` s'applique seulement aux clés d'un dictionnaire, pas à ses valeurs :
+
     ``` py
     >>> "Paris" in capitale
     False
@@ -106,11 +107,11 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
 
     ``` py
     >>> for cle in capitale:
-    ...     print(cle, capitale[cle])
+    ...     print(capitale[cle], 'est en', cle)
     ...
-    Allemagne Berlin
-    France Paris
-    Italie Rome
+    Berlin est en Allemagne
+    PAris est en France
+    Rome est en Italie
     ```
     [^6.1]
 
@@ -141,7 +142,7 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     [('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')]
     ```
 
--   Il est possible de modifier la valeur associée à une clé existante (mais si la clé n'existe pas elle est créée) : 
+-   Il est possible de modifier la valeur associée à une clé existante (et si la clé n'existe pas elle est créée) : 
 
     ``` py
     capitale["Italie"] = "Roma"
@@ -161,10 +162,10 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons qu
     {'Allemagne': 'Berlin'}
     ```
 
-	Ou encore le dictionnaire entier avec l'instruction `del capitale`, alors la variable `capitale` n'existe plus.
+	Ou encore le dictionnaire entier avec l'instruction `del capitale`, dans ce cas la variable `capitale` n'existe plus.
 
 
-Autre particularité vue en classe de première, un dictionnaire peut être créé par compréhension :
+-   Autre particularité vue en classe de première, un dictionnaire peut être créé par compréhension :
 
     ``` py
     >>> carres = {x:x**2 for x in range(10)}
@@ -173,7 +174,7 @@ Autre particularité vue en classe de première, un dictionnaire peut être cré
     ```
 
 
-Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire particulièrment attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.2].
+-    Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire particulièrment attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.2].
 
 [^6.2]:	
 	:warning: Attention au signe `=` pour copier un dictionnaire :
@@ -222,9 +223,9 @@ Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire par
 ###	Avec un tableau et une fonction de hachage
 
 
-Commençons par créer une classe `dico`, stockant les valeurs d'un dictionnaire dans un tableau de 100 valeurs :
+Commençons par créer une classe `Dico`, stockant les valeurs d'un dictionnaire dans un tableau de 100 valeurs :
 ``` py
-class dico:
+class Dico:
 
     def __init__(self):
         self.t = [None] * 100
@@ -234,7 +235,9 @@ class dico:
 
 !!! abstract "Cours"
 
-    Une fonction de hachage est un algorithme mathématique qui transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en une chaîne alphanumérique, appelée valeur de hachage ou *hash* en anglais. L'opération inverse qui permet de retrouver la valeur initiale à partir de la valeur de hachage est en principe difficile à réaliser.
+    Une fonction de hachage est un algorithme mathématique qui transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en une chaîne alphanumérique, appelée valeur de hachage ou *hash* en anglais. 
+    
+    L'opération inverse qui permet de retrouver la valeur initiale à partir de la valeur de hachage est en principe difficile à réaliser.
 
 Il existe des méthodes mathématiques complexes[^6.3] pour définir des fonctions de hachage efficaces. Pour notre exemple, nous utilisons une fonction très simple qui additionne les valeurs Unicode de chaque lettre, le tout modulo 100 :
 
@@ -258,7 +261,7 @@ def hachage(chaine):
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-light-mode.png#only-light){width="28%" align="right"}
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-dark-mode.png#only-dark){width="28%" align="right"}
 
-Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de "France" sera stockée dans le tableau à la position d'indice 91, la capitale d'"Allemagne" à l'indice 2, etc. :
+Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de `"France"` sera stockée dans le tableau à la position d'indice 91, la capitale d'`"Allemagne"` à l'indice 2, etc. :
 
 ``` py
 >>> hachage("France")
@@ -267,11 +270,12 @@ Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. 
 2
 ```
 
+Note: Il est très difficile de retrouver, à partir d'un valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `"France"` .
 
 
-Ajoutons les primitives d'un dictionnaire à la classe `dico` :
+Ajoutons les primitives d'un dictionnaire à la classe `Dico` :
 ``` py
-class dico:
+class Dico:
 
     def __init__(self):
         self.t = [None] * 100
@@ -297,8 +301,9 @@ class dico:
 
 ```
 et créons le dictionnaire des capitales :
+
 ``` py
-capitale = dico()
+capitale = Dico()
 capitale.ajouter('France', 'Paris')
 capitale.ajouter('Allemagne', 'Berlin')
 print(capitale.lire('France'))
