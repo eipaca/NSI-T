@@ -261,7 +261,7 @@ def hachage(chaine):
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-light-mode.png#only-light){width="28%" align="right"}
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-dark-mode.png#only-dark){width="28%" align="right"}
 
-Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de `"France"` sera stockée dans le tableau à la position d'indice 91, la capitale d'`"Allemagne"` à l'indice 2, etc. :
+Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de la France sera stockée dans le tableau à la position d'indice 91, la capitale de l'Allemagne à l'indice 2, etc. :
 
 ``` py
 >>> hachage("France")
@@ -270,7 +270,7 @@ Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. 
 2
 ```
 
-Note: Il est très difficile de retrouver, à partir d'un valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `"Allemagne"` .
+Note: Il est très difficile de retrouver, à partir d'une valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `"Allemagne"` .
 
 
 Ajoutons les primitives d'un dictionnaire à la classe `Dico` :
@@ -303,13 +303,16 @@ class Dico:
 et créons le dictionnaire des capitales :
 
 ``` py
-capitale = Dico()
-capitale.ajouter('France', 'Paris')
-capitale.ajouter('Allemagne', 'Berlin')
-print(capitale.lire('France'))
+>>> capitale = Dico()
+>>> capitale.ajouter('France', 'Paris')
+>>> capitale.ajouter('Allemagne', 'Berlin')
+>>> capitale.ajouter('Italie', 'Rome')
+>>> capitale.lire('France')
+Paris
 ```
 
-Il y a une « collision » quand la fonction de hachage n'est pas assez performante, comme ici, et renvoie le même hash pour deux clés différentes :
+
+Il y a une « collision » quand la fonction de hachage n'est pas assez performante, comme ici, et renvoie la même valeur de hachage pour deux clés différentes :
 
 ``` py
 >>> hachage("Danemark")
@@ -318,6 +321,5 @@ Il y a une « collision » quand la fonction de hachage n'est pas assez performa
 3
 ```
 
-Dans ce cas il faut penser à gérer la collision, par exemple l'indice correspondant à plusieurs clés peut pointer vers une liste chaînée contenant toutes les clés-valeurs partageant ce même indice.
-
+Dans ce cas, l'implémentation du dictionnaire doit permettre de gérer la collision, par exemple en faisant pointer l'indice correspondant à plusieurs clés vers une liste chaînée contenant toutes les clés-valeurs partageant ce même indice.
 
