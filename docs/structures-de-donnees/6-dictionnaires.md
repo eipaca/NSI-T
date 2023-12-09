@@ -23,20 +23,20 @@ Les principales primitives constituant l'interface d'un dictionnaire sont :
 
 ##	Implémentation
 
-Prenons pour exemple de vouloir stocker les capitales de pays. Ni les listes chaînées, ni les tableaux, ne semblent offrir une solution efficace pour manipuler ces données :
+Prenons pour exemple de vouloir stocker les capitales de plusieurs pays dans une structure de données. Ni les tableaux, ni les listes chaînées ne semblent offrir une solution efficace  :
 
-- Les pays ne sont pas classés dans un ordre particulier, un tableau ne permettrait donc pas d'accéder facilement à la capitale d'un pays donné.
+- Les pays ne sont pas classés dans un ordre particulier, un tableau ne permettrait donc pas d'accéder facilement à la capitale d'un pays.
 
-- Une liste chaînée aurait l'inconvénient de devoir parcourir toute la liste pour accéder à la capitale d'un pays donné.
+- Une liste chaînée aurait l'inconvénient de devoir parcourir toute la liste pour accéder à la capitale d'un pays.
 
 Dans ce cas, un dictionnaire est la structure de donnée la mieux adaptée.
 
-Python possède naturellement une structure de dictionnaire (le type `dict`), mais ce  n'est pas le cas dans tous les langages. Dans ce cas, plusieurs implémentations sont possibles, par exemple en utilisant une fonction de hachage. 
+Python possède naturellement une structure de dictionnaire (le type `dict`). Mais ce  n'est pas le cas dans tous les langages, plusieurs implémentations sont alors possibles, par exemple en utilisant une fonction de hachage. 
 
 
 ###	Avec le type `dict` de Python
 
-Le type `dict` Python offre toutes les primitives d'un dictionnaire : 
+Les dictionnaires Python, de type `dict`, offrent immédiatement toutes les primitives d'un dictionnaire : 
 
 ``` py
 >>> capitale = {}           # creer()
@@ -53,21 +53,21 @@ True
 'Rome'
 ```
 
-Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons en quelques unes déja vues en classe de première : 
+Rappelons quelques unes des autres fonctionalités vues en classe de première : 
 
--   Un dictionnaire peut être créé avec plusieurs couples de clés-valeurs séparés par des virgules, le tout encadré par des accolades “{ }”.
+-   Un dictionnaire peut être créé avec plusieurs couples de clés-valeurs séparés par des virgules, le tout encadré par des accolades “{ }” :
 
     ``` py
     >>> capitale = {'France': 'Paris', 'Allemagne': 'Berlin', 'Italie': 'Rome'}
     ```
 
--   Les entrées sont affichées sans ordre particulier.
+-   Les entrées sont affichées sans ordre particulier :
     ``` py
     >>> capitale
     {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
     ```
 
--   On accède à une valeur d'un dictionnaire **uniquement par sa clé, mais pas par sa position**, les valeurs d'un dictionnaire n'ont pas de position :
+-   Il est possible d'accèder à une valeur **par sa clé, et uniquement par sa clé, mais pas par sa position**. Les valeurs d'un dictionnaire n'ont pas de position :
 
     ``` py
     >>> capitale[0]
@@ -78,7 +78,7 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons en
     ```
     Dans ce cas, l'interpréteur renvoie un message d'erreur car la clé `0` n'existe pas dans le dictionnaire `capitale`. 
 
--   La méthode `.get()` permet aussi de récupérer une valeur associée à une clé sans lever d'erreur si la clé n'existe pas.
+-   La méthode `.get()` permet aussi de récupérer une valeur associée à une clé, mais sans lever d'erreur si la clé n'existe pas :
 
     ``` py
     >>> capitale.get('France')
@@ -110,12 +110,12 @@ Les dictionnaires Python offrent beaucoup d'autres fonctionalités. Rappelons en
     ...     print(capitale[cle], 'est en', cle)
     ...
     Berlin est en Allemagne
-    PAris est en France
+    Paris est en France
     Rome est en Italie
     ```
     [^6.1]
 
-[^6.1]: Il est aussi possible d'utiliser la méthode `items()` et d'écrire : : `>>> for cle, val in 'capitale.items():
+[^6.1]: Il est aussi possible d'utiliser la méthode `items()` et d'écrire : `>>> for cle, val in 'capitale.items(): val, 'est en', cle)`
 
 
 -   Les méthodes `.keys()` et `.values()` renvoient les clés et les valeurs d'un dictionnaire :
@@ -270,7 +270,7 @@ Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. 
 2
 ```
 
-Note: Il est très difficile de retrouver, à partir d'un valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `"France"` .
+Note: Il est très difficile de retrouver, à partir d'un valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `"Allemagne"` .
 
 
 Ajoutons les primitives d'un dictionnaire à la classe `Dico` :
