@@ -241,28 +241,39 @@ Dans de nombreux langages informatiques, un tableau est une structure de donnée
 !!! abstract "Cours"
     En Python le **type `list`** est un **tableau dynamique**. C'est une forme d'implémentation particulière de la structure de données abstraite de liste (mais ce n'est pas la seule). :warning: Attention de ne pas confondre les deux termes.
 
-Le type `list` en Python offre toutes les primitives de base d'une liste (notons qu'ici la tête est à la dernière position de la variable `L`) :
+Le type `list` en Python offre toutes les primitives de base d'une liste :
 
-|Primitive d'une liste| Type `list` en Python|
-|:--|:--|
-|`creer() → liste` : constructeur d'une liste vide|`L = []`|
-|`est_vide() → bool` : vérification si une liste est vide ou non|`L == []  ou len(L) ==0`|
-|`inserer_tete(element)` : insertion d'un élément en tête|`L.insert(0, 'a')`|
-|`supprimer_tete() →  element` : suppression de l'élément de tête|`L.pop(0)`|
-|`taille() → int` : nombre d'éléments dans la pile|`len(L)`|
-|`tete() →  element` : lire le premier élément de la liste|`L[-1]`|
-|`queue() → liste` : accès au reste de la liste|`L[:-1]`|
+``` py
+>>> L = []       # creer une liste 
+>>> L == []       # est_vide()
+True
+>>> L.insert(0, 'a')         # inserer_tete()
+>>> L.insert(0, 'b')         # inserer_tete()
+>>> L.insert(0, 'c')         # inserer_tete()
+>>> L.insert(0, 'd')         # inserer_tete()
+>>> L.insert(0, 'e')         # inserer_tete()
+>>> len(L)       # taille()
+5
+>>> L.pop(0)       # supprimer_tete()
+'e'
+>>> L[0]       # tete()
+'d'
+>>> L[1:]       # queue()
+['c', 'b', 'a']
+```
 
+Notons qu'ici la tête est à la première position de `L`. 
 
 Le type `list` propose bien d'autres opérateurs que les listes : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc. Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
 
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-light-mode.png#only-light){width="25%" align=right}
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-dark-mode.png#only-dark){width="25%" align=right}
 
-Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste implémentée par un tableau Python `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau, avec la méthode `insert()` :
+Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau Python, avec la méthode `insert()` :
 
 ``` py
->>> L = ['d', 'c', 'b', 'a']
+>>> L
+['d', 'c', 'b', 'a']
 >>> L.insert(0, 'e')
 >>> L
 ['e', 'd', 'c', 'b', 'a']
@@ -303,12 +314,12 @@ Le nombre d'opérations est proportionnel à la taille du tableau. Ajouter ou su
     Pour en savoir plus sur le coût des opérations sur les listes : [https://wiki.python.org/moin/TimeComplexity](https://wiki.python.org/moin/TimeComplexity)
 
 
-Le choix d'implémentation qui a été fait ici de placer la tête de liste en position 0 d'un tableau Python suis suis les implémentations précédentes, il aurait été plus optimal d'inverser l'ordre de la liste dans le tableau et d'utiliser `L.append('a')` et `L.pop()` pour `inserer_tete` et `supprimer_tete`.
+Le choix d'implémentation qui a été fait ici de placer la tête de liste en position 0 d'un tableau Python suis les implémentations précédentes, il aurait été judicieux d'inverser l'ordre de la liste dans le tableau et d'utiliser `L.append('a')` et `L.pop()` pour `inserer_tete` et `supprimer_tete`.
 
 
 ### Avec une liste chaînée 
 
-La liste chainée apporte une solution au problème de coût d'insertion et suppression d'éléments des tableaux dynamiqus.  Elle servira aussi de brique de base aux structures de données de piles et de files étudiées dans la suite de ce chapitre.
+La liste chainée apporte une solution au problème de coût d'insertion et suppression d'éléments des tableaux dynamiques.  Elle servira aussi de brique de base aux structures de données de piles et de files étudiées dans la suite de ce chapitre.
 
 Dans une liste chaînée, chaque élément de la liste est stocké dans une **cellule** contenant :
 

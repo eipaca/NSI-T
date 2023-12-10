@@ -3,7 +3,8 @@
 
 !!! abstract "Cours"
     
-    Un dictionnaire est un type abstrait de données formé de couples **clé-valeur** (*key-value* en anglais). Chaque couple est une **entrée** du dictionnaire.
+    Un dictionnaire est un type abstrait de données constitué d'éléments sous forme de couples **clé-valeur** (*key-value* en anglais).
+
     Un dictionnaire n'a **pas d'ordre**, on accède à **chaque valeur par sa clé**. 
 
 La clé d'un dictionnaire peut être un mot (de type `str`), un nombre (de type `int` ou `float`), un p-uplet, etc., mais pas un tableau (type `list`) ni un autre dictionnaire car ce sont des types muables.
@@ -14,10 +15,10 @@ Les principales primitives constituant l'interface d'un dictionnaire sont :
 
 - `creer() → dict` : construire d'un dictionnaire vide.
 - `est_vide() → bool` : vérifier si un dictionnaire est vide ou non.
-- `ajouter(clé, valeur)` : ajouter un couple clé-valeur.
-- `supprimer(clé) → valeur` : supprimer une entrée identifiée par sa clé.
+- `ajouter(clé, valeur)` : ajouter un élément formé du couple clé-valeur.
+- `supprimer(clé) → valeur` : supprimer un élément identifié par sa clé.
 - `lire(clé) → valeur` : lire la valeur associée à une clé.
-- `taille() → int` : renvoyer le nombre d'entrées dans un dictionnaire.
+- `taille() → int` : renvoyer le nombre d'éléments dans un dictionnaire.
 
 
 
@@ -61,7 +62,7 @@ Rappelons quelques unes des autres fonctionalités vues en classe de première :
     >>> capitale = {'France': 'Paris', 'Allemagne': 'Berlin', 'Italie': 'Rome'}
     ```
 
--   Les entrées sont affichées sans ordre particulier :
+-   Les éléments sont affichés sans ordre particulier :
     ``` py
     >>> capitale
     {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
@@ -70,6 +71,8 @@ Rappelons quelques unes des autres fonctionalités vues en classe de première :
 -   Il est possible d'accèder à une valeur **par sa clé, et uniquement par sa clé, mais pas par sa position**. Les valeurs d'un dictionnaire n'ont pas de position :
 
     ``` py
+    >>> capitale["France"]
+    'Paris'
     >>> capitale[0]
     Traceback (most recent call last):
     File "<pyshell#12>", line 1, in <module>
@@ -142,14 +145,14 @@ Rappelons quelques unes des autres fonctionalités vues en classe de première :
     [('Allemagne', 'Berlin'), ('France', 'Paris'), ('Italie', 'Rome')]
     ```
 
--   Il est possible de modifier la valeur associée à une clé existante (et si la clé n'existe pas elle est créée) : 
+-   Il est possible de modifier la valeur associée à une clé existante (rappel : si la clé n'existe pas, un nouvel élément est créé dans le dictionnaire) : 
 
     ``` py
     capitale["Italie"] = "Roma"
     ```
 
 
--   La méthode `.pop(clé)` ou l'instruction `del` permettent de supprimer une entrée :
+-   La méthode `.pop(clé)` ou l'instruction `del` permettent de supprimer un élément :
     
     ``` py
     >>> capitale

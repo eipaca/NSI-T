@@ -1,4 +1,4 @@
-#	Structures linéaires : Piles
+﻿#	Structures linéaires : Piles
 
 
 !!! abstract "Cours"
@@ -154,6 +154,10 @@ False
 'c''
 >>>
 ```
+
+Enregistons cette classe de `Pile` dans un fichier "pile.py", elle nous sera utile par la suite.
+
+
 Pour faire encore plus simple, programmons une pile avec la même idée, mais sans utiliser la POO : 
 
 ``` py
@@ -173,7 +177,7 @@ def depiler(p):
 def taille(p):
     return len(p)
 
-def affciher(p):
+def afficher(p):
     for v in p:
         print("|\t", v, "\t|\n")   # Affiche les élements de la pile : |  v  |
     print("---------")
