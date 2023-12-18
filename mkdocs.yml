@@ -155,10 +155,10 @@ nav:
    # - Arbres: structures-de-donnees/7-arbres.md
    # - Graphes: structures-de-donnees/8-graphes.md
  
-  # Architectures matérielles, systèmes d'exploitation et réseaux:
+  Architectures matérielles, systèmes d'exploitation et réseaux:
  #  -Composants intégrés d’un système sur puce.
  # -Gestion des processus et des ressources par un système d'exploitation
- # -Protocoles de routage
+    - Protocoles de routage: 4-routage.md
  # -Sécurisation des communications
  # Algorithmique:
  #Algorithmes sur les arbres binaires et sur les arbres binaires de recherche
