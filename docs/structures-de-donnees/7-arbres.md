@@ -4,8 +4,8 @@
 !!! abstract "Cours"
     Un **arbre** est un type abstrait de données constitué d'un ensemble de **nœuds**, reliés entre eux par des **arêtes** et organisés de manière **hiérarchique** :
 
-    ![Exemple d'arbre représentant l'évolution des langages informatiques](assets/7-arbre-langages-informatiques-light-mode.png#only-light){width="30%" align="right"}
-    ![Exemple d'arbre représentant l'évolution des langages informatiques](assets/7-arbre-langages-informatiques-dark-mode.png#only-dark){width="30%" align="right"}
+    ![Exemple d'arbre représentant l'évolution des langages informatiques](assets/7-arbre-langages-informatiques-light-mode.png#only-light){width="35%" align="right"}
+    ![Exemple d'arbre représentant l'évolution des langages informatiques](assets/7-arbre-langages-informatiques-dark-mode.png#only-dark){width="35%" align="right"}
 
 
     -   Un nœud particulier est la **racine**.
@@ -74,15 +74,16 @@ def est_vide(arbre):
 def taille(arbre):
     return len(arbre)
 
-def ajouter_noeud(arbre, noeud):
-    if noeud not in arbre: arbre[noeud] = []
+def ajouter_noeud(arbre, fils, pere = None):
+    if fils not in arbre:
+        arbre[fils] = []      # ajoute le noeud fils à l'arbre
+        if pere is not None:
+            arbre[pere].append(fils)   # et dans la liste des fils du pere
 
-def ajouter_fils(arbre, noeud, fils):
-    ajouter_noeud(arbre, fils)
-    arbre[noeud].append(fils)
 
-def est_feuille(arbre, noeud) :
-    return len(arbre[noeud]) == 0
+def est_feuille(arbre, noeud):
+    """ True si n est une feuille, False sinon"""
+    return arbre[noeud] == []       # si noeud n'a pas de fils
 
 ```
 
@@ -91,35 +92,51 @@ puis pour créer notre arbre :
 ``` py
 a = creer()
 ajouter_noeud(a, 'A')
-ajouter_fils(a, 'A', 'B')
-ajouter_fils(a, 'A', 'C')
-ajouter_fils(a, 'A', 'D')
-# etc.
+for fils in ['B', 'C', 'D', 'E', 'F', 'G']:
+    ajouter_noeud(a, fils, 'A')      # les fils de 'A'
+for fils in ['H', 'I']:
+    ajouter_noeud(a, fils, 'B')      # les fils de 'B'
+for fils in ['J', 'K']:
+    ajouter_noeud(a, fils, 'E')      # les fils de 'E'
+ajouter_noeud(a, 'L', 'G')
 ```
 
 Il est aussi possible de rajouter quelques primitives de profondeur, hauteur, etc. :
 
 ``` py
-def pere(arbre, n):
-    for noeud in arbre:    # parcourt des noeuds
-        if n in arbre[noeud]:
-            return noeud
-    # n n'a pas de pere
-    return None
+def pere(arbre, noeud):
+    """ Renvoie le pere de noeud"""
+    for n in arbre:
+        if noeud in arbre[n]:      # si noeud est un fils de n
+            return n
+    return None     # n est la racine, le pere est None
 
-def profondeur(arbre, n):
+
+
+def profondeur(arbre, noeud):  
+    """ Renvoie la profondeur de noeud"""
     p = 0
-    while pere(arbre, n) is not None:
-        n = pere(arbre, n)
-        p = p + 1
+    while pere(arbre, noeud) is not None:    # tant qu'on n'est pas à la racine
+        p = p + 1           # on ajoute 1 à p
+        noeud = pere(arbre, noeud)  # on remplace noeud par son pere
     return p
 
+
+# ou en récursif
+def profondeur_rec(arbre, noeud):
+    """ Renvoie la profondeur de n"""
+    if pere(arbre, noeud) is None: return 0    # la profondeur de la racine est 0
+    return 1 + profondeur_rec(arbre, pere(arbre, noeud))
+
+
 def hauteur(arbre):
-    if est_vide(arbre): return -1
-    t = []
-    for noeud in arbre:
-        t.append(profondeur(arbre, noeud))
-    return max(t)
+    """ Renvoie la hauteur de l'arbre"""
+    p_max = -1
+    for n in arbre:
+        if profondeur(arbre, n) > p_max:
+            p_max = profondeur(arbre, n)
+    return p_max
+
 ```
 
 ## Arbre binaire
@@ -129,7 +146,7 @@ def hauteur(arbre):
     ![Exemple d'arbre binaire contenant des chiffres](assets/7-ab-1-light-mode.png#only-light){width="30%" align="right"}
     ![Exemple d'arbre binaire contenant des chiffres](assets/7-ab-1-dark-mode.png#only-dark){width="30%" align="right"}
 
-    Un **arbre binaire** (AB) est un cas particuliers d'arbre où **chaque nœud possède au maximum deux fils ordonnés** : un fils **gauche** et/ou un fils **droit**. 
+    Un **arbre binaire** (**AB**) est un cas particuliers d'arbre où **chaque nœud possède au maximum deux fils ordonnés** : un fils **gauche** et/ou un fils **droit**. 
 
     Les fils gauche et droit ne sont pas intervertibles !
 

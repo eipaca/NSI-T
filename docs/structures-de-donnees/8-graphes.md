@@ -54,3 +54,22 @@ Un même graphe peut avoir de nombreuses représentations graphiques. Voici troi
 
 ![Trois représentation d'un même graphe ](assets/8-graphe-6-light-mode.png#only-light)
 ![Trois représentation d'un même graphe ](assets/8-graphe-6-dark-mode.png#only-dark)
+
+!!! abstract "Cours"
+    Un **chemin** (ou **chaine** pour les graphes non orientés) est une suite de sommets reliés par des arêtes. 
+
+    Un **cycle** (ou **circuit** pour les graphes non orientés) est un chemin fermé.
+
+Remarque : dans un graphe orienté, il peut exister un chemin menant du sommet x au sommet y, alors que l’inverse n’est pas possible.
+
+Exemple : chemin menant de A à C, que l’on peut noter A→B→D→C
+
+![Chemin menant de A à C passant par B et D](assets/8-graphe-7-light-mode.png#only-light){width="30%"}
+![Chemin menant de A à C passant par B et D](assets/8-graphe-7-dark-mode.png#only-dark){width="30%"}
+
+!!! abstract "Cours"
+    La **distance** entre deux sommets d’un arbre est la longueur (nombre d’arêtes) du **chemin le plus court** (s’il y en a un) reliant ces deux sommets.
+
+Exemple : la distance entre A et C est la distance du plus court chemin de A à C (A→D→C), soit 2 (arêtes).
+![Distance de A à C ](assets/8-graphe-8-light-mode.png#only-light){width="30%"}
+![Distance de A à C ](assets/8-graphe-8-dark-mode.png#only-dark){width="30%"}
