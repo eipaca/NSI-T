@@ -299,6 +299,9 @@ On peut reprocher à cette structure de ne représenter correctement que les arb
 
 Une solution est de créer une nouvelle classe d'arbre qui pointe sur la racine quand l'arbre est enraciné ou sur `None` sinon, sur le même modèle des listes chainées avec les classes `Cellules` et `ListeChainees`.
 
+!!! notetip inline end "" 
+    La classe AB n'est pas récursive, ce qui ne correspond pas à la défintion précédente. Ici la structure récursive est la classe Noeud. 
+
 Ajoutons à notre structure cette classe `AB` avec un attribut racine qui est de type `Noeud` ou `None` pour un arbre vide.
 
 ``` py
