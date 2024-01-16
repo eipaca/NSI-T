@@ -233,21 +233,18 @@ et créons un arbre non vide (un arbre vide est `None`) :
 
 
 ``` py
-n7 = Noeud(7) 
-n8 = Noeud(8) 
-n5 = Noeud(5, n7, n8) 
 n4 = Noeud(4) 
+n5 = Noeud(5) 
 n2 = Noeud(2, n4, n5) 
-n9 = Noeud(9) 
-n6 = Noeud(6, n9)
-n3 = Noeud(3, None, n6)
+n6 = Noeud(6) 
+n3 = Noeud(3, d=n5) 
 a = Noeud(1, n2, n3)
 ```
 
 ou directement :
 
 ``` py
-a = Noeud(1, Noeud(2, Noeud(4), Noeud(5, Noeud(7), Noeud(8))), Noeud(3, None, Noeud(6, Noeud(9))))
+a = Noeud(1, Noeud(2, Noeud(4), Noeud(5)), Noeud(3, None, Noeud(6)))
 ```
 
 Ajoutons une première méthode pour vérifier si un nœud est une feuille :
@@ -292,16 +289,33 @@ puis la taille et la hauteur de l'arbre :
 ```
 
 
-![classes AB et Noeud](assets/7-ab-et-noeud-light-mode.png#only-light){width="30%" align="right"}
-![classes AB et Noeud](assets/7-ab-et-noeud-dark-mode.png#only-dark){width="30%" align="right"}
 
-On peut reprocher à cette structure de ne représenter correctement que les arbres qui ne sont pas vide et ont une racine -- appelés « arbres **enracinés** », mais pas les arbres vides qui sont représentés par `None`, ce qui n'est pas un objet de la classe `Noeud`. 
 
-Une solution est de créer une nouvelle classe d'arbre qui pointe sur la racine quand l'arbre est enraciné ou sur `None` sinon, sur le même modèle des listes chainées avec les classes `Cellules` et `ListeChainees`.
+Si on retrouve cette implémentation dans la plupart des exercices de baccalauréat, parfois en nommant `arbre`, ou `AB` notre classe `Noeud`  [^7.2], on peut lui reprocher de ne pas représenter correctement la définition proposée d'un arbre, puisque les arbres et sous-arbres vides sont représentés par `None` qui n'est pas un objet de la classe `Noeud` ! 
+
+En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer des manipulations pénibles dans le code pour vérifier si un sous-arbre est `None` ou pas (comme ici `if self.droite is None: ...`), cela engendre beaucoup d'erreurs de programmation (utilisations erronées des méthodes de la classe `Noeud` sur `None`).
+
+[^7.2]: Sujets 21-NSIJ1ME1,
+ [22-NSIJ2ME1](https://eduscol.education.fr/document/44032/download),
+  22-NSIJ1LR1,
+ [23-NSIJ2AS1](https://eduscol.education.fr/document/47993/download)
+ [23-NSIJ2LI1](https://eduscol.education.fr/document/48164/download),
+  23-NSIJ2LR1,
+  23-NSIJ2ME1,
+  23-NSIJ2PO1,
+  23-sujet_0-b
+
+:warning: On trouve plusieurs variantes d'implémentation, plus ou moins heureuses, qui tentent de remédier à ces problèmes, par exemple ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur la racine quand il ne l'est pas (sur le même modèle vu précédemment des listes chainées avec les classes `Cellules` et `ListeChainees`)[^7.3].
+
+
+
+
 
 !!! notetip inline end "" 
-    La classe AB n'est pas récursive, ce qui ne correspond pas à la défintion précédente. Ici la structure récursive est la classe Noeud. 
+    La structure récursive est la classe `Noeud`, pas la classe `AB` !
 
+![classes AB et Noeud](assets/7-ab-et-noeud-light-mode.png#only-light){width="20%" align="right"}
+![classes AB et Noeud](assets/7-ab-et-noeud-dark-mode.png#only-dark){width="20%" align="right"}
 Ajoutons à notre structure cette classe `AB` avec un attribut racine qui est de type `Noeud` ou `None` pour un arbre vide.
 
 ``` py
@@ -313,12 +327,6 @@ class AB:
 Il est maintenant possible d'implémenter un arbre vide comme un objet de la classe `AB` :
 ``` py
 arbre = AB()
-```
-
-un arbre enraciné ainsi :
-
-``` py
-arbre = AB(Noeud(1))
 ```
 
 et un arbre complet :
@@ -345,6 +353,27 @@ class AB:
         return self.racine.taille()
 ``` 
 
+[^7.3]: Sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
+
+Une troisième approche parfois rencontrée[^7.4] consiste à donner la valeur `None` l'attribut `self.valeur` d'un objet `Noeud`  quand l'arbre est vide. 
+
+``` py
+class Noeud:
+    def __init__(self, v=None, g=None, d=None):
+        self.valeur = v   # None pour un arbre vide 
+        self.gauche = g   # None ou un Noeud
+        self.droite = d   # None ou un Noeud
+```
+
+On peut alors simplement créer un arbre vide :
+``` py
+arbre_vide = Noeud()
+```
+mais l'objet `arbre_vide` apparaît comme un noeud avec une taille 1 et une hauteur 0 au lieu de -1, il faut modifier les deux méthodes pour traiter ce cas particulier.
+
+[^7.4]: Sujet [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Le site
+ [https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/](https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/) montre un exemple d'implémentation complétement récursive.
+
 ## Arbres binaires de recherche 
 
 !!! abstract "Cours"
@@ -362,10 +391,10 @@ Note : « supérieur » et   « inférieur » peuvent être au sens strict ou la
  
 Considèrons l'arbre binaire de recherche précédent qui servira comme support pour illustrer la suite.
 
-Plutôt que de dupliquer la classe `AB` précédente en `ABR` et de la modifier, nous allons créer une sous-classe par héritage[^7.2] et lui ajouter les spécificités d'un ABR. 
+Plutôt que de dupliquer la classe `AB` précédente en `ABR` et de la modifier, nous allons créer une sous-classe par héritage[^7.5] et lui ajouter les spécificités d'un ABR. 
 
 
-[^7.2]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
+[^7.5]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
 
 Inutile de réécrire le constructeur :
 
@@ -395,9 +424,9 @@ Ajoutons des méthodes propres aux ABR :
 
 Pour accéder à la plus petite clé d'un ABR, il suffit de descendre sur le fils gauche autant que possible. Le dernier nœud visité qui n'a pas de fils gauche porte la plus petite de l'ABR. De la même façon, pour trouver la plus grande valeur il suffit de descendre sur les fils à droite.
 
-La classe `ABR` n'étant pas récursive, il faut définir une **méthode récursive** au niveau de la classe `Noeud` qui descend le plus à gauche[^7.3] :
+La classe `ABR` n'étant pas récursive, il faut définir une **méthode récursive** au niveau de la classe `Noeud` qui descend le plus à gauche[^7.6] :
 
-[^7.3]: 
+[^7.6]: 
     On peut aussi définir la sous fonction récursive directement dans la méthode `min()` de la classe `ABR`.
     ``` py
     class ABR
