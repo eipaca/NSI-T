@@ -355,7 +355,7 @@ class AB:
 
 [^7.3]: Sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
 
-Une troisième approche parfois rencontrée[^7.4] consiste à donner la valeur `None` l'attribut `self.valeur` d'un objet `Noeud`  quand l'arbre est vide. 
+Une troisième approche parfois rencontrée[^7.4] consiste à donner la valeur `None` à l'attribut `self.valeur` d'un objet `Noeud` pour signifier que l'arbre est vide. 
 
 ``` py
 class Noeud:
