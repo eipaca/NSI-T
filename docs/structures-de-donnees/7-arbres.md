@@ -172,15 +172,18 @@ Il est possible d'avoir des arbres binaires de même taille mais de « forme » 
 
 Il en résulte certaines propriétés sur la taille $n$  et la hauteur $h$ d’un arbre binaire :
 
--   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n−1$, c’est la plus grande hauteur possible donc pour tout AB : $h ≤  n – 1$. 
--   On peut aussi montrer[^7.1] qu'un arbre parfait de hauteur $h$ a une taille $n$ égale à  $2^{h+1} - 1$ , c’est la plus grande taille possible donc pour tout AB : $n ≤  2^{h+1} – 1$.
+-   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n−1$, c’est la plus grande hauteur possible donc pour tout AB : $h ≤  n – 1$. On en déduit que $h + 1 ≤  n$.
+
+-   On peut aussi montrer[^7.1] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h+1} - 1$ , c’est la plus grande taille possible donc pour tout AB : $n ≤  2^{h+1} – 1$. On en déduit que $log_2 (n) ≤ h$ où $log_2 (n)$ est le logarithme en base $2$ de $n$[^7.2].
 
 [^7.1]: Par récurrence la taille d’un arbre racine est $2^0 = 1$, et si la taille d’un arbre parfait de hauteur $h-1$ est $2^h -1$, pour obtenir la taille de l’arbre parfait de hauteur $h$ il faut ajouter $2^h$ nouveaux nœuds, au total on obtient $2^h - 1 + 2^h = 2 \times 2^h - 1 = 2^{h+1} -1$.
+
+[^7.2]: Le logarithme en base 2, noté $log_2$ est une opération mathématique qui calcule la puissance à laquelle il faut élever le nombre 2 pour obtenir un nombre donné. Par exemple $log_2 (8)$ est $3$ car$2^3 = 8$.
 
 !!! abstract "Cours"
     La taille $n$ d'un arbre binaire quelconque de hauteur $h$  est encadrée par :     $h + 1 ≤ n ≤ 2^{h + 1} - 1$
 
-    Réciproquement, la hauteur $h$ d'un arbre binaire de la taille $n$ est encadrée par :   $log_2 (n) ≤ h ≤ n - 1$
+    Réciproquement, la hauteur $h$ d'un arbre binaire de taille $n$ est encadrée par :   $log_2 (n) ≤ h ≤ n - 1$
 
 ### Implémentation avec des p-uplets imbriqués
 
@@ -208,15 +211,20 @@ Les arbres binaires ont au plus deux fils, il est donc possible d'utiliser des t
 Notons qu'un arbre binaire peut-être est défini de façon récursive comme étant :
 
 -   soit un arbre vide,
--   soit composé  d'un nœud racine avec une valeur, un sous-arbre gauche, et un sous-arbre droit.
+-   soit composé  d'un nœud racine avec une valeur, un sous-arbre gauche et un sous-arbre droit.
 
 
-Les sous-arbres de gauche et droite sont aussi des arbres (autrement dit un nœud avec deux sous-arbres, etc…). 
+Les sous-arbres de gauche et droite sont aussi des arbres (autrement dit des nœuds avec deux sous-arbres, etc…). 
 
-Implémentons sur ce modèle un AB par une classe `Noeud` possédant trois attributs :
+
+Implémentons sur ce modèle un arbre binaire par une classe `Noeud` possédant trois attributs :
+
+![classes AB et Noeud](assets/7-noeud-recursif-light-mode.png#only-light){width="20%" align="right"}
+![classes AB et Noeud](assets/7-noeud-recursif-dark-mode.png#only-dark){width="20%" align="right"}
+
 -   `valeur` pour l'étiquette du noeud ;
--   `gauche`, le sous arbre gauche (ou `None` si le nœud n'a pas de fils gauche) ;
--   `droite`, le sous arbre droit (ou `None` si le nœud n'a pas de fils droit).
+-   `gauche`, le sous-arbre gauche, c'est une instance de `Noeud` (ou `None` si le nœud n'a pas de fils gauche) ;
+-   `droite`, le sous-arbre droit, c'est une instance de `Noeud` (ou `None` si le nœud n'a pas de fils droit).
 
 ``` py
 class Noeud:
@@ -241,7 +249,7 @@ n3 = Noeud(3, d=n5)
 a = Noeud(1, n2, n3)
 ```
 
-ou directement :
+ce qui peut aussi s'écrire directement :
 
 ``` py
 a = Noeud(1, Noeud(2, Noeud(4), Noeud(5)), Noeud(3, None, Noeud(6)))
@@ -258,56 +266,59 @@ puis la taille et la hauteur de l'arbre :
 
 ``` py
     def taille(self):
-        # taille du sous arbre droit
+        """ Renvoie la taille (le nombre de noeud) de l'arbre"""
+        # taille du sous-arbre droit
         if self.droite is None:
             td = 0 
         else: 
             td = self.droite.taille()
 
-        # taille du sous arbre gauche
+        # taille du sous-arbre gauche
         if self.gauche is None: 
             tg = 0
         else: 
             tg = self.gauche.taille()
         
+        # 1 (pour le noeud self) + taille à gauche + la taille à droite
         return 1 + td + tg
 
     def hauteur(self):
-        # hauteur du sous arbre droit
+        """ Renvoie la hauteur (la plsu grande profondeur) de l'arbre,
+        Par convention, la taille d'un arbre réduit à la racine est 0"""
+
+        # hauteur du sous-arbre droit
         if self.droite is None:
             hd = -1 
         else:
             hd = self.droite.hauteur()
 
-        # hauteur du sous arbre gauche
+        # hauteur du sous-arbre gauche
         if self.gauche is None:
             hg = -1
         else:
             hg = self.gauche.hauteur()
         
+        # 1 (pour le noeud self) + la plus grande taille entre gauche et droite
         return 1 + max(hd , hg)
 ```
 
-
-
-
-Si on retrouve cette implémentation dans la plupart des exercices de baccalauréat, parfois en nommant `arbre`, ou `AB` notre classe `Noeud`  [^7.2], on peut lui reprocher de ne pas représenter correctement la définition proposée d'un arbre, puisque les arbres et sous-arbres vides sont représentés par `None` qui n'est pas un objet de la classe `Noeud` ! 
+On retrouve cette implémentation avec une classe `Noeud` dans la plupart des exercices de baccalauréat[^7.3], parfois la nommant `arbre`, ou `AB`. Néanmoins on peut lui reprocher de ne pas représenter correctement la définition proposée d'un arbre, puisque les arbres et sous-arbres vides sont représentés par `None`, ce qui n'est pas une instance de cette classe ! 
 
 En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer des manipulations pénibles dans le code pour vérifier si un sous-arbre est `None` ou pas (comme ici `if self.droite is None: ...`), cela engendre beaucoup d'erreurs de programmation (utilisations erronées des méthodes de la classe `Noeud` sur `None`).
 
-[^7.2]: Sujets 21-NSIJ1ME1,
+[^7.3]: On trouve des arbres implémentés par une seule classe récursive dans les sujets 21-NSIJ1ME1,
  [22-NSIJ2ME1](https://eduscol.education.fr/document/44032/download),
-  22-NSIJ1LR1,
+ [22-NSIJ1LR1](https://www.education.gouv.fr/media/114662/download),
  [23-NSIJ2AS1](https://eduscol.education.fr/document/47993/download)
  [23-NSIJ2LI1](https://eduscol.education.fr/document/48164/download),
-  23-NSIJ2LR1,
-  23-NSIJ2ME1,
-  23-NSIJ2PO1,
+ [23-NSIJ2LR1](https://www.education.gouv.fr/media/154805/download),
+  [23-NSIJ2ME1](https://www.education.gouv.fr/media/133955/download),
+  [23-NSIJ2PO1](https://www.education.gouv.fr/media/133706/download),
   23-sujet_0-b
 
-:warning: On trouve plusieurs variantes d'implémentation, plus ou moins heureuses, qui tentent de remédier à ces problèmes, par exemple ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur la racine quand il ne l'est pas (sur le même modèle vu précédemment des listes chainées avec les classes `Cellules` et `ListeChainees`)[^7.3].
+:warning: Pour tenter de remédier à ces défauts, on trouve plusieurs variantes d'implémentation, plus ou moins heureuses. 
 
-
+Une seconde implémentation consiste à ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur un `Noeud` racine quand l'arbre n'est pas vide[^7.4] (sur le même modèle vu précédemment des listes chainées avec les classes `Cellules` et `ListeChainees`).
 
 
 
@@ -316,6 +327,7 @@ En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer
 
 ![classes AB et Noeud](assets/7-ab-et-noeud-light-mode.png#only-light){width="20%" align="right"}
 ![classes AB et Noeud](assets/7-ab-et-noeud-dark-mode.png#only-dark){width="20%" align="right"}
+
 Ajoutons à notre structure cette classe `AB` avec un attribut racine qui est de type `Noeud` ou `None` pour un arbre vide.
 
 ``` py
@@ -329,7 +341,7 @@ Il est maintenant possible d'implémenter un arbre vide comme un objet de la cla
 arbre = AB()
 ```
 
-et un arbre complet :
+ou un arbre complet :
 
 ``` py
 arbre = AB(Noeud(1, Noeud(2, Noeud(4), Noeud(5, Noeud(7), Noeud(8))), Noeud(3, None, Noeud(6, Noeud(9)))))
@@ -343,19 +355,19 @@ class AB:
         return self.racine == None
 
     def hauteur(self):
-        if self.racine == None: return -1
+        if self.racine is None: return -1
         # renvoie la hauteur du nœud racine
         return self.racine.hauteur()
 
     def taille(self):
-        if self.racine == None: return 0
+        if self.racine is None: return 0
         # renvoie la taille du nœud racine
         return self.racine.taille()
 ``` 
 
-[^7.3]: Sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
+[^7.4]: On trouve un arbre implémenté par une classe `Noeud` récursive et une classe `Arbre` dans les sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
 
-Une troisième approche parfois rencontrée[^7.4] consiste à donner la valeur `None` à l'attribut `self.valeur` d'un objet `Noeud` pour signifier que l'arbre est vide. 
+Une troisième implémentation, encore différente et aussi parfois rencontrée[^7.5], consiste à donner la valeur `None` à l'attribut `self.valeur` d'un objet `Noeud` pour signifier que l'arbre est vide. 
 
 ``` py
 class Noeud:
@@ -369,21 +381,22 @@ On peut alors simplement créer un arbre vide :
 ``` py
 arbre_vide = Noeud()
 ```
-mais l'objet `arbre_vide` apparaît comme un noeud avec une taille 1 et une hauteur 0 au lieu de -1, il faut modifier les deux méthodes pour traiter ce cas particulier.
+mais l'objet `arbre_vide` apparaît comme un noeud avec une taille 1 (au lieu de 0) et une hauteur 0 (au lieu de -1), il faut modifier les deux méthodes pour traiter ce cas particulier.
 
-[^7.4]: Sujet [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Le site
- [https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/](https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/) montre un exemple d'implémentation complétement récursive.
+[^7.5]: On trouve un arbre implémenté par une classe `Noeud` dont l'attribut `valeur` d'un arbre vide est égal à `None` dans le sujet  [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Par ailleurs, le sujet 
+ [https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/](https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/) montre un exemple de ce type d'implémentation complétement récursif.
 
 ## Arbres binaires de recherche 
 
 !!! abstract "Cours"
     ![Exemple d'arbre binaire de recherche avec des chiffres](assets/7-abr-0-light-mode.png#only-light){width="50%" align="right"}
     ![Exemple d'arbre binaire de recherche avec des chiffres](assets/7-abr-0-dark-mode.png#only-dark){width="50%" align="right"}
-    Un **arbre binaire de recherche** (ABR)  est un cas particulier d'arbre binaire sans lequel :
+
+    Un **arbre binaire de recherche** (**ABR**)  est un cas particulier d'arbre binaire sans lequel :
 
     -   Chaque nœud a une valeur (ou clé) supérieure à celles de tous les nœuds de son sous-arbre gauche.
     -   Chaque nœud a une valeur inférieure à celles de tous les nœuds de son sous-arbre droit.
-    -   Tous les sous arbres sont aussi des ABR
+    -   Tous les sous-arbres sont aussi des ABR.
 
 
 
@@ -391,10 +404,10 @@ Note : « supérieur » et   « inférieur » peuvent être au sens strict ou la
  
 Considèrons l'arbre binaire de recherche précédent qui servira comme support pour illustrer la suite.
 
-Plutôt que de dupliquer la classe `AB` précédente en `ABR` et de la modifier, nous allons créer une sous-classe par héritage[^7.5] et lui ajouter les spécificités d'un ABR. 
+Plutôt que de dupliquer la classe `AB` précédente en `ABR` et de la modifier, nous allons créer une sous-classe par héritage[^7.65] et lui ajouter les spécificités d'un ABR. 
 
 
-[^7.5]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
+[^7.6]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
 
 Inutile de réécrire le constructeur :
 
@@ -422,20 +435,23 @@ Ajoutons des méthodes propres aux ABR :
 ![Recherche du min dans un ABR](assets/7-abr-1-light-mode.png#only-light){width="30%" align="right"}
 ![Recherche du min dans un ABR](assets/7-abr-1-dark-mode.png#only-dark){width="30%" align="right"}
 
-Pour accéder à la plus petite clé d'un ABR, il suffit de descendre sur le fils gauche autant que possible. Le dernier nœud visité qui n'a pas de fils gauche porte la plus petite de l'ABR. De la même façon, pour trouver la plus grande valeur il suffit de descendre sur les fils à droite.
+Pour accéder à la plus petite clé d'un ABR, il suffit de descendre sur les fils à gauche autant que possible. Le dernier nœud visité qui n'a pas de fils gauche porte la plus petite valeur de l'ABR. De la même façon, pour trouver la plus grande valeur, il suffit de descendre sur les fils à droite.
 
-La classe `ABR` n'étant pas récursive, il faut définir une **méthode récursive** au niveau de la classe `Noeud` qui descend le plus à gauche[^7.6] :
+La classe `ABR` n'étant pas récursive, il faut définir une **méthode récursive** au niveau de la classe `Noeud` qui descend le plus à gauche[^7.7] :
 
-[^7.6]: 
-    On peut aussi définir la sous fonction récursive directement dans la méthode `min()` de la classe `ABR`.
+[^7.7]: 
+    On peut aussi définir une fonction récursive directement dans la méthode `min()` de la classe `ABR`.
     ``` py
-    class ABR
+    class ABR:
         def min(self):
             """ Renvoie la plus petite valeur de l'arbre """
+            if self.racine is None: return None
+
             def desc_g(n):
                 while n.gauche is not None:
-                return desc_g(n.gauche)
+                    n = desc_g(n.gauche)
                 return n
+
             return desc_g(self.racine).valeur
     ```
 
