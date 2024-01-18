@@ -217,7 +217,7 @@ Notons qu'un arbre binaire peut-être est défini de façon récursive comme ét
 Les sous-arbres de gauche et droite sont aussi des arbres (autrement dit des nœuds avec deux sous-arbres, etc…). 
 
 
-Implémentons sur ce modèle un arbre binaire par une classe `Noeud` possédant trois attributs :
+Implémentons sur ce modèle un arbre binaire par une classe `Noeud`, récursive, possédant trois attributs :
 
 ![classes AB et Noeud](assets/7-noeud-recursif-light-mode.png#only-light){width="20%" align="right"}
 ![classes AB et Noeud](assets/7-noeud-recursif-dark-mode.png#only-dark){width="20%" align="right"}
@@ -245,7 +245,7 @@ n4 = Noeud(4)
 n5 = Noeud(5) 
 n2 = Noeud(2, n4, n5) 
 n6 = Noeud(6) 
-n3 = Noeud(3, d=n5) 
+n3 = Noeud(3, d=n6) 
 a = Noeud(1, n2, n3)
 ```
 
@@ -316,9 +316,9 @@ En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer
   [23-NSIJ2PO1](https://www.education.gouv.fr/media/133706/download),
   23-sujet_0-b
 
-:warning: Pour tenter de remédier à ces défauts, on trouve plusieurs variantes d'implémentation, plus ou moins heureuses. 
+:warning: Pour tenter de remédier à ces défauts, on trouve plusieurs variantes d'implémentation, plus ou moins satisfaisantes. 
 
-Une seconde implémentation consiste à ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur un `Noeud` racine quand l'arbre n'est pas vide[^7.4] (sur le même modèle vu précédemment des listes chainées avec les classes `Cellules` et `ListeChainees`).
+Une première variante consiste à ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur un `Noeud` racine quand l'arbre est enraciné[^7.4] (sur le même modèle des listes chainées utilisant les classes `Cellules` et `ListeChainees`).
 
 
 
@@ -367,7 +367,7 @@ class AB:
 
 [^7.4]: On trouve un arbre implémenté par une classe `Noeud` récursive et une classe `Arbre` dans les sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
 
-Une troisième implémentation, encore différente et aussi parfois rencontrée[^7.5], consiste à donner la valeur `None` à l'attribut `self.valeur` d'un objet `Noeud` pour signifier que l'arbre est vide. 
+Une seconde variante que l'on rencontre parfois[^7.5] consiste à ne garder qu'une seule classe `Noeud` et en représentant un arbre vide avec une instance dont l'attribut `self.valeur` prend la valeur `None`. 
 
 ``` py
 class Noeud:
@@ -381,7 +381,14 @@ On peut alors simplement créer un arbre vide :
 ``` py
 arbre_vide = Noeud()
 ```
-mais l'objet `arbre_vide` apparaît comme un noeud avec une taille 1 (au lieu de 0) et une hauteur 0 (au lieu de -1), il faut modifier les deux méthodes pour traiter ce cas particulier.
+Ici, l'objet `arbre_vide` est représenté par un noeud à part entière. On peut utiliser les méthodes de la classe `Noeud` pour calculer la hauteur et la taille :
+
+``` py
+>>> arbre_vide.taille()
+1
+```
+
+L'arbre vide comporte un noeud, la méthode renvoie une taille 1 au lieu de 0 ! De même `.hauteur()` renvoie 0 au lieu de -1. Il faut donc modifier les deux méthodes en conséquence.
 
 [^7.5]: On trouve un arbre implémenté par une classe `Noeud` dont l'attribut `valeur` d'un arbre vide est égal à `None` dans le sujet  [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Par ailleurs, le sujet 
  [https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/](https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/) montre un exemple de ce type d'implémentation complétement récursif.
