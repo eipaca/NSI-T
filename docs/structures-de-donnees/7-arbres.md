@@ -33,15 +33,13 @@ Les arbres trouvent de nombreuses applications en informatique, par exemple dans
 ## Interface 
 
 
-Les principales primitives constituant l'interface d'un arbrete sont :
+Les principales primitives constituant l'interface d'un arbre sont :
 
--	`creer() → arbre` : construire un  arbre vide.
+-	`creer() → arbre` : construire un arbre vide.
 -	`est_vide() → bool` : vérifier si un arbre est vide ou non.
 -	`taille() → int` : renvoyer la taille d'un arbre.
 -	`hauteur() → int` : renvoyer la hauteur d'un arbre.
 -	`profondeur(nœud) → int` : renvoyer la profondeur d'un nœud.
--	`tete() →  element` : lire le premier élément (la tête) de la liste.
--	`queue() → liste` : accéder au reste de la liste (la queue).
 -	`est_feuille(noeud) → bool` : vérifier si un nœud est une feuille ou pas.
 -	`branche(noeud) → arbre` : renvoyer un sous-arbre de racine nœud.
  
