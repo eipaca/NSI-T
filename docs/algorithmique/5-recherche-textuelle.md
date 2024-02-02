@@ -207,15 +207,16 @@ def horspool(motif, chaine):
     while i <= n - m:
         print(' ' * i + motif)     # affiche le motif aligné avec la chaine
         j = m -  1       # position du caractère dans le motif
+        dernier_car = chaine[j]
         while j >= 0 and chaine[i + j] == motif[j]:
             j = j - 1
         # si on a trouvé le motif
         if j == -1:
             positions.append(i)
-            i = i + 1
+            i = i + sauts[dernier_car] 
         # sinon si le dernier caractère est dans la table des sauts
-        elif chaine[i + m - 1] in sauts:
-            i = i + sauts[chaine[i + m - 1]]   # on saute de la table de sauts
+        elif dernier_car in sauts:
+            i = i + sauts[dernier_car]   # on saute de la table de sauts
         # sinon
         else:      # le caractère n'est pas dans le motif
             i = i + m    # on saute tout le motif
@@ -342,7 +343,8 @@ def boyer_moore(motif, chaine):
 ```
 
 ###	Règle du bon suffixe (good suffix)
-L'algorithme complet de Boyer-Moore ajoute une règle du “bon suffixe” qui n'a pas été présentée ici.
+Dans le cas où certains caractères du motif correspondent à ceux de la chaine, l'algorithme de Boyer-Moore calcule un saut supplémentaire en utilisant les « bons » caractères placés à droite du mauvais caractère : le « bon suffixe ».
+
 
 Reprenons à l'étape 3 :
 ![Recherche Boyer-Morre avec la règle du bon suffixe - étape 3](assets/5-boyer-moore-3-bs.png)
@@ -372,9 +374,6 @@ La règle du « bon suffixe » consiste à calculer une seconde table :
 |`ACTC`|4||
 |`CACTC`|4||
 
-
-L'algorithme de Boyer Moore consiste à prendre à chaque étape le plus grand saut entre les deux tables .
-
-
+L'algorithme de Boyer Moore consiste à prendre à chaque étape le plus grand saut entre les deux tables.
 
 On peut regarder l'animation de [http://fred.boissac.free.fr/AnimsJS/recherchetextuelle/index.html](http://fred.boissac.free.fr/AnimsJS/recherchetextuelle/index.html)
