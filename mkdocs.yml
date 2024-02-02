@@ -160,9 +160,10 @@ nav:
  # -Gestion des processus et des ressources par un système d'exploitation
     - Protocoles de routage: architectures-materielles-et-systemes-d-exploitation/4-routage.md
  # -Sécurisation des communications
- # Algorithmique:
+ - Algorithmique:
+    - algorithmique/index.md
  #Algorithmes sur les arbres binaires et sur les arbres binaires de recherche
  #Algorithmes sur les graphes
  #Méthode « diviser pour régner »
  #Programmation dynamique
- #Recherche textuelle
+    - Recherche textuelle: algorithmique/recherche-textuelle.md
