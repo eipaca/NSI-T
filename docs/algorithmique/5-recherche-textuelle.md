@@ -19,17 +19,17 @@ Le `T` du motif ne correspond pas au `C` de la chaine. On décale le motif d'un 
 
 ![Recherche naïve - étape 2](assets/5-naive-2.png)
 
-Le `T` correspond à celui de la chaine, on compare les caractères suivants à droite : le `C` ne correspond pas au `T`. On décale d'un caractère à droite :
+Le `T` du motif correspond à celui de la chaine, on compare les caractères suivants à droite : le `C` ne correspond pas au `T`. On décale le motif d'un caractère à droite :
 
 ![Recherche naïve - étape 3](assets/5-naive-3.png)
 
-Le `T` et le `C` correspondent à la chaine, mais pas le `A`. On décale d'un caractère :
+Le `T` puis le `C` du motif correspondent à la chaine, mais pas le `A`. On décale le motif d'un caractère :
 
 ![Recherche naïve - étape 4](assets/5-naive-4.png)
 
-Le `T` ne  correspond pas au `C` de la chaine. On décale d'un caractère :
+Le `T` du motif ne  correspond pas au `C` de la chaine. On décale le motif  d'un caractère :
 
-L'opération se répète jusqu'à trouver tous les caractères du motif qui correspondent. 
+L'opération se répète jusqu'à trouver tous les caractères du motif qui correspondent à ceux de la chaine. 
 
 ![Recherche naïve - étape 5](assets/5-naive-5.png)
 
@@ -43,10 +43,6 @@ Le recherche naïve est très longue car il faut parcourir toute la chaîne, car
 Traduit en Python, on obtient le programme suivant :
 
 ``` py linenums="1"
-
-chaine = 'CTTCCGCTCGTATTCGTCTCACTCG'
-motif = 'TCACTC'
-
 
 def naive(motif, chaine):
     """ str, str -> list
@@ -65,6 +61,10 @@ def naive(motif, chaine):
         i = i + 1   # on décale d'un caractère à droite
     return positions
 
+
+chaine = 'CTTCCGCTCGTATTCGTCTCACTCG'
+motif = 'TCACTC'
+
 assert naive(motif, chaine) == [18]
 assert naive('AAA', 'AAAAA') == [0, 1, 2]
 assert naive('AT', 'ATATAT') == [0, 2, 4]
@@ -72,8 +72,8 @@ assert naive('AZ', chaine) == []
 
 ```
 
-![La valeur finale de i est n-m inclus](assets/5-naive-i-final-light-mode.png#only-light){width="25%" align=right}
-![La valeur finale de i est n-m inclus](assets/5-naive-i-final-dark-mode.png#only-dark){width="25%" align=right}
+![La valeur finale de i est n-m inclus](assets/5-naive-i-final-light-mode.png#only-light){width="30%" align=right}
+![La valeur finale de i est n-m inclus](assets/5-naive-i-final-dark-mode.png#only-dark){width="30%" align=right}
 
 Attention à prendre soin de terminer la boucle sur le dernier caractère quand `i` vaut `n – m` **inclus**.
 
@@ -85,22 +85,26 @@ On constate que si l'algorithme fonctionne très bien, il est coûteux en temps 
 Une première modification consiste à inverser l'ordre des caractères à comparer : on part du dernier caractère du motif et s'il correspond à celui de la chaîne on passe au caractère précédent jusqu'à trouver une discordance ou avoir parcouru l'ensemble du motif (on a alors trouvé le motif).
 
 ![Recherche naïve à rebours - étape 1](assets/5-rebours-1.png)
-Le `C` du motif  ne correspond pas au `G` de la chaine, on décale d'un caractère à droite. 
+
+Le `C` du motif  ne correspond pas au `G` de la chaine, on décale le motif d'un caractère à droite et on essaie à nouveau :
 
 ![Recherche naïve à rebours - étape 2](assets/5-rebours-2.png)
-Le `C`  correspond, mais le `T` ne correspond pas au `G` de la chaine, on décale d'un caractère à droite.
+
+Le `C` du motif correspond à celui de la chaine, mais le `T` ne correspond pas au `G`, on décale le motif d'un caractère à droite :
 
 ![Recherche naïve à rebours - étape 3](assets/5-rebours-3.png)
 
-Le `C`  ne correspond pas au `T`, on décale d'un caractère à droite.
+Le `C` du motif ne correspond pas au `T`, on décale le motif d'un caractère à droite :
 
 ![Recherche naïve à rebours - étape 4](assets/5-rebours-4.png)
 
-Le `A`  puis le `T` correspondent à la chaine, mais pas le `C`, on décale d'un caractère à droite,  et ainsi de suite...
+Le dernier `C`, puis le `T`  et encore le `C` correspondent aux caractères de la chaine, mais pas le `A`, on décale le motif d'un caractère à droite :
 
-On modifie donc le code Python de la façon suivante :
+Et ainsi de suite...
 
-``` py linenums="13"
+Il suffit de modifier le code de la fonction Python pour parcourir les caractères du motif de droite à gauche, c'est-à-dire que `j` aille de `n - 1` à `0` en décroissant :
+
+``` py linenums="9"
     while i <= n - m:
         j = m -  1       # position du caractère dans le motif
         while j >= 0 and chaine[i + j] == motif[j]:
@@ -124,55 +128,58 @@ Dans la recherche naïve, lorsque que le dernier caractère ne correspond pas à
 
 ![Recherche Horspool - étape 1](assets/5-horspool-1.png)
 
-Le `C` ne correspond pas au `G` de la chaine. Plutôt que de décaler le motif d'une seule position vers la droite, on voit qu'il y n'y a pas de  `G`  dans le motif, on peut donc « sauter »  de toute la longueur du motif, et gagner beaucoup de temps :
+Le `C` du motif ne correspond pas au `G` de la chaine. Plutôt que de décaler le motif d'un seul caractère vers la droite, on voit qu'il y n'y a aucun `G` dans tout le motif, on peut donc « sauter »  de toute la longueur du motif, et gagner beaucoup de temps :
 
 ![Recherche Horspool - étape 2](assets/5-horspool-2.png)
 
-Le `C` ne correspond pas au `A` de la chaine, mais il y a un `A` dans la chaîne 3 caractères à gauche du dernier caractère du motif, on peut donc aligner immédiatement ce dernier `A` du motif en « sautant »  de 3 caractères :
+Le `C` du motif ne correspond pas au `A` de la chaine, mais il y a un `A` dans la chaîne.  Alignons le motif sur ce `A` de la chaine à la fin motif. Il y a un seul `A` dans le motif qui pourrait correspondre, il est placé 3 caractères avant le dernier caractère du motif. On peut aligner ce `A` du motif sur celui de la chaine en « sautant » de 3 caractères :
+
 
 
 ![Recherche Horspool - étape 3](assets/5-horspool-3.png)
 
-Le `C` ne correspond pas au `T` de la chaine.  Il y a un `T`dans le motif 5 caractères à gauche du dernier caractère du motif et un autre 1 caractère à gauche. On peut aligner ce dernier  `T` du motif en « sautant » de 1 caractère. 
+Le dernier `C` puis le `T` du motif correspondent aux caractères de la chaine, mais pas le `C` encore avant. Alignons le motif sur le `C` de la chaine à la fin motif. Il y a deux `C` dans le motif qui pourraient correspondre, un placé 5 caractères avant le dernier caractère du motif et un autre 2 caractères avant.
+
+On ne peut pas aligner le premier `C`, placé 5 caractères avant le dernier caractère du motif, car on irait trop loin en « ratant »  l'essai du second `C`. Alignons plutôt le deuxième `C`, celui placé 2 caractères avant le dernier caractère du motif, sur celui de la chaine en « sautant » de 2 caractères :
 
 
 ![Recherche Horspool - étape 4](assets/5-horspool-4.png)
 
-Le `C` ne correspond pas au `T` de la chaine, mais il y a un `T` dans la chaîne 1 caractère à droite du dernier caractère du motif. On aligne ce `T` du motif en décalant de 1 caractère :
+Le `C` du motif ne correspond pas au `T` de la chaine. Alignons le motif sur ce `T` de la chaine à la fin motif. Il y a deux `T` dans le motif qui pourraient correspondre, un placé 6 caractères caractères avant le dernier caractère du motif et un autre 1 caractère avant. On choisit le deuxième `T` du motif pour l'aligner sur celui de la chaine en « sautant » de 1 caractère :
 
 ![Recherche Horspool - étape 5](assets/5-horspool-5.png)
 
-Le `C` et le `T`  correspondent à la chaine, mais ensuite le  `C` ne correspond pas au `G`, on « saute » de 2 caractères pour aligner les `C` :
+Le `C` et le `T` du motif correspondent aux caractères de la chaine, mais ensuite le  `C` ne correspond pas au `G`, on « saute » de 2 caractères pour aligner les `C` :
 
 ![Recherche Horspool - étape 6](assets/5-horspool-6.png)
 
-Le `C`, le `T` et le `C` correspondent, mais pas le `A` au `T` de la chaine, on « saute » de 2 caractères pour aligner les `C` :
+Le `C`, le `T` et le `C` du motif correspondent aux caractères de la chaine, mais pas le `A` au `T` de la chaine, on « saute » de 2 caractères pour aligner les `C` :
 
 ![Recherche Horspool - étape 7](assets/5-horspool-7.png)
 
-Le `C` correspond, mais pas le `T` avec le `A` de la chaine , on « saute » de 2 caractères pour aligner les `C` :
+Le `C` du motif correspond à la chaine, mais pas le `T` avec le `A` de la chaine , on « saute » encore de 2 caractères pour aligner les `C` :
 
 ![Recherche Horspool - étape 8](assets/5-horspool-8.png)
 
-Tous les caractères correspondent. On a trouvé le motif en 8 étapes, au lieu de 18 avec l'algorithme naïf !
+Tous les caractères du motif correspondent à ceux de la chaine. On a trouvé le motif en 8 étapes, au lieu de 18 avec l'algorithme naïf !
 
-On voit que le saut est déterminé par le caractère de la chaine qui est aligné sur le dernier caractère du motif. Ce saut est toujours le même pour un même caractère, quelle que soit la position où la différence est trouvée. Ici, dans notre exemple :
+On voit que le saut est déterminé par le **caractère de la chaine qui est aligné sur le dernier caractère du motif**, appelons le « **caractère de droite** » . Ce saut est toujours le même pour un même caractère, quelle que soit la position où la différence est trouvée. Ici, dans notre exemple :
 
--   Quand cette lettre est un `A` on fait toujours un saut de 3 caractères.
+-   Quand le caractère de droite est un `A`, on fait toujours un saut de 3 caractères.
 
 ![Saut quand la lettre est A](assets/5-horspool-saut-A.png){height="10%"}
 
--	Quand ce caractère est un `C` on fait toujours un saut de 2 caractères quelle que soit la position du caractère différent de la chaine.
+-	Quand le caractère de droite est un `C`, on fait toujours un saut de 2 caractères quelle que soit l'endroit où l'on trouve une différence avec la chaine.
 
 ![Un exemple de saut quand la lettre est C](assets/5-horspool-saut-C.png){height="10%" }
 
 
 
-On voit aussi que si un caractère apparaît plusieurs fois dans le motif, on ne garde que celui qui est le plus à droite.  Par exemple, ici `T` apparaît plusieurs fois dans le motif, on calcule le saut pour `T` en considérant celui qui est le plus à droite du motif, c'est-à-dire 1.
+On voit aussi que si le caractère de droite apparaît plusieurs fois dans le motif, on ne considère que celui qui est le plus à droite du motif.  Par exemple, ici `T` apparaît plusieurs fois dans le motif, on calcule le saut pour `T` en considérant celui qui est le plus à droite du motif, c'est-à-dire 1.
 
 ![Saut quand la lettre est T](assets/5-horspool-saut-T.png){height="10%"}
 
-Enfin, on voit que le dernier caractère du motif  n'est pas pris en compte pour calculer le saut correspondant (puisqu'il aurait un saut de 0). Par exemple, ici le dernier `C` n'est pas pris en compte pour calculer le saut correspondant à `C`, on prend en compte celui qui est 2 caractères avant.
+Enfin, on voit que le dernier caractère du motif n'est pas pris en compte pour calculer le saut correspondant (puisqu'il aurait un saut de 0). Par exemple, ici le dernier `C` n'est pas pris en compte pour calculer le saut correspondant au caractère de droite `C`, on considère celui qui est 2 caractères avant le dernier caractère du motif.
 
 ![Un exemple de saut quand la lettre est C (en ignorant le dernier caractére)](assets/5-horspool-saut-C-2.png){height="10%" }
 
@@ -190,7 +197,7 @@ Un dictionnaire Python permet d'enregistrer simplement les valeurs des sauts cal
 !!! abstract "Cours" 
     L'algorithme de Horspool consiste à comparer les caractères du motif avec ceux de la chaine un par un en remontant **de droite à gauche** jusqu'à trouver une différence.
 
-    Quand une différence est trouvée, on regarde le **caractère de la chaine tout à droite du motif**. 
+    Quand une différence est trouvée, on regarde le **caractère de la chaine aligné sur le dernier caractère du motif**. 
 
     -   Si ce caractère est présent dans le motif, on décale le motif d'un **saut** pour aligner ce caractère de la chaine avec sa **dernière** occurence dans le motif.
 
@@ -254,21 +261,20 @@ On présente ici une version de l'algorithme de Boyer-Moore que l'on trouve sur 
 
 On peut généraliser l'idée du saut calculé sur la lettre alignée avec le dernier caractère du motif en calculant le saut sur le premier mauvais caractère.
 
-Comme avec Horspool, quand on trouve un caractère qui n'est pas présent dans le motif, on peut « sauter »  derrière celui-ci :
 
 ![Recherche Boyer-Moore - étape 1](assets/5-horspool-1.png)
 
-Le `C` ne correspond pas au `G` de la chaine. Il y n'y a pas de `G`  dans le motif, on « saute »  de toute la longueur du motif :
+Comme avec Horspool, quand on trouve dans la chaine un caractère qui n'est pas présent dans le motif, on peut « sauter »  derrière celui-ci. Le `C` du motif ne correspond pas au `G` de la chaine. Il y n'y a aucun `G` dans le motif, on « saute » de toute la longueur du motif :
 
 ![Recherche Boyer-Moore - étape 2](assets/5-horspool-2.png)
 
-Le `C` ne correspond pas au `A` de la chaine, mais il y a un `A` dans la chaîne 3 caractères à droite du dernier caractère du motif. On peut aligner ce dernier `A` du motif en « sautant » de 3 caractères.
+Le `C` du motif ne correspond pas au `A` de la chaine, mais il y a un `A` dans la chaîne 3 caractères à droite du dernier caractère du motif. On peut aligner ce dernier `A` du motif en « sautant » de 3 caractères ( de la même façon qu'avec Horspool) :
 
 ![Recherche Boyer-Moore - étape 3](assets/5-boyer-moore-3.png)
 
-Le `C` et le `T` correspondent, mais pas le `C`  avec le `T` de la chaine. Plutôt que de calculer le saut en fonction du `C` comme avec Horspool, c'est-à-dire un saut de 2 caractères,  on utilise le premier mauvais caractère, ici `T`. Il y a un `T` dans le motif à gauche du mauvais caractère, on peut aligner ces `T` et  sauter de 3 caractères.  Attention, on ne prend pas en compte le `T` dans le motif à droite du mauvais caractère.
+Le `C` et le `T` du motif correspondent à la chaine, mais pas le `C`  avec le `T` de la chaine. Plutôt que de calculer le saut en fonction du `C` comme avec Horspool (c'est-à-dire un saut de 2 caractères), on utilise le premier **mauvais caractère**, ici `T`, pour calculer le saut. Il y a un `T` dans le motif à gauche du mauvais caractère, on peut aligner ces `T` et  sauter de 3 caractères.  Attention, on ne prend pas en compte le `T` dans le motif à droite du mauvais caractère.
 
-C'est comme si on calculait la table des sauts pour un motif réduit `TCAC` :
+C'est comme si on calculait la table des sauts pour un motif réduit à la gauche du mauvais caractère, `TCAC` :
 
 |A|C|T|autres|
 |:-:|:-:|:-:|:-:|
@@ -276,22 +282,22 @@ C'est comme si on calculait la table des sauts pour un motif réduit `TCAC` :
 
 ![Recherche Boyer-Moore - étape 4](assets/5-boyer-moore-4.png)
 
-Le `C`  et le `T` correspondent, mais pas le `C` avec le `G` de la chaine.  Il n'y a pas de `G` dans la partie droit du motif,  (il n'y en a pas du tout), on « saute » de 4 caractères après ce `G` .
+Le `C`  et le `T` du motif correspondent à la chaine, mais pas le `C` avec le `G` de la chaine.  Il n'y a pas de `G` dans la partie droite du motif (il n'y en a pas du tout), on « saute » de toute la longueur du motif à gauche du mauvais caractère, c'est-à-dire de 4 caractères, pour placer le motif après le `G` :
 
 ![Recherche Boyer-Moore - étape 5](assets/5-boyer-moore-5.png)
 
-Le `C` correspond, mais  pas le  `T` avec le `A`. Le mauvais caractère est un `A` et il y a un `A` à droite du mauvais caractère, on « saute » de 2 caractères pour aligner les `A`. 
+Le `C` du motif correspond à la chaine, mais pas le `T` avec le `A`. Le mauvais caractère est un `A` et il y a un `A` dans le motif à droite du mauvais caractère, on « saute » de 2 caractères pour aligner les `A`. 
 
 ![Recherche Boyer-Moore - étape 6](assets/5-boyer-moore-6.png)
 
 Tous les caractères correspondent. On a trouvé le motif en 6 étapes, au lieu de 8 avec Horspool !
 
 
-A la différence de Horspool, les sauts ne dépendent pas que du mauvais caractère dans la chaine, mais aussi de sa position dans le motif.  La table des sauts a donc deux entrées : les caractères du motif et la position j dans le motif à laquelle se trouve le mauvais caractère :
+A la différence de Horspool, les sauts ne dépendent pas que d'un seul caractère dans la chaine (le caractère à droite), ils dépendent du mauvais caractère et de sa position dans le motif.  La table des sauts a donc deux entrées : les mauvais caractères (qui sont dans le motif) et leur position `j` à laquelle on les trouve dans le motif :
 
 -	Pour `j = 5`, les sauts sont calculés sur la position du dernier caractère du motif, on retrouve les sauts de Horspool.
 
--	Pour les autres valeurs de j, il faut calculer les sauts sans prendre en compte les caractères qui coïncident, par exemple pour `j = 3`, les sauts correspondent aux sauts Horpsool pour le motif  `TCAC`, c'est-à-dire en ignorant les derniers caractères `TC` (puisqu'ils coïncident avec la chaîne).
+-	Pour les autres valeurs de `j`, il faut calculer les sauts sans prendre en compte les caractères qui coïncident, par exemple pour `j = 3`, les sauts correspondent aux sauts Horpsool pour le motif  `TCAC`, c'est-à-dire en ignorant les derniers caractères `TC` (puisqu'ils coïncident avec la chaîne).
 
 -	Certaines valeurs ont un `X` pour les caractères qui correspondent au motif (ce n'est pas un mauvais caractère). 
 
@@ -311,9 +317,9 @@ A la différence de Horspool, les sauts ne dépendent pas que du mauvais caract�
 
     Règle du mauvais caractère : Quand une différence est trouvée, on regarde le **caractère de la chaine qui est différent du motif**, c'est le **mauvais caractère**. 
 
-    -   Si ce mauvais caractère est présent dans le motif à gauche de sa position dans la chaine, on décale le motif d'un **saut** pour aligner ce mauvais caractère de la chaine avec sa **dernière** occurence dans le motif à gauche de la différence trouvée.
+    -   Si ce mauvais caractère est présent dans  la partie du motif à gauche de l'emplacement du mauvais caractère, on décale le motif d'un **saut** pour aligner ce mauvais caractère de la chaine avec sa **dernière** occurence dans le motif à gauche de la différence trouvée.
 
-    -   Si ce mauvais caractère n'est pas présent dans le motif, on décale le motif d'un **saut** pour passer au delà de la différence trouvée.
+    -   Si ce mauvais caractère n'est pas présent dans la partie du motif à gauche de l'emplacement du mauvais caractère, on décale le motif d'un **saut** pour passer au delà de la différence trouvée.
 
    
     Prétraitement des sauts :  Pour chaque lettre du motif (sauf la dernière), et pour chaque position du mauvais caractère, le saut à effectuer est égal à l'écart entre la dernière occurrence de cette lettre dans le motif (en restant à gauche du mauvais caractère) et la position du mauvais caractère. On ne calcule pas de saut pour le dernier caractère.
@@ -331,7 +337,7 @@ En Python, on peut construire cette table des sauts avec un tableau de dictionna
  {'A': 3, 'T': 1}]
 ```
 
-La programmation de l'algorithme complet de Boyer-Moore dépasse le niveau attendu en NSI. 
+La programmation de l'algorithme de Boyer-Moore dépasse le niveau attendu en NSI. 
 
 ``` py linenums="1"
 def table_sauts_bm(motif):
@@ -375,15 +381,23 @@ Dans le cas où certains caractères du motif correspondent à ceux de la chaine
 Reprenons à l'étape 3 :
 ![Recherche Boyer-Morre avec la règle du bon suffixe - étape 3](assets/5-boyer-moore-3-bs.png)
 
-Le `C` et le `T` correspondent, mais pas le `C`  avec le `T` de la chaine. Plutôt que de calculer le saut en fonction du `C` comme avec Horspool, c'est-à-dire un saut de 2 caractères,  on utilise le premier mauvais caractère, ici `T`. Il y a un `T` dans le motif à gauche du mauvais caractère, on peut aligner ces `T` et  sauter de 3 caractères.  Attention, on ne prend pas en compte le `T` dans le motif à droite du mauvais caractère. On applique la meilleure des deux :
+Le `C` et le `T` du motif correspondent à la chaine, mais pas le `C`  avec le `T` de la chaine. 
+
+La règle du mauvais caractère, ici `T`, nous dit d'aligner ce  `T` avec le `T` du motif placé à gauche du mauvais caractère, c'est à dire un saut de 3 caractères.
+
+On observe par ailleurs que les deux premiers caractères du motif que l'on a comparés à la chaine, le `C` et le `T` du motif, étaient « bons », ils forment un « **bon suffixe** ». Hors ce bon suffixe apparait aussi dans le motif, tout à gauche du motif, et pas après. On peut donc aussi aligner ces bons suffixes, ce qui permet de faire un saut de 4 caractères.
+
+L'algorithme de Boyer-Moore applique le meilleur des deux, c'est un saut de 4 caractères :
 
 ![Recherche Boyer-Morre avec la règle du bon suffixe - étape 4](assets/5-boyer-moore-4-bs.png)
 
-Ici, le mauvais caractère est `T`, la règle du « mauvais caractère » nous permet d'aligner ce `T` avec le `T` du motif à gauche, c'est-à-dire de « sauter » d'1 caractère. 
+Ici, le mauvais caractère est `T`, la règle du  mauvais caractère nous permet d'aligner ce `T` avec le `T` du motif à gauche, c'est-à-dire de « sauter » d'1 caractère. Il n'y a pas de bon suffixe, on saute d'un caractère :
 
 ![Recherche Boyer-Morre avec la règle du bon suffixe - étape 5](assets/5-boyer-moore-5-bs.png)
 
-Le `T` correspondant `A` du motif est le mauvais caractère, la règle du « mauvais caractère » nous permettrait de « sauter » de 2 caractères. Mais on a encore un bon suffixe, `TC`, on peut donc faire mieux et aligner les `TC` en « sautant » de 4 caractères. On applique la meilleure des deux règles :
+Le `C`, puis le `T`, puis le `C` du motif correspondent à la chaine, mais le `A` ne correspond pas au `T` de la chaine. On a donc un mauvais caractère `T` et un bon suffixe `CTC` .
+
+La règle du « mauvais caractère » nous permet de « sauter » de seulement 2 caractères (on ne prend en compte que le premier `T` du motif, le second est trop à droite). La règle du bon suffixe nous permet d'aligner les `TC` en « sautant » de 4 caractères. On applique la meilleure des deux règles :
 
 ![Recherche Boyer-Morre avec la règle du bon suffixe - étape 6](assets/5-boyer-moore-6-bs.png)
 
