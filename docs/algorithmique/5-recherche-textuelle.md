@@ -169,7 +169,7 @@ On voit que le saut est déterminé par le **caractère de la chaine qui est ali
 
 ![Saut quand la lettre est A](assets/5-horspool-saut-A.png){height="10%"}
 
--	Quand le caractère de droite est un `C`, on fait toujours un saut de 2 caractères quelle que soit l'endroit où l'on trouve une différence avec la chaine.
+-	Quand le caractère de droite est un `C`, on fait toujours un saut de 2 caractères quel que soit l'endroit où l'on trouve une différence avec la chaine.
 
 ![Un exemple de saut quand la lettre est C](assets/5-horspool-saut-C.png){height="10%" }
 
