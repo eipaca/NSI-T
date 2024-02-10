@@ -11,17 +11,17 @@
     -	**pondéré**, chaque arête porte une valeur (aussi appelée poids ou coût).
 
     === "graphe non orienté"
-        ![Exemple de graphe non orienté](assets/8-graphe-0-light-mode.png#only-light){width="30%"}
-        ![Exemple de graphe non orienté](assets/8-graphe-0-dark-mode.png#only-dark){width="30%"}
+        ![Exemple de graphe non orienté](assets/8-graphe-ABCD-non-oriente-light-mode.png#only-light){width="30%"}
+        ![Exemple de graphe non orienté](assets/8-graphe-ABCD-non-oriente-dark-mode.png#only-dark){width="30%"}
     
 
     === "graphe orienté"
-        ![Exemple de graphe orienté](assets/8-graphe-1-light-mode.png#only-light){width="30%"}
-        ![Exemple de graphe orienté](assets/8-graphe-1-dark-mode.png#only-dark){width="30%"}
+        ![Exemple de graphe orienté](assets/8-graphe-ABCD-oriente-light-mode.png#only-light){width="30%"}
+        ![Exemple de graphe orienté](assets/8-graphe-ABCD-oriente-dark-mode.png#only-dark){width="30%"}
 
     === "graphe pondéré"
-        ![Exemple de graphe pondéré](assets/8-graphe-2-light-mode.png#only-light){width="30%"}
-        ![Exemple de graphe pondéré](assets/8-graphe-2-dark-mode.png#only-dark){width="30%"}
+        ![Exemple de graphe pondéré](assets/8-graphe-ABCD-pondere-light-mode.png#only-light){width="30%"}
+        ![Exemple de graphe pondéré](assets/8-graphe-ABCD-pondere-dark-mode.png#only-dark){width="30%"}
 
 
 Les graphes trouvent de nombreuses applications en informatique, par exemple dans une modélisation de réseau de routeurs, de réseau social, de réseau routier, de labyrinthe, etc.
@@ -33,17 +33,17 @@ Les graphes trouvent de nombreuses applications en informatique, par exemple dan
     Deux sommets reliés entre eux par une arête sont dits **adjacents** ou **voisins**.
 
     === "voisinage de A dans un graphe orienté"
-        ![Voisinage de A dans un graphe orienté](assets/8-graphe-3-light-mode.png#only-light){width="30%"}
-        ![Voisinage de A dans un graphe orienté](assets/8-graphe-3-dark-mode.png#only-dark){width="30%"}
+        ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-A-light-mode.png#only-light){width="30%"}
+        ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-A-dark-mode.png#only-dark){width="30%"}
     
 
     === "voisisage de D dans un graphe orienté"
-        ![Voisisage de D dans un graphe orienté](assets/8-graphe-4-light-mode.png#only-light){width="30%"}
-        ![Voisisage de D dans un graphe orienté](assets/8-graphe-4-dark-mode.png#only-dark){width="30%"}
+        ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-D-light-mode.png#only-light){width="30%"}
+        ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-D-dark-mode.png#only-dark){width="30%"}
 
     === "voisinage de D dans un graphe non orienté"
-        ![Voisisage de D dans un graphe non orienté](assets/8-graphe-5-light-mode.png#only-light){width="30%"}
-        ![Voisisage de D dans un graphe non orienté](assets/8-graphe-5-dark-mode.png#only-dark){width="30%"}
+        ![Voisisage de D dans un graphe non orienté](assets/8-graphe-non-oriente-voisinage-D-light-mode.png#only-light){width="30%"}
+        ![Voisisage de D dans un graphe non orienté](assets/8-graphe-non-oriente-voisinage-D-dark-mode.png#only-dark){width="30%"}
 
     Le **degré** d'un sommet est le nombre d'arêtes issues de ce sommet. La somme des degrés des sommets est le double du nombre d'arêtes du graphe[^8.1].
 
@@ -52,8 +52,8 @@ Les graphes trouvent de nombreuses applications en informatique, par exemple dan
 
 Un même graphe peut avoir de nombreuses représentations graphiques. Voici trois représentation d'un même graphe :
 
-![Trois représentation d'un même graphe ](assets/8-graphe-6-light-mode.png#only-light)
-![Trois représentation d'un même graphe ](assets/8-graphe-6-dark-mode.png#only-dark)
+![Trois représentation d'un même graphe ](assets/8-graphe-3-representations-light-mode.png#only-light)
+![Trois représentation d'un même graphe ](assets/8-graphe-3-representations-dark-mode.png#only-dark)
 
 !!! abstract "Cours"
     Un **chemin** (ou **chaine** pour les graphes non orientés) est une suite de sommets reliés par des arêtes. 
@@ -64,15 +64,15 @@ Remarque : dans un graphe orienté, il peut exister un chemin menant du sommet x
 
 Exemple : chemin menant de A à C, que l'on peut noter A→B→D→C
 
-![Chemin menant de A à C passant par B et D](assets/8-graphe-7-light-mode.png#only-light){width="30%"}
-![Chemin menant de A à C passant par B et D](assets/8-graphe-7-dark-mode.png#only-dark){width="30%"}
+![Chemin menant de A à C passant par B et D](assets/8-graphe-chemin-A-B-D-C-light-mode.png#only-light){width="30%"}
+![Chemin menant de A à C passant par B et D](assets/8-graphe-chemin-A-B-D-C-dark-mode.png#only-dark){width="30%"}
 
 !!! abstract "Cours"
     La **distance** entre deux sommets d'un arbre est la longueur (nombre d'arêtes) du **chemin le plus court** (s'il y en a un) reliant ces deux sommets.
 
 Exemple : la distance entre A et C est la distance du plus court chemin de A à C (A→D→C), soit 2 (arêtes).
-![Distance de A à C ](assets/8-graphe-8-light-mode.png#only-light){width="30%"}
-![Distance de A à C ](assets/8-graphe-8-dark-mode.png#only-dark){width="30%"}
+![Distance de A à C ](assets/8-graphe-chemin-A-D-C-light-mode.png#only-light){width="30%"}
+![Distance de A à C ](assets/8-graphe-chemin-A-D-C-dark-mode.png#only-dark){width="30%"}
 
 
 !!! abstract "Cours"
@@ -84,8 +84,8 @@ Exemple : la distance entre A et C est la distance du plus court chemin de A à 
 
 Exemple : Un graphe orienté connexe, mais pas fortement connexe (il n'existe pas de chemin menant à A).
 
-![Un graphe connexe mais pas fortement connexe](assets/8-graphe-ABCD-light-mode.png#only-light){width="30%"}
-![Un graphe connexe mais pas fortement connexe](assets/8-graphe-ABCD-dark-mode.png#only-dark){width="30%"}
+![Un graphe connexe mais pas fortement connexe](assets/8-graphe-ABCD-oriente-light-mode.png#only-light){width="30%"}
+![Un graphe connexe mais pas fortement connexe](assets/8-graphe-ABCD-oriente-dark-mode.png#only-dark){width="30%"}
 
 !!! abstract "Cours"
     Un chemin **eulérien** est un chemin dans le graphe qui passe par toutes les arêtes juste une seule fois. Si ce chemin est fermé, on parlera de cycle eulérien. Un graphe est dit eulérien s'il possède un cycle eulérien.
@@ -234,23 +234,34 @@ G.ajouter_arc("D", "B")  # arc de D vers B
 G.ajouter_arc("D", "C")  # arc de D vers C
 ```
 
-Et ajoutons des méthodes qui renvoient les degrés d'un nœud et ses voisins :
+Et ajoutons des méthodes qui renvoient les voisins et le degré d'un nœud :
 
 ``` py
-    def degre(self, s):
-        """ renvoie le degre de s """
-        assert s in self.sommets, 'sommet inexistant'
-        i = self.sommets.index(s)
-        return sum(self.matrice[i])
-
     def voisins(self, s):
-        """ renvoie la liste des voisins de s"""
-        assert s in self.sommets, 'sommet inexistant'
-        i = self.sommets.index(s)
+        """ renvoie les voisins de s"""
+        n = self.sommets.index(s)
         v = []
-        for j in range(self.ordre()):
-            if self.matrice[i][j] == 1: v.append(self.sommets[j])
+        for i in range(self.ordre()):
+            if self.matrice[n][i] == 1:
+                v.append(self.sommets[i])
         return v
+
+    def degre(self, s):
+        """ renvoie le degre de s"""
+        n = self.sommets.index(s)
+        d = 0
+        for i in range(self.ordre()):
+            if self.matrice[n][i] == 1:    # les arêtes partant de A
+                d += 1
+            if self.matrice[i][n] == 1:    # les arêtes arrivant en A
+                d += 1
+        if self.oriente:
+            return d
+        # si le graphe n'est pas orienté, on a compté les arêtes 2 fois
+        else:
+            return d//2
+
+
 ```
 
 Affichons enfin la matrice avec un peu de formatage :
@@ -283,7 +294,7 @@ Avantages et Inconvénients de cette structure :
 
 -	La dimension de la matrice est égale au carré du nombre de sommets ($n \times n$), ce qui peut représenter un important espace en mémoire.
 
--	Pour obtenir les voisins d'un sommet, il faut une utiliser une fonction de coût d'ordre $O(n)$.
+-	Le fonction pour obtenir les voisins d'un sommet a un coût d'ordre $O(n)$.
 
 
 ### Liste ou dictionnaire d'adjacence
@@ -294,8 +305,8 @@ Avantages et Inconvénients de cette structure :
 
     Dans un **graphe orienté**, la **liste des successeurs** associe chaque sommet à la liste des sommets que l'on peut atteindre directement par un arc à partir de ce sommet ; et la **liste des prédécesseurs** donne la liste des sommets menant à ce sommet.
 
-![Le graphe ABCD](assets/8-graphe-ABCD-light-mode.png#only-light){width="30%" align="right"}
-![Le graphe ABCD](assets/8-graphe-ABCD-dark-mode.png#only-dark){width="30%" align="right"}
+![Le graphe ABCD](assets/8-graphe-ABCD-oriente-light-mode.png#only-light){width="30%" align="right"}
+![Le graphe ABCD](assets/8-graphe-ABCD-oriente-dark-mode.png#only-dark){width="30%" align="right"}
 
 Exemple : le dictionnaire d'adjacence du graphe ci-contre : 
 
