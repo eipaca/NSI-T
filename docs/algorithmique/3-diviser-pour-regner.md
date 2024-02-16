@@ -1,4 +1,4 @@
-# Méthode « diviser pour régner »
+﻿# Méthode « diviser pour régner »
 
 !!! abstract "Cours" 
 
@@ -160,9 +160,9 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
     ``` py
     def tri_selection(T):
         n = len(T)
-        for i in range(n - 1):
+        for i in range(n-1):
             mini = i
-            for j in range(i + 1, n):
+            for j in range(i+1, n):
             if T[j] < T[mini]:
                 mini = j
             T[i], T[mini] = T[mini], T[i]
@@ -196,16 +196,13 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
         for i in range(n):
             for j in range(n-i-1):
             if T[j] > T[j+1]:
-                T[j],T[j+1] = T[j+1],T[j]
+                T[j], T[j+1] = T[j+1], T[j]
         return T
     ```
 
-Ces algorithmes sont considérés comme inefficaces car d'une **complexité quadratique en $O(n^2)$**.
+Ces algorithmes sont considérés comme inefficaces car d'une **complexité quadratique en $O(n^2)$**. 
 
-Le principe du tri fusion consiste à réunir deux tableaux triés en un seul (leur « fusion »). L'efficacité de l'algorithme vient du fait que deux tableaux triés peuvent être fusionnés en temps linéaire.
-
-À partir de deux tableaux triés, on peut facilement construire un nouveau tableau trié comportant les éléments issus de ces deux tableaux. En effet, le plus petit élément du tableau à construire est soit le plus petit élément du premier tableau, soit le plus petit élément du deuxième.
-
+L'efficacité du tri fusion repose sur la facilité de réunir deux tableaux triés en un seul (leur « fusion »). En effet, pour construire le nouveau tableau élément par élément, il suffit de choisir à chaque fois le plus petit entre le premier élément du premier tableau et le premier élément du second tableau. Inutile de regarder les éléments suivants de chaque tableau puisqu'ils seront plus grands que les premiers. De cette façon, la fusion entre deux tableaux triés se fait en temps linéaire.
 
 Tri Fusion d'un tableau  `T[1, .. n]` :
 
