@@ -216,24 +216,28 @@ Tri Fusion d'un tableau  `T[1, .. n]` :
 ![Exemple de tri fusion. Source wikipedia](assets/3-tri-fusion-light-mode.png#only-light){width="30%" align=right}
 ![Exemple de tri fusion. Source wikipedia](assets/3-tri-fusion-dark-mode.png#only-dark){width="30%" align=right}
 
-Commençons par écrire une fonction qui fusionne deux tableaux triés T1 et T2. On construit le nouveau tableau élément par élément en retirant tantôt le premier élément du premier tableau, tantôt le premier élément du deuxième tableau (en fait, le plus petit des deux, à supposer qu'aucun des deux tableaux ne soit vide, sinon la réponse est immédiate).
+Commençons par écrire une fonction qui fusionne deux tableaux triés T1 et T2. On construit le nouveau tableau élément par élément en retirant tantôt le premier élément du premier tableau, tantôt le premier élément du deuxième tableau, en prenant à chaque fois le plus petit des deux (à supposer qu'aucun des deux tableaux ne soit vide, sinon la réponse est immédiate).
 
 En voici une version itérative[^3.1] : 
-``` py
+
+``` py linenums="1"
 def fusion(T1: list, T2: list) -> list:
     """ (list, list) -> list
     T1 et T2 sont des tableaux triés
-    renvoie le tableau trié des éléments de T1 et T2 ensembles
+    Renvoie le tableau trié des éléments de T1 et T2 ensembles
     """
     T = []
-    i1, i2 = 0, 0
+    i1, i2 = 0, 0     # Indices des éléments à comparer de T1 et T2
+    # Tant qu'il reste des éléments dans les deux tableaux
     while i1 < len(T1) and i2 < len(T2):
+        # On ajoute le plus petit des deux éléments dans T
         if T1[i1] <= T2[i2]:
             T.append(T1[i1])
             i1 += 1
         else:
             T.append(T2[i2])
             i2 += 1
+    # Un des deux tableaux et vide, on transfère tous les élements restants dans T
     while i1 < len(T1):
         T.append(T1[i1])
         i1 += 1
@@ -244,7 +248,7 @@ def fusion(T1: list, T2: list) -> list:
 
 ```
 
-[^3.1]: Il existe aussi une version recursive en utilisant les tranches de tableau :
+[^3.1]: Il existe aussi une version récursive en utilisant les tranches de tableau :
     ``` py
     def fusion(T1: list, T2: list) -> list:
         """ (list, list) -> list
@@ -262,20 +266,22 @@ def fusion(T1: list, T2: list) -> list:
 A partir de là, le tri-fusion se construit naturellement de façon récursive :
 
 1.	Si le tableau n'a qu'un élément, il est déjà trié.
-2.	Sinon, séparer le tableau en deux parties à peu près égales.
+2.	Sinon, "diviser" le tableau en deux parties à peu près égales.
 3.	Trier récursivement les deux parties avec l'algorithme du tri fusion.
 4.	Fusionner les deux tableaux triés en un seul tableau trié.
 
-``` py
+``` py linenums="1"
 def tri_fusion(T: list) -> list:
     """ (list) -> list
-    renvoie le tableau trié (tri-fusion) des éléments de T
+    Renvoie le tableau trié (tri-fusion) des éléments de T
     """
-    if len(T) <= 1:
+    if len(T) <= 1:            # Si le tableau n'a qu'un élément, il est déjà trié
         return T
     else:
-        T1 = T[:len(T)//2]
+        # On divise en deux parties à peu près égales
+        T1 = T[:len(T)//2]     
         T2 = T[len(T)//2:]
+        # Et on fusionne les deux tableaux après les avoir triés
         return fusion(tri_fusion(T1), tri_fusion(T2))
 ``` 
 
@@ -286,8 +292,15 @@ Etudions la complexité temporelle pour un tableau de taille $n$.  Comme pour l'
 
 Avec un tableau d'un milliard de valeurs, l'algorithme naïf en $O(n^2)$ demande de l'ordre de $10^{18}$ opérations. Avec des ordinateurs effectuant $10^9$ opérations par secondes, il faut de l'ordre de $10^9$ secondes, soit environ 30 ans.
 
-Avec le tri fusion est, le nombre d'opérations est de l'ordre de $10^9 × log_2(10^9) \simeq 10^9 \times 30$, ce qui s'exécute en 30 secondes sur les ordinateurs précédants. 
+Avec le tri fusion est, le nombre d'opérations est de l'ordre de $10^9 × log_2(10^9) \simeq 10^9 \times 30$, ce qui s'exécute en 30 secondes sur les ordinateurs précédants[^3.2]. 
 
+
+[^3.1]:
+    ``` py
+    >>> import math
+    >>> math.log(10**9,2)
+    29.897352853986263
+    ``` 
 
 ## 	Rotation d'une image d'un quart de tour
 
