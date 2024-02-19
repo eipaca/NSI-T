@@ -306,7 +306,8 @@ Avec le tri fusion est, le nombre d'opérations est de l'ordre de $10^9 × log_2
 
 Commençons par analyser un algorithme naïf de rotation d'image pixel par pixel.
 
-Observons la rotation de deux pixel A et B sur le schéma suivant : Le pixel A initialement en position  `[0][0]` devient A' en position `[0][5]`. Le pixel B en `[2][3]` devient B' en `[4][4]`. De façon générale, un pixel en position `[ligne][colonne]` se déplace en position`[colonne][nb pixels – 1 - ligne]`.  
+Observons la rotation de deux pixel A et B sur le schéma suivant : Le pixel  initialement en position  `[2][4]` se déplace en position `[4][3]` dans une iamge de  6 x 6 pixels. 
+De façon générale, un pixel en position `[ligne][colonne]` se déplace en position`[colonne][nb pixels – 1 - ligne]`.  
 
 
 ![Transformation des coordonnées de pixels dans une rotation d'image naive](assets/3-rotation-naive-light-mode.png#only-light)
