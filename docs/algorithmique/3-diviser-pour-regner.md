@@ -116,7 +116,7 @@ Ce programme contient une boucle `while`, il faut donc s'assurer qu'il se termin
 
 Tant qu'on est dans la boucle, le variant de boucle `fin - debut` décroit strictement, la boucle `while debut <= fin:` se terminera donc.
 
-Pour prouver la correction de cet algorithme, on va utiliser la technique de l’invariant de boucle. Ici, un invariant de boucle est : si x est dans T alors `T[debut] <= x <= T[fin]`. Si l'invariant est vrai quand on entre dans la boucle, alors il y a les mêmes trois possibilités :
+Pour prouver la correction de cet algorithme, on va utiliser la technique de l'invariant de boucle. Ici, un invariant de boucle est : si x est dans T alors `T[debut] <= x <= T[fin]`. Si l'invariant est vrai quand on entre dans la boucle, alors il y a les mêmes trois possibilités :
 
 - `x < T[milieu]` : alors la recherche se poursuit dans `T[debut:milieu - 1]`, l'invariant est encore vrai quand on retourbne dans la boucle; 
 - `x > T[milieu]` : alors la recherche se poursuit dans `T[milieu + 1:fin]`, l'invariant est encore vrai quand on retourbne dans la boucle ;  
@@ -306,7 +306,7 @@ Avec le tri fusion est, le nombre d'opérations est de l'ordre de $10^9 × log_2
 
 Commençons par analyser un algorithme naïf de rotation d'image pixel par pixel.
 
-Observons la rotation de deux pixel A et B sur le schéma suivant : Le pixel  initialement en position  `[2][4]` se déplace en position `[4][3]` dans une iamge de  6 x 6 pixels. 
+Observons la rotation de deux pixel A et B sur le schéma suivant : Le pixel  initialement en position  `[2][4]` se déplace en position `[4][3]` dans une image de  6 x 6 pixels. 
 De façon générale, un pixel en position `[ligne][colonne]` se déplace en position`[colonne][nb pixels – 1 - ligne]`.  
 
 
@@ -314,7 +314,7 @@ De façon générale, un pixel en position `[ligne][colonne]` se déplace en pos
 ![Transformation des coordonnées de pixels dans une rotation d'image naive](assets/3-rotation-naive-dark-mode.png#only-dark)
 
 
-Utilisons cette observation pour écrire une rotation pixel par pixel :
+Utilisons cette observation pour écrire une rotation pixel par pixel en utilisant l'import d'une image par la fonction `imread` de `matplotlib.pyplot` qui donne un tableau de tableaux des pixels :
 
 ``` py
 import matplotlib.pyplot as plt
@@ -334,37 +334,37 @@ plt.imshow(image)
 plt.show()
 ```
 
-Avec deux boucles imbriquées de taille $n$ , la complexité temporelle de l'algorithme naif est en $O(n^2)$. 
+Avec deux boucles imbriquées de taille $n$, la complexité temporelle de cet algorithme naif est donc en $O(n^2)$. 
 
 Comparons cette algorithme naïf à une méthode « diviser pour régner » effectuant une rotation d'un quart de tour sur une image carrée, dont le côté est une puissance de 2.
 
-Pour effectuer une rotation d'un quart de tour sur une image :
+1. Considérons l'image suivante de 256 x 256 pixels :
 
-![Image de R2D2 avant rotation](assets/3-rotation-r2d2-1.png){width="25%"}
+    ![Image de R2D2 avant rotation](assets/3-rotation-r2d2-1.png){width="25%"}
 
-on commence par diviser l'image en 4 sous-images :
+2. La première étape consisite à diviser l'image en 4 sous-images :
 
-![Image de R2D2 divisée en 4 sous-images](assets/3-rotation-r2d2-2.png){width="25%"}
+    ![Image de R2D2 divisée en 4 sous-images](assets/3-rotation-r2d2-2.png){width="25%"}
 
-puis on effectue une permutation circulaire des quatre sous-images :
+3. puis à effectuer une permutation circulaire de ces quatre sous-images :
 
-![Image de R2D2 avec chaque sous-image tournée](assets/3-rotation-r2d2-3.png){width="25%"}
+    ![Image de R2D2 avec chaque sous-image tournée](assets/3-rotation-r2d2-3.png){width="25%"}
 
-et enfin une rotation d'un quart de tour pour chaque sous-image :
+4. Effectuons maintenant une rotation d'un quart de tour de chaque sous-image :
 
-![Image de R2D2 avec les sous-image reassemblées](assets/3-rotation-r2d2-4.png){width="25%"}
+    ![Image de R2D2 avec les sous-image reassemblées](assets/3-rotation-r2d2-4.png){width="25%"}
  
+5. Il ne reste plus qu'à réunir les quatres sous-images en une seule. La rotation d'un quart de tour a bien été effectuée.
 
+L'étape 4 consiste à effectuer une rotation des quatres sous-images, la méthode « diviser pour régner » est encore utilisée. Le processus est donc récursif, il se répète jusqu'à obtenir des sous-images qui ne contiennent qu'un seul pixel, un pixel étant uniformément colorié, il est inutile de le tourner.
 
-Le processus est récursif, on le répète jusqu'à obtenir des sous-images ne contient qu'un seul pixel, un pixel étant uniformément colorié, il est inutile de le tourner.
-
-Rotation d'une image d'un quart de tour : 
+Rotation d'une image d'un quart de tour par la méthode « diviser pour régner »: 
 
 |Etape|Description|
 |:--|:--|
 |**Diviser** |Découper l'image en 4 sous-images et effectuer une permutation circulaire |
 |**Régner**	 |Effectuer une rotation d'1/4 de tour pour chaque sous-image|
-|**Combiner**|egrouper les 4 sous-images ensembles|
+|**Combiner**|Réunir les 4 sous-images ensembles|
 
 Voilà ce qu'on obtient étape par étape :
 
@@ -374,43 +374,43 @@ On poursuit sans représenter le quadrillage devenu trop fin pour les deux derni
 
 ![Image de R2D2 trounées](assets/3-rotation-r2d2-6.png){width="50%"} 
 
-Le code suivant applique ce procédé, en utilisant l'import d'une image par la fonction `imread` de `matplotlib.pyplot` qui donne un tableau de tableaux des pixels.
+Traduisons ce processus en Python :
 
 ``` py
 import matplotlib.pyplot as plt
 
 def rotation(image):
     n = len(image)
-    if n > 1:
-        # Diviser en 4 sous image
-        quart_haut_gauche = [[image[i][j] for j in range(n//2)] for i in range(n//2)]
-        quart_haut_droite = [[image[i][j] for j in range(n//2, n)] for i in range(n//2)]
-        quart_bas_gauche = [[image[i][j] for j in range(n//2)] for i in range(n//2, n)]
-        quart_bas_droite = [[image[i][j] for j in range(n//2, n)] for i in range(n//2, n)]
+
+    if n == 1:             # Il ne reste qu'un seul pixel
+        return image       # Inutile de le tourner
+    
+    # Diviser en 4 sous-image
+    # Sous-image qaurt haut gauche
+    hg = [[image[lig][col] for col in range(n//2)] for lig in range(n//2)]
+    # Sous-image qaurt haut droit
+    hd = [[image[lig][col] for col in range(n//2, n)] for lig in range(n//2)]
+    # Sous-image qaurt bas gauche
+    bg = [[image[lig][col] for col in range(n//2)] for lig in range(n//2, n)]
+    # Sous-image qaurt bas droit
+    bd = [[image[lig][col] for col in range(n//2, n)] for lig in range(n//2, n)]
+
+    # Permutation circulaire des 4 sous-images
+    hg, hd, bg, bd = bg, hg, bd, hd
+
+    # Rotation récursive d'1/4 de tour de chaque sous-image
+    hg = rotation(hg)
+    hd = rotation(hd)
+    bd = rotation(bd)
+    bg = rotation(bg)
+
+    # Réunir les 4 sous-images
+    image = []
+    for li in range(n//2):   # les lignes du haut
+        image.append(hg[li] + hd[li])
+    for li in range(n//2):   # les lignes du bas
+        image.append(bg[li] + bd[li])           
         
-        # Permutation circulaire
-        temp = quart_haut_gauche
-        quart_haut_gauche = quart_bas_gauche
-        quart_bas_gauche = quart_bas_droite
-        quart_bas_droite = quart_haut_droite
-        quart_haut_droite = temp
-
-        # Rotation des sous images
-        quart_haut_gauche = rotation(quart_haut_gauche)
-        quart_haut_droite = rotation(quart_haut_droite)
-        quart_bas_gauche = rotation(quart_bas_gauche)
-        quart_bas_droite = rotation(quart_bas_droite)
-
-        # Combiner les 4 sous images ensembles
-        image = []
-        # les lignes du haut
-        for i in range(n//2):
-            image.append([quart_haut_gauche[i][j] for j in range(n//2)] \
-                       + [quart_haut_droite[i][j] for j in range(n//2)])
-        # puis les lignes du bas
-        for i in range(n//2):
-            image.append([quart_bas_gauche[i][j] for j in range(n//2)] \
-                        +[quart_bas_droite[i][j] for j in range(n//2)])
     return image
 
 image = plt.imread('R2D2.jpg')
@@ -420,9 +420,10 @@ plt.show()
 
 ```
 
-Essayons d'estimer la complexité. La fonction `rotation` exécute 4 boucles imbriquées de taille $n/2$ pour découper l'image en 4 sous-image, chaque boucle a donc une compléxité en $O(n^2)$. Ensuite, la fonction fait appel 4 fois à elle-même sur ces images de taille réduite de 2, suivi de boucles imbriquées à nouveau en $O(n^2)$ pour combiner les 4 images. On a donc un nombre d'opérations qui vérifie $C(n) = 4 \times O(n^2) + 4 \times C(n/2) + 4 \times O(n^2)$. On peut montrer par un calcul mathématique que la complexité en temps de rotation est de l'ordre de $O(n^2 \times log_2(n))$.
+Essayons d'estimer la complexité de cette rotation d'un quart de tour. La fonction `rotation` exécute 4 boucles imbriquées de taille $n/2$ pour découper l'image en 4 sous-images, chaque boucle a donc une compléxité en $O(n^2)$. Ensuite, la fonction fait appel 4 fois à elle-même sur ces images d'une taille réduite par un facteur 2, suivi à nouveau de boucles imbriquées en $O(n^2)$ pour combiner les 4 sous-images. On a donc un nombre d'opérations qui vérifie la relation $C(n) = 4 \times O(n^2) + 4 \times C(n/2) + 4 \times O(n^2)$. On peut montrer par un calcul mathématique que la complexité de cette rotation par la méthode est de l'ordre de $O(n^2 \times log_2(n))$, donc un peu moins bonne que celle de l'algorithme naïf[^3.3].
 
-Cette complexité en temps est donc (un peu) moins bonne que celle de l'algorithme naïf. Par contre, dans cette procédure, il n'y a pas de création d'une nouvelle image mais de simples permutations de pixels, un à un. La complexité en mémoire est donc ici en $O(1)$, bien meilleure que celle de l'algorithme naïf.
+[^3.3]: L'implémentation présentée ici de la méthode « diviser pour régner » n'est pas optimale en terme de compléxité spacitale non plus. En copiant les quatre sous-image dans des images temporaires, elle nécessite une utilisation de l'espace place mémoire supérieure à la taille de l'image ! Il existe une implémentation « en place » permettant de réduire l'espace mémoire utilisé. Source: [https://eduscol.education.fr/document/10100/download](https://eduscol.education.fr/document/10100/download)
+
 
 
 ##	Tri Rapide (*quicksort*)
