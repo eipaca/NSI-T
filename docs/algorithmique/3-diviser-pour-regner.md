@@ -481,5 +481,5 @@ tab = [randint(0, 100) for i in range(10000)]
 print(tri_rapide(tab))
 ```
 
-
-Le *quicksort* est un tri dont la complexité moyenne est en $O(n \times log_2(n))$, mais dont la complexité dans le pire des cas est un comportement quadratique en $O(n^2)$. Malgré ce désavantage théorique, c'est en pratique un des tris les plus rapides pour des données réparties aléatoirement.
+Dans le pire des cas où à chaque itération toutes les valeurs se trouvent toutes du même côté du pivot, la complexité du tri rapide est quadratique en $O(n^2)$. 
+Cependant en pratique, la complexité moyenne est en $O(n \times log_2(n))$, faisant du tri rapide un des tris les plus rapides pour des données réparties aléatoirement.
