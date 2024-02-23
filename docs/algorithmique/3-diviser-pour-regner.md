@@ -482,4 +482,4 @@ print(tri_rapide(tab))
 ```
 
 Dans le pire des cas où à chaque itération toutes les valeurs se trouvent toutes du même côté du pivot, la complexité du tri rapide est quadratique en $O(n^2)$. 
-Cependant en pratique, la complexité moyenne est en $O(n \times log_2(n))$, faisant du tri rapide un des tris les plus rapides pour des données réparties aléatoirement.
+Cependant en pratique,  pour des données réparties aléatoirement, la complexité moyenne est en $O(n \times log_2(n))$, faisant du tri rapide un des tris les plus rapides.
