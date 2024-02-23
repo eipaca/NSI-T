@@ -443,7 +443,7 @@ Tri Rapide d'un tableau `T[1, …, n]`
 
 |Etape|Description|
 |:--|:--|
-|**Diviser** |Découper le tableau `T[1, …, n]` de part et d'autre d'un pivot en deux sous-tableaux : le  premier contenant toutes les valeurs inférieures au pivot, le second celles qui lui sont supérieures |
+|**Diviser** |Découper le tableau `T[1, …, n]` de part et d'autre d'un pivot en trois sous-tableaux : le premier contenant toutes les valeurs inférieures au pivot, le second contenant celles égales au pivot et le dernier celles supérieures au pivot|
 |**Régner**	 |Trier les deux sous-tableaux|
 |**Combiner**|Regrouper les deux sous tableaux triés|
 
