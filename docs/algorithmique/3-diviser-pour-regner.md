@@ -448,20 +448,37 @@ Tri Rapide d'un tableau `T[1, …, n]`
 
 
 En pratique, le programme Python est construit en utilisant trois sous-tableaux contenant respectivement les valeurs inférieures, supérieures et égales au pivot. On trie les deux premiers et on combine les trois.
-from random import randint
+
 
 
 ``` py
+from random import randint
+
 def tri_rapide(T):
-    n = len(T)
-    if n == 0: return []
+    """ list[int]-> list[int]
+    Renvoie le tableau T trié par tri rapide
+    """
+    if len(T) <= 1:    # si T est vide ou un seul élément
+        return T        # il est déjà trié
 
-    pivot = T[randint(0, n-1)]
-    egales = [x for x in T if x == pivot]
-    inferieures = tri_rapide([x for x in T if x < pivot])
-    superieures = tri_rapide([x for x in T if x > pivot])
-    return inferieures + egales + superieures
+    # Diviser
+    pivot = T[randint(0, len(T)-1)]  # pivot au hasard
+    val_inferieures = []
+    val_egales = []
+    val_superieures = []
 
+    for elem in T:
+        if elem < pivot: val_inferieures.append(elem)
+        elif elem > pivot: val_superieures.append(elem)
+        else: val_egales.append(elem)
+
+    # Regner
+    return tri_rapide(val_inferieures) + val_egales + tri_rapide(val_superieures)
+
+
+tab = [randint(0, 100) for i in range(10000)]
+print(tri_rapide(tab))
 ```
+
 
 Le *quicksort* est un tri dont la complexité moyenne est en $O(n \times log_2(n))$, mais dont la complexité dans le pire des cas est un comportement quadratique en $O(n^2)$. Malgré ce désavantage théorique, c'est en pratique un des tris les plus rapides pour des données réparties aléatoirement.
