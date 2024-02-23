@@ -444,8 +444,8 @@ Tri Rapide d'un tableau `T[1, …, n]`
 |Etape|Description|
 |:--|:--|
 |**Diviser** |Découper le tableau `T[1, …, n]` de part et d'autre d'un pivot en trois sous-tableaux : le premier contenant toutes les valeurs inférieures au pivot, le second contenant celles égales au pivot et le dernier celles supérieures au pivot|
-|**Régner**	 |Trier les deux sous-tableaux|
-|**Combiner**|Regrouper les deux sous tableaux triés|
+|**Régner**	 |Trier les sous-tableaux des valeurs inférieures et des valeurs supérieures au pivot (celui des valeurs égales au pivot est déjà trié)|
+|**Combiner**|Regrouper les trois sous-tableaux triés|
 
 
 En pratique, le programme Python est construit en utilisant trois sous-tableaux contenant respectivement les valeurs inférieures, supérieures et égales au pivot. On trie les deux premiers et on combine les trois.
