@@ -429,11 +429,11 @@ Essayons d'estimer la complexité de cette rotation d'un quart de tour. La fonct
 ##	Tri Rapide (*quicksort*)
 
 
-La méthode consiste à choisir, souvent au hasard, un élément appelé **pivot**  pour le mettre à sa place définitive en plaçant tous les éléments du tableau qui lui sont inférieurs dans un sous-tableau à sa gauche et tous ceux qui lui sont supérieurs dans un autre sous-tableau à sa droite. 
+La méthode consiste à choisir, souvent au hasard, un élément appelé **pivot** pour le mettre à sa place définitive en plaçant tous les éléments du tableau qui lui sont inférieurs dans un sous-tableau à sa gauche et tous ceux qui lui sont supérieurs dans un autre sous-tableau à sa droite. 
 
 L'algorithme est récursif, pour chacun des sous-tableaux on définit un nouveau pivot et on répète l'opération jusqu'à ce que tous les sous-tableaux soient vides. Il ne reste plus qu'à réunir tous les sous-tableaux et l'ensemble sera trié.
 
-Voyons un exemple dans lequel le pivot est toujours le dernier élément du tableau :
+Voyons un exemple dans lequel le pivot choisi est toujours le dernier élément du tableau :
 
 ![Exemple de tri rapide, le pivot est le dernier élément ](assets/3-quicksort-light-mode.png#only-light){width=80% }
 ![Exemple de tri rapide, le pivot est le dernier élément](assets/3-quicksort-dark-mode.png#only-dark){width=80%}
