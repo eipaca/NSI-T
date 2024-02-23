@@ -463,7 +463,7 @@ def tri_rapide(T):
         return []        # il n'y a rien à trier
 
     # Diviser
-    pivot = T[randint(0, len(T)-1)]  # pivot au hasard
+    pivot = T[randint(0, len(T)-1)]  # pivot au hasard, on peut utiliser T[-1] pour prendre le dernier élement
     val_inferieures = []
     val_egales = []
     val_superieures = []
