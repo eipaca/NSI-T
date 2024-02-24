@@ -429,9 +429,9 @@ Essayons d'estimer la complexité de cette rotation d'un quart de tour. La fonct
 ##	Tri Rapide (*quicksort*)
 
 
-La méthode consiste à choisir, souvent au hasard, un élément appelé **pivot** pour le mettre à sa place définitive en plaçant tous les éléments du tableau qui lui sont inférieurs dans un sous-tableau à sa gauche et tous ceux qui lui sont supérieurs dans un autre sous-tableau à sa droite. 
+La méthode consiste à choisir un élément du tableau, appelé **pivot**, pour le mettre à sa place définitive en plaçant tous les éléments du tableau qui lui sont inférieurs dans un sous-tableau à sa gauche et tous ceux qui lui sont supérieurs dans un autre sous-tableau à sa droite. Le pivot peut être choisi au hasard ou de façon systématique, par exemple le premier ou le dernier élément du tableau. 
 
-L'algorithme est récursif, pour chacun des sous-tableaux on définit un nouveau pivot et on répète l'opération jusqu'à ce que tous les sous-tableaux soient vides. Il ne reste plus qu'à réunir tous les sous-tableaux et l'ensemble sera trié.
+L'algorithme est récursif, pour trier chacun des sous-tableaux on choisit un nouveau pivot et on répète l'opération jusqu'à ce que tous les sous-tableaux n'aient plus qu'une ou aucune valeur. Il ne reste plus qu'à réunir tous les sous-tableaux et l'ensemble sera trié.
 
 Voyons un exemple dans lequel le pivot choisi est toujours le dernier élément du tableau :
 
@@ -459,8 +459,8 @@ def tri_rapide(T):
     """ list[int]-> list[int]
     Renvoie le tableau T trié par tri rapide
     """
-    if len(T) == 0:    # si T est vide
-        return []        # il n'y a rien à trier
+    if len(T) <= 1:    # si T n'a plus qu'une valeur ou qu'il est vide
+        return []       # il n'y a rien à trier
 
     # Diviser
     pivot = T[randint(0, len(T)-1)]  # pivot au hasard, on peut utiliser T[-1] pour prendre le dernier élement
