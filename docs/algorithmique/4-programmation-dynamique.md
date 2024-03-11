@@ -207,7 +207,7 @@ Avec la programmation dynamique, tous les cas possibles ont été traités, et p
 
 ### Version descendante (*top-down*), récursivité et mémoïsation
 
-Testons le programme `rendu_monnaie_dynamique(13)` avec des pièces de ②, ⑤ et ⑩euros.  Le programme ne permet pas d'obtenir une solution, les appels récursifs sont trop nombreux, on dépasse la capacité de la pile.
+Testons le programme `rendu_monnaie_dynamique(113)` avec des pièces de ②, ⑤ et ⑩euros.  Le programme ne permet pas d'obtenir une solution, les appels récursifs sont trop nombreux, on dépasse la capacité de la pile.
 
 En programmation dynamique les sous-problèmes se chevauchent et les mêmes calculs reviennent plusieurs fois. Dans un exemple aussi simple que celui de rendre 13 euros, on retrouve 2 fois la branche qui part de "6" :
 
@@ -385,7 +385,7 @@ Ici, avec deux boucles imbriquées, la complexité est quadratique en $O(n^2)$.
 
 ## Alignement de séquences
 
-Un problème utile aux généticiens est celui de l'alignement de séquences, qui se décline en de nombreux sous-problèmes, dont plusieurs peuvent être abordés à l'aide de la programmation dynamique.
+Un problème utile aux généticiens est celui de l'alignement de séquences, qui se décline en de nombreuses variations, dont plusieurs peuvent être abordées à l'aide de la programmation dynamique.
 
 Nous nous intéressons ici à la recherche d'une plus longue sous-chaîne commune. Étant donné deux chaine de caractères `str1`  et `str2`, on cherche une chaine de caractères, la plus longue possible, qui soit à la fois extraite de `str1`  et de `str2`. Dire qu'une sous-chaîne est extraite de `str1` signifie que l'on peut obtenir cette sous-chaîne en effaçant certains caractères de `str1`. Autrement dit, tous les caractères de la sous-chaîne commune doivent apparaître dans l'ordre dans `str1` et `str2`, même s'ils ne sont pas consécutifs dans ces deux chaînes, seul l'ordre des caractères compte.
 
@@ -395,7 +395,7 @@ str1 = 'CGCATA'
 str2 = 'GACT'
 ```
 
-Une plus longue sous-chaîne commune est  `'GAT'`. En effet, tous les caractères de `'GAT'` apparaîssent dans l'odre dans `str1` :
+Une plus longue sous-chaîne commune est  `'GAT'`. En effet, tous les caractères de `'GAT'` apparaîssent dans le même ordre dans `str1` :
 
 ``` py
 CGCATA
@@ -408,7 +408,7 @@ de même dans `str2` :
 G-ACT 
 G-A-T
 ```
-On peut aligner les deux chaines l'uns sous l'autre et faire apparaître la sous-chaîne commune dans la troisième ligne :
+On peut aligner les deux chaines l'une sous l'autre et faire apparaître la sous-chaîne commune dans la troisième ligne :
 ``` py
 CGCA-TA
 -G-ACT- 
@@ -421,15 +421,16 @@ Notons bien qu'il n'y a pas unicité de la plus longue sous-chaine commune ! `'G
 ``` py
 CG-CATA
 -GAC-T-
+-G-C-T-
 ```
 
-Abordons ce problème sous l'approche de programmation dynamique. Pour trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GACT'` , on commence par aligner les deux chaines en partant de la fin et à comparer les deux derniers caractères :
+Abordons ce problème sous l'approche de programmation dynamique. Pour trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GACT'` , on commence par aligner les deux chaines en partant de la fin et par comparer les deux derniers caractères :
 
 ![Alignement séquences - Etape 1](assets/4-alignement-sequence-1-light-mode.png#only-light){width=100% }
 ![Alignement séquences - Etape 1](assets/4-alignement-sequence-1-dark-mode.png#only-dark){width=100% }
 
 
-Les caractères `A` et le `T` sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune. On peut avancer dans notre recherche en cherchant ces deux sous-problèmes: 
+Les deux caractères `A` et `T` sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune. On peut avancer dans notre recherche en cherchant ces deux sous-problèmes : 
 
 1.	la plus longue sous-chaine commune entre la première chaine, `'CGCATA'`, et la seconde chaine réduite de son dernier caractère,  `'GAC'`, ou 
 2.	la plus longue sous-chaine commune entre la première chaine réduite de son dernier caractère, `'CGCAT'`, et la seconde chaine, `'GACT'`.
@@ -440,7 +441,7 @@ Les caractères `A` et le `T` sont différents, ils ne pourront pas être align�
 
 La  plus longue sous-chaine commune entre `str1` et `str2` sera la solution trouvée la plus longue à ces deux sous-problèmes.
  
-Commençons par le premier sous-problème : trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GAC'`. A nouveau, les deux derniers caractères sont différents, ils ne pourront pas être alignés dans la plus longue sous-chaine commune, on peut partager ce problème en deux sous problèmes.
+Commençons par le premier sous-problème : trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GAC'`. A nouveau, les deux derniers caractères sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune, on peut encore partager ce problème en deux sous problèmes.
 
 Abordons ensuite, le second sous-problème : trouver la plus longue sous-chaine commune entre `'CGCAT'` et `'GACT'`. Cette fois-ci, les deux derniers caractères sont identiques, ils pourront être alignés dans la plus longue sous-chaine commune. On garde en mémoire le caractère `'T'` qu'on rajoutera au résultat de la plus longue sous-chaine commune entre ces deux dernière chaines réduites de ce `'T'`  :   `'CGCA'` et `'GAC'`.
 
@@ -467,7 +468,7 @@ Généralisons l'approche que l'on vient de faire sur l'exemple. Soit deux sous-
 
 -	Si les deux sous-chaîne ont un ou plusieurs caractères, alors :
 
-    1.	Si les deux sous-chaînes ont le même dernier caractère, `str1[-1] == str2[-1]`, alors ces caractères pourront être alignés, la plus longue chaine commune est la plus longue chaîne commune entre les deux sous-chaînes réduite de leur dernier caractère, à laquelle on ajoute ce caractère commune : `T(str1, str2) = T(str1[:-1], str2 [:-1]) + str[-1]`. 
+    1.	Si les deux sous-chaînes ont le même dernier caractère, `str1[-1] == str2[-1]`, alors ces caractères pourront être alignés, la plus longue chaine commune est la plus longue chaîne commune entre les deux sous-chaînes réduite de leur dernier caractère, à laquelle on ajoute ce caractère commun : `T(str1, str2) = T(str1[:-1], str2 [:-1]) + str[-1]`. 
 
     2.	Si les derniers caractères sont différents, `str1[-1] != str2[-1]`, alors ces caractères ne  pourront pas être alignés, la plus longue chaine commune est la chaîne qui a le plus de caractères entre :
 
@@ -475,7 +476,7 @@ Généralisons l'approche que l'on vient de faire sur l'exemple. Soit deux sous-
 
         -	La plus longue chaîne commune de la seconde chaîne et de la première réduite de son dernier caractère d'autre part,
 
-        Donc   `T(str1, str2) =  max_len(T(str1, str2[:-1]), T(str1[:-1], str2))`, où `max_len` renvoie la chaîne qui a le plus de caractères entre les deux.
+        Donc   `T(str1, str2) =  max_len(T(str1, str2[:-1]), T(str1[:-1], str2))`, où `max_len` renvoie la chaîne la plus longue entre les deux.
 
 Cette relation de récurrence se traduit directement en Python en version dynamique descendante :
 
@@ -518,7 +519,7 @@ def alignement_sequence_top_down(str1, str2):
 print(alignement_sequence_top_down(str1, str2))
 ```
 
-La version ascendante utilise la même relation de récurrence mais de façon un peu plus complexe que les exemples précédents. L'idée est de construire un tableau de tableaux `T` rempli des résultats des sous-problèmes rencontrés, c'est-à-dire des  plus longue sous-chaînes commune entre les chaines `str1[ :i+1]` et `str[j+1]` pour les valeurs de `i` allant et `j` allant de `0` à `len(str1)` et `len(str2)` respectivement.
+La version ascendante utilise la même relation de récurrence mais de façon un peu plus complexe que les exemples précédents. L'idée est de construire un tableau de tableaux `T` rempli des résultats des sous-problèmes rencontrés, c'est-à-dire des plus longues sous-chaînes communes entre les chaines `str1[ :i+1]` et `str[:j+1]` pour les valeurs de `i` allant et `j` allant de `0` à `len(str1)` et `len(str2)` respectivement.
 
 On peut faire les constatations suivantes : 
 
