@@ -75,7 +75,7 @@ Ce sont les deux principes de la **programmation dynamique**.
 
 
 !!! question "Exercice corrigé"
-    Mario veut rejoindre la princesse Beach. Il ne peut se déplacer que vers la gauche et vers le haut, et ne peut jamais revenir en arrière. Combien de chemins différents peut-il emprunter ?
+    Mario veut rejoindre la princesse Peach. Il ne peut se déplacer que vers la gauche et vers le haut, et ne peut jamais revenir en arrière. Combien de chemins différents peut-il emprunter ?
 
     ![Chemin de mario sur un quadrillage 3 x 4](assets/4-mario-question-light-mode.png#only-light){width=50%}
     ![Chemin de mario sur un quadrillage 3 x 4](assets/4-mario-question-dark-mode.png#only-dark){width=50%}
