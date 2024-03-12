@@ -202,12 +202,24 @@ def rendu_monnaie_dynamique(x):
 5
 ```
 
-Avec la programmation dynamique, tous les cas possibles ont été traités, et plusieurs cas ont renvoyé la même solution.
+Avec la programmation dynamique, tous les cas possibles ont été traités, et plusieurs cas ont renvoyé la même solution. On a donc une solution optimale au problème.
 
+
+Mais testons maintenant cette fonction avec quelques valeurs plus grandes que `13`. Très vite la fonction prend beaucoup de temps pour s'exécuter. Quelques secondes pour exécuter `rendu_monnaie_dynamique(60)`, dizaines de secondes pour `  rendu_monnaie_dynamique(70)`, plusieurs minutes pour `  rendu_monnaie_dynamique(80)`, etc.  Le programme devient vite trop lent, même pour des rendus très simples de quelques pièces de ⑩ euros !
+
+Essayons d'estimer la complexité temporelle de cette fonction. Le nombre d'opérations pour rendre un montant $n$ avec des pieces de 10, 5 et 2 est le nombre d'opérations pour rendre $n-10$, plus le nombre d'opérations pour rendre $n-5$, plus celui pour rendre $n-2$, plus quelques opérations élémentaires. 
+
+Si on appelle $T(n)$ le nombre d'opérations pour rendre $n$, alors on peut donc écrire que :
+
+$T(n) = T(n-10) + T(n-5) + T(n-2) + O(1)$,
+
+avec $O(1)$ pour les quelques opérations supplémentaires. Pour de grandes valeurs de $n$, on peut faire l'approximation que retirer 10, 5, 2 ou 1 euro à $n$ ne change pas grand chose, donc que $T(n-10)$, $T(n-5)$, et $T(n-2)$ sont du même ordre de grandeur que $T(n-1)$,  donc que  $T(n) \approx 3 \times T(n-1) + O(1)$. A chaque fois que $n$ augmente de 1, le nombre d'opérations est mutliplié par 3, plus quelques opérations, la complexité est donc exponentielle en $O(3^n)$ ici, ou de façon générale en $O({nbPieces}^n)$ pour un rendu avec $nbPieces$ pieces.  
 
 ### Version descendante (*top-down*), récursivité et mémoïsation
 
-Testons le programme `rendu_monnaie_dynamique(113)` avec des pièces de ②, ⑤ et ⑩euros.  Le programme ne permet pas d'obtenir une solution, les appels récursifs sont trop nombreux, on dépasse la capacité de la pile.
+Les appels récursifs sont trop nombreux, la complexité est trop importante pour calculer un solution en temps raisonnable.
+
+
 
 En programmation dynamique les sous-problèmes se chevauchent et les mêmes calculs reviennent plusieurs fois. Dans un exemple aussi simple que celui de rendre 13 euros, on retrouve 2 fois la branche qui part de "6" :
 
@@ -215,30 +227,33 @@ En programmation dynamique les sous-problèmes se chevauchent et les mêmes calc
 ![Arbre de rendu de monnaie pour 13 euros - branche rendre 6](assets/4-rendu-monnaie-3-dark-mode.png#only-dark){width=80% }
 
 
-La solution pour limiter les opérations inutiles consiste à ne calculer les solutions des sous-problèmes qu'une seule fois et de les garder en mémoire. C'est la **mémoïsation**.
+La solution pour limiter le nombre d'opérations consiste à ne calculer les solutions des sous-problèmes qu'une seule fois et de les garder en mémoire. C'est la technique de **mémoïsation**.
 
 !!! abstract "Cours" 
     La mémoïsation consiste à garder en mémoire les valeurs déjà calculées.
 
-Par exemple avec un dictionnaire déclaré en variable globale :
+Par exemple, avec un dictionnaire déclaré en variable globale :
 
 ```py
 from math import inf
 
-memoise = {0: 0}
+memoise = {0: 0}       # on peut déjà mettre 0 pieces pour rendre 0 euros
 pieces = [10, 5, 2]
+
 def rendu_monnaie_dynamique(x):
     if x in memoise:
         return memoise[x]
-    if x == 0: return 0
-    if x < min(pieces) : return inf
+    if x < min(pieces) : return inf     # on ne peut pas mettre inf dans le dictionnaire memoise
     memoise[x] = 1 + min([rendu_monnaie_dynamique(x - p) for p in pieces if p <= x])
     return memoise[x] 
 ```
 
+Cette fois ci, le résultat est immédiat, même avec des valeurs de `x` de quelques milliers (dans la limite de la pile d'appels récursifs).
+
+
 ### Version ascendante (*bottom-up*)
 
-On a déjà vu dans l'exemple précédent comment écrire un algorithme récursif en utilisant la mémoisation. Une autre approche consiste à calculer d'abord les sous-problèmes en partant d'un cas de base et à  « remonter » jusqu'à résoudre le problème initial :  c'est l'approche ascendante, ou *top-down*.
+On a déjà vu dans l'exemple précédent comment écrire un algorithme récursif en utilisant la mémoïsation. Une autre approche de la programmation dynamique consiste à calculer d'abord les sous-problèmes en partant d'un cas de base et à  « remonter » jusqu'à résoudre le problème initial : c'est la version ascendante, ou *top-down*.
 
 ![Rendu de monnaie pour 13 euros bottom-up](assets/4-rendu-monnaie-bottom-up-light-mode.png#only-light){width=30% align=right}
 ![Rendu de monnaie pour 13 euros bottom-up](assets/4-rendu-monnaie-bottom-up-dark-mode.png#only-dark){width=30% align=right}
@@ -248,7 +263,7 @@ Appelons $nb_i$ le nombre de pièces pour rendre une somme $i$. Comme dans l'app
 [^4.3]:  $nb_i$ est donné par la formule de récurrence $nb_i = \underset{p \leq i}{\min}⁡ (1+ nb_{i-p})$.
 
 
-On va créer le même dictionnaire que celui utilisé pour la mémoisation, mais en le remplissant itérativement en partant cette fois de 0 et en incrémentant jusqu'à x.
+On va créer le même dictionnaire que celui utilisé pour la mémoïsation, mais en le remplissant itérativement en partant cette fois de 0 et en incrémentant jusqu'à x.
 
 ``` py
 from math import inf
@@ -264,6 +279,10 @@ def rendu_bottom_up(x):
         nb[i] = q
     return nb[x]
 ```
+
+Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de `x`. En effet, la fonction fait une double boucle imbriquée, sur la valeur à rendre $n$, et sur le nombre de pièces disponibles. La complexité est donc simplement linéaire en $O(n \times nbPieces)$.
+
+
 
 !!! abstract "Cours" 
     La programmation dynamique peut prendre deux formes :
@@ -330,7 +349,7 @@ def R(n):
     return q
 ```
 
-La complexité temporelle de la fonction est de l'ordre du nombre de nœud dans l'arbre, c'est-à-dire une complexité exponentielle en $O(2^n)$.  Cette solution n'est donc pas utilisable pratiquement, mais on constate une fois de plus que les sous-problèmes se chevauchent, on peut donc garder les résultats des sous-problèmes en mémoire pour améliorer cette situation. Appliquons cette technique de memoisation :
+La complexité temporelle de la fonction est de l'ordre du nombre de nœud dans l'arbre, c'est-à-dire une complexité exponentielle en $O(2^n)$.  Cette solution n'est donc pas utilisable pratiquement, mais on constate une fois de plus que les sous-problèmes se chevauchent, on peut donc garder les résultats des sous-problèmes en mémoire pour améliorer cette situation. Appliquons cette technique de mémoïsation :
 
 ```py
 from math import inf
@@ -358,7 +377,7 @@ def R(n):
         #...
 ```
 
-Alors que la première fonction, sans mémoisation, s'appelle 1024 fois pour le calcul de R(10) et 1 043 456 fois pour R(20), la version avec mémoisation s'appelle seulement 56 et 156 pour les mêmes calculs ! Mais cela se fait aux dépends de la complexité spatiale.
+Alors que la première fonction, sans mémoïsation, s'appelle 1024 fois pour le calcul de R(10) et 1 043 456 fois pour R(20), la version avec mémoïsation s'appelle seulement 56 et 156 pour les mêmes calculs ! Mais cela se fait aux dépends de la complexité spatiale.
 
 
 La version ascendante est une autre façon efficace de palier au problème de complexité temporelle :
