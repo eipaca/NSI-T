@@ -447,9 +447,9 @@ def R(n):
         decoupes = [Prix[i] + revenus[m - i] for i in range(1, min(len(Prix), m + 1))]
         revenus[m] = max(decoupes)
 
-    return revenus[n]          # On renvoie la valeur pour la clé correspondant au montant n
+    return revenus[n]          # On renvoie la valeur pour la clé correspondant à la longueur n
 
 ```
 
 
-Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de `n`. En effet, la fonction fait une double boucle imbriquée, sur la valeur à rendre $n$, et sur la longueur de la grille des prix. La complexité est donc simplement linéaire en $O(n \times tailleGrillePrix)$, ou plus simplement en $O(n)$ si on considère une grille de prix de petite taille.
+Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de `n`. En effet, la fonction fait une double boucle imbriquée, sur la longueur de la tige $n$, et sur la longueur de la grille des prix. La complexité est donc simplement linéaire en $O(n \times tailleGrillePrix)$, ou plus simplement en $O(n)$ si on considère une grille de prix de petite taille.
