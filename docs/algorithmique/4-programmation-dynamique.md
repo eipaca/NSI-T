@@ -309,58 +309,60 @@ Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'app
         - On résout de façon **itérative** d'abord les sous-problèmes de la plus "petite taille", puis ceux de la taille "d'au dessus", etc. Au fur et à mesure on garde les résultats en mémoire.
         - On continue jusqu'à la taille voulue.
 
-##	Découpe de tiges d'acier
+##	Découpe d'une tige d'acier
 
-Problème : Soit une tige d'acier qu'on découpe par morceau pour les revendre selon une grille de prix suivante :
+Problème : Soit une tige d'acier que l'on peut découper en plusieurs morceaux pour les revendre selon la grille de prix suivante :
 
 |Longueur (m)| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
 |:--     |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-: |
 |Prix (€)   | 0 | 1 | 5 | 8 | 9 | 10| 17| 17| 20| 24| 30 |
 
-L'objectif est de découper la tige de façon optimale pour en tirer un revenu maximum.
+Comment découper la tige de façon optimale pour en tirer un revenu maximum ?
 
 Prenons, l'exemple d'une tige de longueur 4 m. On peut la découper de 8 façons différentes :
 
 ![Découpe d'une tige de 4 m](assets/4-decoupe-tige-light-mode.png#only-light){width=80% }
 ![Découpe d'une tige de 4 m](assets/4-decoupe-tige-dark-mode.png#only-dark){width=80% }
 
-Le meilleur revenu est 10 € avec un découpage en 2 tiges de 2 m. Mais comment le calculer de façon systématique ? 
+On voit que le revenu maximim est donc 10 €, obtenu en découpant la tige en 2 morceaux de 2 m. Mais comment le calculer de façon systématique ? 
 
-Un algorithme glouton simple qui consiste à choisir en priorité les longueurs de tige les plus chères ne donne pas le meilleur revenu puisqu'il propose de ne faire aucune découpe afin de garder les tiges les plus longues, ceux sont les plus chères selon la grille de prix. Une approche plus fine consiste à prendre en compte le prix linéaire (ratio prix/longueur) pour optimiser les découpes. Regardons la grille de prix de l'exemple précédant pour les tiges jusqu'à 4 m :
+Un algorithme glouton simple qui consiste à choisir en priorité les longueurs de morceaux les plus chers ne donne pas le meilleur revenu puisqu'il proposera toujours de garder les morceaux les plus longs possibles, ce sont les plus chers selon la grille de prix. Une approche plus fine consiste à prendre en compte le prix linéaire (ratio prix/longueur) pour optimiser les découpes. Reprenons la grille de prix de l'exemple précédant pour les morceaux jusqu'à 4 m :
 
 |Longueur (m)       | 0 | 1 |  2 | 3   | 4   |
 |:--                |:-:|:-:|:--:|:---:|:---:|
 |Prix (€)           | 0 | 1 |  5 | 8   | 9   |
 |Prix linéaire (€/m)| 0 | 1 | 2,5| 2,67| 2,25|
 
-Cet algorithme glouton commence par choisir le meilleur ratio prix/longueur, c'est une découpe de 3 m, mais ensuite il ne reste qu'un morceau de 1 m qui a une faible valeur linéaire ! C'est trop tard, l'algorithme ne peut pas revenir en arrière sur la découpe de 3 m, il ne donne pas le revenu maximum.
+Cet algorithme glouton commence par choisir le meilleur ratio prix/longueur, c'est une découpe d'un morceau de 3 m, mais ensuite il ne reste plus qu'un autre morceau de 1 m, qui lui a une très faible valeur linéaire ! C'est trop tard, l'algorithme ne peut pas revenir en arrière sur la découpe du premier morceau de 3 m, on obtient un revenu de 9 €, ce n'est pas le revenu maximum.
 
-ici encore, la programmation dynamique nous permet de trouver la solution optimale. Appelons `R[n]` le revenu maximum d'une tige de longueur `n`, `Prix` une grille de prix pour différentes longueurs de tige et prenons un exemple.
+ici encore, la programmation dynamique nous permet de trouver la solution optimale. 
 
-Comment calculer `R[4]`, le revenu maximum pour découper une tige de longueur `4` ? C'est bien la plus grande valeur entre :
+Appelons `R[n]` le revenu maximum d'une tige de longueur `n` et `Prix` le tableau de la grille de prix pour différentes longueurs. 
 
--	Le prix d'une tige de longueur `1`  + le revenu maximum d'un tige de longueur `3` : `Prix[1] + R[3]`
--	Le prix d'une tige de longueur `2`  + le revenu maximum d'un tige de longueur `2` : `Prix[2] + R[2]`
--	Le prix d'une tige de longueur `3`  + le revenu maximum d'un tige de longueur `1` : `Prix[3] + R[1]`
--	Le prix d'une tige de longueur `4`  + le revenu maximum d'un tige de longueur `0`:  `Prix[4] + R[0]`
+Comment calculer `R[4]`, le revenu maximum pour découper une tige de longueur `4` m ?  On peut voir ce qu'il se passe si on fait une découpe d'un premier morceau de 1 m, ou bien de 2 m, ou encore de 3 m, ou même ne pas couper la tige, puis comparer le revenu obtenu dans chaque cas pour prendre le plus grand. `R[4]` est donc égal à la plus grande valeur entre :
+
+-	Le prix d'un morceau de longueur `1`  + le revenu maximum d'un tige de longueur `3` : `Prix[1] + R[3]`
+-	Le prix d'un morceau de longueur `2`  + le revenu maximum d'un tige de longueur `2` : `Prix[2] + R[2]`
+-	Le prix d'un morceau de longueur `3`  + le revenu maximum d'un tige de longueur `1` : `Prix[3] + R[1]`
+-	Le prix d'un morceau de longueur `4`  + le revenu maximum d'un tige de longueur `0`:  `Prix[4] + R[0]`
 
 ![Découpe d'une tige de 4 m - éape 1](assets/4-decoupe-tige-arbre-1-light-mode.png#only-light){width=100% }
 ![Découpe d'une tige de 4 m - étape 1](assets/4-decoupe-tige-arbre-1-dark-mode.png#only-dark){width=100% }
 
-La valeur de `R[0]` est immédiate, c'est le revenu maximum d'une tige de longeur de zéro, c'est-à-dire `0`. Mais comment calculer `R[1]`, `R[2]` et `R[3]` ? On applique le même principe.
+La valeur de `R[0]` est immédiate, c'est le revenu maximum d'une tige de longueur de zéro, c'est-à-dire `0`. Mais comment calculer `R[1]`, `R[2]` et `R[3]` ? On applique le même principe.
 
 ![Découpe d'une tige de 4 m - arbre complet](assets/4-decoupe-tige-arbre-2-light-mode.png#only-light){width=100% }
 ![Découpe d'une tige de 4 m - arbre complet](assets/4-decoupe-tige-arbre-2-dark-mode.png#only-dark){width=100% }
 
-On a découpé le problème en plusieurs sous-problèmes. Par ailleurs, les résultats de certains sous-problèmes, par exemple le calcul de `R[2]`, sont réutilisés plusieurs fois. Les sous-problèmes se chevauchent.
+On voit qu'on a ici **découpé le problème en plusieurs sous-problèmes**. Par ailleurs, les résultats de certains sous-problèmes, par exemple le calcul de `R[2]`, sont réutilisés plusieurs fois. Les **sous-problèmes se chevauchent**. Ce sont les deux grands principes de la **programmation dynamique**.
 
 
 Généralisons cet algorithme à une tige de longueur `n ` pour écrire `R[n]` en considérant les deux cas :
 
 -	Si `n` est égal à `0`, alors la tige a une longueur de `0`, son revenu maximum est `0`.
--   Sinon, `R[n]` est égal à la plus grande valeur entre tous les prix d'une tige de longueur `i` (`prix[i]`) auxquels on ajoute le revenu maximum d'une tige de longeur `n - i` (`R[n-i]`), calculés pour toutes les découpes de longueur `i` possibles, c'est-à-dire toutes les valeurs de `i` comprises entre `1` et `n` sans dépasser la taille de la grille des prix :  `1 <= i < min(len(Prix), n + 1)`.
+-   Sinon, `R[n]` est égal à la plus grande valeur entre les prix d'un morceau de longueur `i` (`prix[i]`) auquel on ajoute le revenu maximum d'une tige de longueur `n - i` (`R[n-i]`), calculés pour toutes les longueurs `i` possibles, c'est-à-dire toutes les valeurs de `i` allant de `1` à `n + 1` (exclus) sans dépasser la taille de la grille des prix :  `1 <= i < min(len(Prix), n + 1)`.
 
-On peut écrire la formule :  `R[n] = max(Prix[i] + R[n - i] pour 1 ≤ i  < min(len(Prix), n + 1)`  et `R[0] = 0`. 
+On peut donc écrire la formule :  `R[n] = max(Prix[i] + R[n - i] pour 1 ≤ i  < min(len(Prix), n + 1)`  et `R[0] = 0`. 
 
 
 Traduisons maintenant cet algorithme de programmation dynamique en version descendante :
@@ -389,7 +391,7 @@ Avec la programmation dynamique, tous les cas possibles ont été traités, et p
 
 Mais testons maintenant cette fonction avec quelques valeurs plus grandes que `4`. Très vite la fonction prend beaucoup de temps pour s'exécuter. Essayons encore d'estimer la complexité temporelle de cette fonction.
 
-Si on appelle $T(n)$ le nombre d'opérations pour calculer le revenu maximum pour une tige de longueur $n$, il est égal aux nombres d'opérations de toutes les découpes de tiges de longeurs $n - i$, $T(n - i)$, pour toutes les valeurs de $i$ de la grille de prix, plus quelques opérations élémentaires.
+Si on appelle $T(n)$ le nombre d'opérations pour calculer le revenu maximum pour une tige de longueur $n$, il est égal aux nombres d'opérations de toutes les découpes de tiges de longueurs $n - i$, $T(n - i)$, pour toutes les valeurs de $i$ de la grille de prix, plus quelques opérations élémentaires.
 
 $T(n) = T(n-1) + T(n-2) + T(n-3) + ..T(n-i)+... + T(n - 10) + O(1)$,
 
@@ -451,3 +453,453 @@ def R(n):
 
 
 Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de `n`. En effet, la fonction fait une double boucle imbriquée, sur la valeur à rendre $n$, et sur la longueur de la grille des prix. La complexité est donc simplement linéaire en $O(n \times tailleGrillePrix)$, ou plus simplement en $O(n)$ si on considère une grille de prix de petite taille.
+
+## Alignement de séquences
+
+Un problème utile aux généticiens est celui de l'alignement de séquences, qui se décline en de nombreuses variations, dont plusieurs peuvent être abordées à l'aide de la programmation dynamique.
+
+Nous nous intéressons ici à la recherche d'une plus longue sous-chaîne commune. Étant donné deux chaine de caractères `str1`  et `str2`, on cherche une chaine de caractères, la plus longue possible, qui soit à la fois extraite de `str1`  et de `str2`. Dire qu'une sous-chaîne est extraite de `str1` signifie que l'on peut obtenir cette sous-chaîne en effaçant certains caractères de `str1`. Autrement dit, tous les caractères de la sous-chaîne commune doivent apparaître dans l'ordre dans `str1` et `str2`, même s'ils ne sont pas consécutifs dans ces deux chaînes, seul l'ordre des caractères compte.
+
+Prenons l'exemple de :
+``` py
+str1 = 'CGCATA'
+str2 = 'GACT'
+```
+
+Une plus longue sous-chaîne commune est  `'GAT'`. En effet, tous les caractères de `'GAT'` apparaîssent dans le même ordre dans `str1` :
+
+``` py
+CGCATA
+-G-AT-
+```
+
+de même dans `str2` :
+
+``` py
+G-ACT 
+G-A-T
+```
+On peut aligner les deux chaines l'une sous l'autre et faire apparaître la sous-chaîne commune dans la troisième ligne :
+``` py
+CGCA-TA
+-G-ACT- 
+-G-A-T-
+```
+
+Les caractères `G`, `A` et `T` sont alignés, on peut donc extraire la sous-chaine `'GAT'` à la fois de `str1` et `str2`
+
+Notons bien qu'il n'y a pas unicité de la plus longue sous-chaine commune ! `'GCT'` est également une plus longue sous-chaîne commune, de même longueur 3 :
+``` py
+CG-CATA
+-GAC-T-
+-G-C-T-
+```
+
+Abordons ce problème sous l'approche de programmation dynamique. Pour trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GACT'` , on commence par aligner les deux chaines en partant de la fin et par comparer les deux derniers caractères :
+
+![Alignement séquences - Etape 1](assets/4-alignement-sequence-1-light-mode.png#only-light){width=100% }
+![Alignement séquences - Etape 1](assets/4-alignement-sequence-1-dark-mode.png#only-dark){width=100% }
+
+
+Les deux caractères `A` et `T` sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune. On peut avancer dans notre recherche en cherchant ces deux sous-problèmes : 
+
+1.	la plus longue sous-chaine commune entre la première chaine, `'CGCATA'`, et la seconde chaine réduite de son dernier caractère,  `'GAC'`, ou 
+2.	la plus longue sous-chaine commune entre la première chaine réduite de son dernier caractère, `'CGCAT'`, et la seconde chaine, `'GACT'`.
+
+![Alignement séquences - Etape 2](assets/4-alignement-sequence-2-light-mode.png#only-light){width=100% }
+![Alignement séquences - Etape 2](assets/4-alignement-sequence-2-dark-mode.png#only-dark){width=100% }
+
+
+La  plus longue sous-chaine commune entre `str1` et `str2` sera la solution trouvée la plus longue à ces deux sous-problèmes.
+ 
+Commençons par le premier sous-problème : trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GAC'`. A nouveau, les deux derniers caractères sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune, on peut encore partager ce problème en deux sous problèmes.
+
+Abordons ensuite, le second sous-problème : trouver la plus longue sous-chaine commune entre `'CGCAT'` et `'GACT'`. Cette fois-ci, les deux derniers caractères sont identiques, ils pourront être alignés dans la plus longue sous-chaine commune. On garde en mémoire le caractère `'T'` qu'on rajoutera au résultat de la plus longue sous-chaine commune entre ces deux dernière chaines réduites de ce `'T'`  :   `'CGCA'` et `'GAC'`.
+
+![Alignement séquences - Etape 3](assets/4-alignement-sequence-3-light-mode.png#only-light){width=100% }
+![Alignement séquences - Etape 3](assets/4-alignement-sequence-3-dark-mode.png#only-dark){width=100% }
+
+Passons à l'étape suivante. Les chaînes `'CGCATA'` et `'GA'`  ont le même dernier caractère, ils pourront être alignés dans la plus longue sous-chaine commune. On garde en mémoire le caractère `'A'` qu'on rajoutera au résultat de la plus longue sous-chaine commune entre ces deux dernière chaines réduites de ce `'A'`  :  `'CGCAT'` et `'G'`.
+
+Par contre, les chaînes `'CGCAT'` et `'GAC'`  ont un dernier caractère différent, on va donc chercher les plus longues chaines communes entre `'CGCAT'` et `'GA'` d'une part  et `'CGCAT'` et `'GA'` d'autre part. Notons que le sous problème de la plus longue chaine commune entre `'CGCA'` et `'GAC'` a déjà été rencontré. C'est le propre de la programmation dynamique, les sous-problèmes se chevauchent, il ne faut pas les recalculer plusieurs fois !
+
+![Alignement séquences - Etape 4](assets/4-alignement-sequence-4-light-mode.png#only-light){width=100% }
+![Alignement séquences - Etape 4](assets/4-alignement-sequence-4-dark-mode.png#only-dark){width=100% }
+
+On continue ainsi jusqu'à trouver des sous-chaines vide, il n'y a alors plus de sous-chaine commune à chercher.
+
+![Alignement séquences - Etape 5](assets/4-alignement-sequence-5-light-mode.png#only-light){width=100% }
+![Alignement séquences - Etape 5](assets/4-alignement-sequence-5-dark-mode.png#only-dark){width=100% }
+
+On trouve ici deux chemins qui permettent d'aligner 3 caractères entre les deux chaines : `'GAT'`et `'GCT'`.
+
+Généralisons l'approche que l'on vient de faire sur l'exemple. Soit deux sous-chaines `str1` et `str2` et essayons de calculer  la plus longue sous-chaîne commune entre les deux, que l'on note `T(str1, str2)`. Deux cas se présentent :
+
+-	Si l'une des deux sous-chaîne est vide, alors il n'y a pas de plus longue sous-chaine commune : `T(str1, str2) = ''`.
+
+-	Si les deux sous-chaîne ont un ou plusieurs caractères, alors :
+
+    1.	Si les deux sous-chaînes ont le même dernier caractère, `str1[-1] == str2[-1]`, alors ces caractères pourront être alignés, la plus longue chaine commune est la plus longue chaîne commune entre les deux sous-chaînes réduite de leur dernier caractère, à laquelle on ajoute ce caractère commun : `T(str1, str2) = T(str1[:-1], str2 [:-1]) + str[-1]`. 
+
+    2.	Si les derniers caractères sont différents, `str1[-1] != str2[-1]`, alors ces caractères ne  pourront pas être alignés, la plus longue chaine commune est la chaîne qui a le plus de caractères entre :
+
+        -	la plus longue chaîne commune de la première chaîne et de la seconde réduite de son dernier caractère d'une part, et
+
+        -	La plus longue chaîne commune de la seconde chaîne et de la première réduite de son dernier caractère d'autre part,
+
+        Donc   `T(str1, str2) =  max_len(T(str1, str2[:-1]), T(str1[:-1], str2))`, où `max_len` renvoie la chaîne la plus longue entre les deux.
+
+Cette relation de récurrence se traduit directement en Python en version dynamique descendante :
+
+``` py
+str1 = 'CGCATA'
+str2 = 'GACT'
+
+def maxi(str1, str2):
+    """ str, str -> str
+    Renvoie la plus longue chaine des deux
+    ou la premiere si les deux chaines on la même longueur
+    """
+    if len(str1) >= len(str2):
+        return str1
+    else:
+        return str2
+
+
+memo = {}
+def alignement_sequence_top_down(str1, str2):
+    """ str, str -> str
+    Renvoie une plus longue chaine commune
+    """
+    if (str1, str2) in memo: return memo[(str1, str2)]
+    if str1 =='' or str2 == '': memo[(str1, str2)] = ''
+    elif str1[-1] == str2[-1]:
+        memo[(str1, str2)] = alignement_sequence_top_down(str1[:-1], str2[:-1]) + str1[-1]
+    else:
+        # on garde str1 et enlève le dernier car de str2
+        lsc1 = alignement_sequence_top_down(str1, str2[:-1])
+        # on garde str2 et enlève le dernier car de str1
+        lsc2 = alignement_sequence_top_down(str1[:-1], str2)
+        if len(lsc1) >= len(lsc2):
+            memo[(str1, str2)] = lsc1
+        else:
+            memo[(str1, str2)] = lsc2
+    return memo[(str1, str2)]
+
+
+print(alignement_sequence_top_down(str1, str2))
+```
+
+La version ascendante utilise la même relation de récurrence mais de façon un peu plus complexe que les exemples précédents. L'idée est de construire un tableau de tableaux `T` rempli des résultats des sous-problèmes rencontrés, c'est-à-dire des plus longues sous-chaînes communes entre les chaines `str1[ :i+1]` et `str[:j+1]` pour les valeurs de `i` allant et `j` allant de `0` à `len(str1)` et `len(str2)` respectivement.
+
+On peut faire les constatations suivantes : 
+
+-	Pour `i = 0` on remplit la première ligne pour les valeur de `j` avec `''` si `str1[0]`  n'est pas présent dans  `str2[:j+1]` car il n'y a pas d'alignement possible ; ou sinon avec `str1[0]` s'il est présent. 
+
+-	Pour  `j = 0`, alors on remplit la première colonne pour les valeur de `i` avec `''` si `str2[0]`  n'est pas présent dans  `str1[:i+1]` car il n'y a pas d'alignement possible ; ou sinon  avec `str2[0]` s'il est présent. 
+
+-	Ensuite pour chaque valeur de `i` et `j` à partir de `1`, deux cas de figure se présentent :
+
+    -	Si les deux dernier caractères de `str1[:i+1]` et `str2[:j+1]` sont identiques ,  c'est-à-dire `str1[i] == str2[j]`, alors ils peuvent être alignés :  
+    `T[i][j] = T[i-1][j-1] + str[i]`
+
+    - S'ils sont différents, c'est-à-dire `str1[i] != str2[j]`, alors ils ne peuvent pas être alignés, il faut prendre la plus longue sous-chaîne entre les deux sous-chaînes calculées en enlevant l'un des dernier caractère :   
+    `T[i][j] = max_len(T[i][j-1], T[i-1][j])`
+
+    La plus longue sous-chaine commune est calculée dans la dernière ligne dernière colonne du tableau de tableaux.
+
+![Alignement séquences - tableau de tableaux](assets/4-alignement-sequence-tableau-light-mode.png#only-light){width=100% }
+![Alignement séquences - tableau de tableaux](assets/4-alignement-sequence-tableau-dark-mode.png#only-dark){width=100% }
+
+
+Traduite en Python, on obtient le code suivant :
+
+``` py
+def alignement_sequence_bottom_up(str1, str2):
+    """ str, str -> str
+    Renvoie une plus longue chaine commune
+    """
+    n1, n2 = len(str1), len(str2)
+    T = [['' for j in range(n2)] for i in range(n1)]
+    for i in range(n1):
+        if str2[0] in str1[:i+1]:
+            T[i][0] = str2[0]
+    for j in range(n2):
+        if str1[0] in str2[:j+1]:
+            T[0][j] = str1[0]
+
+    for i in range(1, n1):
+        for j in range(1, n2):
+            if str1[i] == str2[j]:
+                T[i][j] = T[i-1][j-1] + str1[i]
+            else:
+                T[i][j] = maxi(T[i][j-1], T[i-1][j])
+
+    return T[n1-1][n2-1]
+
+print(alignement_sequence_bottom_up(str1, str2))
+
+```
+
+
+
+
+
+## Problème du sac à dos
+
+
+![Un sac à dos avec des objets de poids et valeurs différents à mettre dans le sac à dos](assets/4-sac-a-dos.png){width=30%  align=right}
+
+Problème : On dispose d'un sac à dos avec une capacité maximum de poids à transporter. Parmi plusieurs objets de poids et de valeurs différents, lesquels peut-on mettre dans le sac à dos de façon à maximiser la somme des valeurs des objets choisis sans que leur poids total ne dépasse la capacité du sac. C'est un problème d'**optimisation avec contrainte**.
+
+Par exemple, on peut considérer les objets suivants et un sac à dos avec une capacité maximum de 15 kg.
+
+|Poids (kg)| 12 | 4 | 2 |1 | 1 | 
+|:--      |:-:|:-:|:-:|:-:|:-:|
+|Prix (€) |  4 | 10 | 2 | 2 | 1 | 
+
+
+
+On peut choisir plusieurs combinaisons d'objets, par exemple les objets de poids 12kg, 2kg, 1kg et 1kg ont un poids total inférieur à la capacité du sac de 15kg et une valeur totale de 9 €, ou encore les objets de poids 4kg, 2kg, 1kg et 1kg pour une valeur totale de 15 €. Mais comment trouver la combinaison optimale dans toutes les situations ?
+
+![Exemples d'objets mis dans le sac à dos](assets/4-sac-a-dos-2-exemples-light-mode.png#only-light){width=60% }
+![Exemples d'objets mis dans le sac à dos](assets/4-sac-a-dos-2-exemples-dark-mode.png#only-dark){width=60% }
+
+
+
+Représentons les objets dans une liste de p-uplets nommés :
+
+```py
+liste_1 = [{'poids': 12, 'valeur': 4},
+           {'poids': 4, 'valeur': 10},
+           {'poids': 2, 'valeur': 2},
+           {'poids': 1, 'valeur': 2},
+           {'poids': 1, 'valeur': 1}]
+```
+
+
+### Algorithme glouton
+
+L'algorithme glouton le plus simple consiste à prendre les objets en ordre de valeur décroissante tant que leur poids ne fait pas dépasser la capacité du sac. On peut écrire le code suivant :
+
+!!! note inline end "" 
+    L'utilisation de la fonction `sorted()` permet de ne pas modifier la liste `liste_objets`.
+
+``` py linenums="1"
+def sac_glouton(liste_objets, poids_max):
+    """ list[dict], int -> int
+    Renvoie la valeur maximale d'objets {'poids', 'valeur'}
+    qui peuvent être mis dans le sac sans que leur poids dépasse poids_max
+    """
+
+    poids_sac = 0
+    valeur_sac = 0
+    # objets pris en ordre de valeur décroissante
+    for objet in sorted(objets, key=lambda x: x['valeur'], reverse=True):
+        # si le poids de objet ne fait pas dépasser la capacité du sac
+        if objet['poids'] + poids_sac <= poids_max:
+            # on le met dans le sac
+            poids_sac += objet['poids']
+            valeur_sac += objet['valeur']
+    return valeur_sac
+
+assert sac_glouton(liste_1, 15) == 15
+```
+
+L'algorithme glouton renvoie `15` pour l'exemple précédant d'une liste d'objets `liste_1` et d'un sac de capacité 15 kg, c'est bien la plus grande valeur d'objets :
+
+![Algorithme glouton par valeur dans l'exemple précédant](assets/4-sac-a-dos-glouton-valeur-1-light-mode.png#only-light){width=50%}
+![Algorithme glouton par valeur dans l'exemple précédant](assets/4-sac-a-dos-glouton-valeur-1-dark-mode.png#only-dark){width=50%}
+
+
+![Algorithme glouton par valeur dans un autre exemple](assets/4-sac-a-dos-glouton-valeur-2-light-mode.png#only-light){width=40% align=right}
+![Algorithme glouton par valeur dans un autre exemple](assets/4-sac-a-dos-glouton-valeur-2-dark-mode.png#only-dark){width=40% align=right}
+
+Mais en favorisant les objets ayant la plus grande valeur, l'algorithme ne prend pas en compte leur poids ce qui conduit à une solution qui n'est pas optimale dans tous cas. 
+
+
+Regardons ce qu'il se passe avec la liste d'objets suivante :
+
+
+```py
+liste_2 = [{'poids': 12, 'valeur': 4},
+          {'poids': 15, 'valeur': 10},
+          {'poids': 1, 'valeur': 9}]
+```
+
+
+L'algorithme choisit d'abord l'objet de 15 kg, il n'est plus possible d'en ajouter d'autres, ni de revenir en arrière pour enlever l'objet. C'est le principe des algorithmes gloutons, on ne revient pas en arrière sur une décision qui a été prise. L'algorithe renvoie donc `10`, ce n'est pas optimal, les objets de 1 kg et 12 kg avaient une valeur totale de 13 €.
+
+
+
+Une approche plus fine consiste à prendre en priorité les objets ayant le meilleur ratio valeur/poids. Modifions la boucle `for` dans le programme pour trier les objets par ce ratio :
+
+```py linenums="9"
+    # objets pris en l'ordre de ratio valeur/poids décroissant
+    for objet in sorted(liste_objets, key=lambda x: x['valeur']/x['poids'], reverse=True):
+```
+
+
+Ce nouvel algorithme glouton renvoie aussi la valeur attendue `15`  pour l'exemple précédant d'une liste d'objets `liste_1` et d'un sac de capacité 15 kg, c'est bien la plus grande valeur d'objets : 
+
+
+![Algorithme glouton par valeur/poids dans un autre exemple](assets/4-sac-a-dos-glouton-valeur-poids-1-light-mode.png#only-light){width=50%}
+![Algorithme glouton par valeur/poids dans un autre exemple](assets/4-sac-a-dos-glouton-valeur-poids-1-dark-mode.png#only-dark){width=50%}
+
+Essayons maintenant cette nouvelle liste :
+
+![Algorithme glouton par valeur/poids dans un autre exemple](assets/4-sac-a-dos-glouton-valeur-poids-2-light-mode.png#only-light){width=40% align=right}
+![Algorithme glouton par valeur/poids dans un autre exemple](assets/4-sac-a-dos-glouton-valeur-poids-2-dark-mode.png#only-dark){width=40% align=right}
+
+
+``` py
+liste_3 = [{'poids': 12, 'valeur': 7},
+          {'poids': 9, 'valeur': 10},
+          {'poids': 5, 'valeur': 2},
+          {'poids': 2, 'valeur': 1}]
+```
+
+Les objets triés par ratio valeur/poids décroissants sont 9 kg, 12 kg, 2 kg puis 5 kg. L'algorithme glouton commence par mettre l'objet de 9 kg dans le sac et ensuite celui de 2 kg, il renvoie donc la valeur `11`.  La solution n'est encore pas optimale, le premier algorithme par valeur renvoyait `12` ! 
+
+
+###	Programmation dynamique
+
+
+Une fois de plus la programmation dynamique offre une solution optimale au problème.
+
+Reprenons l'exemple d'un sac de capacité 15 kg avec les objets de la `liste_1` et calculons la valeur maximale des objets qui peuvent être mis dans ce sac. On la note `V[15]`.
+
+![Objet de poids 1 kg et valeur 1 euro](assets/4-sac-a-dos-objet-1kg-1euro.png){width=10% align=right}
+
+
+Au début le sac est vide. On se pose la question de mettre un premier objet dans le sac, par exemple l'objet de 1kg avec une valeur d'1 €. Deux cas se présentent :
+
+1.	Cas 1 : On met l'objet d'1kg dans le sac, il restera à calculer la valeur maximale d'un sac de 14kg, `V[14]`, puis de lui ajouter la valeur de 1 € de l'objet.
+2.	Cas 2 : On ne met pas l'objet dans le sac, il restera à calculer la valeur maximale  d'un sac de 15kg, `V[15]`, sans lui ajouter aucune valeur ensuite.
+
+Si on peut trouver la solution de ces deux sous-problèmes, il suffira ensuite de prendre la plus grande valeur entre les deux.
+On remarque que pour calculer `V[15]`, le deuxième cas consiste à calculer `V[15]`, c'est circulaire ! Alors quelle est la différence ? 
+
+La différence réside dans la liste d'objets disponibles. Au début, tous les objets sont disponibles pour être mis, ou pas, dans la sac à dos.  Ensuite l'objet pesant 1kg de valeur 1 euro n'est plus disponible, soit il a été mis dans le sac (cas 1), soit il a été écarté (cas 2) et on ne le considère plus pour être mis dans le sac.
+
+
+![Le calcul de la valeur maximum dépend du poids max p et de la liste d'objet indicée jusqu'à i](assets/4-sac-a-dos-v(i,p)-light-mode.png#only-light){width=100% }
+![Le calcul de la valeur maximum dépend du poids max p et de la liste d'objet indicée jusqu'à i](assets/4-sac-a-dos-v(i,p)-dark-mode.png#only-dark){width=100%}
+
+On en déduit que le calcul de la valeur maximale d'un sac de capacité $p$ ne dépend pas que de la valeur de $p$, mais aussi de la liste d'objets disponibles. On identifie les objets par leur indice $i$ dans la liste, et on notera $V_{i,p}$  la valeur maximale d'un sac de capacité $p$ en choisissant parmi les objets d'indices $0$, $1$, $2$, …, $i-1$, $i$.
+
+Généralisons cette approche. Soit un sac de capacité p et une liste d'objet  d'indices $0$, $1$, $2$, …, $i-1$, $i$, et essayons de calculer $V_{i,p}$. On se pose la question de mettre le dernier objet de la liste, de poids $poids_{i}$  et de valeur $valeur_{i}$ dans le sac, ou pas. Plusieurs cas se présentent :
+
+- Si $poids_{i} > p$, alors l'objet est trop lourd pour le sac, il est écarté. On calculera la valeur maximale pour la même capacité de sac $p$, mais avec une liste d'objet qui s'arrête à $i-1$ : $V_{i, p}= V_{i-1, p}$.
+
+- Si $poids_{i} \leq p$, alors l'objet $i$ peut rentrer dans le sac. On retombe sur les deux cas de l'exemple précédant :
+
+    1. 	Cas 1 : On met l'objet $i$ dans le sac, il reste à calculer la valeur maximale d'un sac de capacité $p - poids_{i}$ avec les objets restants, $V_{i-1,p - poids_i}$,  puis de lui ajouter la valeur de l'objet $valeur_{i}$.
+
+	2. Cas 2 : On ne met pas l'objet $i$ dans le sac, il reste à calculer la valeur maximale d'un sac de capacité $p$ avec les objets restants, sans lui ajouter aucune valeur ensuite : $V_{i-1, p}$.
+
+    3. $V_{i, p}$ est le cas le plus favorable entre les deux : $V_{i, p} = \max(V_{i-1, p} , valeur_{i} + V_{i-1, p - poids_{i}})$
+    
+
+
+![Relation de récurence donnant Vi,p](assets/4-sac-a-dos-recurence-light-mode.png#only-light){width=80% }
+![Relation de récurence donnant Vi,p](assets/4-sac-a-dos-recurence-dark-mode.png#only-dark){width=80%}
+
+
+Cette relation de récurrence se traduit directement en Python en version dynamique descendante :
+
+```py
+def sac_dynamique_top_down(liste_objets, poids_max):
+    """ int, list[dict] -> int
+    Renvoie la valeur maximale d'objets {'poids', 'valeur'}
+    qui peuvent être mis dans le sac     sans que leur poids dépasse poids_max
+    """
+
+    # V[(i, p)] est la valeur max d'un sac de capacité p avec les premiers objets de liste_objets
+    # jusqu'à liste_objets[i] inclus
+
+    V = {(0, p): 0 for p in range(poids_max  + 1)}
+   # on remplit la premiere ligne avec la valeur du premier objet (i=0)
+    # pour tous les sac de capacité p >= poids de cet objet
+    for p in range(liste_objets[0]['poids'], poids_max + 1):
+        V[(0, p) ] = liste_objets[0]['valeur']
+
+
+
+    def sac_dynamique(i, p):
+        if (i, p) in V:
+            return V[(i, p)]
+
+        if p < liste_objets[i]['poids']:
+            # on ne le met pas dans le sac
+            V[(i, p)] = V[(i-1, p)]
+        else:
+            # on prend la plus grande valeur entre ne pas mettre i dans le sac
+            V[(i, p)] = max( sac_dynamique(i-1, p),
+                # et ajouter l'objet i au sac
+                sac_dynamique(i - 1, p - liste_objets[i]['poids']) + liste_objets[i]['valeur'])
+        return V[(i, p)]
+    return sac_dynamique(len(liste_objets) - 1 , poids_max)
+
+
+assert sac_dynamique_top_down(liste_1, 15) == 15
+assert sac_dynamique_top_down(liste_2, 15) == 13
+assert sac_dynamique_top_down(liste_3, 15) == 12
+```
+
+La version ascendante consiste à construire un tableau de tableaux contenant les valeurs maximales du problème réduit aux premiers objets de la liste `V[i][p]`, jusqu'à l'objet `liste_objets[i]` inclus et d'un sac de capacité `p`. 
+
+La première ligne du tableau est simple  : Si `i = 0`, alors seulement le premier objet de liste_objet est disponible pour remplir le sac, donc `V[0][p]` est égal à zéro pour toutes les valeurs de `p` inférieure au poids du premier objet et `V[0][p]` est égal au poids du premier objet pour les valeurs suivantes. 
+
+Les autres valeurs de `V[i][p]` sont calculées à partir de la relation de récurence précédente. La solution du problème se trouve sur la dernière ligne et la dernière colonne du tableau de tableau :
+
+
+![Construction du tableau de tableaux des Vi,p en bottom-up](assets/4-sac-a-dos-bottom-up-light-mode.png#only-light){width=80% }
+![Construction du tableau de tableaux des Vi,p en bottom-up](assets/4-sac-a-dos-bottom-up-dark-mode.png#only-dark){width=80%}
+
+
+
+``` py
+def sac_dynamique_bottom_up(liste_objets, poids_max):
+    """ int, list[dict] -> int
+    Renvoie la valeur maximale d'objets {'poids', 'valeur'}
+    qui peuvent être mis dans le sac     sans que leur poids dépasse poids_max
+    """
+    n = len(liste_objets)
+
+    V = [[0]*(poids_max + 1) for i in range(n)]
+    # V[i][p] est la valeur max d'un sac de capacité p avec les premiers objets de liste_objets
+    # jusqu'à liste_objets[i] inclus
+
+    # on remplit la premiere ligne avec la valeur du premier objet (i=0)
+    # pour tous les sac de capacité p >= poids de cet objet
+    for p in range(liste_objets[0]['poids'], poids_max + 1):
+        V[0][p] = liste_objets[0]['valeur']
+
+    # on remplit les lignes suivantes
+    for i in range(1, n):
+        for p in range(poids_max + 1):
+            # si l'objet i est plus lourd que p
+            if p < liste_objets[i]['poids']:
+                # on ne le met pas dans le sac
+                V[i][p] = V[i-1][p]
+            # sinon
+            else:
+                # on prend la plus grande valeur entre ne pas mettre i dans le sac
+                V[i][p] = max( V[i-1][p],
+                    # et ajouter l'objet i au sac
+                    V[i-1][p - liste_objets[i]['poids']] + liste_objets[i]['valeur'])
+    return V[n-1][poids_max]
+
+assert sac_dynamique_bottom_up(liste_1, 15) == 15
+assert sac_dynamique_bottom_up(liste_2, 15) == 13
+assert sac_dynamique_bottom_up(liste_3, 15) == 12
+```
+
+
+
+
+
+
+
+
