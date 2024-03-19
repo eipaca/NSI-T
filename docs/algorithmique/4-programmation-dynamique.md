@@ -558,7 +558,7 @@ str2 = 'GACT'
 def max_len(str1, str2):
     """ str, str -> str
     Renvoie la plus longue chaine des deux
-    ou la premiere si les deux chaines on la même longueur
+    ou la premiere si les deux chaines ont la même longueur
     """
     if len(str1) >= len(str2):
         return str1
