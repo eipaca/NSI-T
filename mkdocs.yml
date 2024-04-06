@@ -156,7 +156,8 @@ nav:
     - Graphes: structures-de-donnees/8-graphes.md
  
   - Architectures matérielles, systèmes d'exploitation et réseaux:
- #  -Composants intégrés d’un système sur puce.
+    - architectures-materielles-et-systemes-d-exploitation/index.md
+    - Composants intégrés d'un système sur puce: architectures-materielles-et-systemes-d-exploitation/1-systeme-sur-puce.md
  # -Gestion des processus et des ressources par un système d'exploitation
     - Protocoles de routage: architectures-materielles-et-systemes-d-exploitation/4-routage.md
  # -Sécurisation des communications
