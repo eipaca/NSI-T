@@ -8,8 +8,8 @@
 
 On a déjà implémenté un arbre binaire et ses nœuds en Python par les classes AB  et Noeud  :
 
-![Un exemple d'arbre binaire](assets/1-AB-exemple-light-mode.png#only-light){width="25%" align=right}
-![Un exemple d'arbre binaire](assets/1-AB-exemple-dark-mode.png#only-dark){width="25%" align=right}
+![Un exemple d'arbre binaire](assets/1-ab-exemple-light-mode.png#only-light){width="25%" align=right}
+![Un exemple d'arbre binaire](assets/1-ab-exemple-dark-mode.png#only-dark){width="25%" align=right}
 
 ``` py
 class AB: 
@@ -41,7 +41,12 @@ arbre = AB(Noeud(5, n10, n6))
 
 Pour calculer la taille d'un arbre, on parcourt toutes les branches et compter le nombre de nœuds à partir de la racine. 
 
-Pour un arbre binaire, on peut créer une méthode récursive de la classe `Noeud` :  `taille()`. Cette méthode renvoie la somme des tailles de ses deux branches. Pour un arbre binaire (classe `AB`) on ajoute une autre méthode appelée aussi `taille()` qui renvoie `0` pour l'arbre vide ou sinon la taille du Nœud  racine.
+Pour un arbre binaire, on peut créer une méthode récursive de la classe `Noeud` :  `taille()`. Cette méthode renvoie la somme des tailles de ses deux branches.
+
+![Un exemple de calcul de la taille d'arbre binaire](assets/1-ab-taille-light-mode.png#only-light){width="40%" align=right}
+![Un exemple de calcul de la taille d'arbre binaire](assets/1-ab-taille-dark-mode.png#only-dark){width="40%" align=right}
+
+ Pour un arbre binaire (classe `AB`) on ajoute une autre méthode appelée aussi `taille()` qui renvoie `0` pour l'arbre vide ou sinon la taille du Nœud  racine.
 
 
 
@@ -55,10 +60,19 @@ class AB:
 class Noeud: 
 
     def taille(self):
-        # taille du sous arbre droit
-        td = 0 if self.droite is None else self.droite.taille()
         # taille du sous arbre gauche
-        tg = 0 if self.gauche is None else self.gauche.taille()
+        if self.gauche is None:
+            tg = 0  
+        else:
+            tg = self.gauche.taille()
+
+        # taille du sous arbre droit
+        if self.droite is None:
+            td = 0
+        else:
+            td = self.droite.taille()
+
+        # la taille est 1 + la somme des deux 
         return 1 + td + tg
 ```
 
@@ -81,11 +95,11 @@ Le calcul de la taille a un coût proportionnel à la taille du nombre de nœuds
 
 Pour calculer la hauteur d'un arbre, il faut parcourir toutes ses branches et retenir la profondeur de la feuille la plus éloignée. 
 
+![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-light-mode.png#only-light){width="40%" align=right}
+![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-dark-mode.png#only-dark){width="40%" align=right}
+
 Pour un arbre binaire, on peut de la même façon que pour la taille, créer une méthode récursive de la classe `Noeud` :  `hauteur()`. Cette méthode renvoie la plus grande des hauteurs de ses deux branches plus 1. Pour un arbre binaire (classe `AB`) on ajoute une autre méthode appelée aussi `hauteur()` qui renvoie `-1` pour l'arbre vide ou sinon la hauteur du Nœud racine.
 
-
-![Exemple de calcul de la hauteur d'un AB](assets/1-AB-hauteur-light-mode.png#only-light){width="50%"}
-![Exemple de calcul de la hauteur d'un AB](assets/1-AB-hauteur-dark-mode.png#only-dark){width="50%" }
 
 ``` py 
 class AB: 
@@ -97,11 +111,20 @@ class AB:
 
 class Noeud:     
     def hauteur(self):
-        # hauteur du sous arbre droit
-        td = -1 if self.droite is None else self.droite.hauteur()
         # hauteur du sous arbre gauche
-        tg = -1 if self.gauche is None else self.gauche.hauteur()
-        return 1 + max(td , tg)
+        if self.gauche is None:
+            hg = -1  # par convention l'arbre vide a une hauteur de -1
+        else:
+            hg = self.gauche.hauteur()
+
+        # hauteur du sous arbre droit
+        if self.droite is None:
+            hd = -1  # par convention l'arbre vide a une hauteur de -1
+        else:
+            hd = self.droite.hauteur()
+
+        # la hauteur est 1 + le plus grand des deux
+        return 1 + max(hg, hd)
 
 ```
 
@@ -119,28 +142,35 @@ Parcourir un arbre consiste à visiter chaque nœud en gardant en mémoire son f
 !!! abstract "Cours" 
     Le **parcours en largeur** ou **BFS** (*Breadth First Search*), consiste à parcourir l'arbre **niveau par niveau**. Les nœuds de niveau 0 sont d'abord parcourus puis les nœuds de niveau 1 et ainsi de suite. Dans chaque niveau, les nœuds sont parcourus de la **gauche vers la droite**.
 
-![Exemple de parcours en largeur d'un AB](assets/1-AB-BFS-light-mode.png#only-light){width="50%"}
-![Exemple de parcours en largeur d'un AB](assets/1-AB-BFS-dark-mode.png#only-dark){width="50%" }
+![Exemple de parcours en largeur d'un AB](assets/1-ab-bfs-light-mode.png#only-light){width="40%"}
+![Exemple de parcours en largeur d'un AB](assets/1-ab-bfs-dark-mode.png#only-dark){width="40%" }
 
 
-L'implémentation va nécessiter l'utilisation une structure en file : pour chaque nœud visité on met en attente son fils de gauche puis son fils de droite dans une file (enfiler) puis on visite les nœuds présents dans la file (défiler). 
+L'implémentation se fait en utilisant une structure en file : 
 
+- La racine est d'abord mise dans la file, puis
+- Tant que la file n'est pas vide:
+    - On défile le premier noeud entré dans la file
+    - On note sa valeur dans le parcours
+    - On enfile ses fils gauche et droite, dans cet ordre, s'ils existent. 
 
-
-La méthode est itérative, on peut donc l'ajouter dans la classe Nœud ou dans la classe AB directement:
-
+La méthode est itérative, on n'utilise pas la récursivité de la classe `Noeud`, on peut donc l'ajouter au choix dans la classe `Noeud` ou dans la classe `AB` directement:
 
 ``` py
 class Noeud:
-    def parcours_largeur(self):
+    def parcours_larg(self):
         parcours = []
         file = []         # file de noeuds en attente
         file.append(self)
         while len(file) != 0:   # tant que la file n'est pas vide
             n = file.pop(0)             # on défile le premier nœud de la file
             parcours.append(n.valeur)   # on note sa valeur
-            if n.gauche is not None: file.append(n.gauche)  #on enfile le fils gauche
-            if n.droite is not None: file.append(n.droite)  #on enfile le fils droite
+            # on enfile le fils gauche s'il existe
+            if n.gauche is not None: 
+                file.append(n.gauche)  
+            # on enfile le fils drot s'il existe
+            if n.droite is not None: 
+                file.append(n.droite)
         return parcours
 
 ```
@@ -149,11 +179,13 @@ et l'appel de la méthode pour le nœud racine :
 
 ``` py
 class AB :
-    def parcours_largeur(self):
+    def parcours_larg(self):
         if self.racine is None: print("l'arbre est vide")
-        else: return self.racine.parcours_largeur()
+        else: return self.racine.parcours_larg()
 
 
+>>> arbre.parcours_larg()
+[5, 10, 6, 3, 1, 12, 9, 4]
 ```
 
 ### Parcours en profondeur (DFS)
@@ -167,57 +199,35 @@ class AB :
     - Entre le parcours de sous-arbre gauche et celui de son sous-arbre droit : parcours **infixe** (ou **en ordre**) ;
     - Après le parcours de son sous-arbre droit : parcours **postfixe** (ou **suffixe**, ou encore **postordre**).
 
+|Parcours préfixe|Parcours infixe|Parcours postfixe|
+|:--|:--|:--|
+|1.	Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|1.	Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|1.Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|
+|![Exemple de parcours en profondeur préfixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur préfixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark)|![Exemple de parcours en profondeur infixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur infixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark) |![Exemple de parcours en profondeur postfixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur postfixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark)|
 
-=== "Parcours préfixe"
-
-    ![Exemple de parcours en profondeur préfixe d'un AB](assets/1-AB-DFS-prefixe-light-mode.png#only-light){width="30%" align=right}
-    ![Exemple de parcours en profondeur préfixe d'un AB](assets/1-AB-DFS-prefixe-dark-mode.png#only-dark){width="30%" align=right}
-
-    1.	Visite du nœud
-    2.	Parcours branche gauche
-    3.	Parcours branche droite
-
-
-=== "Parcours infixe"
-
-    ![Exemple de parcours en profondeur infixe d'un AB](assets/1-AB-DFS-infixe-light-mode.png#only-light){width="30%" align=right}
-    ![Exemple de parcours en profondeur infixe d'un AB](assets/1-AB-DFS-infixe-dark-mode.png#only-dark){width="30%" align=right}
-
-    1.	Parcours branche gauche
-    2.	Visite du nœud
-    3.	Parcours branche droite
-
-=== "Parcours postfixe"
-
-	![Exemple de parcours en profondeur postfixe d'un AB](assets/1-AB-DFS-postfixe-light-mode.png#only-light){width="30%" align=right}
-    ![Exemple de parcours en profondeur postfixe d'un AB](assets/1-AB-DFS-postfixe-dark-mode.png#only-dark){width="30%" align=right}
-
-    1.	Parcours branche gauche
-    2.	Parcours branche droite
-    3.	Visite du nœud
+=
  	 	 
-Les implémentations récursives de ces trois types de parcours en profondeur sont très semblables, seul change l'ordre des instructions. Observons la ligne `print(self.valeur, end='-')`  :
+Les implémentations récursives de ces trois types de parcours en profondeur sont très semblables, seul l'ordre des instructions change. Observons la ligne `print(self.valeur, end='-')`  :
 
 === "Parcours préfixe"
 
     ``` py linenums="1"
     class AB :
-        def parcours_prof(self):
+        def parcours_prefixe(self):
             if self.racine is None: print("l'arbre est vide")
-            else: return self.racine.parcours_prof()
+            else: return self.racine.parcours_prefixe()
 
     class Noeud:
-        def parcours_prof(self):
+        def parcours_prefixe(self):
 
             print(self.valeur, end='-')       # on traite le noeud avant son sous-arbre gauche
     
             if self.gauche is not None:  
-                self.gauche.parcours_prof()
+                self.gauche.parcours_prefixe()
 
             if self.droite is not None: 
-                self.droite.parcours_prof()
+                self.droite.parcours_prefixe()
 
-    >>> arbre.parcours_profondeur()
+    >>> arbre.parcours_prefixe()
     5-10-3-6-1-9-4-12-
     ```
 
@@ -225,23 +235,23 @@ Les implémentations récursives de ces trois types de parcours en profondeur so
 
     ``` py linenums="1"
     class AB :
-        def parcours_prof(self):
+        def parcours_infixe(self):
             if self.racine is None: print("l'arbre est vide")
-            else: return self.racine.parcours_prof()
+            else: return self.racine.parcours_infixe()
 
     class Noeud:
-        def parcours_prof(self):
+        def parcours_infixe(self):
 
     
             if self.gauche is not None:  
-                self.gauche.parcours_prof()
+                self.gauche.parcours_infixe()
 
             print(self.valeur, end='-')       # on traite le noeud entre ses sous-arbre gauche et droit
 
             if self.droite is not None: 
-                self.droite.parcours_prof()
+                self.droite.parcours_infixe()
 
-    >>> arbre.parcours_profondeur()
+    >>> arbre.parcours_infixe()
     10-3-5-9-1-4-6-12-
     ```
 
@@ -249,35 +259,35 @@ Les implémentations récursives de ces trois types de parcours en profondeur so
 
     ``` py linenums="1"
     class AB :
-        def parcours_prof(self):
+        def parcours_postfixe(self):
             if self.racine is None: print("l'arbre est vide")
-            else: return self.racine.parcours_prof()
+            else: return self.racine.parcours_postfixe()
 
     class Noeud:
-        def parcours_prof(self):
+        def parcours_postfixe(self):
 
     
             if self.gauche is not None:  
-                self.gauche.parcours_prof()
+                self.gauche.parcours_postfixe()
 
             if self.droite is not None: 
-                self.droite.parcours_prof()
+                self.droite.parcours_postfixe()
 
             print(self.valeur, end='-')       # on traite le noeud après son sous-arbre droit
 
-    >>> arbre.parcours_profondeur()
+    >>> arbre.parcours_postfixe()
     3-10-9-4-1-12-6-5-
     ```
 
 
-On peut aussi implémenter le parcours préfixe de façon itérative, semblable au parcours en largeur à la différence qu'on utilise une pile plutôt qu'une file[^1.1].
+Noter qu'il est aussi possible d'implémenter le parcours **préfixe** de façon itérative, semblable au parcours en largeur, à la différence qu'on utilise une pile plutôt qu'une file[^1.1].
 
 [^1.1]: 
     ``` py
     class Noeud:
     def parcours_prefixe(self):
         parcours = []
-         pile = []
+        pile = []
         pile.append(self)
         while len(pile) != 0:   # tant que la pile n'est pas vide
             n = pile.pop()   # on prend le noeud au sommet de la pile
@@ -302,16 +312,15 @@ Note : « supérieur » et   « inférieur » peuvent être au sens strict ou la
 
 
 
-On considère l'ABR précédent qui servira comme support pour illustrer la suite :
+On considère l'ABR suivant qui servira comme support pour illustrer la suite :
 
-![Exemple d'ABR](assets/1-abr-light-mode.png#only-light){width="80%" }
-![Exemple d'ABR](assets/1-abr-dark-mode.png#only-dark){width="80%" }
+![Exemple d'ABR](assets/1-abr-light-mode.png#only-light)
+![Exemple d'ABR](assets/1-abr-dark-mode.png#only-dark)
 
-A noter : Dans un ABR, le parcours infixe trie les valeurs des nœuds dans l'''ordre croissant.
 
-La classe ABR est une sous classe d'AB qui hérite[^1.3]  des méthodes d'un arbre binaire et permet d'ajouter ses propres méthodes.
+La classe `ABR` est une sous classe d'`AB` qui hérite[^1.3]  des méthodes d'un arbre binaire et permet d'ajouter ses propres méthodes.
 
-[^1.3]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
+[^1.3]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous-classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
 
 ``` py
 class ABR(AB):
@@ -320,14 +329,22 @@ class ABR(AB):
 a = ABR(Noeud(7, Noeud(4, Noeud(2), Noeud(6)), Noeud(11, Noeud(9, Noeud(8), Noeud(10)), Noeud(12))))
 ```
 
-Les méthodes de la classe AB fonctionnent par héritage :
+Les méthodes de la classe AB fonctionnent par héritage, en pârticulier le parcours infixe donne un résultat intéressant :
 
 ``` py
 >>> a.taille()
 9
 >>> a.hauteur()
 3
+
+>>> a.parcours_infixe()
+2-4-6-7-8-9-10-11-12-
 ```
+
+
+!!! abstract "Cours" 
+    Le **parcours infixe** d'un ABR trie les valeurs des nœuds dans l'ordre croissant.
+
 
 ###	Rechercher une clé
 
@@ -341,7 +358,7 @@ Comme son nom l'indique, un ABR est spécifiquement adapté pour rechercher rapi
 -   si la valeur recherchée est plus petite que la valeur du nœud parcouru, on descend à gauche ;
 -	si c'est la même, on renvoie le nœud.
 
-Une fois arrivé à une feuille, la clé n'a pas été trouvée. L'exemple ci-contre montre la recherche de la valeur 6.
+Une fois arrivé à une feuille, la clé n'a pas été trouvée. L'exemple ci-contre montre la recherche de la valeur 6 dans l'arbre précédent.
 
 Modifions la classe `ABR`, pour gérer immédiatement le cas de l'arbre vide (la valeur n'est pas trouvée) et appeler une méthode de la classe `Noeud`.
 
@@ -360,11 +377,15 @@ class Noeud:
     def chercher(self, v):
         if self.valeur == v: return True       # la valeur est trouvée
         if self.valeur > v:      # on regarde à gauche
-            if self.gauche is None: return False 
-            else: return self.gauche.chercher(v)
+            if self.gauche is None: 
+                return False 
+            else: 
+                return self.gauche.chercher(v)
         if self.valeur < v:      # on regarde à droite
-            if self.droite is None: return False
-            else: return self.droite.chercher(v)
+            if self.droite is None: 
+                return False
+            else: 
+                return self.droite.chercher(v)
 ```
 
 ou en itératif :
@@ -388,7 +409,8 @@ A chaque appel récursif, ou itération de la boucle `while`, le nombre de nœud
  
 ###	Insérer une clé
 
-Lorsqu'on ajoute un nœud à un ABR, on **ajoute toujours une feuille de l'arbre, jamais un nœud interne**.  
+!!! abstract "Cours" 
+    Lorsqu'on ajoute un nœud à un ABR, on **ajoute toujours une feuille de l'arbre, jamais un nœud interne**.  
 
 ![Exemple d'insertion d'une clé dans ABR](assets/1-abr-inserer-cle-light-mode.png#only-light){width="30%" align=right}
 ![Exemple d'insertion d'une clé dans ABR](assets/1-abr-inserer-cle-dark-mode.png#only-dark){width="30%" align=right}
@@ -404,7 +426,8 @@ class ABR(AB):
     def inserer(self, v):
         """ insere la valeur v dans l'arbre"""
         # si l'arbre est vide, on ajoute une racie
-        if self.racine is None: self.racine = Noeud(v)
+        if self.racine is None: 
+            self.racine = Noeud(v)
         else:
             self.racine.inserer(v)
 ```
@@ -416,12 +439,17 @@ class Noeud:
     def inserer(self,v):
         """insere la valeur v dans l'ABR"""
         if v < self.valeur:
-            if self.gauche is None: self.gauche = Noeud(v)    # on ajoute v à gauche
-            else: self.gauche.inserer(v)    # on descend à gauche
+            if self.gauche is None: 
+                self.gauche = Noeud(v)    # on ajoute v à gauche
+            else: 
+                self.gauche.inserer(v)    # on descend à gauche
         if v > self.valeur: 
-            if self.droite is None: self.droite = Noeud(v)    # on ajoute v à droite
-            else: self.droite.inserer(v)    # on descend à droite
-        if v == self.valeur: print(v,"est déjà dans l'ABR")   # la valeur est déjà dans l'ABR
+            if self.droite is None: 
+                self.droite = Noeud(v)    # on ajoute v à droite
+            else: 
+                self.droite.inserer(v)    # on descend à droite
+        if v == self.valeur: 
+            print(v,"est déjà dans l'ABR")   # la valeur est déjà dans l'ABR
 ```
 
 ou en itératif :
