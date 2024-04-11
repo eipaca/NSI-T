@@ -163,7 +163,7 @@ nav:
  # -Sécurisation des communications
   - Algorithmique:
     - algorithmique/index.md
- #Algorithmes sur les arbres binaires et sur les arbres binaires de recherche
+    - Algorithmes sur les arbres binaires et sur les arbres binaires de recherche: algorithmique/1-arbres-binaires.md
  #Algorithmes sur les graphes
     - Méthode « diviser pour régner »: algorithmique/3-diviser-pour-regner.md
     - Programmation dynamique: algorithmique/4-programmation-dynamique.md
