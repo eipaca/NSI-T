@@ -160,7 +160,7 @@ nav:
     - Composants intégrés d'un système sur puce: architectures-materielles-et-systemes-d-exploitation/1-systeme-sur-puce.md
  # -Gestion des processus et des ressources par un système d'exploitation
     - Protocoles de routage: architectures-materielles-et-systemes-d-exploitation/4-routage.md
- # -Sécurisation des communications
+    - Sécurisation des communications: architectures-materielles-et-systemes-d-exploitation/3-securisation-des-communications.md
   - Algorithmique:
     - algorithmique/index.md
     - Algorithmes sur les arbres binaires et sur les arbres binaires de recherche: algorithmique/1-arbres-binaires.md
