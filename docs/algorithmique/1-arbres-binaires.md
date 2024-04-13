@@ -353,6 +353,7 @@ Les algorithmes de calculs de taille, de hauteur et de parcours d'arbres s'appli
 
     -	Chaque nœud a une **clé[^1.2] supérieure** à celles de tous les nœuds de son **sous-arbre gauche** .
     -	Chaque nœud a une **clé inférieure** à celles de tous les nœuds de son **sous-arbre droit**.
+
     Tous les **sous-arbres sont aussi des ABR**.
 
 [^1.2]: Dans un ABR, l'étiquette est appelée « clé » ou « valeur ».
@@ -387,12 +388,12 @@ arbre_bin = ABR(Noeud(7,
 Les méthodes de la classe `AB` fonctionnent par héritage, en particulier le parcours infixe donne un résultat notable :
 
 ``` py
->>> a.taille()
+>>> arbre_bin.taille()
 9
->>> a.hauteur()
+>>> arbre_bin.hauteur()
 3
 
->>> a.parcours_infixe()
+>>> arbre_bin.parcours_infixe()
 [2, 4, 6, 7, 8, 9, 10, 11, 12]
 ```
 
@@ -431,18 +432,18 @@ Voici ce que cela donne en récursif pour la classe `Noeud` :
 ``` py
 class Noeud:
     def chercher(self, v):
-        if self.valeur == v:     # la valeur est trouvée
-            return True       
-        if self.valeur > v:      # on regarde à gauche
+        if v < self.valeur:      # On continue à chercher à gauche s'il y a un fils gauche
             if self.gauche is None: 
                 return False 
-            else: 
+            else:                 
                 return self.gauche.chercher(v)
-        if self.valeur < v:      # on regarde à droite
+        elif v > self.valeur:    # On continue à chercher à gauche s'il y a un fils droit
             if self.droite is None: 
                 return False
             else: 
                 return self.droite.chercher(v)
+        else:                     # On a trouvé v
+            return True    
 ```
 
 ou en itératif :
@@ -453,12 +454,14 @@ ou en itératif :
         """
         n = self.racine
         while n is not None:
-            if v > n.valeur:
-                n = n.droite
-            elif v < n.valeur:
+            if v < n.valeur:      # On continue à chercher v à gauche
                 n = n.gauche
-            else:
-                return n
+            if v > n.valeur:      # On continue à chercher v à gauche
+                n = n.droite
+            else:                 # On a trouvé v
+                return False
+        # Si on arrive ici, c'est qu'on n'a pas trouvé v
+        return True
 
 ```
 
