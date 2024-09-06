@@ -255,6 +255,6 @@ Nous venons donc bien de démontrer que le programme "Arrêt?" ne peut pas exist
 
 Cette idée d'avoir un problème indécidable, autrement dit qui ne peut pas être résolu par un algorithme, peut être généralisée : il existe en effet de nombreux problèmes indécidables, par exemple montrer que l'image de deux fonctions est la même pour tous les nombres, que la suite de Syracuse se termine toujours par les valeurs 4, 2, 1, le problème de correspondance de Post, etc.
 
-Une vidéo pour terminer en savoir plus sur l'*Entscheidungsproblem* :
+Une vidéo pour en savoir plus sur l'*Entscheidungsproblem* :
 <iframe title="Voyages&#x20;au&#x20;pays&#x20;des&#x20;maths" allowfullscreen="true" style="transition-duration:0;transition-property:no;margin:0 auto;position:relative;display:block;background-color:#000000;" frameborder="0" scrolling="no" src="https://www.arte.tv/embeds/fr/107398-010-A?autoplay=false&mute=0"></iframe>
 
