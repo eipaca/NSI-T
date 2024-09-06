@@ -1,11 +1,11 @@
-# Récursivité
+﻿# Récursivité
 
 ##	Récursivité simple
 
-Une fonction peut être appelée n’importe où dans un programme (après sa définition), y compris par elle-même.
+Une fonction peut être appelée n'importe où dans un programme (après sa définition), y compris par elle-même.
 
 !!! abstract "Cours" 
-        Une fonction **récursive** est une fonction qui s'appelle elle-même[^2.1].
+    Une fonction **récursive** est une fonction qui s'appelle elle-même[^2.1].
 
 [^2.1]: Le mot "récursivité" en informatique a la même racine que "récurrence" utilisée pour les suites mathématiques.
 
@@ -15,7 +15,7 @@ $n!  =  1  \times 2  \times 3  \times 4  \times ...  \times (n-1)  \times n$
 
 Un programme itératif[^2.2]: peut s'écrire simplement avec un boucle `for` qui multiplie tous les entiers allant de `1` à `n` entre eux :
 
-[^2.2]: Une structure de contrôle est dite "itérative" qaund elle exécute plusieurs fois une séquence d’instructions (boucles `for`, `while`).
+[^2.2]: Une structure de contrôle est dite "itérative" qaund elle exécute plusieurs fois une séquence d'instructions (boucles `for`, `while`).
 
 ``` py 
 def fact(n):
@@ -37,10 +37,10 @@ def fact(n):
 On peut toujours transformer une fonction récursive en itérative et vice versa.
 
 
-##	Importance de la clause d’arrêt
+##	Importance de la clause d'arrêt
 
 !!! abstract "Cours" 
-        Une fonction récursive doit toujours comporter **une clause d’arrêt**, pour ne pas « boucler ». 
+        Une fonction récursive doit toujours comporter **une clause d'arrêt**, pour ne pas « boucler ». 
 
 La fonction suivante :
 
@@ -48,9 +48,9 @@ La fonction suivante :
 def fact(n):
     return fact(n-1) * n
 ```
-ne s’arrêtera jamais car il manque une clause d’arrêt `if n == 1 : …` !
+ne s'arrêtera jamais car il manque une clause d'arrêt `if n == 1 : …` !
 
-: warning: Il faut toujours prendre soin de bien définir la clause d’arrêt.  Ici que se passe-t-il si on appelle  `fact(5.1)` ou `fact(-1)`  ? On préfèrera peut-être  `if n <= 1: …` ou utiliser des assertions pour éviter ces cas.
+: warning: Il faut toujours prendre soin de bien définir la clause d'arrêt.  Ici que se passe-t-il si on appelle  `fact(5.1)` ou `fact(-1)`  ? On préfèrera peut-être  `if n <= 1: …` ou utiliser des assertions pour éviter ces cas.
 
 En pratique un appel récursif doit obligatoirement comporter une **instruction conditionnelle** et une **variable de contrôle** : par exemple un entier naturel qui décroît strictement à chaque appel récursif jusqu'à atteindre la valeur d'un cas de base.
 
@@ -72,7 +72,7 @@ def impair(n):
 ```
 
 !!! abstract "Cours" 
-        Il arrive aussi qu’une fonction s’appelle plusieurs fois, c'est une **récursivité multiple**.
+        Il arrive aussi qu'une fonction s'appelle plusieurs fois, c'est une **récursivité multiple**.
 
 Par exemple la suite de Fibonacci est définie par  u_0=0 , u_1=1 et pour n > 1 : u_n=u_(n-1)+ u_(n-2) .
 
@@ -82,15 +82,15 @@ def fib(n):
     return fib(n – 1) + fib(n - 2)
 ```
 
-Si la récursivité est **plus élégante et facile** à lire qu’un programme itératif, on atteint très vite ses limites en complexités[^2.3] spatiale et temporelle[^2.4].
+Si la récursivité est **plus élégante et facile** à lire qu'un programme itératif, on atteint très vite ses limites en complexités[^2.3] spatiale et temporelle[^2.4].
 
 [^2.3]: Les mots "complexité" ou "coût" sont employés indifféremment.
-[^2.4]: Attention à ne pas confondre les deux complexités : la complexité temporelle (ou en temps) mesure l’ordre de grandeur du nombre d’opérations élémentaires, la complexité spatiale (ou en espace) mesure l'espace mémoire requis par un programme.
+[^2.4]: Attention à ne pas confondre les deux complexités : la complexité temporelle (ou en temps) mesure l'ordre de grandeur du nombre d'opérations élémentaires, la complexité spatiale (ou en espace) mesure l'espace mémoire requis par un programme.
 
 
-##	Complexité spatiale et pile d’exécution
+##	Complexité spatiale et pile d'exécution
 
-Analysons ce qu’il se passe si on appelle la fonction récursive `fact(n)` quand `n` devient relativement grand.
+Analysons ce qu'il se passe si on appelle la fonction récursive `fact(n)` quand `n` devient relativement grand.
 
 ```py
 >>> fact(1000)
@@ -118,7 +118,7 @@ La pile pour calculer `fact(4)` est la suivante :
 
 
 !!! abstract "Cours" 
-    **Complexité spatiale** : La récursivité utilise une **pile d’appel** qui est un espace mémoire particulièrement limité, cela génère rapidement des **débordements de capacité**, c’est le fameux **stack overflow** !
+    **Complexité spatiale** : La récursivité utilise une **pile d'appel** qui est un espace mémoire particulièrement limité, cela génère rapidement des **débordements de capacité**, c'est le fameux **stack overflow** !
 
 
 ## Complexité temporelle
@@ -146,7 +146,7 @@ def fib(n):
     return fib(n – 1) + fib(n - 2)
 ```
 
-Plus facile à concevoir et à lire, la programmation récursive devient vite très lente à l’exécution. Comparons les temps d’exécution de ces deux programmes avec le module `time`.
+Plus facile à concevoir et à lire, la programmation récursive devient vite très lente à l'exécution. Comparons les temps d'exécution de ces deux programmes avec le module `time`.
 
 ``` py
 from time import time
@@ -167,18 +167,18 @@ Les résultats obtenus sont les suivants (qui dépendent de la machine utilisée
 |40|0.0 secondes|	78.21 secondes|
 |100|0.0 secondes|	…|
 
-Alors que la fonction itérative est quasi instantanée pour toutes les valeurs de `n` testées, la fonction récursive devient très rapidement extrêmement lente, même pour des valeurs de `n` raisonnables, `fib(40)` demande plus d’une minute ! Ce n’est pas un problème de complexité spatiale, puisque `fib(40)` empile au plus 40 appels dans la pile d’appel, on est loin de la limite !
+Alors que la fonction itérative est quasi instantanée pour toutes les valeurs de `n` testées, la fonction récursive devient très rapidement extrêmement lente, même pour des valeurs de `n` raisonnables, `fib(40)` demande plus d'une minute ! Ce n'est pas un problème de complexité spatiale, puisque `fib(40)` empile au plus 40 appels dans la pile d'appel, on est loin de la limite !
 
 Regardons ce qui se passe pour calculer `fib(5)`.
-La fonction `fib` s’appelle 15 fois juste pour calculer `fib(5)` !
+La fonction `fib` s'appelle 15 fois juste pour calculer `fib(5)` !
 
 et on peut tout de suite imaginer que ce nombre de calculs augmente très rapidement pour `fib(30)` ou `fib(40)`.
-Ce n’est donc pas un problème de complexité spatiale mais plutôt un problème de nombre d’opérations effectuées pendant le calcul :  c'est la **complexité temporelle**.
+Ce n'est donc pas un problème de complexité spatiale mais plutôt un problème de nombre d'opérations effectuées pendant le calcul :  c'est la **complexité temporelle**.
 
 !!! abstract "Cours" 
-    Complexité temporelle : La récursivité peut augmenter le nombre d’opérations.
+    Complexité temporelle : La récursivité peut augmenter le nombre d'opérations.
 
-Essayons d’en savoir plus sur le type de complexité de cette fonction en affichant le nombre d’appels de la fonction, en plaçant un compteur qui s’incrémente à chaque appel.
+Essayons d'en savoir plus sur le type de complexité de cette fonction en affichant le nombre d'appels de la fonction, en plaçant un compteur qui s'incrémente à chaque appel.
 
 ``` py
 def fib(n):
@@ -203,21 +203,21 @@ print(cpt)
 
 
 
-Il y a eu presque 3 millions d’appels alors que `fib(30)` ne nécessite, en théorie, que la connaissance de quelques dizaines de valeur ! Et `fib(40)` nécessite plus de 300 millions d’appels !
+Il y a eu presque 3 millions d'appels alors que `fib(30)` ne nécessite, en théorie, que la connaissance de quelques dizaines de valeur ! Et `fib(40)` nécessite plus de 300 millions d'appels !
 
 
-C’est une complexité qui semble de type exponentielle, en $O(2^n)$ [^2.5], c’est-à-dire qui ne peut pas être exécutée en temps acceptable pour n grand[^2.6] !  
+C'est une complexité qui semble de type exponentielle, en $O(2^n)$ [^2.5], c'est-à-dire qui ne peut pas être exécutée en temps acceptable pour n grand[^2.6] !  
 
 [^2.5]: Plus exactement en $O(r^n)$ ou $r=(1+√5)/2≈1.6$.
-[^2.6]: De manière générale, les algorithmes qui ont une complexité temporelle du type $O(q^n)$ avec $q > 1$, dits de type NP, ne peuvent pas être exécutés en temps acceptable pour $n$ grand, contrairement à ceux en $O(n^p)$ dits de type P qui peuvent l’être.
+[^2.6]: De manière générale, les algorithmes qui ont une complexité temporelle du type $O(q^n)$ avec $q > 1$, dits de type NP, ne peuvent pas être exécutés en temps acceptable pour $n$ grand, contrairement à ceux en $O(n^p)$ dits de type P qui peuvent l'être.
 
 !!! info "Rappel" 
     Principales complexités temporelles : 
 
     |Désignation|Notation|Exemples|
     |:-|:-:|:-|
-    |constante|$O(1)$|Accès à un élément d’un tableau|
-    |logarithmique|$O(long(n))$|Recherche dichotomique (tableau trié)|
+    |constante|$O(1)$|Accès à un élément d'un tableau|
+    |logarithmique|$O(log(n))$|Recherche dichotomique (tableau trié)|
     |linéaire|$O(n)$|Recherche dans un tableau|
     |quasi linéaire|$O(n\times log(n))$|Tri fusion|
     |quadratique|$O(n^2)$|Tri à bulle, parcours de matrice|
@@ -225,9 +225,9 @@ C’est une complexité qui semble de type exponentielle, en $O(2^n)$ [^2.5], c�
     |factorielle|$O(n!)$|Voyageur de commerce|
 
 ## Mémoïsation
-Nous avons vu qu’il y a eu presque 3 millions d’appels alors que `fib(30)` ne nécessite, en théorie, que la connaissance de quelques dizaines de valeur ! La fonction passe son temps à calculer des valeurs qu’elle a déjà calculées mais qu’elle n’a pas « notées ». Par exemple `fib(5)` calcule 3 fois la valeur de `fib(2)`. L’algorithme itératif n’a pas ce problème, il retient chaque valeur de la suite.
+Nous avons vu qu'il y a eu presque 3 millions d'appels alors que `fib(30)` ne nécessite, en théorie, que la connaissance de quelques dizaines de valeur ! La fonction passe son temps à calculer des valeurs qu'elle a déjà calculées mais qu'elle n'a pas « notées ». Par exemple `fib(5)` calcule 3 fois la valeur de `fib(2)`. L'algorithme itératif n'a pas ce problème, il retient chaque valeur de la suite.
 
-Une solution pour limiter le nombre de calcul consiste à ne calculer les termes de la suite qu’une seule fois et de les garder en mémoire. C’est la **memoïzation**.
+Une solution pour limiter le nombre de calcul consiste à ne calculer les termes de la suite qu'une seule fois et de les garder en mémoire. C'est la **memoïzation**.
 
 !!! abstract "Cours" 
     La memoïsation consiste à garder en mémoire les valeurs déjà calculées.
@@ -318,7 +318,7 @@ def fib(n):
         print ('')
     ```
 
-Note : La mémoisation est un exemple classique d’utilisation des décorateurs Python (hors programme)[^2.9]. On pourra aussi explorer le décorateur @functools.lru_cache(). 
+Note : La mémoisation est un exemple classique d'utilisation des décorateurs Python (hors programme)[^2.9]. On pourra aussi explorer le décorateur @functools.lru_cache(). 
 
 [^2.9]: 
     ``` py
@@ -339,9 +339,9 @@ Note : La mémoisation est un exemple classique d’utilisation des décorateurs
 
 ## Complexité temporelle des fonctions récursives
 
-Prenons l’exemple de la fonction récursive `fact`.
+Prenons l'exemple de la fonction récursive `fact`.
 
-Si le calcul de `fact(n-1)` s'effectue en un nombre d’opérations connu, noté $T_n-1$, alors le calcul de `fact(n)` s'effectue en effectuant cinq opérations élémentaires supplémentaires : 
+Si le calcul de `fact(n-1)` s'effectue en un nombre d'opérations connu, noté $T_n-1$, alors le calcul de `fact(n)` s'effectue en effectuant cinq opérations élémentaires supplémentaires : 
 - une instruction conditionnelle (`if`),
 - une comparaison (`n == 1`),
 - un appel de fonction (`fact(n-1)`) ,
@@ -350,11 +350,11 @@ Si le calcul de `fact(n-1)` s'effectue en un nombre d’opérations connu, noté
 
 donc $T_n = T_n-1 + 5$. 
 
-Ce qui peut s’écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexité de la fonction récursive `fact` est en $O(n)$.
+Ce qui peut s'écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexité de la fonction récursive `fact` est en $O(n)$.
 
 
 !!! abstract "Cours" 
-    La complexité d’une fonction récursive se calcule en trouvant une relation entre le nombre d’opérations $T_n$ d’un problème de taille $n$ et $T_{n-1}$. Cette relation (de récurrence) permet de déduire $O(n)$.
+    La complexité d'une fonction récursive se calcule en trouvant une relation entre le nombre d'opérations $T_n$ d'un problème de taille $n$ et $T_{n-1}$. Cette relation (de récurrence) permet de déduire $O(n)$.
 
     |Relation entre Tn et Tn-1|	Complexité|	Désignation|
     |:-:|:-:|:-|
@@ -386,7 +386,7 @@ Comparons les complexités de la suite de Fibonacci avec nos trois programmes :
         if n < 2:return n               # 1 condition + 1 comparaison
         return fib(n - 1) + fib(n - 2)  # 1 addition + Tn-1 + Tn-2
 	```
-    En faisant l’hypothèse que $T_{n-1}  \approx T_{n-2}$, nous obtenons $T_n  \approx 2 \times T_{n-1} + 2$, donc le cout est exponentiel en $O(2^n)$
+    En faisant l'hypothèse que $T_{n-1}  \approx T_{n-2}$, nous obtenons $T_n  \approx 2 \times T_{n-1} + 2$, donc le cout est exponentiel en $O(2^n)$
 
 === "Programme récursif avec mémoïsation"
 	``` py linenums="1"
