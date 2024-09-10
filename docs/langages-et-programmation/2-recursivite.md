@@ -40,7 +40,7 @@ On peut toujours transformer une fonction récursive en itérative et vice versa
 ##	Importance de la clause d'arrêt
 
 !!! abstract "Cours" 
-        Une fonction récursive doit toujours comporter **une clause d'arrêt**, pour ne pas « boucler ». 
+    Une fonction récursive doit toujours comporter **une clause d'arrêt**, pour ne pas « boucler ». 
 
 La fonction suivante :
 
@@ -58,7 +58,7 @@ En pratique un appel récursif doit obligatoirement comporter une **instruction 
 ## Récursivité croisée, multiple
 
 !!! abstract "Cours" 
-        Dans certains cas, une fonction appelle une autre fonction qui elle-même appelle la première. C'est une **récursivité croisée**.
+    Dans certains cas, une fonction appelle une autre fonction qui elle-même appelle la première. C'est une **récursivité croisée**.
 
 Par exemple pour tester si un nombre est pair ou impair (sans utiliser l'opérateur `%2`)
 
@@ -72,9 +72,9 @@ def impair(n):
 ```
 
 !!! abstract "Cours" 
-        Il arrive aussi qu'une fonction s'appelle plusieurs fois, c'est une **récursivité multiple**.
+    Il arrive aussi qu'une fonction s'appelle plusieurs fois, c'est une **récursivité multiple**.
 
-Par exemple la suite de Fibonacci est définie par  u_0=0 , u_1=1 et pour n > 1 : u_n=u_(n-1)+ u_(n-2) .
+Par exemple la suite de Fibonacci est définie par $u_0 = 0$, $u_1 = 1$ et pour $n > 1 : u_n = u_{n-1} + u_{n-2}$.
 
 ``` py
 def fib(n):
@@ -105,13 +105,14 @@ Pour gérer des fonctions qui appellent d'autres fonctions, le système utilise 
 
 La pile pour calculer `fact(4)` est la suivante :
 
-- 1er appel de la fonction `fact` avec n = 4 : n n'est pas égal à 1, la fonction "empile" 4 et appelle `fact(3)`.
-- 2ème appel de la fonction `fact` avec n = 3 : n n'est pas égal à 1, la fonction "empile" 3 et appelle `fact(2)`.
-- 3ème appel de la fonction `fact` avec n = 2 : n n'est pas égal à 1, la fonction "empile" 2 et appelle `fact(1)`.
-- 4ème appel de la fonction `fact` avec n = 1 : n est égal à 1, la fonction renvoie 1.
-- on "dépile" 2 : `fact(2)` renvoie 2 x 1 = 2.
-- on "dépile" 3 : `fact(3)` renvoie 3 x 2  = 6.
-- on "dépile" 4 : `fact(4)` renvoie 4 x 6  = 24.
+- 1er appel de la fonction `fact` avec n = 4 : n n'est pas égal à 1, la fonction "empile" `fact(4)` et appelle `fact(3)`.
+- 2ème appel de la fonction `fact` avec n = 3 : n n'est pas égal à 1, la fonction "empile" `fact(3)` et appelle `fact(2)`.
+- 3ème appel de la fonction `fact` avec n = 2 : n n'est pas égal à 1, la fonction "empile" `fact(2)` et appelle `fact(1)`.
+- 4ème appel de la fonction `fact` avec n = 1 : n est égal à 1, la fonction renvoie `1`.
+- `fact(2)` est "dépilé", il renvoie 2 x 1 = 2.
+- `fact(3)` est "dépilé", il renvoie 3 x 2 = 6.
+- `fact(4)` est "dépilé" et peut enfin être calculé, il renvoie 4 x 6 = 26.
+
 
 ![Pile d'appel de fact(4)](assets/2-pile-execution-fact4-light-mode.png#only-light)
 ![Pile d'appel de fact(4)](assets/2-pile-execution-fact4-dark-mode.png#only-dark)
