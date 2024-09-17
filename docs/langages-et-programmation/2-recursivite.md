@@ -25,7 +25,7 @@ def fact(n):
     return f
 ```
 
-Mais il est aussi possible de remarquer que $n!  =  (n - 1)!  \times n$ et que $1!  =  1$, ce qui permet d'écrire un programme récursif suivant : 
+Mais il est aussi possible de remarquer que $n!  =  (n-1)!  \times n$ et que $1!  =  1$, ce qui permet d'écrire un programme récursif suivant : 
  
 ``` py 
 def fact(n):
@@ -78,8 +78,9 @@ Par exemple la suite de Fibonacci est définie par $u_0 = 0$, $u_1 = 1$ et pour 
 
 ``` py
 def fib(n):
-    if n < 2:return n
-    return fib(n – 1) + fib(n - 2)
+    if n < 2:
+        return n
+    return fib(n–1) + fib(n-2)
 ```
 
 Si la récursivité est **plus élégante et facile** à lire qu'un programme itératif, on atteint très vite ses limites en complexités[^2.3] spatiale et temporelle[^2.4].
@@ -143,8 +144,9 @@ Une programmation récursive est une simple traduction mot à mot de la définit
 
 ```py
 def fib(n):
-    if n < 2:return n
-    return fib(n – 1) + fib(n - 2)
+    if n < 2:
+        return n
+    return fib(n–1) + fib(n-2)
 ```
 
 Plus facile à concevoir et à lire, la programmation récursive devient vite très lente à l'exécution. Comparons les temps d'exécution de ces deux programmes avec le module `time`.
@@ -185,8 +187,9 @@ Essayons d'en savoir plus sur le type de complexité de cette fonction en affich
 def fib(n):
     global cpt
     cpt += 1
-    if n < 2: return n
-    return fib(n - 1) + fib(n - 2)
+    if n < 2:
+        return n
+    return fib(n-1) + fib(n-2)
 
 cpt = 0
 fib(30)
@@ -254,6 +257,7 @@ def fib(n):
         memoise[n] = fib(n-1) + fib(n-2)
     return memoise[n]
 ```
+[^2.8]
 
 
 [^2.7]: Ici on peut modifier la variable globale `memoise` dans la fonction sans utiliser `global memoise` car elle est de type muable.
@@ -263,9 +267,12 @@ def fib(n):
     def fibo(n):
         memoise = {} 
         def fib(n):
-            if n in memoise: return memoise[n] …
-            if n < 2:  memo_fib[n] = n
-            else :  memo_fib[n] = fib(n-1) + fib(n-2)        
+            if n in memoise:
+                return memoise[n] …
+            if n < 2:
+                memo_fib[n] = n
+            else:
+                memo_fib[n] = fib(n-1) + fib(n-2)        
             return memo_fib[n]
         return fib(n)
     ```
@@ -333,8 +340,9 @@ Note : La mémoisation est un exemple classique d'utilisation des décorateurs P
 
     @memoised
     def fib(n):
-        if n < 2: return n
-        return fib(n - 1) + fib(n - 2)
+        if n < 2:
+            return n
+        return fib(n-1) + fib(n-2)
 
     ```
 
@@ -342,14 +350,15 @@ Note : La mémoisation est un exemple classique d'utilisation des décorateurs P
 
 Prenons l'exemple de la fonction récursive `fact`.
 
-Si le calcul de `fact(n-1)` s'effectue en un nombre d'opérations connu, noté $T_n-1$, alors le calcul de `fact(n)` s'effectue en effectuant cinq opérations élémentaires supplémentaires : 
+Si le calcul de `fact(n-1)` s'effectue en un nombre d'opérations connu, noté $T_{n-1}$, alors le calcul de `fact(n)` s'effectue en effectuant cinq opérations élémentaires supplémentaires : 
+
 - une instruction conditionnelle (`if`),
 - une comparaison (`n == 1`),
 - un appel de fonction (`fact(n-1)`) ,
 - une multiplication (`n * fact(n-1)` ) et
 - un `return`.
 
-donc $T_n = T_n-1 + 5$. 
+donc $T_n = T_{n-1} + 5$. 
 
 Ce qui peut s'écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexité de la fonction récursive `fact` est en $O(n)$.
 
@@ -384,8 +393,9 @@ Comparons les complexités de la suite de Fibonacci avec nos trois programmes :
 === "Programme récursif"
 	``` py linenums="1"
     def fib(n):
-        if n < 2:return n               # 1 condition + 1 comparaison
-        return fib(n - 1) + fib(n - 2)  # 1 addition + Tn-1 + Tn-2
+        if n < 2:
+            return n               # 1 condition + 1 comparaison
+        return fib(n-1) + fib(n-2)  # 1 addition + Tn-1 + Tn-2
 	```
     En faisant l'hypothèse que $T_{n-1}  \approx T_{n-2}$, nous obtenons $T_n  \approx 2 \times T_{n-1} + 2$, donc le cout est exponentiel en $O(2^n)$
 
@@ -398,7 +408,7 @@ Comparons les complexités de la suite de Fibonacci avec nos trois programmes :
         if n < 2:                          # 1 condition + 1 comparaison
             memoise[n] = n
         else :
-            memoise [n] = fib(n-1) + fib(n-2)     # 2 appels et 1 addition n fois -> O(n)
+            memoise[n] = fib(n-1) + fib(n-2)     # 2 appels et 1 addition n fois -> O(n)
         return memoise[n]                   # 1 return + 1 un accès au dictionnaire (au pire en O(n))
 
 	```
