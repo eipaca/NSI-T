@@ -360,11 +360,11 @@ Si le calcul de `fact(n-1)` s'effectue en un nombre d'opérations connu, noté $
 
 donc $T_n = T_{n-1} + 5$. 
 
-Ce qui peut s'écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexité de la fonction récursive `fact` est en $O(n)$.
+Ce qui peut s'écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexité temporelle de la fonction récursive `fact` est en $O(n)$.
 
 
 !!! abstract "Cours" 
-    La complexité d'une fonction récursive se calcule en trouvant une relation entre le nombre d'opérations $T_n$ d'un problème de taille $n$ et $T_{n-1}$. Cette relation (de récurrence) permet de déduire $O(n)$.
+    La complexité temporelle d'une fonction récursive se calcule en trouvant une relation entre le nombre d'opérations $T_n$ d'un problème de taille $n$ et $T_{n-1}$. Cette relation (de récurrence) permet de déduire $O(n)$.
 
     |Relation entre Tn et Tn-1|	Complexité|	Désignation|
     |:-:|:-:|:-|
@@ -374,7 +374,7 @@ Ce qui peut s'écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexi
 
 
 
-Comparons les complexités de la suite de Fibonacci avec nos trois programmes :
+Comparons les complexités temporelles de la suite de Fibonacci avec nos trois programmes :
 
 === "Programme itératif"
 	``` py linenums="1"
@@ -387,7 +387,7 @@ Comparons les complexités de la suite de Fibonacci avec nos trois programmes :
                 a, b = b, a + b         # n-1 affectations x 2 
         return b                        # 1 return
 	```
-    Au total, il y a $3(n-1) + 5$ opérations élémentaires. Le coût est linéaire en $O(n)$.
+    Au total, il y a $3(n-1) + 5$ opérations élémentaires. La complexité temporelle est linéaire en $O(n)$.
 
 
 === "Programme récursif"
@@ -397,22 +397,25 @@ Comparons les complexités de la suite de Fibonacci avec nos trois programmes :
             return n               # 1 condition + 1 comparaison
         return fib(n-1) + fib(n-2)  # 1 addition + Tn-1 + Tn-2
 	```
-    En faisant l'hypothèse que $T_{n-1}  \approx T_{n-2}$, nous obtenons $T_n  \approx 2 \times T_{n-1} + 2$, donc le cout est exponentiel en $O(2^n)$
+    En faisant l'hypothèse que $T_{n-1}  \approx T_{n-2}$, nous obtenons $T_n  \approx 2 \times T_{n-1} + 2$, donc la complexité temporelle est exponentielle en $O(2^n)$
 
 === "Programme récursif avec mémoïsation"
 	``` py linenums="1"
     memoise = {} 
     def fib(n):
-        if n in memoise:                   # 1 condition + 1 recherche de clé dans un dictionnaire en O(1) 
-            return memoise[n]              # 1 accès au dictionnaire, au pire en O(n)
-        if n < 2:                          # 1 condition + 1 comparaison
+        if n in memoise:        # 1 condition + 1 recherche de clé dans un dictionnaire  
+            return memoise[n]   # 1 accès au dictionnaire 
+        if n < 2:               # 1 condition + 1 comparaison
             memoise[n] = n
         else :
-            memoise[n] = fib(n-1) + fib(n-2)     # 2 appels et 1 addition n fois -> O(n)
-        return memoise[n]                   # 1 return + 1 un accès au dictionnaire (au pire en O(n))
+            memoise[n] = fib(n-1) + fib(n-2)     # 2 appels et 1 addition répétés
+        return memoise[n]                   # 1 return + 1 un accès au dictionnaire
 
 	```
-    Au total, le coût dans le pire des cas est en $O(1) + O(n) + O(1) +O(1) +O(n) + O(n)$, c'est-à-dire un coût linéaire en $O(n)$.
+    
+    Rappelons d'abord que l'accès à un élément du dictionnaires a une complexité en $O(1)$ (ainsi que l'ajout ou la modification d'une valeur associée à une clé qui sont aussi en $O(1)$. Seule la recherche d'une valeur, qui consiste à parcourir toutes les clés a un coût en $O(n)$, mais ce n'est pas le cas ici). 
+
+    Grace à la mémoïsation, chaque valeur de `fib` n'est calculée qu'une seule fois. Si la valeur est déjà dans le dictionnaire, les deux premières lignes, `if n in memoise:...` réalisent 3 opérations qui s'effectuent en temps constant, donc ont une compléxité en $O(1)$. Si la valeur n'est pas encore dans le dictionnaire, alors on effectue l'instruction qui suit le `else`, `memoise[n] = fib(n-1) + fib(n-2)`, ce sont 3 opérations onc avec une compléxité en $O(1)$. Toutes ces opérations sont répétées pour toutes les valeurs entre 3 et $n$. Ainsi, le nombre total d'opérations est proportionnel à $n$, ce qui donne une complexité linéaire en $O(n)$.
     
 
 
