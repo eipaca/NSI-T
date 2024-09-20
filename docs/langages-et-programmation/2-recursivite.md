@@ -413,7 +413,7 @@ Comparons les complexités temporelles de la suite de Fibonacci avec nos trois p
 
 	```
     
-    Rappelons d'abord que l'accès à un élément du dictionnaires a une complexité en $O(1)$ (ainsi que l'ajout ou la modification d'une valeur associée à une clé qui sont aussi en $O(1)$. Seule la recherche d'une valeur, qui consiste à parcourir toutes les clés a un coût en $O(n)$, mais ce n'est pas le cas ici). 
+    Rappelons d'abord que l'accès à une valeur dans un dictionnairesa une complexité en $O(1)$ (ainsi que l'ajout ou la modification d'une valeur associée à une clé qui sont aussi en $O(1)$. Seule la recherche d'une valeur, qui consiste à parcourir toutes les clés les unes après les autres, a un coût en $O(n)$, mais ce n'est pas le cas ici). 
 
     Grace à la mémoïsation, chaque valeur de `fib` n'est calculée qu'une seule fois. Si la valeur est déjà dans le dictionnaire, les deux premières lignes, `if n in memoise:...` réalisent 3 opérations qui s'effectuent en temps constant, donc ont une compléxité en $O(1)$. Si la valeur n'est pas encore dans le dictionnaire, alors on effectue l'instruction qui suit le `else`, `memoise[n] = fib(n-1) + fib(n-2)`, ce sont 3 opérations onc avec une compléxité en $O(1)$. Toutes ces opérations sont répétées pour toutes les valeurs entre 3 et $n$. Ainsi, le nombre total d'opérations est proportionnel à $n$, ce qui donne une complexité linéaire en $O(n)$.
     
