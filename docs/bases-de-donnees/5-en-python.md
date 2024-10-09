@@ -11,7 +11,7 @@ Commençons par importer le module `sqlite3` dans un programme.
 ``` py
 import sqlite3
 ```
-Une fois ce module importé, la première chose à faire est d'ouvrir le fichier de base de données nNoter que si le fichier n'existe pas, une nouvelle base de données sera créée):
+La première chose à faire ensuite est d'ouvrir le fichier de la base de données (noter que si le fichier n'existe pas, une nouvelle base de données sera créée) :
 
 ``` py
 bdd = sqlite3.connect("LivresAuteurs.db")
@@ -22,7 +22,7 @@ puis de créer un curseur :
 ``` py
 curseur = bdd.cursor()
 ```
-Ce curseur est un objet Python qui va nous permettre d'exécuter des requêtes et récupérer le ou les résultats de ces requêtes.
+Ce curseur est un objet Python qui va nous permettre d'exécuter des requêtes et de récupérer les résultats de ces requêtes.
 
 
 ##	Exécuter des requêtes de sélection
@@ -34,10 +34,10 @@ requete = "SELECT * FROM Pays;"
 curseur.execute(requete)
 ``` 
 
-Pour visualiser le résultat de cette requête, nous utiliserons encore notre curseur. Les deux méthodes les plus courantes pour le faire sont :
+La curseur permet ensuite de visualiser le résultat de cette requête par l'une ou l'autre de ces méthodes :
 
--	`fetchone()` pour récupérer un résultat puis avancer le curseur d'un cran
--	`fetchall()` pour récupérer d'un coup tous les résultats.
+-	`fetchone()` pour récupérer une ligne du résultat puis avancer le curseur d'un cran
+-	`fetchall()` pour récupérer d'un coup tous les lignes du résultat.
 
 Pour mieux comprendre comment fonctionne le curseur, exécutons plusieurs fois l'instruction suivante dans la console : 
 
@@ -45,15 +45,15 @@ Pour mieux comprendre comment fonctionne le curseur, exécutons plusieurs fois l
 >>> curseur.fetchone()
 ```
 
-On constate qu'il s'agit littéralement d'un curseur qui se déplace de ligne en ligne dans le résultat de la requête. 
+On constate que le curseur permet de se déplacer une ligne après l'autre dans le résultat de la requête. 
 
-Essayons maintenant `fetchall()` pour récupèrer tous les résultats dans un seul tuple.
+Essayons maintenant `fetchall()` pour récupèrer toutes les lignes du résultats dans un seul p-uplet.
 
 ``` py
 >>> curseur.fetchall()
 ```
 
-On constate qu'il manque des enregistrements : en effet si on réexécute une nouvelle fois la méthode `fetchall()` du curseur, celle-ci ne renvoie rien.  C'est la notion de curseur qui se déplace au fur à mesure qu'un résultat est donné : les précédents appels de `fetchone()` ont fait avancer le curseur, et de même, `fetchall()` positionne le curseur à la toute fin. Pour retrouver tous les résultats à nouveau, il faut réexécuter la requête. 
+On constate qu'il manque les premières lignes. En effet, elles ont déjà été lues par les premiers `fetchone()` exécutées, le curseur s'est déplacé après. Et si on réexécute une nouvelle fois la méthode `fetchall()` du curseur, celle-ci ne renvoie plus rien, le premier `fetchall()` a positionné le curseur après la dernière ligne du résultat. Pour retrouver à nouveau toutes les lignes du résultat, il faut réexécuter la requête. 
 
 ##	Construire des requêtes à partir de variables python
 
