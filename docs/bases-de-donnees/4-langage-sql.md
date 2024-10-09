@@ -250,7 +250,7 @@ INSERT INTO Auteur VALUES (1, "Russie", "Asimov", "Isaac");
     Contrainte d’intégrité référentielle : Il n'est pas possible d'insérer une ligne dans une table avec une valeur de clé étrangère qui n’existe pas dans la table à laquelle elle fait référence.
 
 
-Pour la suite du chapitre, importons des données plus complètes (25 lignes de Pays, 119 auteurs et 129 livres) dans la base de données à partir du fichier [« `LivresAuteurs.sql` »](assets/LivresAuteur.sql).
+Pour la suite du chapitre, importons des données plus complètes (25 lignes de Pays, 119 auteurs et 129 livres) dans la base de données à partir du fichier [« `LivresAuteurs.sql` »](assets/LivresAuteurs.sql).
 
 
 ##	Mettre à jour des données avec `UPDATE`
