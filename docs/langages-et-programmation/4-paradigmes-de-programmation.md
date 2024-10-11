@@ -36,31 +36,6 @@ Les principes de la programmation fonctionnelle sont les suivants :
     |`>>> l = [1, 2, 3, 4]`<br>`>>> l.append(5)`<br>`>>> l`<br>`[1, 2, 3, 4, 5]`<br>`>>> l.pop()`<br>`5`|`>>> l = [1, 2, 3, 4]`<br>`>>> m = l + [5]`<br>`>>> m`<br>`[1, 2, 3, 4, 5]`<br>`>>> l`<br>`[1, 2, 3, 4]`<br>`>>> n = m[:-1]`|
 
 
--   La **récursivité** est souvent utilisée, en particulier à la place des boucles (puisque l’état du programme ne peut pas être modifié, en particulier avec un variant de boucle). 
-
-    Voyons comment faire la somme des valeurs dans un tableau en programmation impérative et fonctionnelle :
-
-
-    |Exemple de programmation {++non++} fonctionnelle|Exemple de programmation fonctionnelle|
-    |:--|:--|
-    |`def somme(l):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`s= 0`<br>&nbsp;&nbsp;&nbsp;&nbsp;`for elem in l:`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`s = s + e`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return s`|`def somme(l):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`if len(l) == 1: return l[0]`<br>&nbsp;&nbsp;&nbsp;&nbsp;`else: return l[0]+ somme(l[1:])`|
-
--   Une fonction est dite "**fonction pure**", elle renvoie une valeur qui ne dépend que de ses paramètres, et pas de valeur externes.
-
-    |Exemple de programmation {++non++} fonctionnelle|Exemple de programmation fonctionnelle|
-    |:--|:--|
-    |`n = 2`<br>`def inc(k):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`""" incrémentation par effet de bord """`<br>&nbsp;&nbsp;&nbsp;&nbsp;`global n`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n = n + k`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return n`<br><br>`print(inc(1) + inc(1))`|`def inc(k):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`""" incrémentation sans effet de bord"""`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n = 2`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n = n + k`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return n`<br><br>`print(inc(1) + inc(1))`|
-
-    Dans l’exemple de programmation non fonctionnelle, la fonction `inc(k)` ne renvoie pas la même valeur lors des deux appels : le premier appel renvoie `3` (2 + 1) et le second `4` (3 + 1), il est donc impossible de remplacer `print(inc(1) + inc(1))` par `print(2 * inc(1))`. 
-
-
--   Une fonction est dite "**d'ordre supérieur**", elle a le **même statut qu’une valeur**. Elle peut par exemple être utilisée comme paramètre d’une autre fonction ; renvoyée comme résultat d’une autre fonction ; assignée à une variable (fonction lambda); et même stockée dans une structure de données.
-
-    Prenons l'exemple d'une fonction renvoyant la factorielle d’un nombre `n` :
-
-    |Exemple de programmation {++non++} fonctionnelle|Exemple de programmation fonctionnelle|
-    |:--|:--|
-    |`def fact(n):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`f = 1`<br>&nbsp;&nbsp;&nbsp;&nbsp;`for i in range(2, n+1):`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`f = f * i`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return f`|`def fact(n):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return 1 if n == 1 else n * f(n - 1)`<br><br>`# ou en fonction lambda`<br>`fact = lambda n:1 if n == 1  else n * f(n - 1)`|
 
 -   Les **tableaux par compréhension**, inspirées du langage de programmation fonctionnel Haskell, sont adaptés à la programmation fonctionnelle.
 
@@ -73,38 +48,59 @@ Les principes de la programmation fonctionnelle sont les suivants :
 
 
 
-!!! question "Exercice corrigé" 
-    Le produit de tous les nombres entiers entre 1 et $n$ est appelé factorielle de $n$ et noté $n!$.
+
+-   La **récursivité** est souvent utilisée, en particulier à la place des boucles (puisque l’état du programme ne peut pas être modifié, en particulier avec un variant de boucle). 
+
+    Voyons comment calculer le produit de tous les nombres entiers entre 1 et $n$, appelé factorielle de $n$ et noté $n!$ :
 
     $n!  =  1  \times 2  \times 3  \times 4  \times ...  \times (n-1)  \times n$ 
-
-    Ecrire une fonction qui renvoie la factorielle d'un nombre 1) en programmation impérative ; 2) en programmation fonctionnelle (à l’aide d’une fonction récursive) ; et 3) en programmation fonctionnelle (à l’aide d’une fonction lambda). 
-
-??? Success "Réponse"
-    1) En programmation impérative, une simple boucle `for` permet de multiplier tous les entiers allant de `1` à `n` :
     
-    ``` py 
-    def fact(n):
-        f = 1
-        for i in range(1, n + 1):
-            f = f * i
-        return f
+    |Exemple de programmation {++non++} fonctionnelle|Exemple de programmation fonctionnelle|
+    |:--|:--|
+    |`def fact(n):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`f = 1`<br>&nbsp;&nbsp;&nbsp;&nbsp;`for i in range(2, n+1):`<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`f = f * i`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return f`|`def fact(n):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`if n == 1: return 1`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return n * f(n - 1)`<br><br>`# ou en fonction lambda`<br>`fact = lambda n:1 if n == 1  else n * f(n - 1)`|
+
+    
+-   Une fonction est une "**fonction pure**", elle renvoie une valeur qui ne dépend que de ses paramètres, et pas de valeur externes.
+
+    |Exemple de programmation {++non++} fonctionnelle|Exemple de programmation fonctionnelle|
+    |:--|:--|
+    |`n = 2`<br>`def inc(k):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`""" incrémentation par effet de bord """`<br>&nbsp;&nbsp;&nbsp;&nbsp;`global n`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n = n + k`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return n`<br><br>`print(inc(1) + inc(1))`<br>`>>> 7`|`def inc(k):`<br>&nbsp;&nbsp;&nbsp;&nbsp;`""" incrémentation sans effet de bord"""`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n = 2`<br>&nbsp;&nbsp;&nbsp;&nbsp;`n = n + k`<br>&nbsp;&nbsp;&nbsp;&nbsp;`return n`<br><br>`print(inc(1) + inc(1))`<br>`>>> 6`|
+
+    Dans l’exemple de programmation non fonctionnelle, la fonction `inc(k)` ne renvoie pas la même valeur lors des deux appels : le premier appel renvoie `3` (`=2 + 1`) et le second `4` (`=3 + 1`), il est donc impossible de remplacer `print(inc(1) + inc(1))` par `print(2 * inc(1))`. 
+
+
+-   Une fonction est dite "**d'ordre supérieur**", elle a le **même statut qu’une valeur**. Elle peut par exemple être utilisée comme paramètre d’une autre fonction ; renvoyée comme résultat d’une autre fonction ; assignée à une variable (fonction lambda); et même stockée dans une structure de données. 
+
+    En Python, les fonctions lambda sont un exemple de programmation fonctionnelle. 
+    Créons une fonction qui renvoie la fonction "à la puissance n" :
+    
+    ``` py
+    def puissance(n):
+        return lambda x: x**n
     ```
 
-    2) Mais il est aussi possible de remarquer que $n!  =  (n - 1)!  \times n$ et que $1!  =  1$, ce qui permet d'écrire une fonctiion récursive : 
- 
-    ``` py 
-    def fact(n):
-        if n == 1:
-            return 1
-        else:
-            return  fact(n-1) * n         # le else est facultatif
+    que l'on peut l'utiliser pour créer les fonctions `carre` et `cube` :
+    
+    ``` py
+    >>> carre = puissance(2)
+    >>> cube = puissance(3)
+    >>> cube(10)
+    1000
     ```
 
-    3) La même fonction recursive peut s'écrire en fonction lambda : 
+    `puissance(5)` est la fonction qui renvoie la puissance 5 d'un nombre, par exemple pour calculer $10^5$ :
 
-    ``` py 
-    fact = lambda n: 1 if n == 1 else fact(n - 1)  * n
+    ``` py
+    >>> puissance(5)(10)
+    10000
+    ```
+
+    On peut aussi stocker des fonctions dans une structure de données, par exemple créer un tableau avec toutes les fonctions `puissance()` entre de 0 et 100 :
+
+    ``` py
+    >>> p = [puissance(i) for i in range(101)]
+    >>> p[5](10)
+    10000
     ```
 
  
