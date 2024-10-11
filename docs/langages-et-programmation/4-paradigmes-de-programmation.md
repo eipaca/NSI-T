@@ -69,7 +69,7 @@ Les principes de la programmation fonctionnelle sont les suivants :
     Dans l’exemple de programmation non fonctionnelle, la fonction `inc(k)` ne renvoie pas la même valeur lors des deux appels : le premier appel renvoie `3` (`=2 + 1`) et le second `4` (`=3 + 1`), il est donc impossible de remplacer `print(inc(1) + inc(1))` par `print(2 * inc(1))`. 
 
 
--   Une fonction est dite "**d'ordre supérieur**", elle a le **même statut qu’une valeur**. Elle peut par exemple être utilisée comme paramètre d’une autre fonction ; renvoyée comme résultat d’une autre fonction ; assignée à une variable (fonction lambda); et même stockée dans une structure de données. 
+-   Une fonction est dite "**d'ordre supérieur**", elle peut être utilisée comme paramètre d’une autre fonction ou renvoyée comme résultat d’une autre fonction. Une fonction est aussi dite "**de première classe**", elle est manipulable comme un type de base, assignée à une variable (fonction lambda) ou même stockée dans une structure de données. 
 
     En Python, les fonctions lambda sont un exemple de programmation fonctionnelle. 
     Créons une fonction qui renvoie la fonction "à la puissance n" :
