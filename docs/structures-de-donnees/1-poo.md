@@ -5,7 +5,7 @@
     
     Un **objet** en programmation orientée objet représente souvent un concept, une idée ou toute entité du monde physique (une voiture, une personne, une page d'un livre, etc.).
 
-Exemple de langages orientés objets : Java, Javascript C++, Python, PHP
+Exemple de langages orientés objets : Java, C++, Python, etc.
 
 !!! abstract "Cours" 
     La **classe** est comme un "moule" à partir duquel des objets d'un même type peuvent être créés. Elle définit pour chaque objet de cette classe : 
@@ -44,13 +44,14 @@ voiture_2 = Voiture()
 
 !!! abstract "Cours" 
     Pour créer un objet, ou **instancier**, `nom_objet` depuis la classe `NomClasse`, il faut écrire :
+
     ```nom_objet = NomClasse()```
     
 
 
 ##	Les attributs
 
-Pour l'instant notre classe `Voiture` est une coquille vide et les deux objets instanciés à partir de cette classe, `voiture_1` et `voiture_2`, ne décrivent pas grand chose sur les voitures. Il est possible de leur rajouter des caractéristiques les décrivant avec des **attributs**, par exemple les attributs `marque`, `modele` et `km` pour l'instance `voiture_1` : 
+Pour l'instant notre classe `Voiture` est une coquille vide et les deux objets instanciés à partir de cette classe, `voiture_1` et `voiture_2`, ne contiennent aucne information concernant ces voitures. Il est possible de leur rajouter des caractéristiques les décrivant avec des **attributs**, par exemple les attributs `marque`, `modele` et `km` pour l'instance `voiture_1` : 
 
 ``` py
 >>> voiture_1 = Voiture()
@@ -187,7 +188,7 @@ Appelons la méthode `roule(self, k)` :
 167000
 ```
 
-Ici quand la méthode `voiture_1.roule(15000)` est exécuté, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `15000`.
+Ici quand la méthode `voiture_1.roule(15000)` est exécutée, `self` prend le nom de l'objet `voiture_1` et `k` la valeur  `15000`.
 
 Notons aussi qu'une méthode peut renvoyer une valeur. Prenons l'exemple de `revision`, une méthode qui renvoie les kilomètres avant la prochaine révision  : 
 
@@ -418,7 +419,7 @@ class Voiture:
         Voiture.total_km += k
 ```
 
-Noter que ce **simple blanc souligné**, ou tiret bas, au début du nom de l'attribut n'est une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
+Noter que ce **simple blanc souligné**, ou tiret bas, au début du nom de l'attribut n'est qu'une convention d'écriture entre programmeurs, elle n'est pas prise en compte par l'interpréteur et il est toujours possible de le lire et de le modifier directement sans passer par son mutateur. 
 
 ```
 >>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
@@ -459,7 +460,7 @@ mais il peut encore être modifié avec des effets indésirables :
 152000
 ```
 
-Le problème persiste, cette utilisation est contestée[^1.1] :
+Le problème persiste, cette utilisation est contestée[^1.1].
 
 [^1.1]: Règle du « name mangling » :  Voir PEP 8 « Generally, double leading underscores should be used only to avoid name conflicts with attributes in classes designed to be subclassed. Note: there is some controversy about the use of __names (see below). »
 
