@@ -56,67 +56,147 @@ Une liste peut être implémentée sous la forme :
 
 Prenons par exemple une liste vide implémentée par le tuple `()`, et insérons l'élément `'a'` en tête, la nouvelle liste obtenue est `('a', ())`, sa tête est `'a'` et sa queue `()`. Insérons maintenant un élément `'b'` dans cette liste, la nouvelle liste obtenue est `('b', ('a', ()))`, sa tête est `'b'` et sa queue `('a', ())`. Puis insérons successivement les éléments `'c'` et `'d'`, la nouvelle liste  est `('d', ('d', ('b', ('a', ()))))`, la tête est `'d'` et la queue `('d', ('b', ('a', ())))`.
 
-Ecrivons en Python ces premières primitives de liste qui permettent de créer une liste vide puis d'insérer un élément en tête de liste :
+Ecrivons en Python ces premières primitives de liste qui permettent de créer une liste vide puis d'insérer un élément en tête de liste. L'implémentation peut se faire aussi bien en programmation impérative qu'en programmation orientée objet :
 
-``` py
-def creer():
-    return ()  # renvoie une tuple vide
 
-def est_vide(L):
-    return L == ()
+=== "Pogrammation impérative"""
 
-def inserer_tete(L, e):
-    return (e, L)
+    ``` py
+    def creer():
+        return ()  # renvoie une tuple vide
 
-L = creer()
-L = inserer_tete(L, 'a')
-L = inserer_tete(L, 'b')
-L = inserer_tete(L, 'c')
-L = inserer_tete(L, 'd')
-```
+    def est_vide(L):
+        return L == ()
 
-Ajoutons quelques primitives supplémentaires :
+    def inserer_tete(L, e):
+        return (e, L)
 
-``` py
-def tete(L):
-    return L[0]
+    ma_liste = creer()
+    ma_liste = inserer_tete(ma_liste, 'a')
+    ma_liste = inserer_tete(ma_liste, 'b')
+    ma_liste = inserer_tete(ma_liste, 'c')
+    ma_liste = inserer_tete(ma_liste, 'd')
+    ```
 
-def queue(L):
-    return L[1]
-```
+    Ajoutons quelques primitives supplémentaires :
 
-La taille de la liste est calculée de façon récursive :
+    ``` py
+    def tete(L):
+        return L[0]
 
-``` py
-def taille(L):
-    if est_vide(L):
-        return 0
-    else:
-        return 1 + taille(queue(L))
-```
+    def queue(L):
+        return L[1]
+    ```
 
-L'affichage est aussi récursif :
+    La taille de la liste est calculée de façon récursive :
 
-``` py
-def afficher(L):
-    if est_vide(L):
-        print('')     
-    else:
-        print(tete(L), end=' - ' ) 
-        afficher(queue(L))
-```
+    ``` py
+    def taille(L):
+        if est_vide(L):
+            return 0
+        else:
+            return 1 + taille(queue(L))
+    ```
 
-ainsi que la recherche d'un élément dans la liste :
+    L'affichage est aussi récursif :
 
-``` py
-def chercher(L, e):
-    if est_vide(L):
-        return False 
-    elif tete(L) == e:
-        return True 
-    else:
-        return chercher(queue(L) , e) 
-```
+    ``` py
+    def afficher(L):
+        if est_vide(L):
+            print('')     
+        else:
+            print(tete(L), end=' - ' ) 
+            afficher(queue(L))
+    ```
+
+    ainsi que la recherche d'un élément dans la liste :
+
+    ``` py
+    def chercher(L, elem):
+        if est_vide(L):
+            return False 
+        elif tete(L) == elem:
+            return True 
+        else:
+            return chercher(queue(L) , elem) 
+    ```
+
+
+
+
+=== "Pogrammation orientée objet"""
+
+    ``` py
+    class Liste:
+
+        def __init__(self):
+            self.L = ()
+
+        def est_vide(self):
+            return self.L == ()
+
+        def inserer_tete(self, elem):
+            self.L = (elem, self.L)
+
+    ma_liste = Liste()
+    ma_liste.inserer_tete('a')
+    ma_liste.inserer_tete('b')
+    ma_liste.inserer_tete('c')
+    ma_liste.inserer_tete('d')
+    ```
+
+    Ajoutons quelques primitives supplémentaires :
+
+    ``` py
+        def tete(self):
+            if not self.est_vide():
+                return self.L[0]
+
+        def queue(self):
+            if not self.est_vide():
+                return self.L[1]
+    ```
+
+    La taille de la liste est calculée de façon récursive :
+
+    ``` py
+        def __len__(self):
+            """ Renvoie la longueur de la liste avec la fonction len()"""
+            if self.est_vide():
+                return 0
+            return 1 + len(self.queue())
+    ```
+
+    L'affichage en parcourant l'attribut `self.L` :
+
+    ``` py
+        def __str__(self):
+            """ affiche la liste avec la fonction print()"""
+            affiche = ''
+            t = self.L
+            while t != ():
+                affiche = affiche + t[0] + '-'
+                t = t[1]
+            return affiche
+    ```
+
+    ainsi que la recherche d'un élément dans la liste :
+
+    ``` py
+        def chercher(self, elem):
+            if self.est_vide():
+                return False
+            else:
+                t = self.L
+                while t != ():
+                    if t[0] == elem:
+                        return True
+                    else:
+                        t = t[1]
+            # si on arrive ici c'est qu'elem n'est pas dans la liste
+            return False
+    ```
+
 
 ###	Avec un tableau de taille fixe
 
