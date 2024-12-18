@@ -44,6 +44,7 @@ Les principales primitives constituant l'interface d'une pile sont :
 Exemple :
 
 Soit une pile `P` composée des éléments suivants : 12, 14, 8, 7, 19 et 22 (le sommet de la pile est 22). Pour chaque exemple ci-dessous on repart de la pile d'origine :
+
 -	`dépiler(P)` renvoie 22 et la pile `P` est maintenant composée des éléments suivants : 12, 14, 8, 7 et 19 (le sommet de `P` est 19).
 -	`empiler(P, 42)` la pile `P` est maintenant composée des éléments suivants : 12, 14, 8, 7, 19, 22 et 42
 -	si on applique `dépiler(P)` 6 fois de suite, `est_vide(P)` renvoie vrai.
