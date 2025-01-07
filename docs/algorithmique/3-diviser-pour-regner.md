@@ -28,12 +28,12 @@ Dans le pire des cas (x n'est pas dans le tableau), l'algorithme parcourt l'ense
 
 Le principe de la **recherche dichotomique dans un tableau trié** est celui suivi naturellement par les enfants quand ils jouent à un jeu bien connu. Le but du jeu est de découvrir un nombre secret compris entre 0 et 100 en un minimum d'essais. A chaque proposition on lui répond s'il a trouvé ou si le nombre secret est plus petit ou plus grand. La meilleure technique consiste à proposer un nombre au milieu de 0 et 100, c'est-à-dire 50. Si on lui répond « gagné », il a eu de la chance et il a trouvé le nombre secret imméditement. Si on lui répond « perdu, c'est plus » alors il sait que le nombre secret est entre 51 et 100, il va donc proposer le milieu, c'est-à-dire 75. Si la réponse est « perdu, c'est moins » alors le nombre secret est entre 0 et 49, il va proposer 25. Il va continuer ainsi de suite jusqu'à trouver le nombre secret. Cette technique consiste à **diviser un problème en deux sous-problèmes indépendants**, c'est un algorithme du type **diviser pour regner**.
 
-Recherche dichotomique de `x` dans un tableau trié `T[1, .. n]` :
+Recherche dichotomique de `x` dans un tableau trié `T[debut,...., fin]` :
 
 |Etape|Description|
 |:--|:--|
-|**Diviser** |Découper le tableau trié `T[1, …, n]` au milieu en deux sous-tableaux  `T[1, …, n//2]` et `T[n//2 + 1, …, n]`|
-|**Régner**	 |- si `x < T[n//2]`, chercher `x` dans `T[1, ..., n//2]` <br>- si `x > T[n//2]` , chercher `x` dans `T[n//2 + 1,..n]`<br>-	si `x == T[n//2]`,  `x` a été trouvé|
+|**Diviser** |Découper le tableau trié `T[debut, ..., fin]` en son milieu (`(debut + fin)//2`) pour avoir deux sous-tableaux  `T[debut, ..., milieu-1]` et `T[milieu + 1, ..., fin]`|
+|**Régner**	 |- si `x < T[milieu]`, chercher `x` dans `T[debut, ..., milieu-1]` <br>- si `x > T[milieu]` , chercher `x` dans `T[milieu+1, ..., fin]`<br>- si `x == T[milieu]`,  `x` a été trouvé|
 |**Combiner**| |
 
  Faisons par exemple des recherches dans le tableau **trié** [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]. 
@@ -97,13 +97,14 @@ def recherche(x, T) :
     debut = 0
     fin = len(T) - 1
     while debut <= fin:      
-        milieu = (fin + debut)//2
+        milieu = (debut + fin)//2
         if x < T[milieu]: 
             fin = milieu - 1
         elif x > T[milieu]: 
             debut = milieu + 1
-        else: 
+        else:       # donc x == T[milieu]: 
             return True   # ou return milieu si on veut la position dans T
+        
     return False    # ou return None par exemple si on veut la position dans T 
 ```
 :warning: Un bug classique est d'écrire  `while debut < fin:` à la ligne 4, alors qu'on a vu que la recherche doit se poursuivre jusqu'à ce que `debut` soit plus grand que `fin`, c'est-à-dire que le tableau est vide. 
@@ -140,11 +141,11 @@ def recherche(x, T) :
     else:
         debut = 0
         fin = len(T) - 1
-        milieu = (fin + debut)//2
+        milieu = (debut + fin)//2
         if x < T[milieu]: 
-            return recherche(x, T[debut:milieu])
+            return recherche(x, T[:milieu]) 
         elif x > T[milieu]: 
-            return recherche(x, T[milieu + 1:fin + 1])
+            return recherche(x, T[milieu + 1:])
         else: 
             return True
 ```
@@ -364,7 +365,7 @@ Rotation d'une image d'un quart de tour par la méthode « diviser pour régner 
 |:--|:--|
 |**Diviser** |Découper l'image en 4 sous-images et effectuer une permutation circulaire |
 |**Régner**	 |Effectuer une rotation d'1/4 de tour pour chaque sous-image|
-|**Combiner**|Réunir les 4 sous-images ensembles|
+|**Combiner**|Réunir les 4 sous-images ensemble|
 
 Voilà ce qu'on obtient étape par étape :
 
