@@ -26,14 +26,22 @@ def recherche(x, T):
 
 Dans le pire des cas (x n'est pas dans le tableau), l'algorithme parcourt l'ensemble du tableau, le coût est donc en $O(n)$.
 
-Le principe de la **recherche dichotomique dans un tableau trié** est celui suivi naturellement par les enfants quand ils jouent à un jeu bien connu. Le but du jeu est de découvrir un nombre secret compris entre 0 et 100 en un minimum d'essais. A chaque proposition on lui répond s'il a trouvé ou si le nombre secret est plus petit ou plus grand. La meilleure technique consiste à proposer un nombre au milieu de 0 et 100, c'est-à-dire 50. Si on lui répond « gagné », il a eu de la chance et il a trouvé le nombre secret imméditement. Si on lui répond « perdu, c'est plus » alors il sait que le nombre secret est entre 51 et 100, il va donc proposer le milieu, c'est-à-dire 75. Si la réponse est « perdu, c'est moins » alors le nombre secret est entre 0 et 49, il va proposer 25. Il va continuer ainsi de suite jusqu'à trouver le nombre secret. Cette technique consiste à **diviser un problème en deux sous-problèmes indépendants**, c'est un algorithme du type **diviser pour regner**.
+Le principe de la **recherche dichotomique dans un tableau trié** est celui suivi naturellement par les enfants quand ils jouent à un jeu bien connu : un des joueurs doit découvrir en un minimum d'essais un nombre secret compris entre 0 et 100 choisi par l'autre joueur. A chaque proposition du permier joueur, l'autre lui répond s'il a trouvé le nombre secret ou s'il est plus petit ou plus grand. La meilleure technique pour le joueur qui cherche le nombre secret consiste à proposer un nombre « au milieu » de tous les nombres possibles.
 
-Recherche dichotomique de `x` dans un tableau trié `T[debut,...., fin]` :
+Au début le joueur propose le nombre au milieu entre 0 et 100, c'est-à-dire 50. 
+
+- Si on lui répond « gagné », il a eu de la chance et il a trouvé le nombre secret immédiatement. 
+- Si on lui répond « perdu, c'est plus grand », alors il sait que le nombre secret est entre 51 et 100, il va donc proposer le nouveau milieu entre 51 et 100, c'est-à-dire 75.
+- Si la réponse est « perdu, c'est moins », alors le nombre secret est entre 0 et 49, il va proposer 25. 
+
+Il va continuer ainsi de suite jusqu'à trouver le nombre secret. Cette technique consiste à **diviser un problème en deux sous-problèmes indépendants**, c'est un algorithme du type **diviser pour régner**.
+
+Recherche dichotomique de `x` dans un tableau **trié** `T` :
 
 |Etape|Description|
 |:--|:--|
-|**Diviser** |Découper le tableau trié `T[debut, ..., fin]` en son milieu (`(debut + fin)//2`) pour avoir deux sous-tableaux  `T[debut, ..., milieu-1]` et `T[milieu + 1, ..., fin]`|
-|**Régner**	 |- si `x < T[milieu]`, chercher `x` dans `T[debut, ..., milieu-1]` <br>- si `x > T[milieu]` , chercher `x` dans `T[milieu+1, ..., fin]`<br>- si `x == T[milieu]`,  `x` a été trouvé|
+|**Diviser** |Découper le tableau trié `[T[debut], T[debut+1], ..., T[fin]]` en son milieu (`(debut + fin)//2`) pour avoir deux sous-tableaux  `[T[debut], T[debut+1], ..., T[milieu-1]]` et `[T[milieu + 1], ..., T[fin]]`|
+|**Régner**	 |- si `x < T[milieu]`, chercher `x` dans `[T[debut], T[debut+1], ..., T[milieu-1]]` <br>- si `x > T[milieu]` , chercher `x` dans `[T[milieu + 1], ..., T[fin]]`<br>- si `x == T[milieu]`,  `x` a été trouvé|
 |**Combiner**| |
 
  Faisons par exemple des recherches dans le tableau **trié** [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]. 
@@ -46,10 +54,10 @@ Recherche dichotomique de `x` dans un tableau trié `T[debut,...., fin]` :
     ![Recherche dichotomique de 40 dans le [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]](assets/3-recherche-dichotomique-40-dark-mode.png#only-dark){width="50%"}
 
     1. On cherche la valeur `40` dans le tableau `[5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]`. 
-    2. On partage le tableau en deux parties en son milieu : `milieu =  23`.
-    3. `40 > milieu`, on cherche la valeur `40` dans la partie supérieure du tableau `[27, 35, 40 ,41, 45]`.
-    4. On partage le tableau en deux parties en son milieu : `milieu = 40`.
-    5. `40 = milieu`, on a trouvé la valeur `40`.
+    2. On partage le tableau en deux parties en son milieu : `T[milieu] =  23`.
+    3. `40 > T[milieu]`, on cherche la valeur `40` dans la partie supérieure du tableau `[27, 35, 40 ,41, 45]`.
+    4. On partage le tableau en deux parties en son milieu : `T[milieu] = 40`.
+    5. `40 = T[milieu]`, on a trouvé la valeur `40`.
         
     
 
@@ -59,14 +67,14 @@ Recherche dichotomique de `x` dans un tableau trié `T[debut,...., fin]` :
     ![Recherche dichotomique de 35 dans le [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]](assets/3-recherche-dichotomique-35-dark-mode.png#only-dark){width="50%"}
 
     1. On cherche la valeur `35` dans le tableau `[5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]`. 
-    2. On partage le tableau en deux parties en son milieu : `milieu =  23`.
-    3. `35 > milieu`, on cherche la valeur `35` dans la partie supérieure du tableau `[27, 35, 40 ,41, 45]`.
-    4. On partage le tableau en deux parties en son milieu : `milieu = 40`.
-    5. `35 < milieu`, on cherche la valeur `35` dans la partie inférieure du tableau `[27, 35]`.
-    6. On partage le tableau en deux parties en son milieu : `milieu = 27`.
-    7. `35 > milieu`, on cherche la valeur `35` dans la partie supérieure du tableau `[35]`.
-    8. On partage le tableau en deux parties en son milieu : `milieu = 35`.
-    5. `35 = milieu`, on a trouvé la valeur `35`.
+    2. On partage le tableau en deux parties en son milieu : `T[milieu] =  23`.
+    3. `35 > T[milieu]`, on cherche la valeur `35` dans la partie supérieure du tableau `[27, 35, 40 ,41, 45]`.
+    4. On partage le tableau en deux parties en son milieu : `T[milieu] = 40`.
+    5. `35 < T[milieu]`, on cherche la valeur `35` dans la partie inférieure du tableau `[27, 35]`.
+    6. On partage le tableau en deux parties en son milieu : `T[milieu] = 27`.
+    7. `35 > T[milieu]`, on cherche la valeur `35` dans la partie supérieure du tableau `[35]`.
+    8. On partage le tableau en deux parties en son milieu : `T[milieu] = 35`.
+    5. `35 = T[milieu]`, on a trouvé la valeur `35`.
 
     On voit ici que la recherche s'effectue jusqu'à ce que le tableau n'ait plus qu'une seule valeur, c'est à dire que `debut` est égal à `fin`. 
 
@@ -77,14 +85,14 @@ Recherche dichotomique de `x` dans un tableau trié `T[debut,...., fin]` :
     ![Recherche dichotomique de 34 dans le [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]](assets/3-recherche-dichotomique-34-dark-mode.png#only-dark){width="50%"}
 
     1. On cherche la valeur `34` dans le tableau `[5, 7, 12, 14, 23, 27, 35, 40 ,41, 45]`. 
-    2. On partage le tableau en deux parties en son milieu : `milieu =  23`.
-    3. `34 > milieu`, on cherche la valeur `34` dans la partie supérieure du tableau `[27, 35, 40 ,41, 45]`.
-    4. On partage le tableau en deux parties en son milieu : `milieu = 40`.
-    5. `34 < milieu`, on cherche la valeur `34` dans la partie inférieure du tableau `[27, 35]`.
-    6. On partage le tableau en deux parties en son milieu : `milieu = 27`.
-    7. `34 > milieu`, on cherche la valeur `34` dans la partie supérieure du tableau `[35]`.
-    8. On partage le tableau en deux parties en son milieu : `milieu = 35`.
-    5. `34 < milieu`, on cherche la valeur `34` dans la partie inférieure du tableau `[]`
+    2. On partage le tableau en deux parties en son milieu : `T[milieu] =  23`.
+    3. `34 > T[milieu]`, on cherche la valeur `34` dans la partie supérieure du tableau `[27, 35, 40 ,41, 45]`.
+    4. On partage le tableau en deux parties en son milieu : `T[milieu] = 40`.
+    5. `34 < T[milieu]`, on cherche la valeur `34` dans la partie inférieure du tableau `[27, 35]`.
+    6. On partage le tableau en deux parties en son milieu : `T[milieu] = 27`.
+    7. `34 > T[milieu]`, on cherche la valeur `34` dans la partie supérieure du tableau `[35]`.
+    8. On partage le tableau en deux parties en son milieu : `T[milieu] = 35`.
+    5. `34 < T[milieu]`, on cherche la valeur `34` dans la partie inférieure du tableau `[]`
     6. On n'a pas trouvé la valeur `34`.
 
     On voit ici que la recherche s'effectue jusqu'à ce que le tableau soit vide , c'est-à-dire que `debut` est plus grand que `fin`. 
@@ -107,7 +115,7 @@ def recherche(x, T) :
         
     return False    # ou return None par exemple si on veut la position dans T 
 ```
-:warning: Un bug classique est d'écrire  `while debut < fin:` à la ligne 4, alors qu'on a vu que la recherche doit se poursuivre jusqu'à ce que `debut` soit plus grand que `fin`, c'est-à-dire que le tableau est vide. 
+:warning: Un bug classique est d'écrire  `while debut < fin:` à la ligne 4, alors qu'on a vu que la recherche doit se poursuivre jusqu'à ce que `debut` soit plus grand que `fin`, c'est-à-dire quand le tableau est vide. 
 
 Ce programme contient une boucle `while`, il faut donc s'assurer qu'il se termine. Ici le variant de boucle est `fin - debut`. A chaque itération de boucle, on voit qu'il y a trois cas :
 
@@ -119,36 +127,47 @@ Tant qu'on est dans la boucle, le variant de boucle `fin - debut` décroit stric
 
 Pour prouver la correction de cet algorithme, on va utiliser la technique de l'invariant de boucle. Ici, un invariant de boucle est : si x est dans T alors `T[debut] <= x <= T[fin]`. Si l'invariant est vrai quand on entre dans la boucle, alors il y a les mêmes trois possibilités :
 
-- `x < T[milieu]` : alors la recherche se poursuit dans `T[debut:milieu - 1]`, l'invariant est encore vrai quand on retourbne dans la boucle; 
-- `x > T[milieu]` : alors la recherche se poursuit dans `T[milieu + 1:fin]`, l'invariant est encore vrai quand on retourbne dans la boucle ;  
+- `x < T[milieu]` : alors la recherche se poursuit dans `[T[debut], ..., T[milieu-1]]`, l'invariant est encore vrai quand on retourne dans la boucle; 
+- `x > T[milieu]` : alors la recherche se poursuit dans `[T[milieu+1], ..., T[fin]]`, l'invariant est encore vrai quand on retourbne dans la boucle ;  
 - `x == T[milieu]` : alors on l'a trouvé.
 
 On a donc bien un invariant de boucle et l'algorithme trouve bien si une valeur est dans un tableau trié ou pas.
 
 
-Etudions la complexité temporelle pour un tableau de taille $n$. A chaque itération de la boucle on divise la taille du tableau par 2, cela revient donc à se demander combien de fois faut-il diviser la taille du tableau par 2 pour obtenir dans le cas le plus défavorable (`x` n'est pas dans `T`) un tableau comportant un seul entier à la fin ? Cela revient à trouver le nombre $a$ tel que $2^a  = n$ . La solution est  $a= log_2(n)$.
+Etudions la complexité temporelle pour un tableau de taille $n$. A chaque itération de la boucle on divise la taille du tableau par 2, cela revient donc à se demander combien de fois faut-il diviser la taille du tableau par 2 pour obtenir dans le cas le plus défavorable (`x` n'est pas dans `T`) un tableau vide ? Cela revient à trouver le nombre $a$ tel que $2^a  = n$ . La solution est  $a= log_2(n)$.
 
 
 !!! abstract "Cours" 
     La **complexité en temps de l'algorithme de recherche dichotomique est logarithmique en  $O(log_2(n))$**.
 
-On peut bien sûr écrire l'algorithme en mode récursif :
+On peut bien sûr écrire le même algorithme en mode récursif, en passant en paramètre de la fonction les valeurs de `debut`et `fin`. Les paramètres sont des paramètres facultatifs par mot-clé, ils sont initialisés à `0`et `lent(T)-1` au premier appel.
+
 
 ``` py linenums="1"
-def recherche(x, T) :
-    if len(T) == 0:
+def recherche(x, T, debut=None, fin=None):
+
+    # initialisation de debut et fin au premier appel
+    if debut is None or fin is None:
+        debut = 0
+        fin = len(T)-1
+
+    if debut > fin:
         return False
     else:
-        debut = 0
-        fin = len(T) - 1
         milieu = (debut + fin)//2
-        if x < T[milieu]: 
-            return recherche(x, T[:milieu]) 
-        elif x > T[milieu]: 
-            return recherche(x, T[milieu + 1:])
-        else: 
+        if x < T[milieu]:
+            return recherche(x, T, debut, milieu-1)
+        elif x > T[milieu]:
+            return recherche(x, T, milieu+1, fin)
+        else:
             return True
+
+assert recherche(35, [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45])
+assert not recherche(34, [5, 7, 12, 14, 23, 27, 35, 40 ,41, 45])
+
 ```
+
+
 
 ##	Tri fusion (*mergesort*)
 
@@ -189,7 +208,7 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
 
 === "Tri à bulles"
 
-    La fin du tableau étant déjà triée, on parcourt le début du tableau en inverse les éléments successifs qui ne sont pas en ordre croissant.
+    La fin du tableau étant déjà triée, on parcourt le début du tableau en inversant les éléments successifs qui ne sont pas en ordre croissant.
 
     ``` py
     def tri_a_bulle(T):
@@ -205,13 +224,15 @@ Ces algorithmes sont considérés comme inefficaces car d'une **complexité quad
 
 L'efficacité du tri fusion repose sur la facilité de réunir deux tableaux triés en un seul (leur « fusion »). En effet, pour construire le nouveau tableau élément par élément, il suffit de choisir à chaque fois le plus petit entre le premier élément du premier tableau et le premier élément du second tableau. Inutile de regarder les éléments suivants de chaque tableau puisqu'ils seront plus grands que les premiers. De cette façon, la fusion entre deux tableaux triés se fait en temps linéaire.
 
-Tri Fusion d'un tableau  `T[1, .. n]` :
+
+Tri Fusion d'un tableau  `T` de taille `n`:
+
 
 |Etape|Description|
 |:--|:--|
-|**Diviser** |Découper le tableau `T[1, …, n]` en deux sous-tableaux `T[1, …, n//2]` et `T[n//2 + 1, …, n]`|
-|**Régner**	 |Trier les deux sous tableaux `T[1, …, n//2]` et `T[n//2 + 1, …, n]`|
-|**Combiner**|Fusionner les deux sous-tableaux triés `T[1, …, n//2]` et `T[n//2 + 1, …, n]` |
+|**Diviser** |Découper le tableau  `T` en son milieu (`n//2`) pour avoir deux sous-tableaux  `T1` et `T2` de moitié de taille|
+|**Régner**	 |Trier les deux sous tableaux `T1` et `T2`|
+|**Combiner**|Fusionner les deux sous-tableaux triés `T1` et `T2` |
 
 
 ![Exemple de tri fusion. Source wikipedia](assets/3-tri-fusion-light-mode.png#only-light){width="30%" align=right}
@@ -286,17 +307,17 @@ def tri_fusion(T: list) -> list:
         return fusion(tri_fusion(T1), tri_fusion(T2))
 ``` 
 
-Etudions la complexité temporelle pour un tableau de taille $n$.  Comme pour l'algorithme du tri par dichotomie, à chaque itération de la boucle de fusion on divise la taille du tableau par 2, on a donc une complexité en $log_2(n)$. Mais à l'intérieur de chaque boucle, il faut effectuer une fusion qui necessite de faire entre $k/2$ et $k$ comparaisons, où $k$ est la taille des sous-tableaux, c'est donc de l'ordre de $O(n)$.  La complexité du tri fusion est donc de l'ordre  $O(n \times log_2(n))$
+Etudions la complexité temporelle pour un tableau de taille $n$.  Comme pour l'algorithme du tri par dichotomie, à chaque appel récursif du tri fusion, la taille du tableau à trié est divisée par 2, la complexité en donc en $log_2(n)$. Mais fusionner les deux tableaux nécessite de faire entre $k/2$ et $k$ comparaisons, où $k$ est la taille des sous-tableaux, c'est donc de l'ordre de $O(n)$.  La complexité du tri fusion est donc de l'ordre  $O(n \times log_2(n))$
 
 !!! abstract "Cours" 
-    La complexité en temps de l'algorithme de tri fusion est donc linéarithmique en  $O(n \times log_2(n))$.
+    La complexité en temps de l'algorithme de tri fusion est donc **linéarithmique en  $O(n \times log_2(n))$**.
 
 Avec un tableau d'un milliard de valeurs, l'algorithme naïf en $O(n^2)$ demande de l'ordre de $10^{18}$ opérations. Avec des ordinateurs effectuant $10^9$ opérations par secondes, il faut de l'ordre de $10^9$ secondes, soit environ 30 ans.
 
-Avec le tri fusion est, le nombre d'opérations est de l'ordre de $10^9 × log_2(10^9) \simeq 10^9 \times 30$, ce qui s'exécute en 30 secondes sur les ordinateurs précédants[^3.2]. 
+Avec le tri fusion, le nombre d'opérations est de l'ordre de $10^9 × log_2(10^9) \simeq 10^9 \times 30$, ce qui s'exécute en 30 secondes sur les ordinateurs précédants[^3.2]. 
 
 
-[^3.1]:
+[^3.2]:
     ``` py
     >>> import math
     >>> math.log(10**9,2)
