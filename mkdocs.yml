@@ -163,7 +163,7 @@ nav:
     #- Protocoles de routage: architectures-materielles-et-systemes-d-exploitation/4-routage.md
     #- Composants intégrés d'un système sur puce: architectures-materielles-et-systemes-d-exploitation/1-systeme-sur-puce.md
  
-   - Algorithmique:
+  - Algorithmique:
     - algorithmique/index.md
     #- Algorithmes sur les arbres binaires et sur les arbres binaires de recherche: algorithmique/1-arbres-binaires.md
     #- Algorithmes sur les graphes: algorithmique/2-graphes.md
