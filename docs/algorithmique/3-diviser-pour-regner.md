@@ -115,7 +115,7 @@ def recherche(x, T) :
         
     return False    # ou return None par exemple si on veut la position dans T 
 ```
-:warning: Un bug classique est d'écrire  `while debut < fin:` à la ligne 4, alors qu'on a vu dans l'exemple précédant (en recherchant la valeur 35 dans le tableau) que la recherche doit se poursuivre **même quand `debut` est égal à `fin`**, on peut encore trouver la valeur. On ne s'arrête que quand `debut > fin`, c'est seulement alors qu'il n'y a plus aucune valeur possible dans le tableau. 
+:warning: Un bug classique est d'écrire  `while debut < fin:` à la ligne 4, alors qu'on a vu dans l'exemple précédent (en recherchant la valeur 35 dans le tableau) que la recherche doit se poursuivre **même quand `debut` est égal à `fin`**, on peut encore trouver la valeur. On ne s'arrête que quand `debut > fin`, c'est seulement alors qu'il n'y a plus aucune valeur possible dans le tableau. 
 
 Ce programme contient une boucle `while`, il faut donc s'assurer qu'il se termine. Ici le variant de boucle est `fin - debut`. A chaque itération de boucle, on voit qu'il y a trois cas :
 
