@@ -175,46 +175,46 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
 
 === "Tri par sélection"
     
-    Le début du tableau étant déjà trié, on parcourt le reste pour trouver le plus petit élément à rajouter en fin de la partie triée.	
+    Le début du tableau étant déjà trié (jusqu'à `i` exclus), on parcourt le reste pour trouver le plus petit élément à rajouter en fin de la partie triée (en `i`).	
 
     ``` py
     def tri_selection(T):
-        n = len(T)
-        for i in range(n-1):
-            mini = i
-            for j in range(i+1, n):
-                if T[j] < T[mini]:
-                    mini = j
-            T[i], T[mini] = T[mini], T[i]
-        return T
+    n = len(T)
+		for i in range(n):   # on suppose T trié jusqu'à i exclus
+			i_min = i
+			for j in range(i+1, n):
+				if T[j] < T[i_min]:
+					i_min = j
+			T[i], T[i_min] = T[i_min], T[i]
+		return T
     ```
 
 === "Tri par insertion"
     
-    Le début du tableau étant déjà trié, on insère l'élément suivant à la bonne place dans la partie déjà triée.	
+    Le début du tableau étant déjà trié (jusqu'à `i` exclus), on insère l'élément suivant (en `i`) à la bonne place dans la partie déjà triée.	
 	
     ``` py
     def tri_insertion(T):
-        n = len(T)
-        for i in range(1, n):
-            valeur_insertion = T[i]
-            j = i
-            while j > 0 and valeur_insertion < T[j-1]:
-                T[j] = T[j-1]
-                j = j - 1
-            T[j] = valeur_insertion
-        return T	
+		n = len(T)
+		for i in range(n):        # on suppose T trié jusqu'à i exclus
+			valeur_insertion = T[i]
+			j = i
+			while j > 0 and valeur_insertion < T[j-1]:
+				T[j] = T[j-1]
+				j = j - 1
+			T[j] = valeur_insertion
+		return T
     ```
 
 === "Tri à bulles"
 
-    La fin du tableau étant déjà triée, on parcourt le début du tableau en inversant les éléments successifs qui ne sont pas en ordre croissant.
+    La fin du tableau étant déjà triée (de `i` exclus jusqu'à la fin), on parcourt le début du tableau en inversant les éléments successifs qui ne sont pas en ordre croissant pour les faire "monter" dans le tableau, le plus grand va jusqu'à `i`.
 
     ``` py
     def tri_a_bulle(T):
         n = len(T)
-        for i in range(n):
-            for j in range(n-i-1):
+		for i in range(n-1,-1,-1):   # on suppose T trié de i exclus jusqu'à la fin
+			for j in range(i):
                 if T[j] > T[j+1]:
                     T[j], T[j+1] = T[j+1], T[j]
         return T
