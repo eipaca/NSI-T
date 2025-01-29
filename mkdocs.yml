@@ -151,7 +151,7 @@ nav:
     - Listes: structures-de-donnees/3-listes.md
     - Piles: structures-de-donnees/4-piles.md
     - Files: structures-de-donnees/5-files.md
-    #- Dictionnaires: structures-de-donnees/6-dictionnaires.md
+    - Dictionnaires: structures-de-donnees/6-dictionnaires.md
     #- Arbres: structures-de-donnees/7-arbres.md
     #- Graphes: structures-de-donnees/8-graphes.md
  
