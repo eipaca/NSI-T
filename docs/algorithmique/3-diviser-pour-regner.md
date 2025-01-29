@@ -179,14 +179,14 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
 
     ``` py
     def tri_selection(T):
-    n = len(T)
-		for i in range(n):   # on suppose T trié jusqu'à i exclus
-			i_min = i
-			for j in range(i+1, n):
-				if T[j] < T[i_min]:
-					i_min = j
-			T[i], T[i_min] = T[i_min], T[i]
-		return T
+        n = len(T)
+        for i in range(n):   # on suppose T trié jusqu'à i exclus
+            i_min = i
+            for j in range(i+1, n):
+                if T[j] < T[i_min]:
+                    i_min = j
+            T[i], T[i_min] = T[i_min], T[i]
+        return T
     ```
 
 === "Tri par insertion"
