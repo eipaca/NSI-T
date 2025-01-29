@@ -1,0 +1,1580 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ressources pour le cours de Terminale NSI de l'Ecole Internationale PACA">
+      
+      
+        <meta name="author" content="Fabrice Perez">
+      
+      
+        <link rel="canonical" href="https://eipaca.github.io/NSI-T/bases-de-donnees/4-langage-sql/">
+      
+      
+        <link rel="prev" href="../3-conception-physique-sgbd-relationnel/">
+      
+      
+        <link rel="next" href="../../structures-de-donnees/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Langage SQL - Ressources de Terminale NSI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+  
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+    
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.75 1.75 0 0 1 1 7.775m1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25ZM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/></svg>');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.5 1.75v11.5c0 .138.112.25.25.25h3.17a.75.75 0 0 1 0 1.5H2.75A1.75 1.75 0 0 1 1 13.25V1.75C1 .784 1.784 0 2.75 0h8.5C12.216 0 13 .784 13 1.75v7.736a.75.75 0 0 1-1.5 0V1.75a.25.25 0 0 0-.25-.25h-8.5a.25.25 0 0 0-.25.25m13.274 9.537zl-4.557 4.45a.75.75 0 0 1-1.055-.008l-1.943-1.95a.75.75 0 0 1 1.062-1.058l1.419 1.425 4.026-3.932a.75.75 0 1 1 1.048 1.074M4.75 4h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5M4 7.75A.75.75 0 0 1 4.75 7h2a.75.75 0 0 1 0 1.5h-2A.75.75 0 0 1 4 7.75"/></svg>');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13M6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75M8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2"/></svg>');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 8.25a.75.75 0 0 1 .75-.75h4a.75.75 0 0 1 0 1.5h-4A.75.75 0 0 1 5 8.25M4 10.5A.75.75 0 0 0 4 12h4a.75.75 0 0 0 0-1.5z"/><path d="M13-.005c1.654 0 3 1.328 3 3 0 .982-.338 1.933-.783 2.818-.443.879-1.028 1.758-1.582 2.588l-.011.017c-.568.853-1.104 1.659-1.501 2.446-.398.789-.623 1.494-.623 2.136a1.5 1.5 0 1 0 2.333-1.248.75.75 0 0 1 .834-1.246A3 3 0 0 1 13 16H3a3 3 0 0 1-3-3c0-1.582.891-3.135 1.777-4.506q.315-.483.623-.946c.473-.709.923-1.386 1.287-2.048H2.51c-.576 0-1.381-.133-1.907-.783A2.68 2.68 0 0 1 0 2.995a3 3 0 0 1 3-3Zm0 1.5a1.5 1.5 0 0 0-1.5 1.5c0 .476.223.834.667 1.132A.75.75 0 0 1 11.75 5.5H5.368c-.467 1.003-1.141 2.015-1.773 2.963-.192.289-.381.571-.558.845C2.13 10.711 1.5 11.916 1.5 13A1.5 1.5 0 0 0 3 14.5h7.401A3 3 0 0 1 10 13c0-.979.338-1.928.784-2.812.441-.874 1.023-1.748 1.575-2.576l.017-.026c.568-.853 1.103-1.658 1.501-2.448s.623-1.497.623-2.143c0-.838-.669-1.5-1.5-1.5m-10 0a1.5 1.5 0 0 0-1.5 1.5c0 .321.1.569.27.778.097.12.325.227.74.227h7.674A2.7 2.7 0 0 1 10 2.995c0-.546.146-1.059.401-1.5Z"/></svg>');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0"/></svg>');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13M6.92 6.085h.001a.749.749 0 1 1-1.342-.67c.169-.339.436-.701.849-.977C6.845 4.16 7.369 4 8 4a2.76 2.76 0 0 1 1.637.525c.503.377.863.965.863 1.725 0 .448-.115.83-.329 1.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6 6 0 0 0-.26.16 1 1 0 0 0-.276.245.75.75 0 0 1-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1 1 0 0 0 .277-.245C8.96 6.514 9 6.427 9 6.25a.61.61 0 0 0-.262-.525A1.27 1.27 0 0 0 8 5.5c-.369 0-.595.09-.74.187a1 1 0 0 0-.34.398M9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg>');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0M9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/></svg>');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M2.344 2.343za8 8 0 0 1 11.314 11.314A8.002 8.002 0 0 1 .234 10.089a8 8 0 0 1 2.11-7.746m1.06 10.253a6.5 6.5 0 1 0 9.108-9.275 6.5 6.5 0 0 0-9.108 9.275M6.03 4.97 8 6.94l1.97-1.97a.749.749 0 0 1 1.275.326.75.75 0 0 1-.215.734L9.06 8l1.97 1.97a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215L8 9.06l-1.97 1.97a.749.749 0 0 1-1.275-.326.75.75 0 0 1 .215-.734L6.94 8 4.97 6.03a.75.75 0 0 1 .018-1.042.75.75 0 0 1 1.042-.018"/></svg>');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M9.504.43a1.516 1.516 0 0 1 2.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 0 1-.871.354h-.302a1.25 1.25 0 0 1-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004zm1.047 1.074L3.286 8.571A.25.25 0 0 0 3.462 9H6.75a.75.75 0 0 1 .694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0 0 12.538 7H9.25a.75.75 0 0 1-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005 0-.009.004"/></svg>');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M4.72.22a.75.75 0 0 1 1.06 0l1 .999a3.5 3.5 0 0 1 2.441 0l.999-1a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.775.776c.616.63.995 1.493.995 2.444v.327q0 .15-.025.292c.408.14.764.392 1.029.722l1.968-.787a.75.75 0 0 1 .556 1.392L13 7.258V9h2.25a.75.75 0 0 1 0 1.5H13v.5q-.002.615-.141 1.186l2.17.868a.75.75 0 0 1-.557 1.392l-2.184-.873A5 5 0 0 1 8 16a5 5 0 0 1-4.288-2.427l-2.183.873a.75.75 0 0 1-.558-1.392l2.17-.868A5 5 0 0 1 3 11v-.5H.75a.75.75 0 0 1 0-1.5H3V7.258L.971 6.446a.75.75 0 0 1 .558-1.392l1.967.787c.265-.33.62-.583 1.03-.722a1.7 1.7 0 0 1-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72 1.28a.75.75 0 0 1 0-1.06m.53 6.28a.75.75 0 0 0-.75.75V11a3.5 3.5 0 1 0 7 0V7.25a.75.75 0 0 0-.75-.75ZM6.173 5h3.654A.17.17 0 0 0 10 4.827V4.5a2 2 0 1 0-4 0v.327c0 .096.077.173.173.173"/></svg>');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M5 5.782V2.5h-.25a.75.75 0 0 1 0-1.5h6.5a.75.75 0 0 1 0 1.5H11v3.282l3.666 5.76C15.619 13.04 14.543 15 12.767 15H3.233c-1.776 0-2.852-1.96-1.899-3.458Zm-2.4 6.565a.75.75 0 0 0 .633 1.153h9.534a.75.75 0 0 0 .633-1.153L12.225 10.5h-8.45ZM9.5 2.5h-3V6c0 .143-.04.283-.117.403L4.73 9h6.54L9.617 6.403A.75.75 0 0 1 9.5 6Z"/></svg>');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.75 2.5h10.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5m4 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5m0 5h8.5a.75.75 0 0 1 0 1.5h-8.5a.75.75 0 0 1 0-1.5M2.5 7.75v6a.75.75 0 0 1-1.5 0v-6a.75.75 0 0 1 1.5 0"/></svg>');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#le-langage-sql" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Ressources de Terminale NSI" class="md-header__button md-logo" aria-label="Ressources de Terminale NSI" data-md-component="logo">
+      
+  <img src="../../assets/logo-ecole-internationale-paca-manosque.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ressources de Terminale NSI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Langage SQL
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/eipaca/NSI-T" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Onglets" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  A propos
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../langages-et-programmation/" class="md-tabs__link">
+          
+  
+    
+  
+  Langages et programmation
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+    
+  
+  Bases de données
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../structures-de-donnees/" class="md-tabs__link">
+          
+  
+    
+  
+  Structures de données
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architectures-materielles-et-systemes-d-exploitation/" class="md-tabs__link">
+          
+  
+    
+  
+  Architectures matérielles, systèmes d'exploitation et réseaux
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../algorithmique/" class="md-tabs__link">
+          
+  
+    
+  
+  Algorithmique
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ressources de Terminale NSI" class="md-nav__button md-logo" aria-label="Ressources de Terminale NSI" data-md-component="logo">
+      
+  <img src="../../assets/logo-ecole-internationale-paca-manosque.png" alt="logo">
+
+    </a>
+    Ressources de Terminale NSI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/eipaca/NSI-T" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    A propos
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../langages-et-programmation/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Langages et programmation
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Bases de données
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bases de données
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-modelisation-conceptuelle/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Modélisation conceptuelle
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2-conception-logique-modele-relationnel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conception logique - le modèle relationnel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-conception-physique-sgbd-relationnel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conception physique - SGBD relationnel
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Langage SQL
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Langage SQL
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table des matières">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table des matières
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creation-des-tables-mise-a-jour-et-suppression-des-tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Création des tables, mise à jour et suppression des tables
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inserer-des-donnees-avec-insert" class="md-nav__link">
+    <span class="md-ellipsis">
+      Insérer des données avec INSERT
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mettre-a-jour-des-donnees-avec-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mettre à jour des données avec UPDATE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#supprimer-des-donnees-avec-delete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Supprimer des données avec DELETE
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#selectionner-des-donnees-avec-select" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sélectionner des données avec SELECT
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Sélectionner des données avec SELECT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#avec-where" class="md-nav__link">
+    <span class="md-ellipsis">
+      avec WHERE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avec-distinct-et-order-by" class="md-nav__link">
+    <span class="md-ellipsis">
+      avec DISTINCT et ORDER BY
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#avec-des-fonctions-daggregation-min-max-count-sum-et-avg" class="md-nav__link">
+    <span class="md-ellipsis">
+      avec des fonctions d'aggrégation MIN(), MAX(), COUNT(), SUM() et AVG()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#requetes-imbriquees-ou-sous-requetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requêtes imbriquées (ou sous-requêtes)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jointures" class="md-nav__link">
+    <span class="md-ellipsis">
+      Jointures
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Jointures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#autres-types-de-jointures-hors-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      Autres types de jointures (hors programme)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resume-des-requetes-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      Résumé des requêtes SQL
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../structures-de-donnees/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Structures de données
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../architectures-materielles-et-systemes-d-exploitation/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Architectures matérielles, systèmes d'exploitation et réseaux
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+    <a href="../../algorithmique/" class="md-nav__link">
+      
+  
+  <span class="md-ellipsis">
+    Algorithmique
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset"><a class="md-content__button md-icon" download href="4-langage-sql.pdf" title="PDF"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 10.5h1v3h-1v-3m-5 1h1v-1H7v1M20 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2M9.5 10.5A1.5 1.5 0 0 0 8 9H5.5v6H7v-2h1a1.5 1.5 0 0 0 1.5-1.5v-1m5 0A1.5 1.5 0 0 0 13 9h-2.5v6H13a1.5 1.5 0 0 0 1.5-1.5v-3m4-1.5h-3v6H17v-2h1.5v-1.5H17v-1h1.5V9z"></path></svg></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="le-langage-sql">Le langage SQL</h1>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>L’interaction avec un SGBD se fait dans un language informatique dédié appelé <strong><em>Structured Query Language</em></strong> ou <strong>SQL</strong>. </p>
+</div>
+<p>SQL est un langage déclaratif, il n'est donc pas a proprement parlé un langage de programmation, mais plutôt une interface standard pour accéder aux bases de données.</p>
+<p>Commençons par créer une nouvelle base de données (menu « <code>New Database</code> ») enregistrée sous le nom « <code>LivresAuteurs.db</code> ». La base de données vide s’ouvre :</p>
+<p><img alt="Créer une nouvelle base de données dans SQLite" src="../assets/4-nouvelle-bdd.png" width="80%" /></p>
+<h2 id="creation-des-tables-mise-a-jour-et-suppression-des-tables">Création des tables, mise à jour et suppression des tables</h2>
+<p>Créons une première table qui représente la relation: <code>Pays(<ins class="critic">Nom_pays</ins>, Population, Superficie)</code>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La commande SQL pour créer une table est : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">nom_table</span><span class="p">(</span><span class="w"> </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">nom_colonne1</span><span class="w">    </span><span class="n">domaine1</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">nom_colonne2</span><span class="w">    </span><span class="n">domaine2</span><span class="p">,</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="err">…</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">);</span>
+</code></pre></div>
+</div>
+<p><img align="right" alt="Pour créer une nouvelle table" src="../assets/4-creation-table.png" width="40%" /></p>
+<p>Entrons la commande SQL suivante dans l’onglet « <code>Execute SQL</code> » :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">Nom_pays</span><span class="w">    </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">Population</span><span class="w">  </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="n">Superficie</span><span class="w">  </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">Nom_pays</span><span class="p">)</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">);</span>
+</code></pre></div>
+<p>À noter : </p>
+<blockquote>
+<p>Le langage SQL n’est pas sensible à la casse, mais les requêtes SQL sont écrites en majuscule par convention.
+  Les commandes SQL sont séparées par des point-virgules « <code>;</code> »</p>
+</blockquote>
+<p>Puis le bouton «<code>run</code>» <img alt="▶" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/25b6.svg" title=":arrow_forward:" /> pour exécuter la commande :</p>
+<p><img align="left" alt="Une nouvelle table créée" src="../assets/4-table-creee.png" width="40%" /></p>
+<p>La table créée apparaît dans l'onglet « <code>Database Structure</code> » avec ses colonnes. </p>
+<p>Noter l’icone devant <code>Nom_pays</code> indiquant la clé primaire.</p>
+<p>SQLite permet de générer automatiquement les requêtes pour créer les tables suivantes avec le menu « <code>Create Table</code> ».</p>
+<p>Maintenant que la table <code>Pays</code> a été créée, il est possible d'ajouter la table <code>Auteur(<ins class="critic">Num_auteur</ins>, #Nom_pays, Nom, Prenom, Date_naissance)</code>. Il n'était pas possible de créer la table <code>Auteur</code> avant <code>Pays</code> car elle contient une clé étrangère (<code>Nom_ Pays</code>) qui fait référence à <code>Pays</code> (<strong>contrainte d'intégrité référentielle</strong>).</p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>Contrainte d'intégrité référentielle : Pour créer une nouvelle table contenant une clé étrangère en référence à une autre table, il faut que cette autre table soit <strong>créée avant</strong> la nouvelle table.</p>
+</div>
+<ul>
+<li>
+<p>Saisir le nom de la table (<code>Auteur</code>), les noms colonnes (<code>Num_auteur</code>, <code>Nom_pays</code>, <code>Nom</code>, <code>Prenom</code>, <code>Date_naissance</code>), leur domaine respectifs (<code>INTEGER</code>, <code>TEXT</code>, <code>TEXT</code>, <code>TEXT</code>, <code>NUMERIC</code>).</p>
+</li>
+<li>
+<p>Indiquer que la colonne <code>Nom</code> est une clé primaire en cliquant la case « <code>PK</code> » (pour <em>Primary Key</em>). Il est aussi possible de cliquer sur « <code>NN</code> » pour <em>Not Null</em> et « <code>U</code> » pour <em>Unique</em>. </p>
+</li>
+<li>
+<p>Indiquer que la colonne <code>Nom_pays</code> est une clé étrangère dans  « <code>Foreign Key</code> » en indiquant la référence vers l'attribut <code>Nom_pays</code> de la table  <code>Pays</code>.</p>
+</li>
+</ul>
+<p>A noter :</p>
+<blockquote>
+<p>Les domaines proposés par SQLite (dépendent du SGBD) sont INTEGER pour les entiers, TEXT  pour les chaînes de caractères, BLOB pour <em>binary large object</em>, REAL pour le flottants et enfin NUMERIC qui convertit en l’un des types précédents en fonction de la valeur donnée.</p>
+</blockquote>
+<p>La commande SQL est générée automatiquement :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="ss">&quot;Auteur&quot;</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="ss">&quot;Num_auteur&quot;</span><span class="w">    </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">UNIQUE</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="ss">&quot;Nom_pays&quot;</span><span class="w">  </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="ss">&quot;Nom&quot;</span><span class="w">   </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="ss">&quot;Prenom&quot;</span><span class="w">    </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="ss">&quot;Date_naissance&quot;</span><span class="w">    </span><span class="nb">NUMERIC</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="ss">&quot;Nom_pays&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="ss">&quot;Pays&quot;</span><span class="p">(</span><span class="ss">&quot;Nom_pays&quot;</span><span class="p">),</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="ss">&quot;Num_auteur&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="p">);</span><span class="w"> </span>
+</code></pre></div>
+<p>De la même façon, créons la table <code>Livres(<ins class="critic">No_ISBN</ins>, Titre, Annee)</code>, par exemple en précisant le domaine avec une contrainte utilisateur supplémentaire (menu « <code>Check</code> » ) afin que l’année soit un entier entre 1900 et 2100.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="ss">&quot;Livre&quot;</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="ss">&quot;Num_ISBN&quot;</span><span class="w">  </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="ss">&quot;Titre&quot;</span><span class="w"> </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="ss">&quot;Editeur&quot;</span><span class="w">   </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="ss">&quot;Annee&quot;</span><span class="w"> </span><span class="nb">INTEGER</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span><span class="w"> </span><span class="k">CHECK</span><span class="p">(</span><span class="ss">&quot;Annee&quot;</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">1900</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2100</span><span class="p">),</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="ss">&quot;Num_ISBN&quot;</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">);</span>
+</code></pre></div>
+<p>Finalement ajoutons la table <code>Ecrit(<ins class="critic">#No_ISBN</ins>, <ins class="critic">#Num_secu_sociale</ins>)</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="ss">&quot;Ecrit&quot;</span><span class="w"> </span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="ss">&quot;Num_ISBN&quot;</span><span class="w">  </span><span class="nb">TEXT</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="ss">&quot;Num_auteur&quot;</span><span class="w">    </span><span class="nb">INTEGER</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="ss">&quot;Num_auteur&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="ss">&quot;Auteur&quot;</span><span class="p">(</span><span class="ss">&quot;Num_auteur&quot;</span><span class="p">),</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="ss">&quot;Num_ISBN&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="ss">&quot;Livre&quot;</span><span class="p">(</span><span class="ss">&quot;Num_ISBN&quot;</span><span class="p">),</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="ss">&quot;Num_auteur&quot;</span><span class="p">,</span><span class="ss">&quot;Num_ISBN&quot;</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="p">);</span>
+</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La commande SQL <code>CREATE TABLE</code> permet de renseigner les clés primaires et étrangères d'uen table :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">nom_table</span><span class="p">(</span><span class="w"> </span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">nom_colonne1</span><span class="w">    </span><span class="n">domaine1</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="n">nom_colonne2</span><span class="w">    </span><span class="n">domaine2</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="err">…</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">cle_primaire_1</span><span class="p">,</span><span class="w"> </span><span class="n">cle_primaire_2</span><span class="p">,</span><span class="w"> </span><span class="err">…</span><span class="p">)</span><span class="w">    </span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="p">(</span><span class="n">cle_etrangere_1</span><span class="p">)</span><span class="w"> </span><span class="k">REFERENCES</span><span class="w"> </span><span class="n">nom_table</span><span class="p">(</span><span class="n">cle_etrangere_1</span><span class="p">),</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="err">…</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="p">);</span>
+</code></pre></div>
+</div>
+<p>Les commandes <code>ALTER TABLE</code> et <code>DROP TABLE</code> permettent de modifier ou supprimer une table. </p>
+<ul>
+<li>Admettons qu’on veuille changer la base de données pour ne plus enregistrer les pays : </li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Pays</span><span class="p">;</span>
+</code></pre></div>
+<ul>
+<li>Pour le chapitre suivant, on va supprimer la colonne Date_naissance :</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">Auteurs</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">Date_naissance</span><span class="p">;</span>
+</code></pre></div>
+<p>Le schéma de la base de données complet a été créé, il peut être enregistré (menu  « <code>File/Save All</code> »).</p>
+<h2 id="inserer-des-donnees-avec-insert">Insérer des données avec <code>INSERT</code></h2>
+<p>Le schéma de notre base de données a maintenant été créée dans le SGBD, mais à ce stade elle est complétement "vide", elle ne contient aucune données. Autrement dit les tables et les colonnes sont bien renseignées mais il n'y a aucune ligne. C'est ce que l'on observe dans l’onglet « <code>Browse Data</code> ».</p>
+<p><img alt="Aucune ligne n'est renseignée dans la base de donnée" src="../assets/4-browse-data-vide.png" width="60%" /></p>
+<p>La mise à jour la base de données se fait à travers le SGBD par le biais de commandes SQL. Le SGBD garantit que les mises à jour respectent le schéma et les contraintes d'intégrité de la base de données.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La commande SQL pour insérer des données est :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">nom_table</span><span class="w"> </span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="n">valeur_1</span><span class="p">,</span><span class="w">  </span><span class="n">valeur_2</span><span class="p">,</span><span class="w"> </span><span class="err">…</span><span class="p">);</span>
+</code></pre></div>
+</div>
+<p>À noter : </p>
+<blockquote>
+<p>Les valeurs doivent être dans l'ordre des attributs correspondant dans la table.</p>
+</blockquote>
+<p>Entrons la commande SQL dans l’onglet « <code>Execute SQL</code> » :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;France&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">66</span><span class="p">,</span><span class="w"> </span><span class="mi">643</span><span class="p">);</span>
+</code></pre></div>
+<p>et observons le résultat dans « <code>Browse Data</code> » : </p>
+<p><img alt="Une première ligne renseignée dans la base de donnée" src="../assets/4-browse-data-1-ligne.png" width="30%" /></p>
+<p>Il est aussi possible d'utiliser <code>INSERT INTO</code> pour insérer plusieurs lignes en même temps : </p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Pays</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">VALUES</span><span class="w"> </span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="p">(</span><span class="ss">&quot;Allemagne&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">83</span><span class="p">,</span><span class="w"> </span><span class="mi">357</span><span class="p">),</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="p">(</span><span class="ss">&quot;Espagne&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">46</span><span class="p">,</span><span class="w"> </span><span class="mi">505</span><span class="p">);</span>
+</code></pre></div>
+ou encore d'utiliser <code>INSERT INTO</code> en précisant les colonnes, par exemple pour les renseigner dans un ordre différent :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Pays</span><span class="p">(</span><span class="n">Population</span><span class="p">,</span><span class="w"> </span><span class="n">Superficie</span><span class="p">,</span><span class="w"> </span><span class="n">Nom_pays</span><span class="p">)</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">330</span><span class="p">,</span><span class="w"> </span><span class="mi">9834</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Etats-Unis&quot;</span><span class="p">);</span><span class="w"> </span>
+</code></pre></div>
+ou de ne renseigner que certaines colonnes :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Pays</span><span class="p">(</span><span class="n">Nom_pays</span><span class="p">,</span><span class="w"> </span><span class="n">Population</span><span class="p">)</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;Italie&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">);</span>
+</code></pre></div></p>
+<p><img alt="Cinq lignes renseignées dans la base de donnée" src="../assets/4-browse-data-5-lignes.png" width="30%" /></p>
+<p>Observons ce qui se passe si on essaie d’insérer un doublon, c’est-à-dire une ligne avec une clé primaire déjà existante, ici <code>Nom_pays("France")</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;France&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">67</span><span class="p">,</span><span class="w"> </span><span class="mi">640</span><span class="p">);</span>
+</code></pre></div>
+<p>Le SGBD génère une erreur pour violation de la contrainte d’entité : 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">Execution</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="k">with</span><span class="w"> </span><span class="n">errors</span><span class="p">.</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">Result</span><span class="p">:</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="k">constraint</span><span class="w"> </span><span class="n">failed</span><span class="p">:</span><span class="w"> </span><span class="n">Pays</span><span class="p">.</span><span class="n">Nom_pays</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="k">At</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;France&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">67</span><span class="p">,</span><span class="w"> </span><span class="mi">640</span><span class="p">);</span>
+</code></pre></div></p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>Contrainte d’entité : Il n'est pas possible d'insérer deux lignes avec la même valeur de clé primaire (ou la même combinaison de clés primaires) dans une table.</p>
+</div>
+<p>Insérons maintenant un premier auteur :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Auteur</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Etats-Unis&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Twain&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Mark&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>et un livre :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;978-2228887359&quot;</span><span class="p">,</span><span class="ss">&quot;A la dure II&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Payot&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1993</span><span class="p">);</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Ecrit</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;978-2228887359&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+</code></pre></div>
+<p>Le SGBD teste toutes les contraintes d’intégrité. Par exemple si la valeur de la colonne <code>Annee</code> d’un livre n’est pas compris entre 1900 et 2100 :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;0000-00001&quot;</span><span class="p">,</span><span class="ss">&quot;Livre trop vieux&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">1890</span><span class="p">);</span>
+</code></pre></div>
+<p>ou si une clé étrangère n’existe pas : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Russie&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Asimov&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Isaac&quot;</span><span class="p">);</span>
+</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>Contrainte d’intégrité référentielle : Il n'est pas possible d'insérer une ligne dans une table avec une valeur de clé étrangère qui n’existe pas dans la table à laquelle elle fait référence.</p>
+</div>
+<p>Pour la suite du chapitre, importons des données plus complètes (25 lignes de Pays, 119 auteurs et 129 livres) dans la base de données à partir du fichier <a href="../assets/LivresAuteurs.sql">« <code>LivresAuteurs.sql</code> »</a>.</p>
+<h2 id="mettre-a-jour-des-donnees-avec-update">Mettre à jour des données avec <code>UPDATE</code></h2>
+<p>Admettons que la population de la ligne <code>France</code> a changée et qu'elle doit être mise à jour dans la base de données : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="k">SET</span><span class="w"> </span><span class="n">Population</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">67</span><span class="w"> </span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">Nom_Pays</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;France&quot;</span><span class="p">;</span>
+</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La commande SQL pour mettre à jour des données est :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">nom_table</span><span class="w"> </span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="k">SET</span><span class="w">  </span><span class="n">nom_colonne1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nouvelle_valeur</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">nom_colonne2</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">identifiant</span><span class="p">;</span>
+</code></pre></div>
+<p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/26a0.svg" title=":warning:" /> Il ne faut pas oublier de préciser la ligne ou les lignes à modifier avec la clause <code>WHERE</code> au rique de modifier toutes les lignes de la table avec la <code>nouvelle_valeur</code>.</p>
+</div>
+<div class="admonition question">
+<p class="admonition-title">Exercice corrigé</p>
+<p>Certains livres de la base de données ont pour éditeur LGF/ Le Livre de Poche et d’autres Le Livre de Poche. Quelle commande permet de tous les réunir sous un même nom d’éditeur ?</p>
+</div>
+<details class="success">
+<summary>Réponse</summary>
+<p>UPDATE Livre SET Editeur = "Le Livre de Poche" WHERE Editeur = "LGF/Le Livre de Poche";</p>
+</details>
+<h2 id="supprimer-des-donnees-avec-delete">Supprimer des données avec <code>DELETE</code></h2>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La commande SQL pour supprimer des données est :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table</span><span class="w">  </span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">nom_colonne</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">identifiant</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<p>Imaginons que l’on veuille supprimer un livre ainsi que son auteur s’il n’a pas écrit d’autres livres dans la base de données. Par exemple le livre Akira dont l’ISBN est 978-2723428262. </p>
+<p>Commençons par supprimer ce livre dans la table <code>Livre</code>: </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Num_ISBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;978-2723428262&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>Cette commande renvoie une erreur :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">Result</span><span class="p">:</span><span class="w"> </span><span class="k">FOREIGN</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="k">constraint</span><span class="w"> </span><span class="n">failed</span>
+</code></pre></div></p>
+<p>et c'est la même chose si on essaye de supprimer cet auteur de la table <code>Auteur</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
+<p>en effet, ces deux commandes violent la contrainte d'intégrité référentielle sur la table <code>Ecrit</code>.
+Il faut procéder dans l’ordre et commencer par supprimer les lignes des autres tables qui font référence à ce livre ou à cet auteur, ici il y a une ligne dans la table <code>Ecrit</code> qui leur fait référence : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Num_ISBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;978-2723428262&#39;</span><span class="p">;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Num_ISBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;978-2723428262&#39;</span><span class="p">;</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="k">DELETE</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>Contrainte d’intégrité référentielle : Il n'est pas possible de supprimer une ligne dans une table si elle est référencée par la clé étrangère d'une autre table. </p>
+</div>
+<h2 id="selectionner-des-donnees-avec-select">Sélectionner des données avec <code>SELECT</code></h2>
+<p>Une façon simple de connaître tous les livres de la base de données est la commande (ou <strong>requête</strong>) SQL suivante :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span>
+</code></pre></div>
+<p>Elle affiche toute la table. Pour voir seulement certaines colonnes, par exemple les titres et éditeurs des livres,  il faut écrire la requête :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Titre</span><span class="p">,</span><span class="w"> </span><span class="n">Editeur</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La commande (ou <strong>requête</strong>) SQL pour sélectionner des données est :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table</span><span class="p">;</span>
+</code></pre></div>
+<p>ou </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">nom_colonne_1</span><span class="p">,</span><span class="w"> </span><span class="n">nom_colonne_1</span><span class="w"> </span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<p>Il est aussi possible de changer l'affichage du nom des colonnes en leur donnant un alias avec <code>AS</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Titre</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="ss">&quot;Titre du livre&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">Editeur</span><span class="w"> </span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+<h3 id="avec-where">avec <code>WHERE</code></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La clause WHERE suivi d’une condition permet de restreindre le champ de recherche d'une requête ::</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">nom_colonne1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">valeur</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<p>Recherchons par exemple les livres publiés chez l'éditeur "J'ai Lu" :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">Editeur</span><span class="o">=</span><span class="ss">&quot;J&#39;ai Lu&quot;</span><span class="p">;</span>
+</code></pre></div>
+<p>ou tous les livres publiés après 1990 :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">Annee</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1990</span><span class="p">;</span>
+</code></pre></div></p>
+<p>il n'est pas possible de mettre plusieurs clauses <code>WHERE</code> dans une requête, pour des requêtes plus compliquées il faut uiliser les opérateurs booléens  <code>AND</code> et <code>OR</code>, par exemple les livres publiés entre 1990 et 2000, ou les livres publiés en 1990 ou 2000 :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Annee</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">1990</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">Annee</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Annee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1990</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="n">Annee</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2000</span><span class="p">;</span><span class="w">    </span>
+</code></pre></div>
+<p>De nombreuses autres possibilités existent pour affiner les requêtes, par exemple utiliser des clauses "floues" avec <code>LIKE</code>, <code>NOT LIKE</code> et le symbole <code>%</code> ou encore <code>IN</code> (hors programme):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Titre</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="ss">&quot;%Astérix%&quot;</span><span class="p">;</span>
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Num_ISBN</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;978%&#39;</span><span class="p">;</span>
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Editeur</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;J&#39;ai Lu&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">&quot;Flammarion&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="avec-distinct-et-order-by">avec <code>DISTINCT</code> et  <code>ORDER BY</code></h3>
+<p>Recherchons tous les éditeurs de la table <code>Livre</code> :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Editeur</span>
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span>
+</code></pre></div>
+Certains éditeurs apparaîssent plusieurs fois quand ils ont édités plusieurs livres. Pour éviter ces répétitions il faut utiliser la clause <code>DISTINCT</code> :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">DISTINCT</span><span class="w"> </span><span class="n">Editeur</span>
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span>
+</code></pre></div>
+De la même façon, <code>ORDER BY</code> permet de trier les résultats d'une requête selon une colonne :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Nom_pays</span><span class="p">,</span><span class="w"> </span><span class="n">Population</span>
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span>
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Population</span><span class="p">;</span>
+</code></pre></div>
+Le tri se fait par défaut en ordre croissant, mais il est possible de préciser l'ordre voulu, <code>ASC</code> pour l'ordre croissant ou <code>DESC</code> pour l'ordre décroissant : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Nom_pays</span><span class="p">,</span><span class="w"> </span><span class="n">Population</span>
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="w"> </span>
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Population</span><span class="w"> </span><span class="k">DESC</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La clause <code>DISTINCT</code> permet d'éviter le répétition dans une requête :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">DISCTINCT</span><span class="w"> </span><span class="n">nom_colonne</span>
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table</span><span class="p">;</span>
+</code></pre></div>
+<p>La clause <code>ORDER BY</code> permet de trier le resultat d'une requête en ordre croissant (<code>ASC</code> par défaut) ou decroissant (<code>DESC</code>) :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">nom_colonne1</span><span class="p">,</span><span class="w"> </span><span class="n">nom_colonne2</span>
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table</span><span class="w"> </span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">nom_colonne</span><span class="p">;</span>
+</code></pre></div>
+</div>
+<h3 id="avec-des-fonctions-daggregation-min-max-count-sum-et-avg">avec des fonctions d'aggrégation <code>MIN()</code>, <code>MAX()</code>, <code>COUNT()</code>, <code>SUM()</code> et <code>AVG()</code></h3>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>Les fonctions d’agrégation <code>MIN()</code>, <code>MAX()</code>, <code>COUNT()</code>, <code>SUM()</code> et <code>AVG()</code> permettent d’effectuer des opérations statistiques dans une requête : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">nom_colonne</span><span class="p">)</span>
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Nom_table</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+</div>
+<p>En voici quelques exemples :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">Titre</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span>
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">Editeur</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="p">;</span><span class="w"> </span>
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Minimum</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="p">;</span>
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="k">Min</span><span class="p">,</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="k">Max</span><span class="p">,</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Moyenne</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="p">;</span>
+</code></pre></div>
+<p><code>GROUP BY</code> (hors programme) permet de regrouper certains résultats ensembles :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Editeur</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">Editeur</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Editeur</span><span class="p">;</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Nom_pays</span><span class="p">,</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="n">Nom_pays</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">Nom_pays</span><span class="p">;</span>
+</code></pre></div></p>
+<h3 id="requetes-imbriquees-ou-sous-requetes">Requêtes imbriquées (ou sous-requêtes)</h3>
+<p>Une requête du type<code>SELECT… FROM …</code> renvoie une table comme résultat. Cette table peut tout à fait être utilisée pour écrire de nouvelles requêtes.</p>
+<p>Comment trouver le nom du pays qui a la plus petite population ? </p>
+<p>La plus petite population parmi la table <code>Pays</code> est  obtenue par :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="p">;</span>
+</code></pre></div>
+Le resultat de cette requête peut alors être utilisé comme une sous-requête de :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Nom_Pays</span><span class="p">,</span><span class="w"> </span><span class="n">Population</span><span class="w"> </span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span>
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">Population</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="p">);</span>
+</code></pre></div></p>
+<p><img alt="⚠" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/26a0.svg" title=":warning:" /> SQLite est particulièrment flexible avec les fonctions d'aggregation et permettait d’écrire directement<sup id="fnref:4.1"><a class="footnote-ref" href="#fn:4.1">1</a></sup> :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Pays</span><span class="p">,</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="p">;</span>
+</code></pre></div>
+Mais ce n’est pas le cas de tous les SGBD. Il suffit de tester la requête suivante pour comprendre que cette flexibilité est souvent à éviter !</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Pays</span><span class="p">,</span><span class="w"> </span><span class="k">MIN</span><span class="p">(</span><span class="n">Population</span><span class="p">),</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">Population</span><span class="p">)</span><span class="w"> </span>
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Pays</span><span class="p">;</span>
+</code></pre></div>
+<h2 id="jointures">Jointures</h2>
+<p>La requête <code>SELECT * FROM Ecrit</code> nous renvoie la table des <code>Num_auteur</code> avec les <code>Num_ISBN</code> correspondant, mais comment afficher le nom et prénom de l’auteur, plutôt que son numéro ?</p>
+<p>Il faut croiser les informations provenant des tables <code>Ecrit</code> et <code>Auteur</code> ensembles. C’est une <strong>jointure</strong>.</p>
+<p><img alt="Une jointure entre les tables Ecrit et Auteur" src="../assets/4-jointure-light-mode.png#only-light" width="80%" />
+<img alt="Une jointure entre les tables Ecrit et Auteur" src="../assets/4-jointure-dark-mode.png#only-dark" width="80%" /></p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>Pour sélectionner des données à travers plusieurs tables, il faut réaliser une jointure entre les tables avec <code>JOIN... ON...</code>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">nom_table1</span><span class="p">.</span><span class="n">nom_colonne1</span><span class="p">,</span><span class="w"> </span><span class="n">nom_table2</span><span class="p">.</span><span class="n">nom_colonne2</span><span class="w"> </span>
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table1</span>
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">nom_table2</span><span class="w"> </span>
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">nom_table1</span><span class="p">.</span><span class="n">cle1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nom_table2</span><span class="p">.</span><span class="n">cle_2</span><span class="p">;</span>
+</code></pre></div></p>
+</div>
+<p>Ce qui donne dans notre exemple<sup id="fnref:4.2"><a class="footnote-ref" href="#fn:4.2">2</a></sup> :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Ecrit</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="p">,</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span>
+<a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Auteur</span>
+<a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">Ecrit</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Num_auteur</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Quand il n’y a pas d’ambiguïté sur les noms de colonne entre les deux tables, par exemple ici <code>Num_ISBN</code> n’apparaît que dans <code>Ecrit</code> et <code>Nom</code> et <code>Prenom</code> que dans <code>Auteur</code>, il est possible d’écrire plus simplement :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Num_ISBN</span><span class="p">,</span><span class="w"> </span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span>
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Auteur</span>
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">Ecrit</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Num_auteur</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Dans le cas où les noms de tables sont utilisés, l’utilisation des alias améliore la lisibilité :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">E</span>
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">A</span><span class="w"> </span>
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Num_auteur</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Il est aussi possible d'ajouter des clauses habituelles, par exemple pour n'avoir que les auteurs français : 
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">Ecrit</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="p">,</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span>
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span>
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">Ecrit</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Num_auteur</span>
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">Auteur</span><span class="p">.</span><span class="n">Nom_pays</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;France&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Enfin, les noms des livres et de leurs auteurs de la table <code>Ecrit</code> s'obtiennent par une <strong>double jointure</strong> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">Titre</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">E</span>
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">A</span><span class="w"> </span>
+<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Num_auteur</span>
+<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Livre</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">L</span><span class="w"> </span>
+<a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a><span class="k">ON</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">L</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="autres-types-de-jointures-hors-programme">Autres types de jointures (hors programme)</h3>
+<p>La jointure avec <code>JOIN</code>, qui peut aussi s'écrire <code>INNER JOIN</code>, réunit seulement les lignes qui apparaissent dans les deux tables :</p>
+<p><img alt="Une jointure INNER JOIN" src="../assets/4-inner-join-light-mode.png#only-light" width="80%" />
+<img alt="Une jointure INNER JOIN" src="../assets/4-inner-join-dark-mode.png#only-dark" width="80%" /></p>
+<p>L’ordre des tables n’a donc pas d’importance. Les deux requêtes suivantes sont équivalentes :</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">avec <code>...FROM Ecrit JOIN Auteur</code></label><label for="__tabbed_1_2">avec <code>...FROM Auteur JOIN Ecrit</code></label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Ecrit</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">E</span>
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">A</span>
+<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Num_auteur</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_ISBN</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Nom</span><span class="p">,</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Prenom</span><span class="w"> </span>
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">Auteur</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">A</span>
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="k">JOIN</span><span class="w"> </span><span class="n">Ecrit</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">E</span>
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="k">ON</span><span class="w"> </span><span class="n">E</span><span class="p">.</span><span class="n">Num_auteur</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">.</span><span class="n">Num_auteur</span><span class="p">;</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Le résultat est le même.</p>
+<p>Mais il existe aussi d’autres types de jointures, <code>LEFT JOIN</code>, <code>RIGHT JOIN</code>, <code>FULL OUTER JOIN</code> (hors programme) qui permettent d’obtenir des résultats différents.</p>
+<p><img alt="Une jointure LEFT JOIN" src="../assets/4-left-join-light-mode.png#only-light" width="80%" />
+<img alt="Une jointure LEFT JOIN" src="../assets/4-left-join-dark-mode.png#only-dark" width="80%" /></p>
+<p><img alt="Une jointure RIGHT JOIN" src="../assets/4-right-join-light-mode.png#only-light" width="80%" />
+<img alt="Une jointure RIGHT JOIN" src="../assets/4-right-join-dark-mode.png#only-dark" width="80%" /></p>
+<p><img alt="Une jointure FULL OUTER JOIN" src="../assets/4-full-outer-join-light-mode.png#only-light" width="80%" />
+<img alt="Une jointure FULL OUTER JOIN" src="../assets/4-full-outer-join-dark-mode.png#only-dark" width="80%" /></p>
+<h2 id="resume-des-requetes-sql">Résumé des requêtes SQL</h2>
+<p>Les commandes SQL suivantes sont à connaître par cœur :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Action</th>
+<th style="text-align: left;">Commande SQL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Ajouter des lignes dans une table</td>
+<td style="text-align: left;"><code>INSERT  INTO nom_table</code><br><code>VALUES (valeur1,  valeur2, …);</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Ajouter des lignes dans une table<br> en précisant les colonnes</td>
+<td style="text-align: left;"><code>INSERT  INTO nom_table(nom_colonne1,  nom_colonne2, ...)</code><br><code>VALUES (valeur1,  valeur2, …);</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Mettre à jour une ligne</td>
+<td style="text-align: left;"><code>UPDATE  nom_table</code><br><code>SET  nom_colonne1 = valeur1,  nom_colonne2 = valeur2, …</code><br><code>WHERE  certainesColonnes = certainesValeurs;</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Supprimer une ligne</td>
+<td style="text-align: left;"><code>DELETE  FROM nom_table</code><br><code>WHERE   nom_colonne = valeur;</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sélectionner toutes les données dans une table</td>
+<td style="text-align: left;"><code>SELECT  *  FROM  nom_table;</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sélectionner certaines colonnes</td>
+<td style="text-align: left;"><code>SELECT  nom_colonne1,  nom_colonne2,  ...</code><br><code>FROM  nom_table</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sélectionner certaines lignes<br>avec <code>WHERE</code></td>
+<td style="text-align: left;"><code>SELECT  ...</code><br><code>FROM  nom_table</code><br><code>WHERE nom_colonne = valeur</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sélectionner sans répétition<br>avec <code>DISTINCT</code></td>
+<td style="text-align: left;"><code>SELECT  DISTINCT nom_colonne</code><br><code>FROM  nom_table</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sélectionner en triant les lignes<br>avec <code>ORDER BY</code></td>
+<td style="text-align: left;"><code>SELECT  ...</code><br><code>FROM  nom_table</code><br><code>ORDER BY nom_colonne [DESC]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sélectionner avec les fonctions d'aggregat<br> <code>MIN()</code>, <code>MAX()</code>, <code>COUNT()</code>, <code>SUM()</code>, <code>AVG()</code></td>
+<td style="text-align: left;"><code>SELECT  MIN(nom_colonne)</code><br><code>FROM  nom_table</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">Afficher une jointure entre tables</td>
+<td style="text-align: left;"><code>SELECT  nom_table1.nom_col1, nom_table2.nom_col2,</code><br><code>FROM  nom_table1</code><br><code>JOIN  nom_table2</code><br><code>ON nom_table1.cle1 = nom_table2.cle2</code></td>
+</tr>
+</tbody>
+</table>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:4.1">
+<p>Voir <a href="https://sqlite.org/lang_select.html#bare_columns_in_an_aggregate_query">https://sqlite.org/lang_select.html#bare_columns_in_an_aggregate_query</a>.&#160;<a class="footnote-backref" href="#fnref:4.1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4.2">
+<p>Noter que <code>JOIN</code> a remplacé l’ancienne syntaxe pour les jointures avec <code>WHERE</code>  :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">nom_table1</span><span class="p">.</span><span class="n">nom_colonne1</span><span class="p">,</span><span class="w"> </span><span class="n">nom_table2</span><span class="p">.</span><span class="n">nom_colonne2</span><span class="w"> </span>
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="k">FROM</span><span class="w"> </span><span class="n">nom_table1</span><span class="p">,</span><span class="w"> </span><span class="n">nom_table2</span>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">nom_table1</span><span class="p">.</span><span class="n">cle1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nom_table2</span><span class="p">.</span><span class="n">cle2</span><span class="p">;</span>
+</code></pre></div></p>
+<p>Ce qui donnait dans notre exemple :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>SELECT Num_ISBN, Nom, Prenom 
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>FROM Ecrit, Auteur
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>WHERE Ecrit.Num_auteur = Auteur.Num_auteur;
+</code></pre></div>&#160;<a class="footnote-backref" href="#fnref:4.2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pied de page" >
+        
+          
+          <a href="../3-conception-physique-sgbd-relationnel/" class="md-footer__link md-footer__link--prev" aria-label="Précédent: Conception physique - SGBD relationnel">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Précédent
+              </span>
+              <div class="md-ellipsis">
+                Conception physique - SGBD relationnel
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../structures-de-donnees/" class="md-footer__link md-footer__link--next" aria-label="Suivant: Structures de données">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Suivant
+              </span>
+              <div class="md-ellipsis">
+                Structures de données
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a> Mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.prune", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
