@@ -22,12 +22,15 @@ Les arbres trouvent de nombreuses applications en informatique, par exemple dans
     
     -   La **taille** d'un arbre est son **nombre de nœuds**.
 
-    -   La **profondeur** d'un nœud est le **nombre d'arêtes entre la racine le nœud**. La **profondeur de la racine est donc 0**.
+    -   La **profondeur** d'un nœud est  le **nombre de noeuds, ou niveaux, entre la racine le nœud**. La **profondeur de la racine est donc 1**.
+        
+    -   La **hauteur** d'un arbre est la plus **grande profondeur d'une feuille de l'arbre**.  **Un arbre réduit à la racine a une hauteur de 1, un arbre vide a une hauteur de 0 (par convention)**.
 
-    -   La **hauteur** d'un arbre est la plus **grande profondeur d'une feuille de l'arbre**.  **Un arbre réduit à la racine a une hauteur de 0, un arbre vide a une hauteur de -1 (par convention)**.
 
+    :warning: Il n'existe pas de définition universelle pour la hauteur d'un arbre et la profondeur d'un nœud dans un arbre. Dans certains cas la profondeur est le nombre d'**arêtes** entre la racine le nœud, la **hauteur de l'arbre réduit à la racine est alors de 0 et la hauteur de l'arbre vide est -1**[^7.1].
 
-    :warning: Il n'existe pas de définition universelle pour la hauteur d'un arbre et la profondeur d'un nœud dans un arbre. Dans certains cas la profondeur des nœuds est comptée à partir de 1, la **hauteur de l'arbre réduit à la racine est 1 et la hauteur de l'arbre vide est 0**.
+[^7.1]: Un arbre vide a une hauteur de 0 et un arbre réduit à la racine une hauteur de 1 dans la plupart des sujets de bac (21-Sujet_0, 21-NSIJ2ME1, 21-NSIJ2ME2, 22-NSIJ1AS1, 22-NSIJ1JAN1, 22-NSIJ1PO1, 22-NSIJ2JA1, 22-NSIJ2ME1, 23-NSIJ2G11 et 23-NSIJ2LI1) sauf les sujets  22-NSIJ1NC1, 24-NSI-41 et 24-NSIJ2PO1 ou un arbre vide a une hauteur de -1 et un arbre réduit à la racine une hauteur de 0.
+
 
 
 ## Interface 
@@ -113,7 +116,7 @@ def pere(arbre, noeud):
 
 def profondeur(arbre, noeud):  
     """ Renvoie la profondeur de noeud"""
-    p = 0
+    p = 1
     while pere(arbre, noeud) is not None:    # tant qu'on n'est pas à la racine
         p = p + 1           # on ajoute 1 à p
         noeud = pere(arbre, noeud)  # on remplace noeud par son pere
@@ -123,13 +126,13 @@ def profondeur(arbre, noeud):
 # ou en récursif
 def profondeur_rec(arbre, noeud):
     """ Renvoie la profondeur de n"""
-    if pere(arbre, noeud) is None: return 0    # la profondeur de la racine est 0
+    if pere(arbre, noeud) is None: return 1    # la profondeur de la racine est 0
     return 1 + profondeur_rec(arbre, pere(arbre, noeud))
 
 
 def hauteur(arbre):
     """ Renvoie la hauteur de l'arbre"""
-    p_max = -1
+    p_max = 0
     for n in arbre:
         if profondeur(arbre, n) > p_max:
             p_max = profondeur(arbre, n)
@@ -168,20 +171,20 @@ Il est possible d'avoir des arbres binaires de même taille mais de « forme » 
 
 
 
-Il en résulte certaines propriétés sur la taille $n$  et la hauteur $h$ d’un arbre binaire :
+Il en résulte certaines propriétés sur la taille $n$  et la hauteur $h$ d'un arbre binaire :
 
--   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n−1$, c’est la plus grande hauteur possible donc pour tout AB : $h ≤  n – 1$. On en déduit que $h + 1 ≤  n$.
+-   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n$, c'est la plus grande hauteur possible donc pour tout AB : $h ≤  n $.
 
--   On peut aussi montrer[^7.1] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h+1} - 1$ , c’est la plus grande taille possible donc pour tout AB : $n ≤  2^{h+1} – 1$. On en déduit que $log_2 (n) ≤ h$ où $log_2 (n)$ est le logarithme en base $2$ de $n$[^7.2].
+-   On peut aussi montrer[^7.2] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h} - 1$ , c'est la plus grande taille possible donc pour tout AB : $n ≤  2^{h} – 1$. On en déduit que $log_2 (n+1) ≤ h$ où $log_2 (n+1)$ est le logarithme en base $2$ de $n+1$[^7.3].
 
-[^7.1]: Par récurrence la taille d’un arbre racine est $2^0 = 1$, et si la taille d’un arbre parfait de hauteur $h-1$ est $2^h -1$, pour obtenir la taille de l’arbre parfait de hauteur $h$ il faut ajouter $2^h$ nouveaux nœuds, au total on obtient $2^h - 1 + 2^h = 2 \times 2^h - 1 = 2^{h+1} -1$.
+[^7.2]: Par récurrence la taille d'un arbre racine est $2^{1} - 1 = 1$, et si la taille d'un arbre parfait de hauteur $h-1$ est $2^{h-1} -1$, pour obtenir la taille de l'arbre parfait de hauteur $h$ il faut ajouter $2^(h-1)$ nouveaux nœuds, au total on obtient $2^{h-1} -1 + 2^{h-1} = 2 \times 2^{h-1} - 1 = 2^{h} -1$.
 
-[^7.2]: Le logarithme en base 2, noté $log_2$ est une opération mathématique qui calcule la puissance à laquelle il faut élever le nombre 2 pour obtenir un nombre donné. Par exemple $log_2 (8)$ est $3$ car$2^3 = 8$.
+[^7.3]: Le logarithme en base 2, noté $log_2$ est une opération mathématique qui calcule la puissance à laquelle il faut élever le nombre 2 pour obtenir un nombre donné. Par exemple $log_2 (8)$ est $3$ car$2^3 = 8$.
 
 !!! abstract "Cours"
-    La taille $n$ d'un arbre binaire quelconque de hauteur $h$  est encadrée par :     $h + 1 ≤ n ≤ 2^{h + 1} - 1$
+    La taille $n$ d'un arbre binaire quelconque de hauteur $h$  est encadrée par :     $h ≤ n ≤ 2^{h } - 1$
 
-    Réciproquement, la hauteur $h$ d'un arbre binaire de taille $n$ est encadrée par :   $log_2 (n) ≤ h ≤ n - 1$
+    Réciproquement, la hauteur $h$ d'un arbre binaire de taille $n$ est encadrée par :   $log_2 (n+1) ≤ h ≤ n$
 
 ### Implémentation avec des p-uplets imbriqués
 
@@ -281,18 +284,18 @@ puis la taille et la hauteur de l'arbre :
         return 1 + td + tg
 
     def hauteur(self):
-        """ Renvoie la hauteur (la plsu grande profondeur) de l'arbre,
-        Par convention, la taille d'un arbre réduit à la racine est 0"""
+        """ Renvoie la hauteur (la plus grande profondeur) de l'arbre,
+        Par convention, la taille d'un arbre réduit à la racine est 1, celle de l'arbre vide est 0"""
 
         # hauteur du sous-arbre droit
         if self.droite is None:
-            hd = -1 
+            hd = 0 
         else:
             hd = self.droite.hauteur()
 
         # hauteur du sous-arbre gauche
         if self.gauche is None:
-            hg = -1
+            hg = 0
         else:
             hg = self.gauche.hauteur()
         
@@ -300,11 +303,11 @@ puis la taille et la hauteur de l'arbre :
         return 1 + max(hd , hg)
 ```
 
-On retrouve cette implémentation avec une classe `Noeud` dans la plupart des exercices de baccalauréat[^7.3], parfois la nommant `arbre`, ou `AB`. Néanmoins on peut lui reprocher de ne pas représenter correctement la définition proposée d'un arbre, puisque les arbres et sous-arbres vides sont représentés par `None`, ce qui n'est pas une instance de cette classe ! 
+On retrouve cette implémentation avec une classe `Noeud` dans la plupart des exercices de baccalauréat[^7.4], parfois la nommant `arbre`, ou `AB`. Néanmoins on peut lui reprocher de ne pas représenter correctement la définition proposée d'un arbre, puisque les arbres et sous-arbres vides sont représentés par `None`, ce qui n'est pas une instance de cette classe ! 
 
 En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer des manipulations pénibles dans le code pour vérifier si un sous-arbre est `None` ou pas (comme ici `if self.droite is None: ...`), cela engendre beaucoup d'erreurs de programmation (utilisations erronées des méthodes de la classe `Noeud` sur `None`).
 
-[^7.3]: On trouve des arbres implémentés par une seule classe récursive dans les sujets 21-NSIJ1ME1,
+[^7.4]: On trouve des arbres implémentés par une seule classe récursive dans les sujets 21-NSIJ1ME1,
  [22-NSIJ2ME1](https://eduscol.education.fr/document/44032/download),
  [22-NSIJ1LR1](https://www.education.gouv.fr/media/114662/download),
  [23-NSIJ2AS1](https://eduscol.education.fr/document/47993/download)
@@ -316,7 +319,7 @@ En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer
 
 :warning: Pour tenter de remédier à ces défauts, on trouve plusieurs variantes d'implémentation, plus ou moins satisfaisantes. 
 
-Une première variante consiste à ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur un `Noeud` racine quand l'arbre est enraciné[^7.4] (sur le même modèle des listes chainées utilisant les classes `Cellules` et `ListeChainees`).
+Une première variante consiste à ajouter une classe d'arbre qui pointe sur `None` quand l'arbre est vide et sur un `Noeud` racine quand l'arbre est enraciné[^7.5] (sur le même modèle des listes chainées utilisant les classes `Cellules` et `ListeChainees`).
 
 
 
@@ -353,7 +356,7 @@ class AB:
         return self.racine == None
 
     def hauteur(self):
-        if self.racine is None: return -1
+        if self.racine is None: return 0
         # renvoie la hauteur du nœud racine
         return self.racine.hauteur()
 
@@ -363,9 +366,9 @@ class AB:
         return self.racine.taille()
 ``` 
 
-[^7.4]: On trouve un arbre implémenté par une classe `Noeud` récursive et une classe `Arbre` dans les sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
+[^7.5]: On trouve un arbre implémenté par une classe `Noeud` récursive et une classe `Arbre` dans les sujets [21-NSIJ2ME2](https://eduscol.education.fr/document/32791/download)
 
-Une seconde variante que l'on rencontre parfois[^7.5] consiste à ne garder qu'une seule classe `Noeud` et en représentant un arbre vide avec une instance dont l'attribut `self.valeur` prend la valeur `None`. 
+Une seconde variante que l'on rencontre parfois[^7.6] consiste à ne garder qu'une seule classe `Noeud` et en représentant un arbre vide avec une instance dont l'attribut `self.valeur` prend la valeur `None`. 
 
 ``` py
 class Noeud:
@@ -386,9 +389,9 @@ Ici, l'objet `arbre_vide` est représenté par un noeud à part entière. On peu
 1
 ```
 
-L'arbre vide comporte un noeud, la méthode renvoie une taille 1 au lieu de 0 ! De même `.hauteur()` renvoie 0 au lieu de -1. Il faut donc modifier les deux méthodes en conséquence.
+L'arbre vide comporte un noeud, la méthode renvoie une taille 1 au lieu de 0 ! De même `.hauteur()` renvoie 1 au lieu de 0. Il faut donc modifier les deux méthodes en conséquence.
 
-[^7.5]: On trouve un arbre implémenté par une classe `Noeud` dont l'attribut `valeur` d'un arbre vide est égal à `None` dans le sujet  [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Par ailleurs, le sujet 
+[^7.6]: On trouve un arbre implémenté par une classe `Noeud` dont l'attribut `valeur` d'un arbre vide est égal à `None` dans le sujet  [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Par ailleurs, le sujet 
  [https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/](https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/) montre un exemple de ce type d'implémentation complétement récursif.
 
 ## Arbres binaires de recherche 
@@ -409,10 +412,10 @@ Note : « supérieur » et   « inférieur » peuvent être au sens strict ou la
  
 Considèrons l'arbre binaire de recherche précédent qui servira comme support pour illustrer la suite.
 
-Plutôt que de dupliquer la classe `AB` précédente en `ABR` et de la modifier, nous allons créer une sous-classe par héritage[^7.65] et lui ajouter les spécificités d'un ABR. 
+Plutôt que de dupliquer la classe `AB` précédente en `ABR` et de la modifier, nous allons créer une sous-classe par héritage[^7.7] et lui ajouter les spécificités d'un ABR. 
 
 
-[^7.6]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
+[^7.7]: L'héritage est un des grands principes de la programmation orientée objet (POO) permettant de créer une nouvelle classe à partir d'une classe existante. La sous classe hérite des attributs et des méthodes de la classe mère et en ajoute de nouveaux.
 
 Inutile de réécrire le constructeur :
 
@@ -442,9 +445,9 @@ Ajoutons des méthodes propres aux ABR :
 
 Pour accéder à la plus petite clé d'un ABR, il suffit de descendre sur les fils à gauche autant que possible. Le dernier nœud visité qui n'a pas de fils gauche porte la plus petite valeur de l'ABR. De la même façon, pour trouver la plus grande valeur, il suffit de descendre sur les fils à droite.
 
-La classe `ABR` n'étant pas récursive, il faut définir une **méthode récursive** au niveau de la classe `Noeud` qui descend le plus à gauche[^7.7] :
+La classe `ABR` n'étant pas récursive, il faut définir une **méthode récursive** au niveau de la classe `Noeud` qui descend le plus à gauche[^7.8] :
 
-[^7.7]: 
+[^7.8]: 
     On peut aussi définir une fonction récursive directement dans la méthode `min()` de la classe `ABR`.
     ``` py
     class ABR:
