@@ -199,8 +199,8 @@ Les arbres binaires ont au plus deux fils, il est donc possible d'utiliser des t
 >>> n2 = (2, n4, n5)
 >>> n6 = (6, (), ())
 >>> n3 = (3, (), n6)
->>> n1 = (1, n2, n3)
->>> n1
+>>> a = (1, n2, n3)
+>>> a
 (1, (2, (4, (), ()), (5, (), ())), (3, (), (6, (), ()))) 
 ```
 
