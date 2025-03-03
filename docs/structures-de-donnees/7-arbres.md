@@ -173,7 +173,7 @@ Il est possible d'avoir des arbres binaires de même taille mais de « forme » 
 
 Il en résulte certaines propriétés sur la taille $n$  et la hauteur $h$ d'un arbre binaire :
 
--   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n$, c'est la plus grande hauteur possible donc pour tout AB : $h ≤  n $.
+-   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n$, c'est la plus grande hauteur possible donc pour tout AB : $ h ≤  n $.
 
 -   On peut aussi montrer[^7.2] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h} - 1$ , c'est la plus grande taille possible donc pour tout AB : $n ≤  2^{h} – 1$. On en déduit que $log_2 (n+1) ≤ h$ où $log_2 (n+1)$ est le logarithme en base $2$ de $n+1$[^7.3].
 
