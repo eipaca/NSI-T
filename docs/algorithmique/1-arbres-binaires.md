@@ -8,7 +8,7 @@
 !!! note inline end "" 
     La plupart des exercices de baccalauréat n'ont qu'une seule classe récursive et se contentent d'implémenter des arbres non vides, dit "enracinés".
 
-On a [déjà implémenté un arbre binaire et ses nœuds](/NSI-T/structures-de-donnees/7-arbres/#implementation-recursive) en Python avec deux classes, une classe `AB` permettant d'implémenter un arbre vide, et une classe `Noeud` récursive :
+On a [déjà implémenté un arbre binaire et ses nœuds](../structures-de-donnees/7-arbres.md#implementation-recursive) en Python avec deux classes, une classe `AB` permettant d'implémenter un arbre vide, et une classe `Noeud` récursive :
 
 ![Un exemple d'arbre binaire](assets/1-ab-exemple-light-mode.png#only-light){width="25%" align=right}
 ![Un exemple d'arbre binaire](assets/1-ab-exemple-dark-mode.png#only-dark){width="25%" align=right}
@@ -89,28 +89,29 @@ Le calcul de la taille a un coût proportionnel à au nombre de nœuds $n$ de l'
 ##	Calcul de la hauteur d'un arbre binaire
 
 !!! note inline end "" 
-    :warning: Il n'existe pas de définition universelle pour la hauteur d'un arbre et la profondeur d'un nœud dans un arbre. Dans certains cas la profondeur des nœuds est comptée à partir de 1, la hauteur de l'arbre réduit à la racine est 1 et la hauteur de l'arbre vide est 0.
+    :warning: Il n'existe pas de définition universelle pour la hauteur d'un arbre et la profondeur d'un nœud dans un arbre. Dans certains cas la profondeur des nœuds est comptée à partir de 0, la hauteur de l'arbre réduit à la racine est 0 et la hauteur de l'arbre vide est -1 (par convention).
 
 !!! abstract "Cours" 
-    -	La **profondeur** d'un nœud est le nombre d'arêtes de la racine au nœud. La profondeur de la racine est donc 0.
+    - La **profondeur** d'un nœud est le nombre de noeuds du chemin qui va de la racine au nœud. La profondeur de la racine est donc 1.
 
-    -	La **hauteur** d'un arbre est la plus grande profondeur d'une feuille de l'arbre. Un arbre réduit à la racine a une hauteur de 0, un arbre vide a une hauteur de -1 (par convention).
+
+    -	La **hauteur** d'un arbre est le nombre de nœuds (ou niveaux) du plus long chemin d’une feuille à la racine. Un arbre réduit à la racine a une hauteur de 1, un arbre vide a une hauteur de 0.
 
 Pour calculer la hauteur d'un arbre, il faut parcourir toutes ses branches à partir de la racine et prendre la profondeur de la feuille la plus éloignée. 
 
 ![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-light-mode.png#only-light){width="40%" align=right}
 ![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-dark-mode.png#only-dark){width="40%" align=right}
 
-Dans le cas arbre binaire impléménté comme décrit ci-dessus, on peut à nouveau créer une méthode récursive, `hauteur()`, de la classe `Noeud`. Cette méthode renvoie la **1 plus la plus grande hauteurs** de ses deux fils. :warning: Les feuilles hauteur ont une hauteur de 0 (avec la convention choisie ici).
+Dans le cas arbre binaire impléménté comme décrit ci-dessus, on peut à nouveau créer une méthode récursive, `hauteur()`, de la classe `Noeud`. Cette méthode renvoie la **1 plus la plus grande hauteurs** de ses deux fils. :warning: Les feuilles hauteur ont une hauteur de 1 (avec la convention choisie ici).
 
-Pour la classe `AB`, on ajoute une autre méthode appelée aussi `hauteur()` qui renvoie `-1` pour l'arbre vide ou sinon la hauteur du Nœud racine.
+Pour la classe `AB`, on ajoute une autre méthode appelée aussi `hauteur()` qui renvoie `0` pour l'arbre vide ou sinon la hauteur du Nœud racine.
 
 
 ``` py 
 class AB: 
 
     def hauteur(self):
-        if self.racine == None: return -1
+        if self.racine == None: return 0
         # renvoie la hauteur du nœud racine
         return self.racine.hauteur()
 
@@ -118,13 +119,13 @@ class Noeud:
     def hauteur(self):
         # hauteur du sous arbre gauche
         if self.gauche is None:
-            hg = -1  # par convention l'arbre vide a une hauteur de -1
+            hg = 0  # par convention l'arbre vide a une hauteur de 0
         else:
             hg = self.gauche.hauteur()
 
         # hauteur du sous arbre droit
         if self.droite is None:
-            hd = -1  # par convention l'arbre vide a une hauteur de -1
+            hd = 0  # par convention l'arbre vide a une hauteur de 0
         else:
             hd = self.droite.hauteur()
 
