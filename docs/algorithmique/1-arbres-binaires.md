@@ -215,10 +215,10 @@ Le parcours en largeur contient une boucle tant que la file n'est pas vide c'est
 
 |Parcours préfixe|Parcours infixe|Parcours postfixe|
 |:--|:--|:--|
-|1.	Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|1.	Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|1.Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|
-|![Exemple de parcours en profondeur préfixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur préfixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark)|![Exemple de parcours en profondeur infixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur infixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark) |![Exemple de parcours en profondeur postfixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur postfixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark)|
+|1.	Visite du nœud<br>2.Parcours branche gauche<br>3.Parcours branche droite|1.Parcours branche gauche<br>2.Visite du nœud<br>3.Parcours branche droite|1.Parcours branche gauche<br>2.Parcours branche droite<br>3.Visite du nœud|
+|![Exemple de parcours en profondeur préfixe d'un AB](assets/1-ab-dfs-prefixe-light-mode.png#only-light)![Exemple de parcours en profondeur préfixe d'un AB](assets/1-ab-dfs-prefixe-dark-mode.png#only-dark)|![Exemple de parcours en profondeur infixe d'un AB](assets/1-ab-dfs-infixe-light-mode.png#only-light)![Exemple de parcours en profondeur infixe d'un AB](assets/1-ab-dfs-infixe-dark-mode.png#only-dark) |![Exemple de parcours en profondeur postfixe d'un AB](assets/1-ab-dfs-postfixe-light-mode.png#only-light)![Exemple de parcours en profondeur postfixe d'un AB](assets/1-ab-dfs-postfixe-dark-mode.png#only-dark)|
+| 5 - 10 - 3 - 6 - 1 - 9 - 4 - 12| 10 - 3 - 5 - 9 - 1 - 4 - 6 - 12| 3 - 10 - 9 - 4 - 1 - 12 - 6 - 5|
 
-=
  	 	 
 Les implémentations récursives de ces trois types de parcours en profondeur sont très semblables, seul l'ordre des instructions change : la ligne `parcours.append(self.valeur)` est placée avant, au mileu ou après les appels récursifs des parcours des fils gauche et droit :
 
