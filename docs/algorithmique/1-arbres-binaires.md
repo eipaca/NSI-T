@@ -327,15 +327,15 @@ Noter qu'il est aussi possible d'implémenter le parcours **préfixe** de façon
 [^1.1]: 
     ``` py
     class Noeud:
-    def parcours_prefixe(self):
-        parcours = []
-        pile = []
-        pile.append(self)
-        while len(pile) != 0:   # tant que la pile n'est pas vide
-            n = pile.pop()   # on prend le noeud au sommet de la pile
-            parcours.append(n.valeur)    # on note sa valeur
-            if n.droite is not None: pile.append(n.droite)  #on empile le fils DROIT d'abord
-            if n.gauche is not None: pile.append(n.gauche)  #on empile le fils gauche    
+        def parcours_prefixe(self):
+            parcours = []
+            pile = []
+            pile.append(self)
+            while len(pile) != 0:   # tant que la pile n'est pas vide
+                n = pile.pop()   # on prend le noeud au sommet de la pile
+                parcours.append(n.valeur)    # on note sa valeur
+                if n.droite is not None: pile.append(n.droite)  # on empile le fils DROIT d'abord
+                if n.gauche is not None: pile.append(n.gauche)  # on empile le fils gauche    
     ```
 
 Le parcours en largeur a un coût proportionnel à la taille du nombre de nœuds $n$ de l'arbre (pour chaque nœud supplémentaire, on rajoute 4 opérations). La **complexité du calcul de la hauteur est en $O(n)$**.
