@@ -177,7 +177,7 @@ Il en résulte certaines propriétés sur la taille $n$  et la hauteur $h$ d'un 
 
 -   On peut aussi montrer[^7.2] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h} - 1$ , c'est la plus grande taille possible donc pour tout AB : $n ≤  2^{h} – 1$. On en déduit que $log_2 (n+1) ≤ h$ où $log_2 (n+1)$ est le logarithme en base $2$ de $n+1$[^7.3].
 
-[^7.2]: Par récurrence la taille d'un arbre racine est $2^{1} - 1 = 1$, et si la taille d'un arbre parfait de hauteur $h-1$ est $2^{h-1} -1$, pour obtenir la taille de l'arbre parfait de hauteur $h$ il faut ajouter $2^(h-1)$ nouveaux nœuds, au total on obtient $2^{h-1} -1 + 2^{h-1} = 2 \times 2^{h-1} - 1 = 2^{h} -1$.
+[^7.2]: Par récurrence la taille d'un arbre racine est $2^{1} - 1 = 1$, et si la taille d'un arbre parfait de hauteur $h-1$ est $2^{h-1} - 1$, pour obtenir la taille de l'arbre parfait de hauteur $h$ il faut ajouter $2^{h-1}$ nouveaux nœuds, au total on obtient $2^{h-1} - 1 + 2^{h-1} = 2 \times 2^{h-1} - 1 = 2^{h} - 1$.
 
 [^7.3]: Le logarithme en base 2, noté $log_2$ est une opération mathématique qui calcule la puissance à laquelle il faut élever le nombre 2 pour obtenir un nombre donné. Par exemple $log_2 (8)$ est $3$ car$2^3 = 8$.
 
