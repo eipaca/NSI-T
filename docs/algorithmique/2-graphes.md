@@ -111,7 +111,7 @@ Voilà un exemple d'implémentation avec une file de type Python list.
 Chaque sommet entre une et une seule fois dans la file, la boucle ```while``` sera donc répétée $n$ fois ($n$ est l'ordre du graphe). Pour chaque sommet de la file : on suppose que le défilement  est à cout constant (ce qui n'est pas le cas avec ```.pop(0)``` sur le type ```list```)[^2.2]; alors la boucle ```for``` est répétée pour chaque voisin, donc une fois pour chaque arête. Si on nomme $m$ le nombre d'arête du graphe, **la complexité du parcours en largeur est en $O(n+m)$**.
 
 
-[^2.2]: Le type ```list``` n'est pas l'implémentation optimale d'une file car ```.pop(0)``` est en cout linéaire, une liste chaînée ou la classe la classe ```collections.deque``` serait mieux adaptée.
+[^2.2]: Le type ```list``` n'est pas l'implémentation optimale d'une file car ```.pop(0)``` est en cout linéaire, une liste chaînée ou de la classe ```collections.deque``` serait mieux adaptée.
 
 Il existe de nombreuses utilisations du parcours en largeur. Une première utilisation toute simple permet de vérifier si un graphe est fortement connexe[^2.3]  ou pas. Peut-on accéder à tous les sommets du graphe depuis de chaque sommet ?
 
@@ -209,7 +209,7 @@ Note : pour l'appel initial de la fonction avec le sommet de départ, ```parcour
 
 [^2.5]: Voir [https://docs.python.org/fr/3/tutorial/controlflow.html#default-argument-values](https://docs.python.org/fr/3/tutorial/controlflow.html#default-argument-values)
  
-En cas de très grand nombre de sommets, la méthode récursive peut vite atteindre sa limite[^2.6].  On peut alternativement utiliser une **approche itérative**, à l'aide d'une **pile*, de façon très similaire au parcours en largeur.
+En cas d'un très grand nombre de sommets, la méthode récursive peut vite atteindre sa limite[^2.6].  On peut alternativement utiliser une **approche itérative**, à l'aide d'une **pile*, de façon très similaire au parcours en largeur.
 
 [^2.6]: 1000 par défaut en Python.
 
