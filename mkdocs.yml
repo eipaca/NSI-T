@@ -169,4 +169,4 @@ nav:
     - Algorithmes sur les graphes: algorithmique/2-graphes.md
     - Méthode « diviser pour régner »: algorithmique/3-diviser-pour-regner.md
     - Programmation dynamique: algorithmique/4-programmation-dynamique.md
-    #- Recherche textuelle: algorithmique/5-recherche-textuelle.md
+    - Recherche textuelle: algorithmique/5-recherche-textuelle.md
