@@ -157,7 +157,7 @@ nav:
  
   - Architectures matérielles, systèmes d'exploitation et réseaux:
     - architectures-materielles-et-systemes-d-exploitation/index.md
-    #- Composants intégrés d'un système sur puce: architectures-materielles-et-systemes-d-exploitation/1-systeme-sur-puce.md
+    - Composants intégrés d'un système sur puce: architectures-materielles-et-systemes-d-exploitation/1-systeme-sur-puce.md
     - Gestion des processus et des ressources par un système d'exploitation: architectures-materielles-et-systemes-d-exploitation/2-processus.md
     - Sécurisation des communications: architectures-materielles-et-systemes-d-exploitation/3-securisation-des-communications.md
     - Protocoles de routage: architectures-materielles-et-systemes-d-exploitation/4-routage.md
