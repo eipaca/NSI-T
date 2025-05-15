@@ -55,7 +55,7 @@ def naive(motif, chaine):
     i = 0    # position du début du motif dans la chaine
     while i <= n - m :
         j = 0       # position du caractère dans le motif
-        while j < m and chaine[i + j] == motif[j]:
+        while j <= m - 1 and chaine[i + j] == motif[j]:
             j = j + 1
         if j == m:       # on a trouvé le motif
             positions.append(i)
@@ -129,7 +129,7 @@ Dans la recherche naïve à rebours, lorsque que le dernier caractère ne corres
 
 ![Recherche Horspool - étape 1](assets/5-horspool-1.png)
 
-Le `C` du motif ne correspond pas au `G` de la chaine. Plutôt que de décaler le motif d'un seul caractère vers la droite, on voit qu'il n'y a aucun `G` dans tout le motif. Il est inutile de comparer le motif après l'avoir décallé d'un seul caractère vers la droite, il y aura toujours une différence avec ce `G` dans la chaine.
+Le `C` du motif ne correspond pas au `G` de la chaine. Plutôt que de décaler le motif d'un seul caractère vers la droite, on voit qu'il n'y a aucun `G` dans tout le motif. Il est inutile de comparer le motif après l'avoir décalé d'un seul caractère vers la droite, il y aura toujours une différence avec ce `G` dans la chaine.
 
 On décale donc le motif vers la droite en  « sautant » de toute la longueur du motif ce qui permet de gagner beaucoup de temps :
 
@@ -332,7 +332,7 @@ En Python, on peut construire cette table des sauts avec un tableau de dictionna
 ``` py
 [{},
  {'T': 1},
- {'C': 1, 'C': 2},
+ {'C': 1, 'T': 2},
  {'A': 1, 'T': 3},
  {'A': 2, 'C': 1},
  {'A': 3, 'T': 1}]
