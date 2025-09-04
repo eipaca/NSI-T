@@ -115,7 +115,7 @@ nav:
   
   - Langages et programmation: 
     - langages-et-programmation/index.md
-  #  - Programme en tant que donnée, Calculabilité, Problème de l'arrêt: langages-et-programmation/1-programme-en-tant-que-donnee-calculabilite-probleme-arret.md
+    - Programme en tant que donnée, Calculabilité, Problème de l'arrêt: langages-et-programmation/1-programme-en-tant-que-donnee-calculabilite-probleme-arret.md
   #  - Récursivité: langages-et-programmation/2-recursivite.md
   #  - Modularité: langages-et-programmation/3-modularite.md
   #  - Paradigmes de programmation: langages-et-programmation/4-paradigmes-de-programmation.md
