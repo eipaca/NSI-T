@@ -17,7 +17,7 @@ Un programme peut donc lire un programme en entrée, écrire un programme en sor
 
 C'est une situation qui est souvent rencontrée en pratique :
 
--	Les **interpréteurs** sont des programmes qui prennent en entrée la description d'un autre programme et qui simulent ce programme. Un programme Python est interprété, c'est-à-dire qu'il est compilé en une description dans un codage que l'on appelle bytecode. Lorsqu'on cherche à lancer ce programme, l'interpréteur simule ce bytecode
+-	Les **interpréteurs** sont des programmes qui prennent en entrée la description d'un autre programme et qui simulent ce programme. On a vu que le bytecode d'un programme Python est interprété. Lorsqu'on cherche à lancer ce programme, l'interpréteur lit et exécute ce programme bytecode.
 -	Les **compilateurs** sont aussi des bons exemples. Le langage C est un langage compilé : une fois le code source terminée, le compilateur (qui est un logiciel comme un autre) "transforme" ce code source en langage machine.
 -	Un **système d'exploitation** peut être vu comme un programme qui fait "tourner" d'autres programmes
 -	Les **logiciels de téléchargement** permettent de télécharger d'autres logiciels.
@@ -43,7 +43,7 @@ calcule(math.sqrt, 5)
   <figcaption>David Hilbert <br> (1862-1943) </figcaption>
 </figure>
 
-Si nous avons l'intuition que l'on peut trouver un algorithme qui donne la solution pour la plupart des fonctions et des problèmes mathématiques que nous connaissons (somme, différence, produit, division, puissance, PGCD, etc…), une question fondamentale de l'informatique théorique est de déterminer si un problème donné peut être "calculé"[^1.2]  ou non par un algorithme que l'on peut programmer.  Est-il possible de tout programmer ? Suffit-il de donner la spécification d'une fonction ou d'un problème pour que l'on puisse la réaliser à l'aide d'un algorithme adéquat ? 
+Si nous avons l'intuition que l'on peut trouver un algorithme qui donne la solution pour la plupart des fonctions et des problèmes mathématiques que nous connaissons (somme, différence, produit, division, puissance, PGCD, etc…), une question fondamentale de l'informatique théorique est de déterminer si un problème donné peut être "calculé"[^1.2]  ou non par un algorithme que l'on peut programmer.  Est-il possible de tout programmer ? Suffit-il de donner la spécification exacte d'une fonction ou d'un problème pour que l'on puisse la réaliser à l'aide d'un algorithme adéquat ? 
 
 [^1.2]: Le mot « calcul » vient de calculus qui signifie caillou en latin. Pour se convaincre de la pertinence de cette origine, il suffit d'évoquer le décompte des nombres à l'aide de petits cailloux
 
@@ -228,7 +228,7 @@ Partons du principe que ce programme "Arrêt?" existe (raisonnement par l'absurd
 
 
 
-Construisons maintenant un autre programme "Paradoxe"[^1.7] qui  prend en entrée un programme P et lui applique le programme Arrêt:
+Construisons maintenant un autre programme "Paradoxe"[^1.8] qui  prend en entrée un programme P et lui applique le programme Arrêt:
 •	Si "Arrêt?" renvoie True, "Paradoxe" entre dans une boucle infinie (il ne s'arrête jamais)
 •	Si "Arrêt?" renvoie False,  "Paradoxe" s'arrête.
 
@@ -236,7 +236,7 @@ Construisons maintenant un autre programme "Paradoxe"[^1.7] qui  prend en entré
 ![Le programme "Paradoxe" qui utilise "Arrêt?" ](assets/1-probleme-arret-2-dark-mode.png#only-dark)
 
 
-[^1.7]: Un paradoxe est une proposition qui contient une contradiction logique, ou un raisonnement qui aboutit à une absurdité. Le [paradoxe du menteur](https://fr.wikipedia.org/wiki/Paradoxe_du_menteur) en est un exemple célèbre.
+[^1.8]: Un paradoxe est une proposition qui contient une contradiction logique, ou un raisonnement qui aboutit à une absurdité. Le [paradoxe du menteur](https://fr.wikipedia.org/wiki/Paradoxe_du_menteur) en est un exemple célèbre.
 
 "Paradoxe" est un programme comme les autres, on peut donc l'utiliser en entrée de lui-même. 
 
