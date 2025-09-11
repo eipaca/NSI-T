@@ -115,12 +115,12 @@ La pile pour calculer `fact(4)` est la suivante :
 - `fact(4)` est "dépilé" et peut enfin être calculé, il renvoie 4 x 6 = 26.
 
 
-![Pile d'appel de fact(4)](assets/2-pile-execution-fact4-light-mode.png#only-light)
-![Pile d'appel de fact(4)](assets/2-pile-execution-fact4-dark-mode.png#only-dark)
+![Pile d'appels de fact(4)](assets/2-pile-execution-fact4-light-mode.png#only-light)
+![Pile d'appels de fact(4)](assets/2-pile-execution-fact4-dark-mode.png#only-dark)
 
 
 !!! abstract "Cours" 
-    **Complexité spatiale** : La récursivité utilise une **pile d'appel** qui est un espace mémoire particulièrement limité, cela génère rapidement des **débordements de capacité**, c'est le fameux **stack overflow** !
+    **Complexité spatiale** : La récursivité utilise une **pile d'appels** qui est un espace mémoire particulièrement limité, cela génère rapidement des **débordements de capacité**, c'est le fameux **stack overflow** !
 
 
 ## Complexité temporelle
@@ -134,9 +134,9 @@ def fib(n):
     if n < 2:
         return n
     else:
-        a, b = 0, 1
+        fn, fn_1 = 1, 0
         for i in range(2, n+1):
-            a, b = b, a + b
+            fn, fn_1 = fn + fn_1, f_n
     return b
 ```
 
@@ -170,7 +170,7 @@ Les résultats obtenus sont les suivants (qui dépendent de la machine utilisée
 |40|0.0 secondes|	78.21 secondes|
 |100|0.0 secondes|	…|
 
-Alors que la fonction itérative est quasi instantanée pour toutes les valeurs de `n` testées, la fonction récursive devient très rapidement extrêmement lente, même pour des valeurs de `n` raisonnables, `fib(40)` demande plus d'une minute ! Ce n'est pas un problème de complexité spatiale, puisque `fib(40)` empile au plus 40 appels dans la pile d'appel, on est loin de la limite !
+Alors que la fonction itérative est quasi instantanée pour toutes les valeurs de `n` testées, la fonction récursive devient très rapidement extrêmement lente, même pour des valeurs de `n` raisonnables, `fib(40)` demande plus d'une minute ! Ce n'est pas un problème de complexité spatiale, puisque `fib(40)` empile au plus 40 appels dans la pile d'appels, on est loin de la limite !
 
 Regardons ce qui se passe pour calculer `fib(5)`.
 La fonction `fib` s'appelle 15 fois juste pour calculer `fib(5)` !
@@ -179,9 +179,9 @@ et on peut tout de suite imaginer que ce nombre de calculs augmente très rapide
 Ce n'est donc pas un problème de complexité spatiale mais plutôt un problème de nombre d'opérations effectuées pendant le calcul :  c'est la **complexité temporelle**.
 
 !!! abstract "Cours" 
-    Complexité temporelle : La récursivité peut augmenter le nombre d'opérations.
+    Complexité temporelle : Dans certains cas, la récursivité augmente le nombre d'opérations.
 
-Essayons d'en savoir plus sur le type de complexité de cette fonction en affichant le nombre d'appels de la fonction, en plaçant un compteur qui s'incrémente à chaque appel.
+Essayons d'en savoir plus sur la complexité de cette fonction en affichant le nombre d'appels de la fonction avec un compteur qui s'incrémente à chaque appel.
 
 ``` py
 def fib(n):
@@ -229,7 +229,7 @@ C'est une complexité qui semble de type exponentielle, en $O(2^n)$ [^2.5], c'es
     |factorielle|$O(n!)$|Voyageur de commerce|
 
 ## Mémoïsation
-Nous avons vu qu'il y a eu presque 3 millions d'appels alors que `fib(30)` ne nécessite, en théorie, que la connaissance de quelques dizaines de valeur ! La fonction passe son temps à calculer des valeurs qu'elle a déjà calculées mais qu'elle n'a pas « notées ». Par exemple `fib(5)` calcule 3 fois la valeur de `fib(2)`. L'algorithme itératif n'a pas ce problème, il retient chaque valeur de la suite.
+Nous avons vu qu'il y a eu presque 3 millions d'appels alors que `fib(30)` ne nécessite, en théorie, que la connaissance de quelques dizaines de valeur ! La fonction recalcule de nombreuses fois des valeurs qu'elle a déjà calculées mais qu'elle n'a pas gardé en mémoire. Par exemple `fib(5)` calcule 3 fois la valeur de `fib(2)`. L'algorithme itératif n'a pas ce problème, il retient progresse en calculant les valeurs de la suite dans l'ordre les unes après les autres.
 
 Une solution pour limiter le nombre de calcul consiste à ne calculer les termes de la suite qu'une seule fois et de les garder en mémoire. C'est la **memoïzation**.
 
@@ -288,7 +288,7 @@ def fib(n):
     $C_{n}^{k} = C_{n-1}^{k-1} + C_{n-1}^{k}$
 
     ![Triangle de Pascal](assets/2-triangle-pascal-light-mode.png#only-light)
-    ![Pile d'appel de fact(4)](assets/2-triangle-pascal-dark-mode.png#only-dark)
+    ![Pile d'appels de fact(4)](assets/2-triangle-pascal-dark-mode.png#only-dark)
 
     2) Ajouter la mémoisation à la fonction `C(n, k)`.
 
@@ -415,7 +415,7 @@ Comparons les complexités temporelles de la suite de Fibonacci avec nos trois p
     
     Rappelons d'abord que l'accès à une valeur dans un dictionnairesa une complexité en $O(1)$ (ainsi que l'ajout ou la modification d'une valeur associée à une clé qui sont aussi en $O(1)$. Seule la recherche d'une valeur, qui consiste à parcourir toutes les clés les unes après les autres, a un coût en $O(n)$, mais ce n'est pas le cas ici). 
 
-    Grace à la mémoïsation, chaque valeur de `fib` n'est calculée qu'une seule fois. Si la valeur est déjà dans le dictionnaire, les deux premières lignes, `if n in memoise:...` réalisent 3 opérations qui s'effectuent en temps constant, donc ont une compléxité en $O(1)$. Si la valeur n'est pas encore dans le dictionnaire, alors on effectue l'instruction qui suit le `else`, `memoise[n] = fib(n-1) + fib(n-2)`, ce sont 3 opérations onc avec une compléxité en $O(1)$. Toutes ces opérations sont répétées pour toutes les valeurs entre 3 et $n$. Ainsi, le nombre total d'opérations est proportionnel à $n$, ce qui donne une complexité linéaire en $O(n)$.
+    Grace à la mémoïsation, chaque valeur de `fib` n'est calculée qu'une seule fois. Si la valeur est déjà dans le dictionnaire, les deux premières lignes, `if n in memoise:...` réalisent 3 opérations qui s'effectuent en temps constant, donc ont une compléxité en $O(1)$. Si la valeur n'est pas encore dans le dictionnaire, alors on effectue l'instruction qui suit le `else`, `memoise[n] = fib(n-1) + fib(n-2)`, ce sont 3 opérations donc avec une compléxité en $O(1)$. Toutes ces opérations sont répétées pour toutes les valeurs entre 3 et $n$. Ainsi, le nombre total d'opérations est proportionnel à $n$, ce qui donne une complexité linéaire en $O(n)$.
     
 
 
