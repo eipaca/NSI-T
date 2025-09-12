@@ -121,7 +121,7 @@ nav:
   #  - Paradigmes de programmation: langages-et-programmation/4-paradigmes-de-programmation.md
   #  - Mise au point des programmes et gestion des bugs: langages-et-programmation/5-mise-au-point-gestion-bugs.md
   
-   - Bases de données: 
+  - Bases de données: 
     - bases-de-donnees/index.md
     - Modélisation conceptuelle: bases-de-donnees/1-modelisation-conceptuelle.md
     - Conception logique - le modèle relationnel: bases-de-donnees/2-conception-logique-modele-relationnel.md
