@@ -125,8 +125,8 @@ nav:
     - bases-de-donnees/index.md
     - Modélisation conceptuelle: bases-de-donnees/1-modelisation-conceptuelle.md
     - Conception logique - le modèle relationnel: bases-de-donnees/2-conception-logique-modele-relationnel.md
-  #  - Conception physique - SGBD relationnel: bases-de-donnees/3-conception-physique-sgbd-relationnel.md
-  #  - Langage SQL: bases-de-donnees/4-langage-sql.md
+    - Conception physique - SGBD relationnel: bases-de-donnees/3-conception-physique-sgbd-relationnel.md
+    - Langage SQL: bases-de-donnees/4-langage-sql.md
   
   #- Structures de données:
   #  - structures-de-donnees/index.md
