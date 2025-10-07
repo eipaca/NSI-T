@@ -5,7 +5,7 @@
     
     Un **objet** en programmation orientée objet représente souvent un concept, une idée ou toute entité du monde physique (une voiture, une personne, une page d'un livre, etc.).
 
-Exemple de langages orientés objets : Java, C++, Python, etc.
+Exemple de langages orientés objets : Java et C++, mais aussi les langages multi-paradigmes comme Python.
 
 !!! abstract "Cours" 
     La **classe** est comme un "moule" à partir duquel des objets d'un même type peuvent être créés. Elle définit pour chaque objet de cette classe : 
