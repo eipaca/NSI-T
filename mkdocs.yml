@@ -128,9 +128,9 @@ nav:
     - Conception physique - SGBD relationnel: bases-de-donnees/3-conception-physique-sgbd-relationnel.md
     - Langage SQL: bases-de-donnees/4-langage-sql.md
   
-  #- Structures de données:
-  #  - structures-de-donnees/index.md
-  #  - Vocabulaire de la programmation objet: structures-de-donnees/1-poo.md
+  - Structures de données:
+    - structures-de-donnees/index.md
+    - Vocabulaire de la programmation objet: structures-de-donnees/1-poo.md
   #  - Structures de données, interface et implémentation: structures-de-donnees/2-structures-interface-implementation.md
   #  - Listes: structures-de-donnees/3-listes.md
   #  - Piles: structures-de-donnees/4-piles.md
