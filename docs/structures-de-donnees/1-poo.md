@@ -16,7 +16,7 @@ Exemple de langages orientés objets : Java et C++, mais aussi les langages mult
 
     Une fois une classe d'objet définie, il est possible de créer des objets sur le modèle de cette classe, c'est  **l'instanciation**. **Les objets sont des instances de la classe**. 
 
-Prenons l'exemple d'un programme pour aider un collectionneur de vieilles voitures qui possède une Citroen 2CV avec 152 000 km, une Peugeot Dauphine avec 75 000 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chaque objet représentant une voiture : la Citroen 2CV (`voiture_1`), la Peugeot Dauphine (`voiture_2`), etc.
+Prenons l'exemple d'un programme pour aider un collectionneur de vieilles voitures qui possède une Citroen 2CV avec 152 000 km, une Renault Dauphine avec 75 000 km, etc. Une classe `Voiture`, décrivant les attributs et les méthodes d'une voiture, permet d'instancier plusieurs objets, chaque objet représentant une voiture : la Citroen 2CV (`voiture_1`), la Renault Dauphine (`voiture_2`), etc.
 
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-light-mode.png#only-light){width="80%"}
 ![Instanciation d'une classe d'objets Voiture](assets/1-instanciation-classe-voiture-dark-mode.png#only-dark){width="80%"}
@@ -250,7 +250,7 @@ Les paires de blancs soulignés (ou tirets bas) indiquent que ces méthodes ne s
 Lorsqu'un objet est assigné à une variable, par exemple  `voiture_1 = Voiture('Citroen', '2 CV')`, la variable est une référence à cet objet, c'est-à-dire son adresse mémoire. Dès lors, deux variables peuvent faire référence au même objet, ce sont des **alias**. On peut accéder ou modifier l'objet par l'une ou l'autre. :warning: Cela mène à de nombreuses erreurs de programmation.
 
 ``` py
->>> voiture_2 = Voiture('Peugeot','Dauphine', 75254)
+>>> voiture_2 = Voiture('Renault','Dauphine', 75254)
 >>> v = voiture_2
 ```
 
@@ -303,7 +303,7 @@ puis `NomClasse.nom_variable_de_classe` permet d'utiliser cette variable de clas
 >>> voiture_1 = Voiture('Citroen', '2 CV', 152000)
 >>> Voiture.total_voiture
 1
->>> voiture_1 = Voiture('Peugeot','Dauphine', 75000)
+>>> voiture_1 = Voiture('Renault','Dauphine', 75000)
 >>> Voiture.total_voiture
 2
 >>>
@@ -336,7 +336,7 @@ puis créons deux voitures et faisons rouler une des deux :
 >>> Voiture.total_km
 0
 >>> voiture_1 = Voiture('Citroen', '2 CV', 125000)
->>> voiture_2 = Voiture('Peugeot','Dauphine', 75000)
+>>> voiture_2 = Voiture('Renault','Dauphine', 75000)
 >>> Voiture.total_km
 200000
 >>> voiture_2.roule(10000)
@@ -410,7 +410,7 @@ class Voiture:
         return self._km
 
     def set_km(self, k):
-        Voiture.total_km -= self.km        # on soustrait l'ancienne valeur de km
+        Voiture.total_km -= self._km        # on soustrait l'ancienne valeur de km
         self._km = k
         Voiture.total_km += k               # on rajoute la nouvelle valeur
 
