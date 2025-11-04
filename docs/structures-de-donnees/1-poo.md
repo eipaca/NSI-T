@@ -51,7 +51,7 @@ voiture_2 = Voiture()
 
 ##	Les attributs
 
-Pour l'instant notre classe `Voiture` est une coquille vide et les deux objets instanciés à partir de cette classe, `voiture_1` et `voiture_2`, ne contiennent aucne information concernant ces voitures. Il est possible de leur rajouter des caractéristiques les décrivant avec des **attributs**, par exemple les attributs `marque`, `modele` et `km` pour l'instance `voiture_1` : 
+Pour l'instant notre classe `Voiture` est une coquille vide et les deux objets instanciés à partir de cette classe, `voiture_1` et `voiture_2`, ne contiennent aucune information concernant ces voitures. Il est possible de leur rajouter des caractéristiques les décrivant avec des **attributs**, par exemple les attributs `marque`, `modele` et `km` pour l'instance `voiture_1` : 
 
 ``` py
 >>> voiture_1 = Voiture()
@@ -84,7 +84,7 @@ AttributeError: 'Voiture' object has no attribute 'marque'
 La création d'un nouvel objet avec l'instruction `voiture_1 = Voiture()` appelle une méthode particulière nommée `__init__`. C'est le **constructeur** de la classe. Il est possible de le modifier pour définir des attributs pour toutes les instances de `Voiture` dès leur instanciation :
 
 !!! tip inline end "" 
-    :warning: Attention aux deux blancs soulignés (ou tirets bas) au début et à la fin d'`init`, c'est souvent une erreur diffile à déceler quand il en manque un !
+    :warning: Attention aux deux blancs soulignés (ou tirets bas) au début et à la fin d'`init`, c'est souvent une erreur difficile à déceler quand il en manque un !
 
 ``` py
 class Voiture:
@@ -96,7 +96,7 @@ class Voiture:
 
 Noter le paramètre `self` de la fonction qui représente l'objet qui est instancié par la méthode `__init__`.
 
-Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs peuvent être différentes pour chaque instance et évoluer différemment.
+Toutes les instances de `Voiture` posséderont ces attributs, mais les valeurs peuvent être différentes pour chaque instance et évoluer différemment.
 
 ``` py
 >>> voiture_1 = Voiture()
@@ -107,7 +107,7 @@ Toutes les instances de `Voiture` possèderont ces attributs, mais les valeurs p
 '2 CV'
 ```
 
-Avec ce constructeur, tous les objets sont créés avec les attributs initiés à la même valeur (`""` ou `0`). Ce n'est pas pratique. La méthode `__init__` est une méthode comme les autres, elle peut avoir des paramètres, par exemple la marque et le modèle de la voiture, ainsi que le nombre de kilomètre (assigné à la valeur 0 par défaut s'il n'est pas renseigné).
+Avec ce constructeur, tous les objets sont créés avec les attributs initiés à la même valeur (`""` ou `0`). Ce n'est pas pratique. La méthode `__init__` est une méthode comme les autres, elle peut avoir des paramètres, par exemple la marque et le modèle de la voiture, ainsi que le nombre de kilomètres (assigné à la valeur 0 par défaut s'il n'est pas renseigné).
 
 !!! tip inline end "PEP 8" 
     Comme les fonctions et les modules, les classes et les méthodes publiques comportent une docstring. Voir [https://peps.python.org/pep-0008/#documentation-strings](https://peps.python.org/pep-0008/#documentation-strings)
@@ -354,7 +354,7 @@ Jusqu'ici tout va bien. Mais que se passe-t-il si on change la valeur de l'attri
 
 L'attribut `km` de `voiture_2` a changé mais pas la valeur de la variable de classe `total_km`, elle n'est plus correcte ! C'est un problème. 
 
-Pour éviter ce genre de problème, il faut « protéger » la variable de classe `total_km` pour que sa valeur ne soit pas modifiée directement. C'est comme si cette variable `total_km` était mise à « l'intérieur d'une boîte interne » à l'objet, cachée de « l'exterieur », afin qu'elle ne soit lue et modifiée qu'en utilisant des méthodes qui garantissent que sa valeur reste correcte. C'est le méchanisme d'encapsulation.
+Pour éviter ce genre de problème, il faut « protéger » la variable de classe `total_km` pour que sa valeur ne soit pas modifiée directement. C'est comme si cette variable `total_km` était mise à « l'intérieur d'une boîte interne » à l'objet, cachée de « l’extérieur », afin qu'elle ne soit lue et modifiée qu'en utilisant des méthodes qui garantissent que sa valeur reste correcte. C'est le mécanisme d'encapsulation.
 
 
 !!! abstract "Cours" 
@@ -386,7 +386,7 @@ class Voiture:
     ...
 ```
 
-Pour respecter le principe de l'encapsulation, il faut éviter de lire ou écrire la valeur de l'attribut `_km` d'une instance de `Voiture` directement depuis « l'exterieur » de l'objet. 
+Pour respecter le principe de l'encapsulation, il faut éviter de lire ou écrire la valeur de l'attribut `_km` d'une instance de `Voiture` directement depuis « l’extérieur » de l'objet. 
 
 !!! abstract "Cours" 
     Une classe doit fournir des méthodes (publiques) qui font l'**interface** avec l'extérieur :
@@ -550,7 +550,7 @@ class Epave(Voiture):
         pass
 ```
 
-La méthode `roule()` d'une instance d'`Epave` n'est plus héritée de celle de la classe mère `Voiture`, elle se comporte différement :
+La méthode `roule()` d'une instance d'`Epave` n'est plus héritée de celle de la classe mère `Voiture`, elle se comporte différemment :
 
 ``` py
 >>> voiture_4 = Epave('Trabant','601', 150000)
