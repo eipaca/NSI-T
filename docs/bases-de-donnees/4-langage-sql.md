@@ -103,7 +103,7 @@ CREATE TABLE "Livre" (
 );
 ```
 
-Finalement ajoutons la table `Ecrit({++#No_ISBN++}, {++#Num_secu_sociale++})` :
+Finalement ajoutons la table `Ecrit({++#Num_ISBN++}, {++#Num_auteur++})` :
 
 ``` sql
 CREATE TABLE "Ecrit" (
