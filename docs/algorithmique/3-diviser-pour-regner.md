@@ -1,4 +1,4 @@
-﻿# Méthode « diviser pour régner »
+# Méthode « diviser pour régner »
 
 !!! abstract "Cours" 
 
@@ -125,7 +125,11 @@ Ce programme contient une boucle `while`, il faut donc s'assurer qu'il se termin
 
 Tant qu'on est dans la boucle, le variant de boucle `fin - debut` décroit strictement, la boucle `while debut <= fin:` se terminera donc.
 
-Pour prouver la correction de cet algorithme, on va utiliser la technique de l'invariant de boucle. Ici, un invariant de boucle est : si x est dans T alors `T[debut] <= x <= T[fin]`. Si l'invariant est vrai quand on entre dans la boucle, alors il y a les mêmes trois possibilités :
+PPour prouver la correction de cet algorithme, on va utiliser la technique de l'invariant de boucle. Vérifions que la proposition « si x est dans T alors `T[debut] <= x <= T[fin]` »  est un invariant de boucle. 
+
+Au début, l'invariant est vrai, si x est dans la tableau alors il est compris entre la première et la dernière valeur du tableau.
+
+Si l'invariant est vrai quand on entre dans la boucle, alors il y a les mêmes trois possibilités :
 
 - `x < T[milieu]` : alors la recherche se poursuit dans `[T[debut], ..., T[milieu-1]]`, l'invariant est encore vrai quand on retourne dans la boucle; 
 - `x > T[milieu]` : alors la recherche se poursuit dans `[T[milieu+1], ..., T[fin]]`, l'invariant est encore vrai quand on retourbne dans la boucle ;  
@@ -175,32 +179,35 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
 
 === "Tri par sélection"
     
-    Le début du tableau étant déjà trié (jusqu'à `i` exclus), on parcourt le reste pour trouver le plus petit élément à rajouter en fin de la partie triée (en `i`).	
+    Le début du tableau étant déjà trié (jusqu'à `i` exclu), on parcourt le reste pour "sélectionner" le plus petit élément à rajouter en fin de la partie triée (en `i`).	
 
     ``` py
     def tri_selection(T):
         n = len(T)
-        for i in range(n):   # on suppose T trié jusqu'à i exclus
-            i_min = i
-            for j in range(i+1, n):
-                if T[j] < T[i_min]:
-                    i_min = j
-            T[i], T[i_min] = T[i_min], T[i]
-        return T
+		for i in range(n):   # On suppose T trié jusqu'à i exclu
+            # On "sélectionne" l'indice du plus petit élément à partir de i
+			i_min = i
+			for j in range(i, n):
+				if T[j] < T[i_min]:
+					i_min = j
+            # On met le plus petit élément en position i
+			T[i], T[i_min] = T[i_min], T[i]
+		return T
     ```
 
 === "Tri par insertion"
     
-    Le début du tableau étant déjà trié (jusqu'à `i` exclus), on insère l'élément suivant (en `i`) à la bonne place dans la partie déjà triée.	
+    Le début du tableau étant déjà trié (jusqu'à `i` exclu), on insère l'élément suivant (en `i`) à la bonne position dans la partie déjà triée.	
 	
     ``` py
     def tri_insertion(T):
 		n = len(T)
-		for i in range(n):        # on suppose T trié jusqu'à i exclus
+		for i in range(n):        # on suppose T trié jusqu'à i exclu
+            # On insère T[i] à la bonne position
 			valeur_insertion = T[i]
 			j = i
-			while j > 0 and valeur_insertion < T[j-1]:
-				T[j] = T[j-1]
+			while j > 0 and valeur_insertion < T[j - 1]:
+				T[j] = T[j - 1]
 				j = j - 1
 			T[j] = valeur_insertion
 		return T
@@ -208,17 +215,31 @@ On a vu en classe de première plusieurs algorithmes de tri simples comme le tri
 
 === "Tri à bulles"
 
-    La fin du tableau étant déjà triée (de `i` exclus jusqu'à la fin), on parcourt le début du tableau en inversant les éléments successifs qui ne sont pas en ordre croissant pour les faire "monter" dans le tableau, le plus grand va jusqu'à `i`.
-
+    L'idée est de parcourir le tableau en comparant chaque élément au suivant et de les échanger s'ils ne sont pas dans l'ordre  :
+    
     ``` py
+    n = len(T)
+    for j in range(n - 1):    # on s'arrête à n - 1 pour faire la dernière comparaison
+        # on échange T[j] avec le suivant s'ils ne sont pas dans l'ordre
+        if T[j] > T[j + 1]:
+            T[j], T[j + 1 ] = T[j + 1], T[j]   
+    ```
+
+    En faisant un passage sur tous les éléments de `T`, certaines "grandes" valeurs se sont décalées vers la droite du tableau, la plus grande est arrivée à la dernière position comme attendu. C'est l'idée des bulles qui remontent dans un verre.
+
+    Il suffit de répéter l'opération en parcourant tout le tableau pour obtenir un tableau trié :
+
+    ``` py 
     def tri_a_bulle(T):
         n = len(T)
-		for i in range(n-1,-1,-1):   # on suppose T trié de i exclus jusqu'à la fin
-			for j in range(i):
-                if T[j] > T[j+1]:
-                    T[j], T[j+1] = T[j+1], T[j]
+		for i in range(n):   # on parcourt le tableau
+			for j in range(n - 1):    # ou alors range(n - i - 1) car les i derniers éléments sont à leur place
+                # on échange T[j] avec le suivant s'ils ne sont pas dans l'ordre
+                if T[j] > T[j + 1]:
+                    T[j], T[j + 1] = T[j + 1], T[j]
         return T
     ```
+    
 
 Ces algorithmes sont considérés comme inefficaces car d'une **complexité quadratique en $O(n^2)$**. 
 
