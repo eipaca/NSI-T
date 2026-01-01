@@ -99,8 +99,8 @@ Ce sont les deux principes de la **programmation dynamique**.
 
 On peut voir la programmation dynamique comme une amélioration ou une adaptation de la méthode « diviser pour régner » puisqu'on divise un problème en sous problèmes, à la différence que la programmation dynamique s'applique quand les sous-problèmes se chevauchent, autrement dit un sous-problème peut être utilisé dans la solution de plusieurs sous-problèmes différents. Tandis que l'approche  « diviser pour régner » crée des sous-problèmes qui sont complètement séparés et peuvent être résolus indépendamment les uns des autres.
 
-![Graphe comparant la méthode diviser pour regner et la programmation dynamique](assets/4-diviser-regner-vs-prog-dynamique-light-mode.png#only-light){width=80% }
-![Graphe comparant la méthode diviser pour regner et la programmation dynamique](assets/4-diviser-regner-vs-prog-dynamique-dark-mode.png#only-dark){width=80% }
+![Graphe comparant la méthode diviser pour régner et la programmation dynamique](assets/4-diviser-regner-vs-prog-dynamique-light-mode.png#only-light){width=80% }
+![Graphe comparant la méthode diviser pour régner et la programmation dynamique](assets/4-diviser-regner-vs-prog-dynamique-dark-mode.png#only-dark){width=80% }
 
 ## Rendu de monnaie
 
@@ -115,7 +115,7 @@ On a vu en classe de première une solution donnée par un algorithme glouton, q
     ``` py
     pieces = [10, 5, 2, 1]
 
-    def rendu_monnaie_gouton(n):
+    def rendu_monnaie_glouton(n):
         nombre_pieces = 0
         i = 0 # on commence par la plus grande pièce
         while n > 0:
@@ -131,7 +131,7 @@ On a vu en classe de première une solution donnée par un algorithme glouton, q
     ``` py
     pieces = [10, 5, 2, 1]
 
-    def rendu_monnaie_gouton(n, i=0):
+    def rendu_monnaie_glouton(n, i=0):
         if n == 0: 
            return 0  
         if pieces[i] <= n:  # on peut rendre pieces[i]
@@ -143,7 +143,7 @@ On a vu en classe de première une solution donnée par un algorithme glouton, q
 Testons l'algorithme glouton pour rendre 13 euros. On obtient bien les 3 pièces ⑩ + ② + ① qui font un total de 13.
 
 ``` py
->>> rendu_monnaie_gouton(13)
+>>> rendu_monnaie_glouton(13)
 3
 ```
 
@@ -185,7 +185,7 @@ Certaines branches mènent à une solution, quand il reste 0 euros à rendre, d'
 Implémentons cet algorithme en considérant trois cas :
 
 -	Si $n$ est égal à 0, alors on a rendu $n$, il n'y a pas de pièces supplémentaires à rendre, on renvoie 0.
--	Si $n$ est plus petit que la valeur de la plus petite pièce, on ne pourra pas rendre $n$, on renvoie une très grande valeur, par exemple en utilisant `inf` la valeur infinie du module avec ` math`, afin de ne pas impacter une autre branche qui ménerait à une solution.
+-	Si $n$ est plus petit que la valeur de la plus petite pièce, on ne pourra pas rendre $n$, on renvoie une très grande valeur, par exemple en utilisant `inf` la valeur infinie du module avec ` math`, afin de ne pas impacter une autre branche qui mènerait à une solution.
 -	Sinon, on renvoie 1 plus le plus petit nombre de pièces de tous les rendus de $n – p$, pour toutes les pièces de valeur $p$ telles que $p <= n$. 
 
 Traduisons cet algorithme en Python :
@@ -324,7 +324,7 @@ Prenons, l'exemple d'une tige de longueur 4 m. On peut la découper de 8 façons
 ![Découpe d'une tige de 4 m](assets/4-decoupe-tige-light-mode.png#only-light){width=80% }
 ![Découpe d'une tige de 4 m](assets/4-decoupe-tige-dark-mode.png#only-dark){width=80% }
 
-On voit que le revenu maximim est donc 10 €, obtenu en découpant la tige en 2 morceaux de 2 m. Mais comment le calculer de façon systématique ? 
+On voit que le revenu maximum est donc 10 €, obtenu en découpant la tige en 2 morceaux de 2 m. Mais comment le calculer de façon systématique ? 
 
 Un algorithme glouton simple qui consiste à choisir en priorité les longueurs de morceaux les plus chers ne donne pas le meilleur revenu puisqu'il proposera toujours de garder les morceaux les plus longs possibles, ce sont les plus chers selon la grille de prix. Une approche plus fine consiste à prendre en compte le prix linéaire (ratio prix/longueur) pour optimiser les découpes. Reprenons la grille de prix de l'exemple précédant pour les morceaux jusqu'à 4 m :
 
@@ -399,7 +399,7 @@ Si on suppose que pour les grandes valeurs de $n$, $i$ reste très petit en comp
 
 $T(n) \approx 10 \times T(n-1) + O(1)$
 
-A chaque fois que $n$ augmente de 1, le nombre d'opérations est mutliplié par la taille de la grille de prix, plus quelques opérations. La complexité est donc exponentielle en $O(10^n)$ ici, ou de façon générale en $O({tailleGrillePrix}^n)$ pour une grille de prix de longueur $tailleGrillePrix$ . 
+A chaque fois que $n$ augmente de 1, le nombre d'opérations est multiplié par la taille de la grille de prix, plus quelques opérations. La complexité est donc exponentielle en $O(10^n)$ ici, ou de façon générale en $O({tailleGrillePrix}^n)$ pour une grille de prix de longueur $tailleGrillePrix$ . 
 
 Cette solution n'est donc pas utilisable pratiquement, mais on constate une fois de plus que les sous-problèmes se chevauchent, on peut donc garder les résultats des sous-problèmes en mémoire pour améliorer cette situation. Appliquons la technique de mémoïsation :
 
@@ -458,7 +458,7 @@ Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'app
 
 Un problème utile aux généticiens est celui de l'alignement de séquences, qui se décline en de nombreuses variations, dont plusieurs peuvent être abordées à l'aide de la programmation dynamique.
 
-Nous nous intéressons ici à la recherche d'une plus longue sous-chaîne commune. Étant donné deux chaine de caractères `str1`  et `str2`, on cherche une chaine de caractères, la plus longue possible, qui soit à la fois extraite de `str1`  et de `str2`. Dire qu'une sous-chaîne est extraite de `str1` signifie que l'on peut obtenir cette sous-chaîne en effaçant certains caractères de `str1`. Autrement dit, tous les caractères de la sous-chaîne commune doivent apparaître dans l'ordre dans `str1` et `str2`, même s'ils ne sont pas consécutifs dans ces deux chaînes, seul l'ordre des caractères compte.
+Nous nous intéressons ici à la recherche d'une plus longue sous-chaîne commune. Étant donné deux chaîne de caractères `str1`  et `str2`, on cherche une chaîne de caractères, la plus longue possible, qui soit à la fois extraite de `str1`  et de `str2`. Dire qu'une sous-chaîne est extraite de `str1` signifie que l'on peut obtenir cette sous-chaîne en effaçant certains caractères de `str1`. Autrement dit, tous les caractères de la sous-chaîne commune doivent apparaître dans l'ordre dans `str1` et `str2`, même s'ils ne sont pas consécutifs dans ces deux chaînes, seul l'ordre des caractères compte.
 
 Prenons l'exemple de :
 ``` py
@@ -466,7 +466,7 @@ str1 = 'CGCATA'
 str2 = 'GACT'
 ```
 
-Une plus longue sous-chaîne commune est  `'GAT'`. En effet, tous les caractères de `'GAT'` apparaîssent dans le même ordre dans `str1` :
+Une plus longue sous-chaîne commune est  `'GAT'`. En effet, tous les caractères de `'GAT'` apparaissent dans le même ordre dans `str1` :
 
 ``` py
 CGCATA
@@ -486,47 +486,47 @@ CGCA-TA
 -G-A-T-
 ```
 
-Les caractères `G`, `A` et `T` sont alignés, on peut donc extraire la sous-chaine `'GAT'` à la fois de `str1` et `str2`
+Les caractères `G`, `A` et `T` sont alignés, on peut donc extraire la sous-chaîne `'GAT'` à la fois de `str1` et `str2`
 
-Notons bien qu'il n'y a pas unicité de la plus longue sous-chaine commune ! `'GCT'` est également une plus longue sous-chaîne commune, de même longueur 3 :
+Notons bien qu'il n'y a pas unicité de la plus longue sous-chaîne commune ! `'GCT'` est également une plus longue sous-chaîne commune, de même longueur 3 :
 ``` py
 CG-CATA
 -GAC-T-
 -G-C-T-
 ```
 
-Abordons ce problème sous l'approche de programmation dynamique. Pour trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GACT'` , on commence par aligner les deux chaines en partant de la fin et par comparer les deux derniers caractères :
+Abordons ce problème sous l'approche de programmation dynamique. Pour trouver la plus longue sous-chaîne commune entre `'CGCATA'` et `'GACT'` , on commence par aligner les deux chaines en partant de la fin et par comparer les deux derniers caractères :
 
 ![Alignement séquences - Etape 1](assets/4-alignement-sequence-1-light-mode.png#only-light){width=100% }
 ![Alignement séquences - Etape 1](assets/4-alignement-sequence-1-dark-mode.png#only-dark){width=100% }
 
 
-Les deux caractères `A` et `T` sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune. On peut avancer dans notre recherche en cherchant ces deux sous-problèmes : 
+Les deux caractères `A` et `T` sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaîne commune. On peut avancer dans notre recherche en cherchant ces deux sous-problèmes : 
 
-1.	la plus longue sous-chaine commune entre la première chaine, `'CGCATA'`, et la seconde chaine réduite de son dernier caractère,  `'GAC'`, ou 
-2.	la plus longue sous-chaine commune entre la première chaine réduite de son dernier caractère, `'CGCAT'`, et la seconde chaine, `'GACT'`.
+1.	la plus longue sous-chaîne commune entre la première chaîne, `'CGCATA'`, et la seconde chaîne réduite de son dernier caractère,  `'GAC'`, ou 
+2.	la plus longue sous-chaîne commune entre la première chaîne réduite de son dernier caractère, `'CGCAT'`, et la seconde chaîne, `'GACT'`.
 
 ![Alignement séquences - Etape 2](assets/4-alignement-sequence-2-light-mode.png#only-light){width=100% }
 ![Alignement séquences - Etape 2](assets/4-alignement-sequence-2-dark-mode.png#only-dark){width=100% }
 
 
-La  plus longue sous-chaine commune entre `str1` et `str2` sera la solution trouvée la plus longue à ces deux sous-problèmes.
+La  plus longue sous-chaîne commune entre `str1` et `str2` sera la solution trouvée la plus longue à ces deux sous-problèmes.
  
-Commençons par le premier sous-problème : trouver la plus longue sous-chaine commune entre `'CGCATA'` et `'GAC'`. A nouveau, les deux derniers caractères sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaine commune, on peut encore partager ce problème en deux sous problèmes.
+Commençons par le premier sous-problème : trouver la plus longue sous-chaîne commune entre `'CGCATA'` et `'GAC'`. A nouveau, les deux derniers caractères sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaîne commune, on peut encore partager ce problème en deux sous problèmes.
 
-Abordons ensuite, le second sous-problème : trouver la plus longue sous-chaine commune entre `'CGCAT'` et `'GACT'`. Cette fois-ci, les deux derniers caractères sont identiques, ils pourront être alignés dans la plus longue sous-chaine commune. On garde en mémoire le caractère `'T'` qu'on rajoutera au résultat de la plus longue sous-chaine commune entre ces deux dernière chaines réduites de ce `'T'`  :   `'CGCA'` et `'GAC'`.
+Abordons ensuite, le second sous-problème : trouver la plus longue sous-chaîne commune entre `'CGCAT'` et `'GACT'`. Cette fois-ci, les deux derniers caractères sont identiques, ils pourront être alignés dans la plus longue sous-chaîne commune. On garde en mémoire le caractère `'T'` qu'on rajoutera au résultat de la plus longue sous-chaîne commune entre ces deux dernière chaines réduites de ce `'T'`  :   `'CGCA'` et `'GAC'`.
 
 ![Alignement séquences - Etape 3](assets/4-alignement-sequence-3-light-mode.png#only-light){width=100% }
 ![Alignement séquences - Etape 3](assets/4-alignement-sequence-3-dark-mode.png#only-dark){width=100% }
 
-Passons à l'étape suivante. Les chaînes `'CGCATA'` et `'GA'`  ont le même dernier caractère, ils pourront être alignés dans la plus longue sous-chaine commune. On garde en mémoire le caractère `'A'` qu'on rajoutera au résultat de la plus longue sous-chaine commune entre ces deux dernière chaines réduites de ce `'A'`  :  `'CGCAT'` et `'G'`.
+Passons à l'étape suivante. Les chaînes `'CGCATA'` et `'GA'`  ont le même dernier caractère, ils pourront être alignés dans la plus longue sous-chaîne commune. On garde en mémoire le caractère `'A'` qu'on rajoutera au résultat de la plus longue sous-chaîne commune entre ces deux dernière chaines réduites de ce `'A'`  :  `'CGCAT'` et `'G'`.
 
-Par contre, les chaînes `'CGCAT'` et `'GAC'`  ont un dernier caractère différent, on va donc chercher les plus longues chaines communes entre `'CGCAT'` et `'GA'` d'une part  et `'CGCAT'` et `'GA'` d'autre part. Notons que le sous problème de la plus longue chaine commune entre `'CGCA'` et `'GAC'` a déjà été rencontré. C'est le propre de la programmation dynamique, les sous-problèmes se chevauchent, il ne faut pas les recalculer plusieurs fois !
+Par contre, les chaînes `'CGCAT'` et `'GAC'`  ont un dernier caractère différent, on va donc chercher les plus longues chaines communes entre `'CGCAT'` et `'GA'` d'une part  et `'CGCAT'` et `'GA'` d'autre part. Notons que le sous problème de la plus longue chaîne commune entre `'CGCA'` et `'GAC'` a déjà été rencontré. C'est le propre de la programmation dynamique, les sous-problèmes se chevauchent, il ne faut pas les recalculer plusieurs fois !
 
 ![Alignement séquences - Etape 4](assets/4-alignement-sequence-4-light-mode.png#only-light){width=100% }
 ![Alignement séquences - Etape 4](assets/4-alignement-sequence-4-dark-mode.png#only-dark){width=100% }
 
-On continue ainsi jusqu'à trouver des sous-chaines vide, il n'y a alors plus de sous-chaine commune à chercher.
+On continue ainsi jusqu'à trouver des sous-chaines vide, il n'y a alors plus de sous-chaîne commune à chercher.
 
 ![Alignement séquences - Etape 5](assets/4-alignement-sequence-5-light-mode.png#only-light){width=100% }
 ![Alignement séquences - Etape 5](assets/4-alignement-sequence-5-dark-mode.png#only-dark){width=100% }
@@ -535,13 +535,13 @@ On trouve ici deux chemins qui permettent d'aligner 3 caractères entre les deux
 
 Généralisons l'approche que l'on vient de faire sur l'exemple. Soit deux sous-chaines `str1` et `str2` et essayons de calculer  la plus longue sous-chaîne commune entre les deux, que l'on note `T(str1, str2)`. Deux cas se présentent :
 
--	Si l'une des deux sous-chaîne est vide, alors il n'y a pas de plus longue sous-chaine commune : `T(str1, str2) = ''`.
+-	Si l'une des deux sous-chaîne est vide, alors il n'y a pas de plus longue sous-chaîne commune : `T(str1, str2) = ''`.
 
 -	Si les deux sous-chaîne ont un ou plusieurs caractères, alors :
 
-    1.	Si les deux sous-chaînes ont le même dernier caractère, `str1[-1] == str2[-1]`, alors ces caractères pourront être alignés, la plus longue chaine commune est la plus longue chaîne commune entre les deux sous-chaînes réduite de leur dernier caractère, à laquelle on ajoute ce caractère commun : `T(str1, str2) = T(str1[:-1], str2 [:-1]) + str[-1]`. 
+    1.	Si les deux sous-chaînes ont le même dernier caractère, `str1[-1] == str2[-1]`, alors ces caractères pourront être alignés, la plus longue chaîne commune est la plus longue chaîne commune entre les deux sous-chaînes réduite de leur dernier caractère, à laquelle on ajoute ce caractère commun : `T(str1, str2) = T(str1[:-1], str2 [:-1]) + str[-1]`. 
 
-    2.	Si les derniers caractères sont différents, `str1[-1] != str2[-1]`, alors ces caractères ne  pourront pas être alignés, la plus longue chaine commune est la chaîne qui a le plus de caractères entre :
+    2.	Si les derniers caractères sont différents, `str1[-1] != str2[-1]`, alors ces caractères ne  pourront pas être alignés, la plus longue chaîne commune est la chaîne qui a le plus de caractères entre :
 
         -	la plus longue chaîne commune de la première chaîne et de la seconde réduite de son dernier caractère d'une part, et
 
@@ -557,7 +557,7 @@ str2 = 'GACT'
 
 def max_len(str1, str2):
     """ str, str -> str
-    Renvoie la plus longue chaine des deux
+    Renvoie la plus longue chaîne des deux
     ou la premiere si les deux chaines ont la même longueur
     """
     if len(str1) >= len(str2):
@@ -569,7 +569,7 @@ def max_len(str1, str2):
 memo = {}
 def alignement_sequence_top_down(str1, str2):
     """ str, str -> str
-    Renvoie une plus longue chaine commune
+    Renvoie une plus longue chaîne commune
     """
     if (str1, str2) in memo: return memo[(str1, str2)]
     if str1 =='' or str2 == '': memo[(str1, str2)] = ''
@@ -606,7 +606,7 @@ On peut faire les constatations suivantes :
     - S'ils sont différents, c'est-à-dire `str1[i] != str2[j]`, alors ils ne peuvent pas être alignés, il faut prendre la plus longue sous-chaîne entre les deux sous-chaînes calculées en enlevant l'un des dernier caractère :   
     `T[i][j] = max_len(T[i][j-1], T[i-1][j])`
 
-    La plus longue sous-chaine commune est calculée dans la dernière ligne dernière colonne du tableau de tableaux.
+    La plus longue sous-chaîne commune est calculée dans la dernière ligne dernière colonne du tableau de tableaux.
 
 ![Alignement séquences - tableau de tableaux](assets/4-alignement-sequence-tableau-light-mode.png#only-light){width=100% }
 ![Alignement séquences - tableau de tableaux](assets/4-alignement-sequence-tableau-dark-mode.png#only-dark){width=100% }
@@ -617,7 +617,7 @@ Traduite en Python, on obtient le code suivant :
 ``` py
 def alignement_sequence_bottom_up(str1, str2):
     """ str, str -> str
-    Renvoie une plus longue chaine commune
+    Renvoie une plus longue chaîne commune
     """
     n1, n2 = len(str1), len(str2)
     T = [['' for j in range(n2)] for i in range(n1)]
@@ -798,12 +798,12 @@ Généralisons cette approche. Soit un sac de capacité p et une liste d'objet  
 
 	2. Cas 2 : On ne met pas l'objet $i$ dans le sac, il reste à calculer la valeur maximale d'un sac de capacité $p$ avec les objets restants, sans lui ajouter aucune valeur ensuite : $V_{i-1, p}$.
 
-    3. $V_{i, p}$ est le cas le plus favorable entre les deux : $V_{i, p} = \max(V_{i-1, p} , valeur_{i} + V_{i-1, p - poids_{i}})$
+    3. $V_{i, p}$ est le cas le plus favorable entre les deux : $V_{i, p} = \max(valeur_{i} + V_{i-1, p - poids_{i}}, V_{i-1, p})$
     
 Bien sûr, une fois qu'on a considéré tous les objets de la liste les uns après les autres pour les mettre dans le sac, ou pas, et qu'il ne reste plus que le premier objet de la liste, la solution est immédiate car il suffit de vérifier si son poids est inférieur à la capacité du sac ou pas. Si c'est le cas, on met l'objet dans le sac et la valeur maximale du sac est donc la valeur de l'objet. Sinon, on ne peut pas prendre l'objet, la valeur maximale est 0. 
 
-![Relation de récurence donnant Vi,p](assets/4-sac-a-dos-recurence-light-mode.png#only-light){width=80% }
-![Relation de récurence donnant Vi,p](assets/4-sac-a-dos-recurence-dark-mode.png#only-dark){width=80%}
+![Relation de récurrence donnant Vi,p](assets/4-sac-a-dos-recurence-light-mode.png#only-light){width=80% }
+![Relation de récurrence donnant Vi,p](assets/4-sac-a-dos-recurence-dark-mode.png#only-dark){width=80%}
 
 
 Cette relation de récurrence se traduit directement en Python en version dynamique descendante (noter l'ordre des paramètres inversé, `i` est après `p_max` car les paramètres par mots clés sont toujours placés après les positionnels) :
@@ -821,9 +821,9 @@ def sac_dynamique_top_down(poids_max, i=len(objets)-1):
     """ int, int -> int
     Renvoie la valeur maximale d'une liste d'objets [{'poids', 'valeur'}]
     qui peuvent être mis dans le sac sans que leur poids dépasse poids_max
-    Note : on ne considere que premiers objets de la liste jusqu'à l'indice i (inclus)
+    Note : on ne considère que premiers objets de la liste jusqu'à l'indice i (inclus)
     """
-    # s'il ne reste plus qu' objets[0] à considerer dans la liste 
+    # s'il ne reste plus qu' objets[0] à considérer dans la liste 
     if i == 0:
         # s'il est moins lourd que la capacité du sac, on le met dans le sac
         if objets[i]['poids'] <= poids_max:
@@ -842,7 +842,7 @@ def sac_dynamique_top_down(poids_max, i=len(objets)-1):
         # et ajouter objets[i] dans le sac
      objets[i]['valeur'] + sac_dynamique_top_down(poids_max - objets[i]['poids'], i-1))
 
-    # on met à jour le disctionnaire et on renvoie la valeur maximale pour poids_max
+    # on met à jour le dictionnaire et on renvoie la valeur maximale pour poids_max
     V[(poids_max, i)] = val_max
     return val_max
 
@@ -859,7 +859,7 @@ La première ligne du tableau, quand `i` est égal à `0`, donne la valeur du sa
 
 - si `objet[0]` est moins lourd que la capacité du sac (`objet[0][poids] <= p`), alors on le met dans le sac et la valeur maximale du sac est la valeur de l'objet : `objet[0][valeur]`.
 
-Les autres valeurs de `V[i][p]` sur les autres lignes sont calculées à partir de la relation de récurence précédente. La solution du problème se trouve sur la dernière ligne et la dernière colonne de `V`:
+Les autres valeurs de `V[i][p]` sur les autres lignes sont calculées à partir de la relation de récurrence précédente. La solution du problème se trouve sur la dernière ligne et la dernière colonne de `V`:
 
 
 ![Construction du tableau de tableaux des Vi,p en bottom-up](assets/4-sac-a-dos-bottom-up-light-mode.png#only-light){width=80% }
@@ -875,14 +875,14 @@ def sac_dynamique_bottom_up(poids_max):
     """
 
     # on crée le tableau de tableau, une ligne par objet ajouté (ou pas)
-    # une colonne pour chaque capcacité de sac
+    # une colonne pour chaque capacité de sac
     V = [[None]*(poids_max + 1) for i in range(len(objets))]
 
 
     # V[i][p] est la valeur max d'un sac de capacité p
     # avec les premiers objets jusqu'à objets[i] inclus
 
-    # s'il n'y a qu' objets[0] à considerer dans la liste
+    # s'il n'y a qu' objets[0] à considérer dans la liste
     for p in range(poids_max + 1):
         # s'il est moins lourd que la capacité du sac, on le met dans le sac
         if objets[0]['poids'] <= p:

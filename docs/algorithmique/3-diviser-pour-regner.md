@@ -117,13 +117,13 @@ def recherche(x, T) :
 ```
 :warning: Un bug classique est d'écrire  `while debut < fin:` à la ligne 4, alors qu'on a vu dans l'exemple précédent (en recherchant la valeur 35 dans le tableau) que la recherche doit se poursuivre **même quand `debut` est égal à `fin`**, on peut encore trouver la valeur. On ne s'arrête que quand `debut > fin`, c'est seulement alors qu'il n'y a plus aucune valeur possible dans le tableau. 
 
-Ce programme contient une boucle `while`, il faut donc s'assurer qu'il se termine. Ici le variant de boucle est `fin - debut`. A chaque itération de boucle, on voit qu'il y a trois cas :
+Ce programme contient une boucle `while`, il faut donc s'assurer qu'elle termine. Ici le variant de boucle est `fin - debut`. A chaque itération de boucle, on voit qu'il y a trois cas :
 
-- `x < T[milieu]` : dans ce cas, `fin` devient `milieu - 1`, donc le variant décroit strictement ; 
-- `x > T[milieu]` : dans ce cas, `debut` devient `milieu + 1`, donc le variant décroit strictement ;
+- `x < T[milieu]` : dans ce cas, `fin` devient `milieu - 1`, donc le variant décroît strictement ; 
+- `x > T[milieu]` : dans ce cas, `debut` devient `milieu + 1`, donc le variant décroît strictement ;
 - `x == T[milieu]` : dans ce cas, l'instruction `return True` sort de la boucle et même de la fonction.
 
-Tant qu'on est dans la boucle, le variant de boucle `fin - debut` décroit strictement, la boucle `while debut <= fin:` se terminera donc.
+Tant qu'on est dans la boucle, le variant de boucle `fin - debut` décroît strictement, la boucle `while debut <= fin:` terminera donc.
 
 PPour prouver la correction de cet algorithme, on va utiliser la technique de l'invariant de boucle. Vérifions que la proposition « si x est dans T alors `T[debut] <= x <= T[fin]` »  est un invariant de boucle. 
 
@@ -132,13 +132,13 @@ Au début, l'invariant est vrai, si x est dans la tableau alors il est compris e
 Si l'invariant est vrai quand on entre dans la boucle, alors il y a les mêmes trois possibilités :
 
 - `x < T[milieu]` : alors la recherche se poursuit dans `[T[debut], ..., T[milieu-1]]`, l'invariant est encore vrai quand on retourne dans la boucle; 
-- `x > T[milieu]` : alors la recherche se poursuit dans `[T[milieu+1], ..., T[fin]]`, l'invariant est encore vrai quand on retourbne dans la boucle ;  
+- `x > T[milieu]` : alors la recherche se poursuit dans `[T[milieu+1], ..., T[fin]]`, l'invariant est encore vrai quand on retourne dans la boucle ;  
 - `x == T[milieu]` : alors on l'a trouvé.
 
 On a donc bien un invariant de boucle et l'algorithme trouve bien si une valeur est dans un tableau trié ou pas.
 
 
-Etudions la complexité temporelle pour un tableau de taille $n$. A chaque itération de la boucle on divise la taille du tableau par 2, cela revient donc à se demander combien de fois faut-il diviser la taille du tableau par 2 pour obtenir dans le cas le plus défavorable (`x` n'est pas dans `T`) un tableau vide ? Cela revient à trouver le nombre $a$ tel que $2^a  = n$ . La solution est  $a= log_2(n)$.
+Étudions la complexité temporelle pour un tableau de taille $n$. A chaque itération de la boucle on divise la taille du tableau par 2, cela revient donc à se demander combien de fois faut-il diviser la taille du tableau par 2 pour obtenir dans le cas le plus défavorable (`x` n'est pas dans `T`) un tableau vide ? Cela revient à trouver le nombre $a$ tel que $2^a  = n$ . La solution est  $a= log_2(n)$.
 
 
 !!! abstract "Cours" 
@@ -256,8 +256,8 @@ Tri Fusion d'un tableau  `T` de taille `n`:
 |**Combiner**|Fusionner les deux sous-tableaux triés `T1` et `T2` |
 
 
-![Exemple de tri fusion. Source wikipedia](assets/3-tri-fusion-light-mode.png#only-light){width="30%" align=right}
-![Exemple de tri fusion. Source wikipedia](assets/3-tri-fusion-dark-mode.png#only-dark){width="30%" align=right}
+![Exemple de tri fusion. Source Wikipédia](assets/3-tri-fusion-light-mode.png#only-light){width="30%" align=right}
+![Exemple de tri fusion. Source Wikipédia](assets/3-tri-fusion-dark-mode.png#only-dark){width="30%" align=right}
 
 Commençons par écrire une fonction qui fusionne deux tableaux triés T1 et T2. On construit le nouveau tableau élément par élément en retirant tantôt le premier élément du premier tableau, tantôt le premier élément du deuxième tableau, en prenant à chaque fois le plus petit des deux (à supposer qu'aucun des deux tableaux ne soit vide, sinon la réponse est immédiate).
 
@@ -280,7 +280,7 @@ def fusion(T1: list, T2: list) -> list:
         else:
             T.append(T2[i2])
             i2 += 1
-    # Un des deux tableaux et vide, on transfère tous les élements restants dans T
+    # Un des deux tableaux et vide, on transfère tous les éléments restants dans T
     while i1 < len(T1):
         T.append(T1[i1])
         i1 += 1
@@ -328,7 +328,7 @@ def tri_fusion(T: list) -> list:
         return fusion(tri_fusion(T1), tri_fusion(T2))
 ``` 
 
-Etudions la complexité temporelle pour un tableau de taille $n$.  Comme pour l'algorithme du tri par dichotomie, à chaque appel récursif du tri fusion, la taille du tableau à trié est divisée par 2, la complexité en donc en $log_2(n)$. Mais fusionner les deux tableaux nécessite de faire entre $k/2$ et $k$ comparaisons, où $k$ est la taille des sous-tableaux, c'est donc de l'ordre de $O(n)$.  La complexité du tri fusion est donc de l'ordre  $O(n \times log_2(n))$
+Étudions la complexité temporelle pour un tableau de taille $n$.  Comme pour l'algorithme du tri par dichotomie, à chaque appel récursif du tri fusion, la taille du tableau à trié est divisée par 2, la complexité en donc en $log_2(n)$. Mais fusionner les deux tableaux nécessite de faire entre $k/2$ et $k$ comparaisons, où $k$ est la taille des sous-tableaux, c'est donc de l'ordre de $O(n)$.  La complexité du tri fusion est donc de l'ordre  $O(n \times log_2(n))$
 
 !!! abstract "Cours" 
     La complexité en temps de l'algorithme de tri fusion est donc **linéarithmique en  $O(n \times log_2(n))$**.
@@ -385,7 +385,7 @@ Comparons cette algorithme naïf à une méthode « diviser pour régner » effe
 
     ![Image de R2D2 avant rotation](assets/3-rotation-r2d2-1.png){width="25%"}
 
-2. La première étape consisite à diviser l'image en 4 sous-images :
+2. La première étape consiste à diviser l'image en 4 sous-images :
 
     ![Image de R2D2 divisée en 4 sous-images](assets/3-rotation-r2d2-2.png){width="25%"}
 
@@ -395,7 +395,7 @@ Comparons cette algorithme naïf à une méthode « diviser pour régner » effe
 
 4. Effectuons maintenant une rotation d'un quart de tour de chaque sous-image :
 
-    ![Image de R2D2 avec les sous-image reassemblées](assets/3-rotation-r2d2-4.png){width="25%"}
+    ![Image de R2D2 avec les sous-image réassemblées](assets/3-rotation-r2d2-4.png){width="25%"}
  
 5. Il ne reste plus qu'à réunir les quatres sous-images en une seule. La rotation d'un quart de tour a bien été effectuée.
 
@@ -415,7 +415,7 @@ Voilà ce qu'on obtient étape par étape :
 
 On poursuit sans représenter le quadrillage devenu trop fin pour les deux dernières étapes.
 
-![Image de R2D2 trounées](assets/3-rotation-r2d2-6.png){width="50%"} 
+![Image de R2D2 tournées](assets/3-rotation-r2d2-6.png){width="50%"} 
 
 Traduisons ce processus en Python :
 
@@ -429,13 +429,13 @@ def rotation(image):
         return image       # Inutile de le tourner
     
     # Diviser en 4 sous-image
-    # Sous-image qaurt haut gauche
+    # Sous-image quart haut gauche
     hg = [[image[lig][col] for col in range(n//2)] for lig in range(n//2)]
-    # Sous-image qaurt haut droit
+    # Sous-image quart haut droit
     hd = [[image[lig][col] for col in range(n//2, n)] for lig in range(n//2)]
-    # Sous-image qaurt bas gauche
+    # Sous-image quart bas gauche
     bg = [[image[lig][col] for col in range(n//2)] for lig in range(n//2, n)]
-    # Sous-image qaurt bas droit
+    # Sous-image quart bas droit
     bd = [[image[lig][col] for col in range(n//2, n)] for lig in range(n//2, n)]
 
     # Permutation circulaire des 4 sous-images
@@ -463,9 +463,9 @@ plt.show()
 
 ```
 
-Essayons d'estimer la complexité de cette rotation d'un quart de tour. La fonction `rotation` exécute 4 boucles imbriquées de taille $n/2$ pour découper l'image en 4 sous-images, chaque boucle a donc une compléxité en $O(n^2)$. Ensuite, la fonction fait appel 4 fois à elle-même sur ces images d'une taille réduite par un facteur 2, suivi à nouveau de boucles imbriquées en $O(n^2)$ pour combiner les 4 sous-images. On a donc un nombre d'opérations qui vérifie la relation $C(n) = 4 \times O(n^2) + 4 \times C(n/2) + 4 \times O(n^2)$. On peut montrer par un calcul mathématique que la complexité de cette rotation par la méthode est de l'ordre de $O(n^2 \times log_2(n))$, donc un peu moins bonne que celle de l'algorithme naïf[^3.3].
+Essayons d'estimer la complexité de cette rotation d'un quart de tour. La fonction `rotation` exécute 4 boucles imbriquées de taille $n/2$ pour découper l'image en 4 sous-images, chaque boucle a donc une complexité en $O(n^2)$. Ensuite, la fonction fait appel 4 fois à elle-même sur ces images d'une taille réduite par un facteur 2, suivi à nouveau de boucles imbriquées en $O(n^2)$ pour combiner les 4 sous-images. On a donc un nombre d'opérations qui vérifie la relation $C(n) = 4 \times O(n^2) + 4 \times C(n/2) + 4 \times O(n^2)$. On peut montrer par un calcul mathématique que la complexité de cette rotation par la méthode est de l'ordre de $O(n^2 \times log_2(n))$, donc un peu moins bonne que celle de l'algorithme naïf[^3.3].
 
-[^3.3]: L'implémentation présentée ici de la méthode « diviser pour régner » n'est pas optimale en terme de compléxité spacitale non plus. En copiant les quatre sous-image dans des images temporaires, elle nécessite une utilisation de l'espace place mémoire supérieure à la taille de l'image ! Il existe une implémentation « en place » permettant de réduire l'espace mémoire utilisé. Source: [https://eduscol.education.fr/document/10100/download](https://eduscol.education.fr/document/10100/download)
+[^3.3]: L'implémentation présentée ici de la méthode « diviser pour régner » n'est pas optimale en terme de complexité spatiale non plus. En copiant les quatre sous-image dans des images temporaires, elle nécessite une utilisation de l'espace place mémoire supérieure à la taille de l'image ! Il existe une implémentation « en place » permettant de réduire l'espace mémoire utilisé. Source: [https://eduscol.education.fr/document/10100/download](https://eduscol.education.fr/document/10100/download)
 
 
 
@@ -506,7 +506,7 @@ def tri_rapide(T):
         return []       # il n'y a rien à trier
 
     # Diviser
-    pivot = T[randint(0, len(T)-1)]  # pivot au hasard, on peut utiliser T[-1] pour prendre le dernier élement
+    pivot = T[randint(0, len(T)-1)]  # pivot au hasard, on peut utiliser T[-1] pour prendre le dernier élément
     val_inferieures = []
     val_egales = []
     val_superieures = []
@@ -516,7 +516,7 @@ def tri_rapide(T):
         elif elem > pivot: val_superieures.append(elem)
         else: val_egales.append(elem)
 
-    # Regner
+    # Régner
     return tri_rapide(val_inferieures) + val_egales + tri_rapide(val_superieures)
 
 

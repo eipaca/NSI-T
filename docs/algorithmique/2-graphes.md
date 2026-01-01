@@ -189,7 +189,7 @@ Le parcours en profondeur du graphe ci-dessus est A-B-C-F-E-D, mais les arêtes 
 
 ![Parcours en profondeur dans le graphe de l'exemple qui tourne en rond](assets/2-graphe-dfs-tourne-en-rond-light-mode.png#only-light){width="40%" align=right }
 ![Parcours en profondeur dans le graphe de l'exemple qui tourne en rond](assets/2-graphe-dfs-tourne-en-rond-dark-mode.png#only-dark){width="40%" align=right }
-Comme pour les arbres, le parcours en  profondeur d'un graphe s'exprime naturellement de façon récursive, à la différence qu'**il faut marquer les sommets déjà visités** afin de ne pas y retourner depuis un autre sommet et risquer de « tourner en rond ». Le parcours se termine lorsqu'il n'y a plus de sommets à parcourir.
+Comme pour les arbres, le parcours en  profondeur d'un graphe s'exprime naturellement de façon récursive, à la différence qu'**il faut marquer les sommets déjà visités** afin de ne pas y retourner depuis un autre sommet et risquer de « tourner en rond ». Le parcours termine lorsqu'il n'y a plus de sommets à parcourir.
 
 ``` py
     def parcours_prof_rec(self, s, parcours=None):
