@@ -29,7 +29,7 @@ Les arbres trouvent de nombreuses applications en informatique, par exemple dans
 
     :warning: Il n'existe pas de définition universelle pour la hauteur d'un arbre et la profondeur d'un nœud dans un arbre. Dans certains cas la profondeur est le nombre d'**arêtes** entre la racine le nœud, la **hauteur de l'arbre réduit à la racine est alors de 0 et la hauteur de l'arbre vide est -1**[^7.1].
 
-[^7.1]: Un arbre vide a une hauteur de 0 et un arbre réduit à la racine une hauteur de 1 dans la plupart des sujets de bac (21-Sujet_0, 21-NSIJ2ME1, 21-NSIJ2ME2, 22-NSIJ1AS1, 22-NSIJ1JAN1, 22-NSIJ1PO1, 22-NSIJ2JA1, 22-NSIJ2ME1, 23-NSIJ2G11 et 23-NSIJ2LI1) sauf les sujets  22-NSIJ1NC1, 24-NSI-41 et 24-NSIJ2PO1 où un arbre vide a une hauteur de -1 et un arbre réduit à la racine une hauteur de 0.
+[^7.1]: Un arbre vide a une hauteur de 0 et un arbre réduit à la racine une hauteur de 1 dans la plupart des sujets de bac (21-Sujet_0, 21-NSIJ2ME1, 21-NSIJ2ME2, 22-NSIJ1AS1, 22-NSIJ1JAN1, 22-NSIJ1PO1, 22-NSIJ2JA1, 22-NSIJ2ME1, 23-NSIJ2G11 et 23-NSIJ2LI1) sauf les sujets  22-NSIJ1NC1, 24-NSIJ2PO1, 25-NSIPE2, 25-NSIJ2ME1 et 25-NSI-17 où un arbre vide a une hauteur de -1 et un arbre réduit à la racine une hauteur de 0.
 
 
 
@@ -173,11 +173,11 @@ Il est possible d'avoir des arbres binaires de même taille mais de « forme » 
 
 Il en résulte certaines propriétés sur la taille $n$  et la hauteur $h$ d'un arbre binaire :
 
--   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n$, c'est la plus grande hauteur possible donc pour tout AB : $h ≤  n$.
+-   Un arbre filiforme de taille $n$ a une hauteur $h$ égale à $n$, c'est la plus grande hauteur possible donc pour tout AB : $h ≤  n $.
 
--   On peut aussi montrer[^7.2] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h} - 1$ , c'est la plus grande taille possible donc pour tout AB : $n ≤  2^{h} – 1$. On en déduit que $log_2 (n+1) ≤ h$ où $log_2 (n+1)$ est le logarithme en base $2$ de $n+1$[^7.3].
+-   On peut aussi montrer[^7.2] qu'un arbre binaire parfait de hauteur $h$ a une taille $n$ égale à  $2^{h} - 1$ , c'est la plus grande taille possible donc pour tout AB : $ n ≤  2^{h} – 1$. On en déduit que $log_2 (n+1) ≤ h$ où $log_2 (n+1)$ est le logarithme en base $2$ de $n+1$[^7.3].
 
-[^7.2]: Par récurrence la taille d'un arbre racine est $2^{1} - 1 = 1$, et si la taille d'un arbre parfait de hauteur $h-1$ est $2^{h-1} - 1$, pour obtenir la taille de l'arbre parfait de hauteur $h$ il faut ajouter $2^{h-1}$ nouveaux nœuds, au total on obtient $2^{h-1} - 1 + 2^{h-1} = 2 \times 2^{h-1} - 1 = 2^{h} - 1$.
+[^7.2]: Par récurrence la taille d'un arbre racine est $2^{1} - 1 = 1$, et si la taille d'un arbre parfait de hauteur $h-1$ est $2^{h-1} -1$, pour obtenir la taille de l'arbre parfait de hauteur $h$ il faut ajouter $2^{(h-1)}$ nouveaux nœuds, au total on obtient $2^{h-1} -1 + 2^{h-1} = 2 \times 2^{h-1} - 1 = 2^{h} -1$.
 
 [^7.3]: Le logarithme en base 2, noté $log_2$ est une opération mathématique qui calcule la puissance à laquelle il faut élever le nombre 2 pour obtenir un nombre donné. Par exemple $log_2 (8)$ est $3$ car$2^3 = 8$.
 

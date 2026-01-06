@@ -40,7 +40,7 @@ Python possède naturellement une structure de dictionnaire (le type `dict`). Ma
 Les dictionnaires Python, de type `dict`, offrent immédiatement toutes les primitives d'un dictionnaire : 
 
 ``` py
->>> capitale = {}           # creer()
+>>> capitale = {}           # créer()
 >>> len(capitale) == 0      # est_vide()
 True
 >>> capitale["France"] = "Paris"     # ajouter(cle, valeur)
@@ -54,7 +54,7 @@ True
 'Rome'
 ```
 
-Rappelons quelques unes des autres fonctionalités vues en classe de première : 
+Rappelons quelques unes des autres fonctionnalités vues en classe de première : 
 
 -   Un dictionnaire peut être créé avec plusieurs couples de clés-valeurs séparés par des virgules, le tout encadré par des accolades “{ }” :
 
@@ -68,7 +68,7 @@ Rappelons quelques unes des autres fonctionalités vues en classe de première :
     {'Allemagne': 'Berlin', 'France': 'Paris', 'Italie': 'Rome'}
     ```
 
--   Il est possible d'accèder à une valeur **par sa clé, et uniquement par sa clé, mais pas par sa position**. Les valeurs d'un dictionnaire n'ont pas de position :
+-   Il est possible d’accéder à une valeur **par sa clé, et uniquement par sa clé, mais pas par sa position**. Les valeurs d'un dictionnaire n'ont pas de position :
 
     ``` py
     >>> capitale["France"]
@@ -177,7 +177,7 @@ Rappelons quelques unes des autres fonctionalités vues en classe de première :
     ```
 
 
--    Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire particulièrment attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.2].
+-    Enfin, les dictionnaires sont de types muables :warning:, il faut donc faire particulièrement attention pour copier un dictionnaire ou passer un dictionnaire en argument d'une fonction[^6.2].
 
 [^6.2]:	
 	:warning: Attention au signe `=` pour copier un dictionnaire :
@@ -209,7 +209,7 @@ Rappelons quelques unes des autres fonctionalités vues en classe de première :
 
 	Note: Si le dictionnaire contient des tableaux, les deux méthodes ci-dessus ne fonctionnent plus, il faut utiliser `deepcopy`.
 
-	:warning: Attention aussi aux dictionnaires passés en paramètre de fonction :
+	:warning: Attention aussi aux dictionnaires passés en paramètre d'une fonction :
 
 	``` py
 	def test(var):
@@ -238,7 +238,7 @@ class Dico:
 
 !!! abstract "Cours"
 
-    Une fonction de hachage est un algorithme mathématique qui transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en une chaîne alphanumérique, appelée valeur de hachage ou *hash* en anglais. 
+    Une **fonction de hachage** est un algorithme mathématique qui transforme une valeur donnée (par exemple une chaîne de caractère ou un autre type de donnée) en une chaîne alphanumérique, appelée valeur de hachage ou *hash* en anglais. 
     
     L'opération inverse qui permet de retrouver la valeur initiale à partir de la valeur de hachage est en principe difficile à réaliser.
 
@@ -250,8 +250,6 @@ Il existe des méthodes mathématiques complexes[^6.3] pour définir des fonctio
     -	MD5 : un des premiers algorithmes de hachage, il est aujourd’hui considéré comme peu sûr.
     -	SHA-1  (SHA est l’acronyme de Secure Hashing Algorithm) : il n’est plus recommandé pour le stockage sécurisé des mots de passe car il est sujet à des attaques.
     -	SHA-2 : une famille d’algorithmes de hachage, comprenant SHA-256 et SHA-512. Plus sécurisé que SHA-1, il est aussi très utilisé en cryptographie, par exemple, le Bitcoin utilise SHA-256.
-    -	NTLM : utilisé dans les environnements Microsoft Windows.
-
 
 ``` py
 def hachage(chaine):
@@ -264,16 +262,16 @@ def hachage(chaine):
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-light-mode.png#only-light){width="28%" align="right"}
 ![Transformation de la clé `Allemagne` par une fonction de hachage](assets/6-allemagne-fonction-hachage-dark-mode.png#only-dark){width="28%" align="right"}
 
-Le nombre renvoyé par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de la France sera stockée dans le tableau à la position d'indice 91, la capitale de l'Allemagne à l'indice 2, etc. :
+La valeur renvoyée par cette fonction de hachage sera l'indice dans le tableau. Par exemple, la capitale de la chaîne `'France'` sera stockée dans le tableau en position d'indice 91, la capitale de `'Allemagne'` en 2, etc. :
 
 ``` py
->>> hachage("France")
+>>> hachage('France')
 91
->>> hachage("Allemagne")
+>>> hachage('Allemagne')
 2
 ```
 
-Note: Il est très difficile de retrouver, à partir d'une valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `"Allemagne"` .
+Note: Il est très difficile de retrouver, à partir d'une valeur de hachage par exemple `2`, quelle était la chaîne d'origine, ici `'Allemagne'` .
 
 
 Ajoutons les primitives d'un dictionnaire à la classe `Dico` :
@@ -315,12 +313,12 @@ Paris
 ```
 
 
-Il y a une « collision » quand la fonction de hachage n'est pas assez performante, comme ici, et renvoie la même valeur de hachage pour deux clés différentes :
+On dit qu'il y a une « collision » quand la fonction de hachage n'est pas assez performante, comme ici, et renvoie la même valeur de hachage pour deux clés différentes :
 
 ``` py
->>> hachage("Danemark")
+>>> hachage('Danemark')
 3
->>> hachage("Irlande")
+>>> hachage('Irlande')
 3
 ```
 
