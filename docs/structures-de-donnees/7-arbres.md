@@ -315,7 +315,11 @@ En plus de nous limiter aux arbres non-vides (dit « enracinés ») et d'imposer
  [23-NSIJ2LR1](https://www.education.gouv.fr/media/154805/download),
   [23-NSIJ2ME1](https://www.education.gouv.fr/media/133955/download),
   [23-NSIJ2PO1](https://www.education.gouv.fr/media/133706/download),
-  23-sujet_0-b
+  23-sujet_0-b,
+  [25-NSIJ2JA1](https://www.education.gouv.fr/media/227775/download),
+  [25-NSIPE2](https://www.education.gouv.fr/media/227289/download),
+  25-NSIJ2AN1
+  
 
 :warning: Pour tenter de remédier à ces défauts, on trouve plusieurs variantes d'implémentation, plus ou moins satisfaisantes. 
 
@@ -391,7 +395,7 @@ Ici, l'objet `arbre_vide` est représenté par un noeud à part entière. On peu
 
 L'arbre vide comporte un noeud, la méthode renvoie une taille 1 au lieu de 0 ! De même `.hauteur()` renvoie 1 au lieu de 0. Il faut donc modifier les deux méthodes en conséquence.
 
-[^7.6]: On trouve un arbre implémenté par une classe `Noeud` dont l'attribut `valeur` d'un arbre vide est égal à `None` dans le sujet  [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download). Par ailleurs, le sujet 
+[^7.6]: On trouve un arbre implémenté par une classe `Noeud` dont l'attribut `valeur` d'un arbre vide est égal à `None` dans les sujets  [21-NSIJ2PO1](https://eduscol.education.fr/document/32770/download) et [25-NSIJ1G11] (https://www.education.gouv.fr/media/227719/download). Par ailleurs, le sujet 
  [https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/](https://e-nsi.gitlab.io/pratique/N2/800-arbre_bin/sujet/) montre un exemple de ce type d'implémentation complétement récursif.
 
 ## Arbres binaires de recherche 
