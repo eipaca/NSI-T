@@ -43,7 +43,7 @@ arbre = AB(Noeud(5, n10, n6))
 
 De façon générale, pour calculer la taille d'un arbre, il suffit de compter le nombre de nœuds à partir de la racine en parcourant toutes les branches.
 
-Dans le cas d'un arbre binaire impléménté comme décrit ci-dessus, on peut créer une méthode récursive, `taille()`,  de la classe `Noeud`. Cette méthode renvoie la **1 plus somme des tailles des deux fils** d'un noeud. Ainsi on parcourt tout l'arbre en partant de sa racine.
+Dans le cas d'un arbre binaire implémenté comme décrit ci-dessus, on peut créer une méthode récursive, `taille()`,  de la classe `Noeud`. Cette méthode renvoie la **1 plus somme des tailles des deux fils** d'un nœud. Ainsi on parcourt tout l'arbre en partant de sa racine.
 
 ![Un exemple de calcul de la taille d'arbre binaire](assets/1-ab-taille-light-mode.png#only-light){width="40%" align=right}
 ![Un exemple de calcul de la taille d'arbre binaire](assets/1-ab-taille-dark-mode.png#only-dark){width="40%" align=right}
@@ -92,7 +92,7 @@ Le calcul de la taille a un coût proportionnel à au nombre de nœuds $n$ de l'
     :warning: Il n'existe pas de définition universelle pour la hauteur d'un arbre et la profondeur d'un nœud dans un arbre. Dans certains cas la profondeur des nœuds est comptée à partir de 0, la hauteur de l'arbre réduit à la racine est 0 et la hauteur de l'arbre vide est -1 (par convention).
 
 !!! abstract "Cours" 
-    - La **profondeur** d'un nœud est le nombre de noeuds du chemin qui va de la racine au nœud. La profondeur de la racine est donc 1.
+    - La **profondeur** d'un nœud est le nombre de nœuds du chemin qui va de la racine jusqu'à ce nœud. La profondeur de la racine est donc 1.
 
 
     -	La **hauteur** d'un arbre est le nombre de nœuds (ou niveaux) du plus long chemin d’une feuille à la racine. Un arbre réduit à la racine a une hauteur de 1, un arbre vide a une hauteur de 0.
@@ -102,7 +102,7 @@ Pour calculer la hauteur d'un arbre, il faut parcourir toutes ses branches à pa
 ![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-light-mode.png#only-light){width="40%" align=right}
 ![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-dark-mode.png#only-dark){width="40%" align=right}
 
-Dans le cas arbre binaire impléménté comme décrit ci-dessus, on peut à nouveau créer une méthode récursive, `hauteur()`, de la classe `Noeud`. Cette méthode renvoie la **1 plus la plus grande hauteurs** de ses deux fils. :warning: Les feuilles hauteur ont une hauteur de 1 (avec la convention choisie ici).
+Dans le cas arbre binaire implémenté comme décrit ci-dessus, on peut à nouveau créer une méthode récursive, `hauteur()`, de la classe `Noeud`. Cette méthode renvoie la **1 plus la plus grande hauteurs** de ses deux fils. :warning: Les feuilles hauteur ont une hauteur de 1 (avec la convention choisie ici).
 
 Pour la classe `AB`, on ajoute une autre méthode appelée aussi `hauteur()` qui renvoie `0` pour l'arbre vide ou sinon la hauteur du Nœud racine.
 
@@ -139,7 +139,7 @@ Le calcul de la hauteur a un coût proportionnel à la taille du nombre de nœud
  
 ## Parcourir un arbre binaire
 
-Parcourir un arbre binaire consiste à visiter tous les noeuds que contient cet arbre. Il existe de nombreux algorithmes de parcours qui visitent chaque nœuds dans un **ordre différent**, les plus courants[^1.0] sont le parcours en largeur et le parcours en profondeur.
+Parcourir un arbre binaire consiste à visiter tous les nœuds que contient cet arbre. Il existe de nombreux algorithmes de parcours qui visitent chaque nœuds dans un **ordre différent**, les plus courants[^1.0] sont le parcours en largeur et le parcours en profondeur.
 
 [^1.0]:  D'autres algorithmes existent, par exemple la recherche arborescente Monte-Carlo.
 
@@ -156,7 +156,7 @@ L'implémentation se fait naturellement en utilisant une structure en file :
 
 - La racine est d'abord mise dans la file, puis
 - Tant que la file n'est pas vide:
-    - On défile le premier noeud de la file
+    - On défile le premier nœud de la file
     - On note sa valeur dans le parcours
     - On enfile ses fils gauche et droite, dans cet ordre, s'ils existent. 
 
@@ -199,15 +199,15 @@ class AB :
 [5, 10, 6, 3, 1, 12, 9, 4]
 ```
 
-Le parcours en largeur contient une boucle tant que la file n'est pas vide c'est-à-dire tant que tous les noeuds n'ont pas été visités, le coût est donc proportionnel à la taille du nombre de nœuds $n$ de l'arbre. La **complexité du parcours en largeur est en $O(n)$**.
+Le parcours en largeur contient une boucle tant que la file n'est pas vide c'est-à-dire tant que tous les nœuds n'ont pas été visités, le coût est donc proportionnel à la taille du nombre de nœuds $n$ de l'arbre. La **complexité du parcours en largeur est en $O(n)$**.
 
 
 ### Parcours en profondeur (DFS)
 
 !!! abstract "Cours" 
-    Le **parcours en profondeur** ou **DFS** (*Depth First Search*) consiste à parcourir pour chaque nœud d'abord le sous-arbre gauche entièrement et ensuite le sous arbre droit.
+    Le **parcours en profondeur** ou **DFS** (*Depth First Search*) consiste à parcourir pour chaque nœud d'abord son sous-arbre gauche entièrement et ensuite son sous arbre droit.
 
-    Chaque nœud est parcouru trois fois, on peut donc décider de traiter le nœud :
+    On peut réaliser **trois types de parcours en profondeur** en choisissant à quel moment « visiter » le nœud lui-même :
 
     - Avant le parcours de son sous-arbre gauche : parcours **préfixe** (ou **préordre**) ;
     - Entre le parcours de sous-arbre gauche et celui de son sous-arbre droit : parcours **infixe** (ou **en ordre**) ;
@@ -220,7 +220,7 @@ Le parcours en largeur contient une boucle tant que la file n'est pas vide c'est
 | 5 - 10 - 3 - 6 - 1 - 9 - 4 - 12| 10 - 3 - 5 - 9 - 1 - 4 - 6 - 12| 3 - 10 - 9 - 4 - 1 - 12 - 6 - 5|
 
  	 	 
-Les implémentations récursives de ces trois types de parcours en profondeur sont très semblables, seul l'ordre des instructions change : la ligne `parcours.append(self.valeur)` est placée avant, au mileu ou après les appels récursifs des parcours des fils gauche et droit :
+Les implémentations récursives de ces trois types de parcours en profondeur sont très semblables, seul l'ordre des instructions change : la ligne `parcours.append(self.valeur)` est placée avant, au milieu ou après les appels récursifs des parcours des fils gauche et droit :
 
 === "Parcours préfixe"
 
@@ -334,7 +334,7 @@ Noter qu'il est aussi possible d'implémenter le parcours **préfixe** de façon
             while len(pile) != 0:   # tant que la pile n'est pas vide
                 n = pile.pop()   # on prend le noeud au sommet de la pile
                 parcours.append(n.valeur)    # on note sa valeur
-                if n.droite is not None: pile.append(n.droite)  # on empile le fils DROIT d'abord
+                if n.droite is not None: pile.append(n.droite)  # ! attention, on empile le fils de DROITE d'abord
                 if n.gauche is not None: pile.append(n.gauche)  # on empile le fils gauche    
     ```
 
@@ -406,8 +406,8 @@ Les méthodes de la classe `AB` fonctionnent par héritage, en particulier le pa
 ###	Rechercher une clé
 
 
-![Exemple de recheche d'une clé dans ABR](assets/1-abr-rechercher-cle-light-mode.png#only-light){width="30%" align=right}
-![Exemple de recheche d'une clé dans ABR](assets/1-abr-rechercher-cle-dark-mode.png#only-dark){width="30%" align=right}
+![Exemple de recherche d'une clé dans ABR](assets/1-abr-rechercher-cle-light-mode.png#only-light){width="30%" align=right}
+![Exemple de recherche d'une clé dans ABR](assets/1-abr-rechercher-cle-dark-mode.png#only-dark){width="30%" align=right}
 
 Comme son nom l'indique, un ABR est spécifiquement adapté pour rechercher rapidement une clé. On parcourt l'ABR en partant de sa racine, et on observe trois cas :
 
@@ -486,7 +486,7 @@ Modifions la classe `ABR`, pour gérer immédiatement le cas de l'arbre vide (on
 class ABR(AB):
     def inserer(self, v):
         """ insere la valeur v dans l'arbre"""
-        # si l'arbre est vide, on ajoute une racie
+        # si l'arbre est vide, on ajoute une racine
         if self.racine is None: 
             self.racine = Noeud(v)
         else:
