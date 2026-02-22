@@ -1,0 +1,2211 @@
+
+<!doctype html>
+<html lang="fr" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Ressources pour le cours de Terminale NSI de l'Ecole Internationale PACA">
+      
+      
+        <meta name="author" content="Fabrice Perez">
+      
+      
+        <link rel="canonical" href="https://eipaca.github.io/NSI-T/algorithmique/4-programmation-dynamique/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.2">
+    
+    
+      
+        <title>Programmation dynamique - Ressources de Terminale NSI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+  
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+    
+      
+      
+    
+  
+  
+  <style>:root{--md-admonition-icon--note:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1%207.775V2.75C1%201.784%201.784%201%202.75%201h5.025c.464%200%20.91.184%201.238.513l6.25%206.25a1.75%201.75%200%200%201%200%202.474l-5.026%205.026a1.75%201.75%200%200%201-2.474%200l-6.25-6.25A1.75%201.75%200%200%201%201%207.775m1.5%200c0%20.066.026.13.073.177l6.25%206.25a.25.25%200%200%200%20.354%200l5.025-5.025a.25.25%200%200%200%200-.354l-6.25-6.25a.25.25%200%200%200-.177-.073H2.75a.25.25%200%200%200-.25.25ZM6%205a1%201%200%201%201%200%202%201%201%200%200%201%200-2%22/%3E%3C/svg%3E');--md-admonition-icon--abstract:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.5%201.75v11.5c0%20.138.112.25.25.25h3.17a.75.75%200%200%201%200%201.5H2.75A1.75%201.75%200%200%201%201%2013.25V1.75C1%20.784%201.784%200%202.75%200h8.5C12.216%200%2013%20.784%2013%201.75v7.736a.75.75%200%200%201-1.5%200V1.75a.25.25%200%200%200-.25-.25h-8.5a.25.25%200%200%200-.25.25m13.274%209.537zl-4.557%204.45a.75.75%200%200%201-1.055-.008l-1.943-1.95a.75.75%200%200%201%201.062-1.058l1.419%201.425%204.026-3.932a.75.75%200%201%201%201.048%201.074M4.75%204h4.5a.75.75%200%200%201%200%201.5h-4.5a.75.75%200%200%201%200-1.5M4%207.75A.75.75%200%200%201%204.75%207h2a.75.75%200%200%201%200%201.5h-2A.75.75%200%200%201%204%207.75%22/%3E%3C/svg%3E');--md-admonition-icon--info:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.5%207.75A.75.75%200%200%201%207.25%207h1a.75.75%200%200%201%20.75.75v2.75h.25a.75.75%200%200%201%200%201.5h-2a.75.75%200%200%201%200-1.5h.25v-2h-.25a.75.75%200%200%201-.75-.75M8%206a1%201%200%201%201%200-2%201%201%200%200%201%200%202%22/%3E%3C/svg%3E');--md-admonition-icon--tip:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%208.25a.75.75%200%200%201%20.75-.75h4a.75.75%200%200%201%200%201.5h-4A.75.75%200%200%201%205%208.25M4%2010.5A.75.75%200%200%200%204%2012h4a.75.75%200%200%200%200-1.5z%22/%3E%3Cpath%20d%3D%22M13-.005c1.654%200%203%201.328%203%203%200%20.982-.338%201.933-.783%202.818-.443.879-1.028%201.758-1.582%202.588l-.011.017c-.568.853-1.104%201.659-1.501%202.446-.398.789-.623%201.494-.623%202.136a1.5%201.5%200%201%200%202.333-1.248.75.75%200%200%201%20.834-1.246A3%203%200%200%201%2013%2016H3a3%203%200%200%201-3-3c0-1.582.891-3.135%201.777-4.506q.315-.483.623-.946c.473-.709.923-1.386%201.287-2.048H2.51c-.576%200-1.381-.133-1.907-.783A2.68%202.68%200%200%201%200%202.995a3%203%200%200%201%203-3Zm0%201.5a1.5%201.5%200%200%200-1.5%201.5c0%20.476.223.834.667%201.132A.75.75%200%200%201%2011.75%205.5H5.368c-.467%201.003-1.141%202.015-1.773%202.963-.192.289-.381.571-.558.845C2.13%2010.711%201.5%2011.916%201.5%2013A1.5%201.5%200%200%200%203%2014.5h7.401A3%203%200%200%201%2010%2013c0-.979.338-1.928.784-2.812.441-.874%201.023-1.748%201.575-2.576l.017-.026c.568-.853%201.103-1.658%201.501-2.448s.623-1.497.623-2.143c0-.838-.669-1.5-1.5-1.5m-10%200a1.5%201.5%200%200%200-1.5%201.5c0%20.321.1.569.27.778.097.12.325.227.74.227h7.674A2.7%202.7%200%200%201%2010%202.995c0-.546.146-1.059.401-1.5Z%22/%3E%3C/svg%3E');--md-admonition-icon--success:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M13.78%204.22a.75.75%200%200%201%200%201.06l-7.25%207.25a.75.75%200%200%201-1.06%200L2.22%209.28a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018L6%2010.94l6.72-6.72a.75.75%200%200%201%201.06%200%22/%3E%3C/svg%3E');--md-admonition-icon--question:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M0%208a8%208%200%201%201%2016%200A8%208%200%200%201%200%208m8-6.5a6.5%206.5%200%201%200%200%2013%206.5%206.5%200%200%200%200-13M6.92%206.085h.001a.749.749%200%201%201-1.342-.67c.169-.339.436-.701.849-.977C6.845%204.16%207.369%204%208%204a2.76%202.76%200%200%201%201.637.525c.503.377.863.965.863%201.725%200%20.448-.115.83-.329%201.15-.205.307-.47.513-.692.662-.109.072-.22.138-.313.195l-.006.004a6%206%200%200%200-.26.16%201%201%200%200%200-.276.245.75.75%200%200%201-1.248-.832c.184-.264.42-.489.692-.661q.154-.1.313-.195l.007-.004c.1-.061.182-.11.258-.161a1%201%200%200%200%20.277-.245C8.96%206.514%209%206.427%209%206.25a.61.61%200%200%200-.262-.525A1.27%201.27%200%200%200%208%205.5c-.369%200-.595.09-.74.187a1%201%200%200%200-.34.398M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--warning:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M6.457%201.047c.659-1.234%202.427-1.234%203.086%200l6.082%2011.378A1.75%201.75%200%200%201%2014.082%2015H1.918a1.75%201.75%200%200%201-1.543-2.575Zm1.763.707a.25.25%200%200%200-.44%200L1.698%2013.132a.25.25%200%200%200%20.22.368h12.164a.25.25%200%200%200%20.22-.368Zm.53%203.996v2.5a.75.75%200%200%201-1.5%200v-2.5a.75.75%200%200%201%201.5%200M9%2011a1%201%200%201%201-2%200%201%201%200%200%201%202%200%22/%3E%3C/svg%3E');--md-admonition-icon--failure:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M2.344%202.343za8%208%200%200%201%2011.314%2011.314A8.002%208.002%200%200%201%20.234%2010.089a8%208%200%200%201%202.11-7.746m1.06%2010.253a6.5%206.5%200%201%200%209.108-9.275%206.5%206.5%200%200%200-9.108%209.275M6.03%204.97%208%206.94l1.97-1.97a.749.749%200%200%201%201.275.326.75.75%200%200%201-.215.734L9.06%208l1.97%201.97a.749.749%200%200%201-.326%201.275.75.75%200%200%201-.734-.215L8%209.06l-1.97%201.97a.749.749%200%200%201-1.275-.326.75.75%200%200%201%20.215-.734L6.94%208%204.97%206.03a.75.75%200%200%201%20.018-1.042.75.75%200%200%201%201.042-.018%22/%3E%3C/svg%3E');--md-admonition-icon--danger:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M9.504.43a1.516%201.516%200%200%201%202.437%201.713L10.415%205.5h2.123c1.57%200%202.346%201.909%201.22%203.004l-7.34%207.142a1.25%201.25%200%200%201-.871.354h-.302a1.25%201.25%200%200%201-1.157-1.723L5.633%2010.5H3.462c-1.57%200-2.346-1.909-1.22-3.004zm1.047%201.074L3.286%208.571A.25.25%200%200%200%203.462%209H6.75a.75.75%200%200%201%20.694%201.034l-1.713%204.188%206.982-6.793A.25.25%200%200%200%2012.538%207H9.25a.75.75%200%200%201-.683-1.06l2.008-4.418.003-.006-.004-.009-.006-.006-.008-.001q-.005%200-.009.004%22/%3E%3C/svg%3E');--md-admonition-icon--bug:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M4.72.22a.75.75%200%200%201%201.06%200l1%20.999a3.5%203.5%200%200%201%202.441%200l.999-1a.748.748%200%200%201%201.265.332.75.75%200%200%201-.205.729l-.775.776c.616.63.995%201.493.995%202.444v.327q0%20.15-.025.292c.408.14.764.392%201.029.722l1.968-.787a.75.75%200%200%201%20.556%201.392L13%207.258V9h2.25a.75.75%200%200%201%200%201.5H13v.5q-.002.615-.141%201.186l2.17.868a.75.75%200%200%201-.557%201.392l-2.184-.873A5%205%200%200%201%208%2016a5%205%200%200%201-4.288-2.427l-2.183.873a.75.75%200%200%201-.558-1.392l2.17-.868A5%205%200%200%201%203%2011v-.5H.75a.75.75%200%200%201%200-1.5H3V7.258L.971%206.446a.75.75%200%200%201%20.558-1.392l1.967.787c.265-.33.62-.583%201.03-.722a1.7%201.7%200%200%201-.026-.292V4.5c0-.951.38-1.814.995-2.444L4.72%201.28a.75.75%200%200%201%200-1.06m.53%206.28a.75.75%200%200%200-.75.75V11a3.5%203.5%200%201%200%207%200V7.25a.75.75%200%200%200-.75-.75ZM6.173%205h3.654A.17.17%200%200%200%2010%204.827V4.5a2%202%200%201%200-4%200v.327c0%20.096.077.173.173.173%22/%3E%3C/svg%3E');--md-admonition-icon--example:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M5%205.782V2.5h-.25a.75.75%200%200%201%200-1.5h6.5a.75.75%200%200%201%200%201.5H11v3.282l3.666%205.76C15.619%2013.04%2014.543%2015%2012.767%2015H3.233c-1.776%200-2.852-1.96-1.899-3.458Zm-2.4%206.565a.75.75%200%200%200%20.633%201.153h9.534a.75.75%200%200%200%20.633-1.153L12.225%2010.5h-8.45ZM9.5%202.5h-3V6c0%20.143-.04.283-.117.403L4.73%209h6.54L9.617%206.403A.75.75%200%200%201%209.5%206Z%22/%3E%3C/svg%3E');--md-admonition-icon--quote:url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M1.75%202.5h10.5a.75.75%200%200%201%200%201.5H1.75a.75.75%200%200%201%200-1.5m4%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5m0%205h8.5a.75.75%200%200%201%200%201.5h-8.5a.75.75%200%200%201%200-1.5M2.5%207.75v6a.75.75%200%200%201-1.5%200v-6a.75.75%200%200%201%201.5%200%22/%3E%3C/svg%3E');}</style>
+
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#programmation-dynamique" class="md-skip">
+          Aller au contenu
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="En-tête">
+    <a href="../.." title="Ressources de Terminale NSI" class="md-header__button md-logo" aria-label="Ressources de Terminale NSI" data-md-component="logo">
+      
+  <img src="../../assets/logo-ecole-internationale-paca-manosque.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Ressources de Terminale NSI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Programmation dynamique
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode sombre"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Passer en mode sombre" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Passer en mode clair"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Passer en mode clair" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Rechercher" placeholder="Rechercher" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Recherche">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Effacer" aria-label="Effacer" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initialisation de la recherche
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/eipaca/NSI-T" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ressources de Terminale NSI" class="md-nav__button md-logo" aria-label="Ressources de Terminale NSI" data-md-component="logo">
+      
+  <img src="../../assets/logo-ecole-internationale-paca-manosque.png" alt="logo">
+
+    </a>
+    Ressources de Terminale NSI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/eipaca/NSI-T" title="Aller au dépôt" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    A propos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../langages-et-programmation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Langages et programmation
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Langages et programmation
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../langages-et-programmation/1-programme-en-tant-que-donnee-calculabilite-probleme-arret/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Programme en tant que donnée, Calculabilité, Problème de l'arrêt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../langages-et-programmation/2-recursivite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Récursivité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../langages-et-programmation/3-modularite/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modularité
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../langages-et-programmation/4-paradigmes-de-programmation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Paradigmes de programmation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../langages-et-programmation/5-mise-au-point-gestion-bugs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mise au point des programmes et gestion des bugs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../bases-de-donnees/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Bases de données
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Bases de données
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bases-de-donnees/1-modelisation-conceptuelle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Modélisation conceptuelle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bases-de-donnees/2-conception-logique-modele-relationnel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conception logique - le modèle relationnel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bases-de-donnees/3-conception-physique-sgbd-relationnel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Conception physique - SGBD relationnel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../bases-de-donnees/4-langage-sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Langage SQL
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../structures-de-donnees/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structures de données
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_4" id="__nav_4_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Structures de données
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/1-poo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Vocabulaire de la programmation objet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/2-structures-interface-implementation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Structures de données, interface et implémentation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/3-listes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Listes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/4-piles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Piles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/5-files/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Files
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/6-dictionnaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dictionnaires
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../structures-de-donnees/7-arbres/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arbres
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../architectures-materielles-et-systemes-d-exploitation/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architectures matérielles, systèmes d'exploitation et réseaux
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Architectures matérielles, systèmes d'exploitation et réseaux
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architectures-materielles-et-systemes-d-exploitation/4-routage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protocoles de routage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithmique
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Algorithmique
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1-arbres-binaires/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Algorithmes sur les arbres binaires et sur les arbres binaires de recherche
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3-diviser-pour-regner/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Méthode « diviser pour régner »
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="programmation-dynamique">Programmation dynamique</h1>
+<h2 id="un-exemple-simple">Un exemple simple</h2>
+<p><img align="right" alt="Chemin d'un pion sur un damier" src="../assets/4-damier-0.png" width="30%" />
+Le jeu de Dames se pratique sur un damier de 10 cases sur 10. Les pions sont placés sur les cases foncées et ne peuvent se déplacer que d'une case à la fois, toujours vers l'avant en diagonale. Une des stratégies du jeu consiste à amener un pion sur la dernière rangée pour être promu en dame. </p>
+<p>La question est la suivante :  Sur le damier ci-contre, combien de chemins peut emprunter le pion blanc depuis cette case de départ pour arriver à la case vide sur la rangée du haut et être promu en dame ? </p>
+<p>Si on essaie de compter tous les chemins on risque de vite perdre le compte. Une idée simple pour répondre à ce problème efficacement consiste à noter à chaque intersection le nombre de chemins en partant de la fin. Découpons le processus en plusieurs étapes.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:6"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><input id="__tabbed_1_6" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Etape 1</label><label for="__tabbed_1_2">Etape 2</label><label for="__tabbed_1_3">Etape 3</label><label for="__tabbed_1_4">Etape 4</label><label for="__tabbed_1_5">Etape 5</label><label for="__tabbed_1_6">Etape 6</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>On peut déjà observer qu'un certain nombre de cases ne peuvent pas être atteintes par le pion blanc depuis sa position de départ, ou ne peuvent pas mener à la case d'arrivée, on peut donc les exclure de nos calculs.</p>
+<p><img alt="Chemin d'un pion sur un damier-étape 1" src="../assets/4-damier-1.png" width="30%" /></p>
+</div>
+<div class="tabbed-block">
+<p>Il n'y a que deux cases sur la deuxième rangée qui permettent d'aller sur la case d'arrivée, et pour chacune il n'y a qu'un seul chemin possible. </p>
+<p>Marquons ces cases avec leur nombre de chemins possibles.</p>
+<p><img alt="Chemin d'un pion sur un damier-étape 2" src="../assets/4-damier-2.png" width="30%" /></p>
+</div>
+<div class="tabbed-block">
+<p>Il y a trois cases sur la troisième rangée pouvant aller sur les deux cases précédentes. </p>
+<p>Un pion sur la case à gauche ou celle à droite n'a qu'un seul chemin possible. </p>
+<p>Par contre un pion sur la case au milieu peut se déplacer soit vers le haut à droite, soit vers le haut à gauche. Dans les deux cas, il n'a plus qu'un chemin possible ensuite. Il y a donc deux chemins possibles au départ de cette case.</p>
+<p><img alt="Chemin d'un pion sur un damier-étape 3" src="../assets/4-damier-3.png" width="30%" /></p>
+</div>
+<div class="tabbed-block">
+<p>Continuons à la rangée suivante. Comme dans la rangée précédente, un pion sur la case à gauche ou celle à droite n'a qu'un seul chemin possible.</p>
+<p>Les deux pions placés au milieu peuvent se déplacer soit vers le haut à droite, soit vers le haut à gauche. Selon le choix que l'on fait, ils pourront emprunter 1 ou 2 chemins différents. Au total, il y a donc 3 chemins possibles au départ de ces deux cases. On comprend que le nombre de chemins possibles à partir d'une case est égal à  la somme des nombres de chemins au départ des cases à gauche et à droite de la rangée du dessus.</p>
+<p><strong>On a décomposé un problème en deux sous-problèmes plus simples</strong>.</p>
+<p><img alt="Chemin d'un pion sur un damier-étape 4" src="../assets/4-damier-4.png" width="30%" /></p>
+</div>
+<div class="tabbed-block">
+<p>Appliquons cette même idée à la rangée suivante, et notons le nombre de chemins possibles égal à la somme des nombres de chemins indiqués dans les cases à gauche et à droite sur la rangée du dessus.</p>
+<p>On constate le nombre de chemins calculé pour une case, par exemple 3, est utilisé deux fois : pour la case qui a 4 chemins possibles et pour la case qui a 6 chemins possibles.</p>
+<p><strong>Il faut donc garder en mémoire les résultats intermédiaires pour ne pas recalculer la même chose plusieurs fois</strong>.</p>
+<p><img alt="Chemin d'un pion sur un damier-étape 5" src="../assets/4-damier-5.png" width="30%" /></p>
+</div>
+<div class="tabbed-block">
+<p>Continuons à descendre dans le damier rangé par rangée en appliquant le même principe : pour chaque case on ajoute les nombres de chemins trouvés pour les cases à gauche et à droite de la rangée de dessus.  </p>
+<p>On arrive au résultat final : il y a  126 chemins possibles pour aller de la case de départ jusqu'à l'arrivée.</p>
+<p><img alt="Chemin d'un pion sur un damier-étape 6" src="../assets/4-damier-6.png" width="30%" /></p>
+</div>
+</div>
+</div>
+<p>On peut observer deux choses dans la réalisation de cet algorithme : </p>
+<ol>
+<li>
+<p>Pour chaque case, il suffit de faire la somme du nombre de chemins depuis la case de gauche et depuis la case de droite sur la rangée au-dessus : on <strong>découpe le problème en sous-problèmes plus faciles à résoudre</strong>.  </p>
+</li>
+<li>
+<p>Le nombre de chemins calculé pour une case est utilisé pour calculer les nombres de chemins de plusieurs autres cases. Les sous-problèmes se chevauchent. Il faut <strong>garder en mémoire les résultats intermédiaires pour ne pas recalculer la même chose plusieurs fois</strong>.</p>
+</li>
+</ol>
+<p>Ce sont les deux principes de la <strong>programmation dynamique</strong>.</p>
+<div class="admonition question">
+<p class="admonition-title">Exercice corrigé</p>
+<p>Mario veut rejoindre la princesse Peach. Il ne peut se déplacer que vers la gauche et vers le haut, et ne peut jamais revenir en arrière. Combien de chemins différents peut-il emprunter ?</p>
+<p><img alt="Chemin de mario sur un quadrillage 3 x 4" src="../assets/4-mario-question-light-mode.png#only-light" width="50%" />
+<img alt="Chemin de mario sur un quadrillage 3 x 4" src="../assets/4-mario-question-dark-mode.png#only-dark" width="50%" /></p>
+</div>
+<details class="success">
+<summary>Réponse</summary>
+<p>Notons à chaque intersection le nombre de chemins en partant de la fin. Pour chaque intersection, il suffit de faire la somme du nombre de chemins depuis l‘intersection à sa gauche et des chemins depuis l'intersection au dessus.   </p>
+<p><img alt="Chemin de mario sur un quadrillage 3 x 4" src="../assets/4-mario-answer-light-mode.png#only-light" width="50%" />
+<img alt="Chemin de mario sur un quadrillage 3 x 4" src="../assets/4-mario-answer-dark-mode.png#only-dark" width="50%" /></p>
+<p>Mario peut prendre 10 chemins différents.</p>
+</details>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La <strong>programmation dynamique</strong><sup id="fnref:4.1"><a class="footnote-ref" href="#fn:4.1">1</a></sup> résout un problème en combinant des solutions de <strong>sous-problèmes qui se chevauchent</strong>, c'est à dire qu'il possède des sous-sous-problèmes identiques.  </p>
+<p>Afin d'éviter les calculs redondants, <strong>chaque sous-sous-problème n'est résolu qu'une seule fois et sa réponse est gardée en mémoire</strong>.</p>
+</div>
+<p>On peut voir la programmation dynamique comme une amélioration ou une adaptation de la méthode « diviser pour régner » puisqu'on divise un problème en sous problèmes, à la différence que la programmation dynamique s'applique quand les sous-problèmes se chevauchent, autrement dit un sous-problème peut être utilisé dans la solution de plusieurs sous-problèmes différents. Tandis que l'approche  « diviser pour régner » crée des sous-problèmes qui sont complètement séparés et peuvent être résolus indépendamment les uns des autres.</p>
+<p><img alt="Graphe comparant la méthode diviser pour régner et la programmation dynamique" src="../assets/4-diviser-regner-vs-prog-dynamique-light-mode.png#only-light" width="80%" />
+<img alt="Graphe comparant la méthode diviser pour régner et la programmation dynamique" src="../assets/4-diviser-regner-vs-prog-dynamique-dark-mode.png#only-dark" width="80%" /></p>
+<h2 id="rendu-de-monnaie">Rendu de monnaie</h2>
+<p>Problème : On dispose d'un nombre illimité de pièces de ①, ②, ⑤ et ⑩ euros pour rendre une certaine somme. Quel est le plus petit nombre de pièces nécessaire ?</p>
+<h3 id="algorithme-glouton">Algorithme glouton</h3>
+<p>On a vu en classe de première une solution donnée par un algorithme glouton, qui consiste à faire, étape par étape, un choix optimum local, dans l'espoir d'obtenir un résultat optimum global : dans ce cas on choisit de façon répétitive la pièce de plus grande valeur qui ne dépasse pas la somme restante : </p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Programme itératif</label><label for="__tabbed_2_2">Programme récursif</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">rendu_monnaie_glouton</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">nombre_pieces</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># on commence par la plus grande pièce</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;=</span> <span class="n">pieces</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="c1"># on peut rendre pieces[i]</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            <span class="n">nombre_pieces</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="n">pieces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="k">else</span><span class="p">:</span>    <span class="c1"># on passe à la pièce suivante</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>            <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="k">return</span> <span class="n">nombre_pieces</span>    
+</code></pre></div>
+</div>
+<div class="tabbed-block">
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">rendu_monnaie_glouton</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>       <span class="k">return</span> <span class="mi">0</span>  
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="k">if</span> <span class="n">pieces</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">:</span>  <span class="c1"># on peut rendre pieces[i]</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>        <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">rendu</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">pieces</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">i</span><span class="p">)</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">return</span> <span class="n">rendu</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>   <span class="c1"># on passe à la pièce suivante</span>
+</code></pre></div>
+</div>
+</div>
+</div>
+<p>Testons l'algorithme glouton pour rendre 13 euros. On obtient bien les 3 pièces ⑩ + ② + ① qui font un total de 13.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">rendu_monnaie_glouton</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="mi">3</span>
+</code></pre></div>
+<p>Mais que se passe-t-il si on n'a pas de pièce de 1 euro ? Remplaçons <code>pieces = [10, 5, 2]</code> et testons l'algorithme : </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="ne">IndexError</span><span class="p">:</span> <span class="nb">list</span> <span class="n">index</span> <span class="n">out</span> <span class="n">of</span> <span class="nb">range</span>
+</code></pre></div>
+<p>Pourtant on peut rendre ⑤ + ② + ② + ② + ② qui font aussi un total de 13 euros !</p>
+<p>C'est le <strong>propre des algorithmes gloutons : une fois qu'une décision a été prise, on ne revient pas en arrière</strong>. Dans certains cas l'algorithme ne trouve pas de solution, ou pas la meilleure solution.  Ici l'algorithme choisit la pièce de 10 euros qui ne mène à rien, il ne peut pas revenir en arrière et ressayer avec une autre pièce !</p>
+<h3 id="programmation-dynamique_1">Programmation dynamique</h3>
+<p>La programmation dynamique consiste à résoudre notre problème en combinant les solutions de sous-problèmes. Ici, rendre une somme <span class="arithmatex">\(n\)</span> peut se faire de plusieurs manières  :</p>
+<ul>
+<li>rendre <span class="arithmatex">\(n – 10\)</span> et rajouter une pièce de ⑩, ou</li>
+<li>rendre <span class="arithmatex">\(n – 5\)</span> et rajouter une pièce de ⑤, ou</li>
+<li>rendre <span class="arithmatex">\(n – 2\)</span> et rajouter une pièce de ②.</li>
+</ul>
+<p>Dans notre exemple, pour rendre 13 euros on peut :</p>
+<ul>
+<li>rendre 3 et rajouter une pièce de ⑩, ou</li>
+<li>rendre 8 et rajouter une pièce de ⑤, ou</li>
+<li>rendre 11 et rajouter une pièce de ②.</li>
+</ul>
+<p><img alt="Graphe de rendu de monnaie pour 13 euros - première étape" src="../assets/4-rendu-monnaie-1-light-mode.png#only-light" width="80%" />
+<img alt="Graphe de rendu de monnaie pour 13 euros - première étape" src="../assets/4-rendu-monnaie-1-dark-mode.png#only-dark" width="80%" /></p>
+<p>Chacun de ces sous-problèmes peut être résolus de la même façon. Constituons l'arbre des possibilités :</p>
+<p><img alt="Graphe de rendu de monnaie pour 13 euros - complet" src="../assets/4-rendu-monnaie-2-light-mode.png#only-light" width="80%" />
+<img alt="Graphe de rendu de monnaie pour 13 euros - complet" src="../assets/4-rendu-monnaie-2-dark-mode.png#only-dark" width="80%" /></p>
+<p>Certaines branches mènent à une solution, quand il reste 0 euros à rendre, d'autres pas. </p>
+<p>Implémentons cet algorithme en considérant trois cas :</p>
+<ul>
+<li>Si <span class="arithmatex">\(n\)</span> est égal à 0, alors on a rendu <span class="arithmatex">\(n\)</span>, il n'y a pas de pièces supplémentaires à rendre, on renvoie 0.</li>
+<li>Si <span class="arithmatex">\(n\)</span> est plus petit que la valeur de la plus petite pièce, on ne pourra pas rendre <span class="arithmatex">\(n\)</span>, on renvoie une très grande valeur, par exemple en utilisant <code>inf</code> la valeur infinie du module avec <code>math</code>, afin de ne pas impacter une autre branche qui mènerait à une solution.</li>
+<li>Sinon, on renvoie 1 plus le plus petit nombre de pièces de tous les rendus de <span class="arithmatex">\(n – p\)</span>, pour toutes les pièces de valeur <span class="arithmatex">\(p\)</span> telles que <span class="arithmatex">\(p &lt;= n\)</span>. </li>
+</ul>
+<p>Traduisons cet algorithme en Python :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">inf</span>     <span class="c1"># valeur infinie du module math</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">rendu_monnaie_dynamique</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Il faut 0 piece pour rendre 0 euro</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="k">return</span> <span class="mi">0</span>                
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">pieces</span><span class="p">):</span>   <span class="c1"># n est plus petit que la plus petite piece</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="k">return</span> <span class="n">inf</span>          <span class="c1"># on ne peut pas rendre n avec ces pieces</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="c1"># Tableau de tous les rendus possibles de n - p</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">rendus</span> <span class="o">=</span> <span class="p">[</span><span class="n">rendu_monnaie_dynamique</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pieces</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">]</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="c1"># On rend 1 piece + le plus petit nombre de pieces de tous les rendus</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">rendus</span><span class="p">)</span>  
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="o">&gt;&gt;&gt;</span> <span class="n">rendu_monnaie_dynamique</span><span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="mi">5</span>
+</code></pre></div>
+<p>Avec la programmation dynamique, tous les cas possibles ont été traités, et plusieurs cas ont renvoyé la même solution. On a donc une solution optimale au problème.</p>
+<p>Mais testons maintenant cette fonction avec quelques valeurs plus grandes que <code>13</code>. Très vite la fonction prend beaucoup de temps pour s'exécuter. Quelques secondes pour exécuter <code>rendu_monnaie_dynamique(60)</code>, dizaines de secondes pour <code>rendu_monnaie_dynamique(70)</code>, plusieurs minutes pour <code>rendu_monnaie_dynamique(80)</code>, etc.  Le programme devient vite trop lent, même pour des rendus très simples de quelques pièces de ⑩ euros !</p>
+<p>Essayons d'estimer la complexité temporelle de cette fonction. Le nombre d'opérations pour rendre un montant <span class="arithmatex">\(n\)</span> avec des pieces de 10, 5 et 2 est le nombre d'opérations pour rendre <span class="arithmatex">\(n-10\)</span>, plus le nombre d'opérations pour rendre <span class="arithmatex">\(n-5\)</span>, plus celui pour rendre <span class="arithmatex">\(n-2\)</span>, plus quelques opérations élémentaires. Si on appelle <span class="arithmatex">\(T(n)\)</span> le nombre d'opérations pour rendre <span class="arithmatex">\(n\)</span>, alors on peut donc écrire que :</p>
+<p><span class="arithmatex">\(T(n) = T(n-10) + T(n-5) + T(n-2) + O(1)\)</span>,</p>
+<p>avec <span class="arithmatex">\(O(1)\)</span> pour les quelques opérations supplémentaires. Pour de grandes valeurs de <span class="arithmatex">\(n\)</span>, on peut faire l'approximation que retirer 10, 5, 2 ou 1 euro à <span class="arithmatex">\(n\)</span> ne change pas grand chose, donc que <span class="arithmatex">\(T(n-10)\)</span>, <span class="arithmatex">\(T(n-5)\)</span>, et <span class="arithmatex">\(T(n-2)\)</span> sont du même ordre de grandeur que <span class="arithmatex">\(T(n-1)\)</span>, autrement dit  <span class="arithmatex">\(T(n) \approx 3 \times T(n-1) + O(1)\)</span>. A chaque fois que <span class="arithmatex">\(n\)</span> augmente de 1, le nombre d'opérations est multiplié par 3, plus quelques opérations. La complexité est donc exponentielle en <span class="arithmatex">\(O(3^n)\)</span> ici, ou de façon générale en <span class="arithmatex">\(O({nbPieces}^n)\)</span> pour un rendu avec <span class="arithmatex">\(nbPieces\)</span> pieces.  </p>
+<h3 id="version-descendante-top-down-recursivite-et-memoisation">Version descendante (<em>top-down</em>), récursivité et mémoïsation</h3>
+<p>Les appels récursifs sont trop nombreux, la complexité est trop importante pour calculer un solution en temps raisonnable.</p>
+<p>En programmation dynamique les sous-problèmes se chevauchent et les mêmes calculs reviennent plusieurs fois. Dans un exemple aussi simple que celui de rendre 13 euros, on retrouve 2 fois la branche qui part de "6" :</p>
+<p><img alt="Arbre de rendu de monnaie pour 13 euros - branche rendre 6" src="../assets/4-rendu-monnaie-3-light-mode.png#only-light" width="80%" />
+<img alt="Arbre de rendu de monnaie pour 13 euros - branche rendre 6" src="../assets/4-rendu-monnaie-3-dark-mode.png#only-dark" width="80%" /></p>
+<p>La solution pour limiter le nombre d'opérations consiste à ne calculer les solutions des sous-problèmes qu'une seule fois et de les garder en mémoire. C'est la technique de <strong>mémoïsation</strong>.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La mémoïsation consiste à garder en mémoire les valeurs déjà calculées.</p>
+</div>
+<p>Par exemple, avec un dictionnaire déclaré en variable globale :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">inf</span>     <span class="c1"># valeur infinie du module math</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">memoise</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>       <span class="c1"># Il faut 0 piece pour rendre 0 euro</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">rendu_monnaie_dynamique</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memoise</span><span class="p">:</span>             <span class="c1"># Si on a déjà calculé le nombre de pièces pour n</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="k">return</span> <span class="n">memoise</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">pieces</span><span class="p">):</span>   <span class="c1"># n est plus petit que la plus petite piece</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="k">return</span> <span class="n">inf</span>          <span class="c1"># On ne peut pas rendre n avec ces pieces</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="c1"># Tableau de tous les rendus possibles de n - p</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="n">rendus</span> <span class="o">=</span> <span class="p">[</span><span class="n">rendu_monnaie_dynamique</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pieces</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>    <span class="c1"># On rend 1 piece + le plus petit nombre de pieces de tous les rendus</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>    <span class="n">memoise</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">rendus</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="k">return</span> <span class="n">memoise</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> 
+</code></pre></div>
+<p>Cette fois ci, le résultat est immédiat, même avec des valeurs de <code>n</code> de quelques milliers (dans la limite de la pile d'appels récursifs).</p>
+<h3 id="version-ascendante-bottom-up">Version ascendante (<em>bottom-up</em>)</h3>
+<p>On a déjà vu dans l'exemple précédent comment écrire un algorithme récursif en utilisant la mémoïsation. Une autre approche de la programmation dynamique consiste à calculer d'abord les sous-problèmes en partant d'un cas de base et à  « remonter » jusqu'à résoudre le problème initial : c'est la version ascendante, ou <em>bottom-up</em>.</p>
+<p><img align="right" alt="Rendu de monnaie pour 13 euros bottom-up" src="../assets/4-rendu-monnaie-bottom-up-light-mode.png#only-light" width="30%" />
+<img align="right" alt="Rendu de monnaie pour 13 euros bottom-up" src="../assets/4-rendu-monnaie-bottom-up-dark-mode.png#only-dark" width="30%" /></p>
+<p>Appelons <span class="arithmatex">\(nb_i\)</span> le nombre de pièces pour rendre une somme <span class="arithmatex">\(i\)</span>. Comme dans l'approche <em>top-down</em>,  <span class="arithmatex">\(nb_i\)</span> est égal à 1 + le plus petit nombre de pièces de tous les rendus de <span class="arithmatex">\(i – p\)</span>, pour toutes les pièces <span class="arithmatex">\(p\)</span> telles que <span class="arithmatex">\(p &lt;= i\)</span>. Si aucune pièce p ne convient, alors il n'est pas possible de rendre <span class="arithmatex">\(i\)</span>, on peut représenter <span class="arithmatex">\(nb_i\)</span> par l'infini<sup id="fnref:4.3"><a class="footnote-ref" href="#fn:4.3">2</a></sup>.</p>
+<p>On va créer le même dictionnaire que celui utilisé pour la mémoïsation, mais en le remplissant itérativement en partant cette fois de 0 et en incrémentant jusqu'à n.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">math</span><span class="w"> </span><span class="kn">import</span> <span class="n">inf</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">nb</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>       <span class="c1"># dictionnaire {montant i: nombres de pieces pour rendre i}</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">pieces</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">rendu_bottom_up</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="c1"># On remplit le dictionnaire pour tous les montants i allant de 1 à n</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>   
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="c1"># Tableau de tous les rendus possibles de i - p</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="n">rendus</span> <span class="o">=</span> <span class="p">[</span><span class="n">nb</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="n">p</span><span class="p">]</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pieces</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="n">i</span><span class="p">]</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="k">if</span> <span class="n">rendus</span> <span class="o">==</span> <span class="p">[]:</span>   <span class="c1"># Si c&#39;est impossible de rendre i </span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>            <span class="n">nb</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">inf</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>        <span class="k">else</span><span class="p">:</span>           <span class="c1"># Sinon on prend le plus petit nombre de pieces des i - p et on ajoute 1 </span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>            <span class="n">nb</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">rendus</span><span class="p">)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="k">return</span> <span class="n">nb</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>              <span class="c1"># On renvoie la valeur pour la clé correspondant au montant n</span>
+</code></pre></div>
+<p>Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de <code>n</code>. En effet, la fonction fait une double boucle imbriquée, sur la valeur à rendre <span class="arithmatex">\(n\)</span>, et sur le nombre de pièces disponibles. La complexité est donc simplement linéaire en <span class="arithmatex">\(O(n \times nbPieces)\)</span>, ou plus simplement en <span class="arithmatex">\(O(n)\)</span> si on considère un nombre limité de pièces disponibles.</p>
+<div class="admonition abstract">
+<p class="admonition-title">Cours</p>
+<p>La programmation dynamique peut prendre deux formes :</p>
+<ul>
+<li>
+<p>Une forme récursive descendante de haut en bas, ou <em>top-down</em>, avec mémoïsation : </p>
+<ul>
+<li>On utilise directement la formule de récurrence.</li>
+<li>Lors d'un appel <strong>récursif</strong>, avant d'effectuer un calcul on regarde si son résultat n'est pas gardé en mémoire.</li>
+<li>Sinon, on fait le calcul et on le garde en mémoire.</li>
+</ul>
+</li>
+<li>
+<p>Une forme itérative ascendante de bas en haut, ou <em>bottom-up</em> :</p>
+<ul>
+<li>On résout de façon <strong>itérative</strong> d'abord les sous-problèmes de la plus "petite taille", puis ceux de la taille "d'au dessus", etc. Au fur et à mesure on garde les résultats en mémoire.</li>
+<li>On continue jusqu'à la taille voulue.</li>
+</ul>
+</li>
+</ul>
+</div>
+<h2 id="decoupe-dune-tige-dacier">Découpe d'une tige d'acier</h2>
+<p>Problème : Soit une tige d'acier que l'on peut découper en plusieurs morceaux pour les revendre selon la grille de prix suivante :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Longueur (m)</th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">5</th>
+<th style="text-align: center;">6</th>
+<th style="text-align: center;">7</th>
+<th style="text-align: center;">8</th>
+<th style="text-align: center;">9</th>
+<th style="text-align: center;">10</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Prix (€)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">30</td>
+</tr>
+</tbody>
+</table>
+<p>Comment découper la tige de façon optimale pour en tirer un revenu maximum ?</p>
+<p>Prenons, l'exemple d'une tige de longueur 4 m. On peut la découper de 8 façons différentes :</p>
+<p><img alt="Découpe d'une tige de 4 m" src="../assets/4-decoupe-tige-light-mode.png#only-light" width="80%" />
+<img alt="Découpe d'une tige de 4 m" src="../assets/4-decoupe-tige-dark-mode.png#only-dark" width="80%" /></p>
+<p>On voit que le revenu maximum est donc 10 €, obtenu en découpant la tige en 2 morceaux de 2 m. Mais comment le calculer de façon systématique ? </p>
+<p>Un algorithme glouton simple qui consiste à choisir en priorité les longueurs de morceaux les plus chers ne donne pas le meilleur revenu puisqu'il proposera toujours de garder les morceaux les plus longs possibles, ce sont les plus chers selon la grille de prix. Une approche plus fine consiste à prendre en compte le prix linéaire (ratio prix/longueur) pour optimiser les découpes. Reprenons la grille de prix de l'exemple précédant pour les morceaux jusqu'à 4 m :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Longueur (m)</th>
+<th style="text-align: center;">0</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">3</th>
+<th style="text-align: center;">4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Prix (€)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">9</td>
+</tr>
+<tr>
+<td style="text-align: left;">Prix linéaire (€/m)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2,5</td>
+<td style="text-align: center;">2,67</td>
+<td style="text-align: center;">2,25</td>
+</tr>
+</tbody>
+</table>
+<p>Cet algorithme glouton commence par choisir le meilleur ratio prix/longueur, c'est une découpe d'un morceau de 3 m, mais ensuite il ne reste plus qu'un autre morceau de 1 m, qui lui a une très faible valeur linéaire ! C'est trop tard, l'algorithme ne peut pas revenir en arrière sur la découpe du premier morceau de 3 m, on obtient un revenu de 9 €, ce n'est pas le revenu maximum.</p>
+<p>ici encore, la programmation dynamique nous permet de trouver la solution optimale. </p>
+<p>Appelons <code>R[n]</code> le revenu maximum d'une tige de longueur <code>n</code> et <code>Prix</code> le tableau de la grille de prix pour différentes longueurs. </p>
+<p>Comment calculer <code>R[4]</code>, le revenu maximum pour découper une tige de longueur <code>4</code> m ?  On peut voir ce qu'il se passe si on fait une découpe d'un premier morceau de 1 m, ou bien de 2 m, ou encore de 3 m, ou même ne pas couper la tige, puis comparer le revenu obtenu dans chaque cas pour prendre le plus grand. <code>R[4]</code> est donc égal à la plus grande valeur entre :</p>
+<ul>
+<li>Le prix d'un morceau de longueur <code>1</code>  + le revenu maximum d'un tige de longueur <code>3</code> : <code>Prix[1] + R[3]</code></li>
+<li>Le prix d'un morceau de longueur <code>2</code>  + le revenu maximum d'un tige de longueur <code>2</code> : <code>Prix[2] + R[2]</code></li>
+<li>Le prix d'un morceau de longueur <code>3</code>  + le revenu maximum d'un tige de longueur <code>1</code> : <code>Prix[3] + R[1]</code></li>
+<li>Le prix d'un morceau de longueur <code>4</code>  + le revenu maximum d'un tige de longueur <code>0</code>:  <code>Prix[4] + R[0]</code></li>
+</ul>
+<p><img alt="Découpe d'une tige de 4 m - éape 1" src="../assets/4-decoupe-tige-arbre-1-light-mode.png#only-light" width="100%" />
+<img alt="Découpe d'une tige de 4 m - étape 1" src="../assets/4-decoupe-tige-arbre-1-dark-mode.png#only-dark" width="100%" /></p>
+<p>La valeur de <code>R[0]</code> est immédiate, c'est le revenu maximum d'une tige de longueur de zéro, c'est-à-dire <code>0</code>. Mais comment calculer <code>R[1]</code>, <code>R[2]</code> et <code>R[3]</code> ? On applique le même principe.</p>
+<p><img alt="Découpe d'une tige de 4 m - arbre complet" src="../assets/4-decoupe-tige-arbre-2-light-mode.png#only-light" width="100%" />
+<img alt="Découpe d'une tige de 4 m - arbre complet" src="../assets/4-decoupe-tige-arbre-2-dark-mode.png#only-dark" width="100%" /></p>
+<p>On voit qu'on a ici <strong>découpé le problème en plusieurs sous-problèmes</strong>. Par ailleurs, les résultats de certains sous-problèmes, par exemple le calcul de <code>R[2]</code>, sont réutilisés plusieurs fois. Les <strong>sous-problèmes se chevauchent</strong>. Ce sont les deux grands principes de la <strong>programmation dynamique</strong>.</p>
+<p>Généralisons cet algorithme à une tige de longueur <code>n</code> pour écrire <code>R[n]</code> en considérant les deux cas :</p>
+<ul>
+<li>Si <code>n</code> est égal à <code>0</code>, alors la tige a une longueur de <code>0</code>, son revenu maximum est <code>0</code>.</li>
+<li>Sinon, <code>R[n]</code> est égal à la plus grande valeur entre les prix d'un morceau de longueur <code>i</code> (<code>prix[i]</code>) auquel on ajoute le revenu maximum d'une tige de longueur <code>n - i</code> (<code>R[n-i]</code>), calculés pour toutes les longueurs <code>i</code> possibles, c'est-à-dire toutes les valeurs de <code>i</code> allant de <code>1</code> à <code>n + 1</code> (exclus) sans dépasser la taille de la grille des prix :  <code>1 &lt;= i &lt; min(len(Prix), n + 1)</code>.</li>
+</ul>
+<p>On peut donc écrire la formule :  <code>R[n] = max(Prix[i] + R[n - i] pour 1 ≤ i  &lt; min(len(Prix), n + 1)</code>  et <code>R[0] = 0</code>. </p>
+<p>Traduisons maintenant cet algorithme de programmation dynamique en version descendante :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">Prix</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">R</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Le revenu d&#39;une tige de longueur 0 est 0</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="k">return</span> <span class="mi">0</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="c1"># Tableau des revenus max de toutes les découpes possibles de la grille de prix</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">decoupes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Prix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">R</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Prix</span><span class="p">),</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>    <span class="c1"># On renvoie le plus grand revenu de toutes les découpes possibles</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">decoupes</span><span class="p">)</span>
+</code></pre></div>
+<p>Avec la programmation dynamique, tous les cas possibles ont été traités, et plusieurs cas ont renvoyé la même solution. On obtient donc une solution optimale au problème. </p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>&gt;&gt;&gt; R(4)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>10
+</code></pre></div>
+<p>Mais testons maintenant cette fonction avec quelques valeurs plus grandes que <code>4</code>. Très vite la fonction prend beaucoup de temps pour s'exécuter. Essayons d'estimer la complexité temporelle de cette fonction.</p>
+<p>Si on appelle <span class="arithmatex">\(T(n)\)</span> le nombre d'opérations pour calculer le revenu maximum pour une tige de longueur <span class="arithmatex">\(n\)</span>, il est égal aux nombres d'opérations de toutes les découpes de tiges de longueurs <span class="arithmatex">\(n - i\)</span>, <span class="arithmatex">\(T(n - i)\)</span>, pour toutes les valeurs de <span class="arithmatex">\(i\)</span> de la grille de prix, plus quelques opérations élémentaires.</p>
+<p><span class="arithmatex">\(T(n) = T(n-1) + T(n-2) + T(n-3) + ..T(n-i)+... + T(n - 10) + O(1)\)</span>,</p>
+<p>Si on suppose que pour les grandes valeurs de <span class="arithmatex">\(n\)</span>, <span class="arithmatex">\(i\)</span> reste très petit en comparaison, par exemple ici il vaut entre 1 et 10, alors on peut écrire que :</p>
+<p><span class="arithmatex">\(T(n) \approx 10 \times T(n-1) + O(1)\)</span></p>
+<p>A chaque fois que <span class="arithmatex">\(n\)</span> augmente de 1, le nombre d'opérations est multiplié par la taille de la grille de prix, plus quelques opérations. La complexité est donc exponentielle en <span class="arithmatex">\(O(10^n)\)</span> ici, ou de façon générale en <span class="arithmatex">\(O({tailleGrillePrix}^n)\)</span> pour une grille de prix de longueur <span class="arithmatex">\(tailleGrillePrix\)</span> . </p>
+<p>Cette solution n'est donc pas utilisable pratiquement, mais on constate une fois de plus que les sous-problèmes se chevauchent, on peut donc garder les résultats des sous-problèmes en mémoire pour améliorer cette situation. Appliquons la technique de mémoïsation :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">Prix</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="p">,</span><span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">memo</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>    <span class="c1"># Le revenu d&#39;une tige de longueur 0 est 0</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">R</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span>  <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="c1"># Tableau des revenus max de toutes les découpes possibles de la grille de prix</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>    <span class="n">decoupes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Prix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">R</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Prix</span><span class="p">),</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="c1"># On renvoie le plus grand revenu de toutes les découpes possibles</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>    <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">decoupes</span><span class="p">)</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="k">return</span> <span class="n">memo</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</code></pre></div>
+<p>L'ajout d'une variable globale dans la fonction permet de se convaincre facilement de l'effet sur la complexité temporelle :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">cpt</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">R</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="k">global</span> <span class="n">cpt</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">cpt</span> <span class="o">+</span> <span class="o">=</span> <span class="mi">1</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> 
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="c1">#...</span>
+</code></pre></div></p>
+<p>Alors que la première fonction, sans mémoïsation, s'appelle 1024 fois pour le calcul de R(10) et 1 043 456 fois pour R(20), la version avec mémoïsation s'appelle seulement 56 et 156 pour les mêmes calculs ! Mais cela se fait aux dépends de la complexité spatiale.</p>
+<p>La version ascendante est une autre façon efficace de palier au problème de complexité temporelle :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">Prix</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">30</span><span class="p">]</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">revenus</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>    <span class="c1"># dictionnaire {longueur m :  revenu max pour une tige de longueur m}</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">R</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="c1"># On remplit le dictionnaire pour toutes les longueurs m allant de 1 à n</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>        <span class="c1"># Tableau des revenus max de toutes les découpes possibles de m</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>        <span class="n">decoupes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Prix</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">revenus</span><span class="p">[</span><span class="n">m</span> <span class="o">-</span> <span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Prix</span><span class="p">),</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        <span class="n">revenus</span><span class="p">[</span><span class="n">m</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">decoupes</span><span class="p">)</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    <span class="k">return</span> <span class="n">revenus</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>          <span class="c1"># On renvoie la valeur pour la clé correspondant à la longueur n</span>
+</code></pre></div>
+<p>Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de <code>n</code>. En effet, la fonction fait une double boucle imbriquée, sur la longueur de la tige <span class="arithmatex">\(n\)</span>, et sur la longueur de la grille des prix. La complexité est donc simplement linéaire en <span class="arithmatex">\(O(n \times tailleGrillePrix)\)</span>, ou plus simplement en <span class="arithmatex">\(O(n)\)</span> si on considère une grille de prix de petite taille.</p>
+<h2 id="alignement-de-sequences">Alignement de séquences</h2>
+<p>Un problème utile aux généticiens est celui de l'alignement de séquences, qui se décline en de nombreuses variations, dont plusieurs peuvent être abordées à l'aide de la programmation dynamique.</p>
+<p>Nous nous intéressons ici à la recherche d'une plus longue sous-chaîne commune. Étant donné deux chaîne de caractères <code>str1</code>  et <code>str2</code>, on cherche une chaîne de caractères, la plus longue possible, qui soit à la fois extraite de <code>str1</code>  et de <code>str2</code>. Dire qu'une sous-chaîne est extraite de <code>str1</code> signifie que l'on peut obtenir cette sous-chaîne en effaçant certains caractères de <code>str1</code>. Autrement dit, tous les caractères de la sous-chaîne commune doivent apparaître dans l'ordre dans <code>str1</code> et <code>str2</code>, même s'ils ne sont pas consécutifs dans ces deux chaînes, seul l'ordre des caractères compte.</p>
+<p>Prenons l'exemple de :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">str1</span> <span class="o">=</span> <span class="s1">&#39;CGCATA&#39;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">str2</span> <span class="o">=</span> <span class="s1">&#39;GACT&#39;</span>
+</code></pre></div></p>
+<p>Une plus longue sous-chaîne commune est  <code>'GAT'</code>. En effet, tous les caractères de <code>'GAT'</code> apparaissent dans le même ordre dans <code>str1</code> :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">CGCATA</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="o">-</span><span class="n">G</span><span class="o">-</span><span class="n">AT</span><span class="o">-</span>
+</code></pre></div>
+<p>de même dans <code>str2</code> :</p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">G</span><span class="o">-</span><span class="n">ACT</span> 
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">G</span><span class="o">-</span><span class="n">A</span><span class="o">-</span><span class="n">T</span>
+</code></pre></div>
+On peut aligner les deux chaines l'une sous l'autre et faire apparaître la sous-chaîne commune dans la troisième ligne :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">CGCA</span><span class="o">-</span><span class="n">TA</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="o">-</span><span class="n">G</span><span class="o">-</span><span class="n">ACT</span><span class="o">-</span> 
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="o">-</span><span class="n">G</span><span class="o">-</span><span class="n">A</span><span class="o">-</span><span class="n">T</span><span class="o">-</span>
+</code></pre></div></p>
+<p>Les caractères <code>G</code>, <code>A</code> et <code>T</code> sont alignés, on peut donc extraire la sous-chaîne <code>'GAT'</code> à la fois de <code>str1</code> et <code>str2</code></p>
+<p>Notons bien qu'il n'y a pas unicité de la plus longue sous-chaîne commune ! <code>'GCT'</code> est également une plus longue sous-chaîne commune, de même longueur 3 :
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">CG</span><span class="o">-</span><span class="n">CATA</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="o">-</span><span class="n">GAC</span><span class="o">-</span><span class="n">T</span><span class="o">-</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="o">-</span><span class="n">G</span><span class="o">-</span><span class="n">C</span><span class="o">-</span><span class="n">T</span><span class="o">-</span>
+</code></pre></div></p>
+<p>Abordons ce problème sous l'approche de programmation dynamique. Pour trouver la plus longue sous-chaîne commune entre <code>'CGCATA'</code> et <code>'GACT'</code> , on commence par aligner les deux chaines en partant de la fin et par comparer les deux derniers caractères :</p>
+<p><img alt="Alignement séquences - Etape 1" src="../assets/4-alignement-sequence-1-light-mode.png#only-light" width="100%" />
+<img alt="Alignement séquences - Etape 1" src="../assets/4-alignement-sequence-1-dark-mode.png#only-dark" width="100%" /></p>
+<p>Les deux caractères <code>A</code> et <code>T</code> sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaîne commune. On peut avancer dans notre recherche en cherchant ces deux sous-problèmes : </p>
+<ol>
+<li>la plus longue sous-chaîne commune entre la première chaîne, <code>'CGCATA'</code>, et la seconde chaîne réduite de son dernier caractère,  <code>'GAC'</code>, ou </li>
+<li>la plus longue sous-chaîne commune entre la première chaîne réduite de son dernier caractère, <code>'CGCAT'</code>, et la seconde chaîne, <code>'GACT'</code>.</li>
+</ol>
+<p><img alt="Alignement séquences - Etape 2" src="../assets/4-alignement-sequence-2-light-mode.png#only-light" width="100%" />
+<img alt="Alignement séquences - Etape 2" src="../assets/4-alignement-sequence-2-dark-mode.png#only-dark" width="100%" /></p>
+<p>La  plus longue sous-chaîne commune entre <code>str1</code> et <code>str2</code> sera la solution trouvée la plus longue à ces deux sous-problèmes.</p>
+<p>Commençons par le premier sous-problème : trouver la plus longue sous-chaîne commune entre <code>'CGCATA'</code> et <code>'GAC'</code>. A nouveau, les deux derniers caractères sont différents, ils ne pourront pas être alignés dans une plus longue sous-chaîne commune, on peut encore partager ce problème en deux sous problèmes.</p>
+<p>Abordons ensuite, le second sous-problème : trouver la plus longue sous-chaîne commune entre <code>'CGCAT'</code> et <code>'GACT'</code>. Cette fois-ci, les deux derniers caractères sont identiques, ils pourront être alignés dans la plus longue sous-chaîne commune. On garde en mémoire le caractère <code>'T'</code> qu'on rajoutera au résultat de la plus longue sous-chaîne commune entre ces deux dernière chaines réduites de ce <code>'T'</code>  :   <code>'CGCA'</code> et <code>'GAC'</code>.</p>
+<p><img alt="Alignement séquences - Etape 3" src="../assets/4-alignement-sequence-3-light-mode.png#only-light" width="100%" />
+<img alt="Alignement séquences - Etape 3" src="../assets/4-alignement-sequence-3-dark-mode.png#only-dark" width="100%" /></p>
+<p>Passons à l'étape suivante. Les chaînes <code>'CGCATA'</code> et <code>'GA'</code>  ont le même dernier caractère, ils pourront être alignés dans la plus longue sous-chaîne commune. On garde en mémoire le caractère <code>'A'</code> qu'on rajoutera au résultat de la plus longue sous-chaîne commune entre ces deux dernière chaines réduites de ce <code>'A'</code>  :  <code>'CGCAT'</code> et <code>'G'</code>.</p>
+<p>Par contre, les chaînes <code>'CGCAT'</code> et <code>'GAC'</code>  ont un dernier caractère différent, on va donc chercher les plus longues chaines communes entre <code>'CGCAT'</code> et <code>'GA'</code> d'une part  et <code>'CGCAT'</code> et <code>'GA'</code> d'autre part. Notons que le sous problème de la plus longue chaîne commune entre <code>'CGCA'</code> et <code>'GAC'</code> a déjà été rencontré. C'est le propre de la programmation dynamique, les sous-problèmes se chevauchent, il ne faut pas les recalculer plusieurs fois !</p>
+<p><img alt="Alignement séquences - Etape 4" src="../assets/4-alignement-sequence-4-light-mode.png#only-light" width="100%" />
+<img alt="Alignement séquences - Etape 4" src="../assets/4-alignement-sequence-4-dark-mode.png#only-dark" width="100%" /></p>
+<p>On continue ainsi jusqu'à trouver des sous-chaines vide, il n'y a alors plus de sous-chaîne commune à chercher.</p>
+<p><img alt="Alignement séquences - Etape 5" src="../assets/4-alignement-sequence-5-light-mode.png#only-light" width="100%" />
+<img alt="Alignement séquences - Etape 5" src="../assets/4-alignement-sequence-5-dark-mode.png#only-dark" width="100%" /></p>
+<p>On trouve ici deux chemins qui permettent d'aligner 3 caractères entre les deux chaines : <code>'GAT'</code>et <code>'GCT'</code>.</p>
+<p>Généralisons l'approche que l'on vient de faire sur l'exemple. Soit deux sous-chaines <code>str1</code> et <code>str2</code> et essayons de calculer  la plus longue sous-chaîne commune entre les deux, que l'on note <code>T(str1, str2)</code>. Deux cas se présentent :</p>
+<ul>
+<li>
+<p>Si l'une des deux sous-chaîne est vide, alors il n'y a pas de plus longue sous-chaîne commune : <code>T(str1, str2) = ''</code>.</p>
+</li>
+<li>
+<p>Si les deux sous-chaîne ont un ou plusieurs caractères, alors :</p>
+<ol>
+<li>
+<p>Si les deux sous-chaînes ont le même dernier caractère, <code>str1[-1] == str2[-1]</code>, alors ces caractères pourront être alignés, la plus longue chaîne commune est la plus longue chaîne commune entre les deux sous-chaînes réduite de leur dernier caractère, à laquelle on ajoute ce caractère commun : <code>T(str1, str2) = T(str1[:-1], str2 [:-1]) + str[-1]</code>. </p>
+</li>
+<li>
+<p>Si les derniers caractères sont différents, <code>str1[-1] != str2[-1]</code>, alors ces caractères ne  pourront pas être alignés, la plus longue chaîne commune est la chaîne qui a le plus de caractères entre :</p>
+<ul>
+<li>
+<p>la plus longue chaîne commune de la première chaîne et de la seconde réduite de son dernier caractère d'une part, et</p>
+</li>
+<li>
+<p>La plus longue chaîne commune de la seconde chaîne et de la première réduite de son dernier caractère d'autre part,</p>
+</li>
+</ul>
+<p>Donc   <code>T(str1, str2) =  max_len(T(str1, str2[:-1]), T(str1[:-1], str2))</code>, où <code>max_len</code> renvoie la chaîne la plus longue entre les deux.</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>Cette relation de récurrence se traduit directement en Python en version dynamique descendante :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">str1</span> <span class="o">=</span> <span class="s1">&#39;CGCATA&#39;</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">str2</span> <span class="o">=</span> <span class="s1">&#39;GACT&#39;</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">max_len</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; str, str -&gt; str</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="sd">    Renvoie la plus longue chaîne des deux</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="sd">    ou la premiere si les deux chaines ont la même longueur</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">str1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">str2</span><span class="p">):</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>        <span class="k">return</span> <span class="n">str1</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>        <span class="k">return</span> <span class="n">str2</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="n">memo</span> <span class="o">=</span> <span class="p">{}</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">alignement_sequence_top_down</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; str, str -&gt; str</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="sd">    Renvoie une plus longue chaîne commune</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a>    <span class="k">if</span> <span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)</span> <span class="ow">in</span> <span class="n">memo</span><span class="p">:</span> <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)]</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>    <span class="k">if</span> <span class="n">str1</span> <span class="o">==</span><span class="s1">&#39;&#39;</span> <span class="ow">or</span> <span class="n">str2</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span> <span class="n">memo</span><span class="p">[(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)]</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a>    <span class="k">elif</span> <span class="n">str1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">str2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a>        <span class="n">memo</span><span class="p">[(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">alignement_sequence_top_down</span><span class="p">(</span><span class="n">str1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">str2</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="n">str1</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>    <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>        <span class="c1"># on garde str1 et enlève le dernier car de str2</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a>        <span class="n">lsc1</span> <span class="o">=</span> <span class="n">alignement_sequence_top_down</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a>        <span class="c1"># on garde str2 et enlève le dernier car de str1</span>
+<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a>        <span class="n">lsc2</span> <span class="o">=</span> <span class="n">alignement_sequence_top_down</span><span class="p">(</span><span class="n">str1</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">str2</span><span class="p">)</span>
+<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsc1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">lsc2</span><span class="p">):</span>
+<a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a>            <span class="n">memo</span><span class="p">[(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">lsc1</span>
+<a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a>            <span class="n">memo</span><span class="p">[(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)]</span> <span class="o">=</span> <span class="n">lsc2</span>
+<a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a>    <span class="k">return</span> <span class="n">memo</span><span class="p">[(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">)]</span>
+<a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a>
+<a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a>
+<a id="__codelineno-17-36" name="__codelineno-17-36" href="#__codelineno-17-36"></a><span class="nb">print</span><span class="p">(</span><span class="n">alignement_sequence_top_down</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">))</span>
+</code></pre></div>
+<p>La version ascendante utilise la même relation de récurrence mais de façon un peu plus complexe que les exemples précédents. L'idée est de construire un tableau de tableaux <code>T</code> rempli des résultats des sous-problèmes rencontrés, c'est-à-dire des plus longues sous-chaînes communes entre les chaines <code>str1[ :i+1]</code> et <code>str[:j+1]</code> pour les valeurs de <code>i</code> allant et <code>j</code> allant de <code>0</code> à <code>len(str1)</code> et <code>len(str2)</code> respectivement.</p>
+<p>On peut faire les constatations suivantes : </p>
+<ul>
+<li>
+<p>Pour <code>i = 0</code> on remplit la première ligne pour les valeur de <code>j</code> avec <code>''</code> si <code>str1[0]</code>  n'est pas présent dans  <code>str2[:j+1]</code> car il n'y a pas d'alignement possible ; ou sinon avec <code>str1[0]</code> s'il est présent. </p>
+</li>
+<li>
+<p>Pour  <code>j = 0</code>, alors on remplit la première colonne pour les valeur de <code>i</code> avec <code>''</code> si <code>str2[0]</code>  n'est pas présent dans  <code>str1[:i+1]</code> car il n'y a pas d'alignement possible ; ou sinon  avec <code>str2[0]</code> s'il est présent. </p>
+</li>
+<li>
+<p>Ensuite pour chaque valeur de <code>i</code> et <code>j</code> à partir de <code>1</code>, deux cas de figure se présentent :</p>
+<ul>
+<li>
+<p>Si les deux dernier caractères de <code>str1[:i+1]</code> et <code>str2[:j+1]</code> sont identiques ,  c'est-à-dire <code>str1[i] == str2[j]</code>, alors ils peuvent être alignés :<br />
+<code>T[i][j] = T[i-1][j-1] + str[i]</code></p>
+</li>
+<li>
+<p>S'ils sont différents, c'est-à-dire <code>str1[i] != str2[j]</code>, alors ils ne peuvent pas être alignés, il faut prendre la plus longue sous-chaîne entre les deux sous-chaînes calculées en enlevant l'un des dernier caractère : <br />
+<code>T[i][j] = max_len(T[i][j-1], T[i-1][j])</code></p>
+</li>
+</ul>
+<p>La plus longue sous-chaîne commune est calculée dans la dernière ligne dernière colonne du tableau de tableaux.</p>
+</li>
+</ul>
+<p><img alt="Alignement séquences - tableau de tableaux" src="../assets/4-alignement-sequence-tableau-light-mode.png#only-light" width="100%" />
+<img alt="Alignement séquences - tableau de tableaux" src="../assets/4-alignement-sequence-tableau-dark-mode.png#only-dark" width="100%" /></p>
+<p>Traduite en Python, on obtient le code suivant :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">alignement_sequence_bottom_up</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">):</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; str, str -&gt; str</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="sd">    Renvoie une plus longue chaîne commune</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>    <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">str1</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">str2</span><span class="p">)</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    <span class="n">T</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;&#39;</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n2</span><span class="p">)]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">)]</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n1</span><span class="p">):</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>        <span class="k">if</span> <span class="n">str2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">str1</span><span class="p">[:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>            <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">str2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n2</span><span class="p">):</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>        <span class="k">if</span> <span class="n">str1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">str2</span><span class="p">[:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a>            <span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">str1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n1</span><span class="p">):</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n2</span><span class="p">):</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>            <span class="k">if</span> <span class="n">str1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">str2</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>                <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">str1</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>                <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">max_len</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">j</span><span class="p">])</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a>    <span class="k">return</span> <span class="n">T</span><span class="p">[</span><span class="n">n1</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">n2</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">alignement_sequence_bottom_up</span><span class="p">(</span><span class="n">str1</span><span class="p">,</span> <span class="n">str2</span><span class="p">))</span>
+</code></pre></div>
+<h2 id="probleme-du-sac-a-dos">Problème du sac à dos</h2>
+<p><img align="right" alt="Un sac à dos avec des objets de poids et valeurs différents à mettre dans le sac à dos" src="../assets/4-sac-a-dos.png" width="30%" /></p>
+<p>Problème : On dispose d'un sac à dos avec une capacité maximum de poids à transporter. Parmi plusieurs objets de poids et de valeurs différents, lesquels peut-on mettre dans le sac à dos de façon à maximiser la somme des valeurs des objets choisis sans que leur poids total ne dépasse la capacité du sac. C'est un problème d'<strong>optimisation avec contrainte</strong>.</p>
+<p>Par exemple, on peut considérer les objets suivants et un sac à dos avec une capacité maximum de 15 kg.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Poids (kg)</th>
+<th style="text-align: center;">12</th>
+<th style="text-align: center;">4</th>
+<th style="text-align: center;">2</th>
+<th style="text-align: center;">1</th>
+<th style="text-align: center;">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Prix (€)</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">10</td>
+</tr>
+</tbody>
+</table>
+<p>On peut choisir plusieurs combinaisons d'objets, par exemple les objets de poids 12 kg, 2 kg, 1 kg et 1 kg ont un poids total inférieur à la capacité du sac de 15kg et une valeur totale de 90 €, ou encore les objets de poids 4 kg, 2 kg, 1 kg et 1 kg pour une valeur totale de 150 €. Mais comment trouver la combinaison optimale dans toutes les situations ?</p>
+<p><img alt="Exemples d'objets mis dans le sac à dos" src="../assets/4-sac-a-dos-2-exemples-light-mode.png#only-light" width="60%" />
+<img alt="Exemples d'objets mis dans le sac à dos" src="../assets/4-sac-a-dos-2-exemples-dark-mode.png#only-dark" width="60%" /></p>
+<p>Représentons les objets dans une liste de p-uplets nommés :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">objets</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}]</span>
+</code></pre></div>
+<h3 id="algorithme-glouton_1">Algorithme glouton</h3>
+<p>L'algorithme glouton le plus simple consiste à prendre les objets en ordre de valeur décroissante tant que leur poids ne fait pas dépasser la capacité du sac. On peut écrire le code suivant :</p>
+<div class="admonition note inline end">
+<p>L'utilisation de la fonction <code>sorted()</code> permet de ne pas modifier la liste <code>objets</code>.</p>
+</div>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span>
+<span class="normal"><a href="#__codelineno-20-11">11</a></span>
+<span class="normal"><a href="#__codelineno-20-12">12</a></span>
+<span class="normal"><a href="#__codelineno-20-13">13</a></span>
+<span class="normal"><a href="#__codelineno-20-14">14</a></span>
+<span class="normal"><a href="#__codelineno-20-15">15</a></span>
+<span class="normal"><a href="#__codelineno-20-16">16</a></span>
+<span class="normal"><a href="#__codelineno-20-17">17</a></span>
+<span class="normal"><a href="#__codelineno-20-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">sac_glouton</span><span class="p">(</span><span class="n">poids_max</span><span class="p">):</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; int -&gt; int</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="sd">    Renvoie la valeur maximale d&#39;une liste d&#39;objets [{&#39;poids&#39;, &#39;valeur&#39;}]</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4"></a><span class="sd">    qui peuvent être mis dans le sac sans que leur poids dépasse poids_max</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7"></a>    <span class="n">poids_sac</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8"></a>    <span class="n">valeur_sac</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9"></a>    <span class="c1"># objets pris en ordre de valeur décroissante</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10"></a>    <span class="k">for</span> <span class="n">objet</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">objets</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;valeur&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11"></a>        <span class="c1"># si le poids de objet ne fait pas dépasser la capacité du sac</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12"></a>        <span class="k">if</span> <span class="n">objet</span><span class="p">[</span><span class="s1">&#39;poids&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">poids_sac</span> <span class="o">&lt;=</span> <span class="n">poids_max</span><span class="p">:</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13"></a>            <span class="c1"># on le met dans le sac</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14"></a>            <span class="n">poids_sac</span> <span class="o">+=</span> <span class="n">objet</span><span class="p">[</span><span class="s1">&#39;poids&#39;</span><span class="p">]</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15"></a>            <span class="n">valeur_sac</span> <span class="o">+=</span> <span class="n">objet</span><span class="p">[</span><span class="s1">&#39;valeur&#39;</span><span class="p">]</span>
+<a id="__codelineno-20-16" name="__codelineno-20-16"></a>    <span class="k">return</span> <span class="n">valeur_sac</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17"></a>
+<a id="__codelineno-20-18" name="__codelineno-20-18"></a><span class="k">assert</span> <span class="n">sac_glouton</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="o">==</span> <span class="mi">150</span>
+</code></pre></div></td></tr></table></div>
+<p>L'algorithme glouton renvoie <code>150</code> pour l'exemple précédent, c'est bien la valeur maximale que l'on peut mettre dans le sac :</p>
+<p><img alt="Algorithme glouton par valeur dans l'exemple précédant" src="../assets/4-sac-a-dos-glouton-valeur-1-light-mode.png#only-light" width="50%" />
+<img alt="Algorithme glouton par valeur dans l'exemple précédant" src="../assets/4-sac-a-dos-glouton-valeur-1-dark-mode.png#only-dark" width="50%" /></p>
+<p><img align="right" alt="Algorithme glouton par valeur dans un autre exemple" src="../assets/4-sac-a-dos-glouton-valeur-2-light-mode.png#only-light" width="40%" />
+<img align="right" alt="Algorithme glouton par valeur dans un autre exemple" src="../assets/4-sac-a-dos-glouton-valeur-2-dark-mode.png#only-dark" width="40%" /></p>
+<p>Mais en favorisant les objets ayant la plus grande valeur, l'algorithme ne prend pas en compte leur poids ce qui conduit à une solution qui n'est pas optimale dans tous cas. </p>
+<p>Regardons ce qu'il se passe avec la liste d'objets suivante :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">objets</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>          <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>          <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">90</span><span class="p">}]</span>
+</code></pre></div>
+<p>L'algorithme choisit d'abord l'objet de 15 kg, il n'est plus possible d'en ajouter d'autres, ni de revenir en arrière pour enlever l'objet. C'est le principe des algorithmes gloutons, on ne revient pas en arrière sur une décision qui a été prise. L'algorithme renvoie donc <code>100</code>, ce n'est pas optimal, les objets de 1 kg et 12 kg avaient une valeur totale de 130 €.</p>
+<p>Une approche plus fine consiste à prendre en priorité les objets ayant le meilleur ratio valeur/poids. Modifions la boucle <code>for</code> dans le programme pour trier les objets par ce ratio :</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-22-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-22-9" name="__codelineno-22-9"></a>    <span class="c1"># objets pris en l&#39;ordre de ratio valeur/poids décroissant</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10"></a>    <span class="k">for</span> <span class="n">objet</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">objets</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s1">&#39;valeur&#39;</span><span class="p">]</span><span class="o">/</span><span class="n">x</span><span class="p">[</span><span class="s1">&#39;poids&#39;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+</code></pre></div></td></tr></table></div>
+<p>Ce nouvel algorithme glouton renvoie aussi la valeur attendue <code>150</code> pour le premier exemple, c'est à nouveau la valeur maximale : </p>
+<p><img alt="Algorithme glouton par valeur/poids dans un autre exemple" src="../assets/4-sac-a-dos-glouton-valeur-poids-1-light-mode.png#only-light" width="50%" />
+<img alt="Algorithme glouton par valeur/poids dans un autre exemple" src="../assets/4-sac-a-dos-glouton-valeur-poids-1-dark-mode.png#only-dark" width="50%" /></p>
+<p>Essayons maintenant cette nouvelle liste d'objets :</p>
+<p><img align="right" alt="Algorithme glouton par valeur/poids dans un autre exemple" src="../assets/4-sac-a-dos-glouton-valeur-poids-2-light-mode.png#only-light" width="40%" />
+<img align="right" alt="Algorithme glouton par valeur/poids dans un autre exemple" src="../assets/4-sac-a-dos-glouton-valeur-poids-2-dark-mode.png#only-dark" width="40%" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">objets</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">70</span><span class="p">},</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>          <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>          <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>          <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}]</span>
+</code></pre></div>
+<p>Les objets triés par ratio valeur/poids décroissants sont 9 kg, 12 kg, 2 kg puis 5 kg. L'algorithme glouton commence par mettre l'objet de 9 kg dans le sac et ensuite celui de 2 kg, il renvoie donc la valeur <code>110</code>.  La solution n'est encore pas optimale, le premier algorithme glouton par valeur décroissante renvoyait <code>120</code> ! </p>
+<h3 id="programmation-dynamique_2">Programmation dynamique</h3>
+<p>Une fois de plus la programmation dynamique offre une solution optimale au problème.</p>
+<p>Reprenons l'exemple d'un sac de capacité 15 kg avec les objets du premier exemple et calculons la valeur maximale des objets qui peuvent être mis dans ce sac. On la note <code>V[15]</code>.</p>
+<p><img align="right" alt="Objet de poids 1 kg et valeur 10 euro" src="../assets/4-sac-a-dos-objet-1kg-10euro.png" width="10%" /></p>
+<p>Au début le sac est vide. On se pose la question de mettre un premier objet dans le sac, par exemple l'objet de 1 kg avec une valeur de 10 €. Deux cas se présentent :</p>
+<ol>
+<li>Cas 1 : On met l'objet d'1 kg dans le sac, il restera à calculer la valeur maximale d'un sac de 14 kg, <code>V[14]</code>, puis de lui ajouter la valeur de 10 € de cet objet.</li>
+<li>Cas 2 : On ne met pas l'objet dans le sac, il restera à calculer la valeur maximale  d'un sac de 15 kg, <code>V[15]</code>, sans lui ajouter aucune valeur ensuite.</li>
+</ol>
+<p>Si on peut trouver la solution de ces deux sous-problèmes, il suffira ensuite de prendre la plus grande valeur entre les deux.
+On remarque que pour calculer <code>V[15]</code>, le deuxième cas consiste à calculer <code>V[15]</code>, c'est circulaire ! Alors quelle est la différence ? </p>
+<p>La différence réside dans la liste d'objets disponibles. Au début, tous les objets sont disponibles pour être mis, ou pas, dans la sac à dos. Ensuite l'objet pesant 1 kg de valeur 10 € n'est plus disponible, soit il a été mis dans le sac (cas 1), soit il a été écarté (cas 2) et on ne le considère plus pour être mis dans le sac.</p>
+<p><img alt="Le calcul de la valeur maximum dépend du poids max p et de la liste d'objet indicée jusqu'à i" src="../assets/4-sac-a-dos-v%28i%2Cp%29-light-mode.png#only-light" width="100%" />
+<img alt="Le calcul de la valeur maximum dépend du poids max p et de la liste d'objet indicée jusqu'à i" src="../assets/4-sac-a-dos-v%28i%2Cp%29-dark-mode.png#only-dark" width="100%" /></p>
+<p>On en déduit que le calcul de la valeur maximale d'un sac de capacité <span class="arithmatex">\(p\)</span> ne dépend pas que de la valeur de <span class="arithmatex">\(p\)</span>, mais aussi de la liste d'objets disponibles. On identifie les objets par leur indice <span class="arithmatex">\(i\)</span> dans la liste, et on notera <span class="arithmatex">\(V_{i,p}\)</span> la valeur maximale d'un sac de capacité <span class="arithmatex">\(p\)</span> en choisissant parmi les objets d'indices <span class="arithmatex">\(0\)</span>, <span class="arithmatex">\(1\)</span>, <span class="arithmatex">\(2\)</span>, …, <span class="arithmatex">\(i-1\)</span>, <span class="arithmatex">\(i\)</span>.</p>
+<p>Généralisons cette approche. Soit un sac de capacité p et une liste d'objet  d'indices <span class="arithmatex">\(0\)</span>, <span class="arithmatex">\(1\)</span>, <span class="arithmatex">\(2\)</span>, …, <span class="arithmatex">\(i-1\)</span>, <span class="arithmatex">\(i\)</span>, et essayons de calculer <span class="arithmatex">\(V_{i,p}\)</span>. On se pose la question de mettre le dernier objet de la liste, de poids <span class="arithmatex">\(poids_{i}\)</span>  et de valeur <span class="arithmatex">\(valeur_{i}\)</span> dans le sac, ou pas. Plusieurs cas se présentent :</p>
+<ul>
+<li>
+<p>Si <span class="arithmatex">\(poids_{i} &gt; p\)</span>, alors l'objet est trop lourd pour le sac, il est écarté. On calculera la valeur maximale pour la même capacité de sac <span class="arithmatex">\(p\)</span>, mais avec une liste d'objet qui s'arrête à <span class="arithmatex">\(i-1\)</span> : <span class="arithmatex">\(V_{i, p}= V_{i-1, p}\)</span>.</p>
+</li>
+<li>
+<p>Si <span class="arithmatex">\(poids_{i} \leq p\)</span>, alors l'objet <span class="arithmatex">\(i\)</span> peut rentrer dans le sac. On retombe sur les deux cas de l'exemple précédant :</p>
+<ol>
+<li>
+<p>Cas 1 : On met l'objet <span class="arithmatex">\(i\)</span> dans le sac, il reste à calculer la valeur maximale d'un sac de capacité <span class="arithmatex">\(p - poids_{i}\)</span> avec les objets restants, <span class="arithmatex">\(V_{i-1,p - poids_i}\)</span>,  puis de lui ajouter la valeur de l'objet <span class="arithmatex">\(valeur_{i}\)</span>.</p>
+</li>
+<li>
+<p>Cas 2 : On ne met pas l'objet <span class="arithmatex">\(i\)</span> dans le sac, il reste à calculer la valeur maximale d'un sac de capacité <span class="arithmatex">\(p\)</span> avec les objets restants, sans lui ajouter aucune valeur ensuite : <span class="arithmatex">\(V_{i-1, p}\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(V_{i, p}\)</span> est le cas le plus favorable entre les deux : <span class="arithmatex">\(V_{i, p} = \max(valeur_{i} + V_{i-1, p - poids_{i}}, V_{i-1, p})\)</span></p>
+</li>
+</ol>
+</li>
+</ul>
+<p>Bien sûr, une fois qu'on a considéré tous les objets de la liste les uns après les autres pour les mettre dans le sac, ou pas, et qu'il ne reste plus que le premier objet de la liste, la solution est immédiate car il suffit de vérifier si son poids est inférieur à la capacité du sac ou pas. Si c'est le cas, on met l'objet dans le sac et la valeur maximale du sac est donc la valeur de l'objet. Sinon, on ne peut pas prendre l'objet, la valeur maximale est 0. </p>
+<p><img alt="Relation de récurrence donnant Vi,p" src="../assets/4-sac-a-dos-recurence-light-mode.png#only-light" width="80%" />
+<img alt="Relation de récurrence donnant Vi,p" src="../assets/4-sac-a-dos-recurence-dark-mode.png#only-dark" width="80%" /></p>
+<p>Cette relation de récurrence se traduit directement en Python en version dynamique descendante (noter l'ordre des paramètres inversé, <code>i</code> est après <code>p_max</code> car les paramètres par mots clés sont toujours placés après les positionnels) :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">objets</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">40</span><span class="p">},</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">},</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">},</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>           <span class="p">{</span><span class="s1">&#39;poids&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;valeur&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}]</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="n">V</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c1"># dictionnaire {(capacité du sac, objets jusqu&#39;à i): valeur maximale} de memoisation</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">sac_dynamique_top_down</span><span class="p">(</span><span class="n">poids_max</span><span class="p">,</span> <span class="n">i</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">objets</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; int, int -&gt; int</span>
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a><span class="sd">    Renvoie la valeur maximale d&#39;une liste d&#39;objets [{&#39;poids&#39;, &#39;valeur&#39;}]</span>
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a><span class="sd">    qui peuvent être mis dans le sac sans que leur poids dépasse poids_max</span>
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a><span class="sd">    Note : on ne considère que premiers objets de la liste jusqu&#39;à l&#39;indice i (inclus)</span>
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>    <span class="c1"># s&#39;il ne reste plus qu&#39; objets[0] à considérer dans la liste </span>
+<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>    <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>        <span class="c1"># s&#39;il est moins lourd que la capacité du sac, on le met dans le sac</span>
+<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>        <span class="k">if</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;poids&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">poids_max</span><span class="p">:</span>
+<a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>            <span class="n">val_max</span> <span class="o">=</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;valeur&#39;</span><span class="p">]</span>
+<a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>        <span class="c1"># sinon il est trop lourd pour le sac</span>
+<a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a>              <span class="n">val_max</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a>
+<a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a>    <span class="c1"># s&#39;il reste plusieurs objets, on considère objets[i]</span>
+<a id="__codelineno-24-25" name="__codelineno-24-25" href="#__codelineno-24-25"></a>    <span class="c1"># soit il est plus lourd que la capacité du sac, on ne le met pas dans le sac</span>
+<a id="__codelineno-24-26" name="__codelineno-24-26" href="#__codelineno-24-26"></a>    <span class="k">elif</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;poids&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">poids_max</span><span class="p">:</span>
+<a id="__codelineno-24-27" name="__codelineno-24-27" href="#__codelineno-24-27"></a>        <span class="n">val_max</span> <span class="o">=</span> <span class="n">sac_a_dos_dynamique</span><span class="p">(</span><span class="n">poids_max</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<a id="__codelineno-24-28" name="__codelineno-24-28" href="#__codelineno-24-28"></a>    <span class="k">else</span><span class="p">:</span>   <span class="c1"># soit il est moins lourd  et</span>
+<a id="__codelineno-24-29" name="__codelineno-24-29" href="#__codelineno-24-29"></a>        <span class="c1"># on garde la plus grande valeur entre ne pas prendre objets[i] </span>
+<a id="__codelineno-24-30" name="__codelineno-24-30" href="#__codelineno-24-30"></a>        <span class="n">val_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">sac_dynamique_top_down</span><span class="p">(</span><span class="n">poids_max</span><span class="p">,</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+<a id="__codelineno-24-31" name="__codelineno-24-31" href="#__codelineno-24-31"></a>        <span class="c1"># et ajouter objets[i] dans le sac</span>
+<a id="__codelineno-24-32" name="__codelineno-24-32" href="#__codelineno-24-32"></a>     <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;valeur&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">sac_dynamique_top_down</span><span class="p">(</span><span class="n">poids_max</span> <span class="o">-</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;poids&#39;</span><span class="p">],</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<a id="__codelineno-24-33" name="__codelineno-24-33" href="#__codelineno-24-33"></a>
+<a id="__codelineno-24-34" name="__codelineno-24-34" href="#__codelineno-24-34"></a>    <span class="c1"># on met à jour le dictionnaire et on renvoie la valeur maximale pour poids_max</span>
+<a id="__codelineno-24-35" name="__codelineno-24-35" href="#__codelineno-24-35"></a>    <span class="n">V</span><span class="p">[(</span><span class="n">poids_max</span><span class="p">,</span> <span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">val_max</span>
+<a id="__codelineno-24-36" name="__codelineno-24-36" href="#__codelineno-24-36"></a>    <span class="k">return</span> <span class="n">val_max</span>
+<a id="__codelineno-24-37" name="__codelineno-24-37" href="#__codelineno-24-37"></a>
+<a id="__codelineno-24-38" name="__codelineno-24-38" href="#__codelineno-24-38"></a>
+<a id="__codelineno-24-39" name="__codelineno-24-39" href="#__codelineno-24-39"></a><span class="k">assert</span> <span class="n">sac_dynamique_top_down</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="o">==</span> <span class="mi">150</span>
+</code></pre></div>
+<p>La version ascendante consiste à construire un tableau de tableaux <code>V</code> dont les éléments <code>V[i][p]</code> sont les valeurs maximales du problème pour un sac de capacité <code>p</code> en ne considérant que les premiers objets de la liste jusqu'à l'objet <code>objets[i]</code> inclus . </p>
+<p>La première ligne du tableau, quand <code>i</code> est égal à <code>0</code>, donne la valeur du sac en ne considérant que le premier objet de la liste, <code>objet[0]</code>. Deux cas se présentent :</p>
+<ul>
+<li>
+<p>si <code>objet[0]</code> est plus lourd que la capacité du sac (<code>objet[0][poids] &gt; p</code>), alors on ne peut pas le mettre dans le sac et la valeur maximale du sac est 0.</p>
+</li>
+<li>
+<p>si <code>objet[0]</code> est moins lourd que la capacité du sac (<code>objet[0][poids] &lt;= p</code>), alors on le met dans le sac et la valeur maximale du sac est la valeur de l'objet : <code>objet[0][valeur]</code>.</p>
+</li>
+</ul>
+<p>Les autres valeurs de <code>V[i][p]</code> sur les autres lignes sont calculées à partir de la relation de récurrence précédente. La solution du problème se trouve sur la dernière ligne et la dernière colonne de <code>V</code>:</p>
+<p><img alt="Construction du tableau de tableaux des Vi,p en bottom-up" src="../assets/4-sac-a-dos-bottom-up-light-mode.png#only-light" width="80%" />
+<img alt="Construction du tableau de tableaux des Vi,p en bottom-up" src="../assets/4-sac-a-dos-bottom-up-dark-mode.png#only-dark" width="80%" /></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">sac_dynamique_bottom_up</span><span class="p">(</span><span class="n">poids_max</span><span class="p">):</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot; int -&gt; int</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="sd">    Renvoie la valeur maximale d&#39;une liste d&#39;objets [{&#39;poids&#39;, &#39;valeur&#39;}]</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="sd">    qui peuvent être mis dans le sac sans que leur poids dépasse poids_max</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>    <span class="c1"># on crée le tableau de tableau, une ligne par objet ajouté (ou pas)</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>    <span class="c1"># une colonne pour chaque capacité de sac</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>    <span class="n">V</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">poids_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">objets</span><span class="p">))]</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a>    <span class="c1"># V[i][p] est la valeur max d&#39;un sac de capacité p</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>    <span class="c1"># avec les premiers objets jusqu&#39;à objets[i] inclus</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>    <span class="c1"># s&#39;il n&#39;y a qu&#39; objets[0] à considérer dans la liste</span>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a>    <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">poids_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a>        <span class="c1"># s&#39;il est moins lourd que la capacité du sac, on le met dans le sac</span>
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>        <span class="k">if</span> <span class="n">objets</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;poids&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">p</span><span class="p">:</span>
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a>            <span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">objets</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;valeur&#39;</span><span class="p">]</span>
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>        <span class="c1"># sinon il est trop lourd pour le sac</span>
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>        <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>            <span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a>
+<a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>
+<a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a>    <span class="c1"># s&#39;il reste plusieurs objets, on regarde l&#39;objet d&#39;indice i</span>
+<a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">objets</span><span class="p">)):</span>
+<a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>
+<a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a>    <span class="c1"># on remplit les lignes suivantes</span>
+<a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a>        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">poids_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+<a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a>            <span class="c1"># soit il est plus lourd que la capacité du sac</span>
+<a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a>            <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;poids&#39;</span><span class="p">]:</span>
+<a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a>                <span class="c1"># on ne le met pas dans le sac</span>
+<a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a>                <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">p</span><span class="p">]</span>
+<a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a>            <span class="c1"># soit il est moins lourd</span>
+<a id="__codelineno-25-35" name="__codelineno-25-35" href="#__codelineno-25-35"></a>            <span class="k">else</span><span class="p">:</span>
+<a id="__codelineno-25-36" name="__codelineno-25-36" href="#__codelineno-25-36"></a>                <span class="c1"># on prend la plus grande valeur entre ne pas prendre objets[i]</span>
+<a id="__codelineno-25-37" name="__codelineno-25-37" href="#__codelineno-25-37"></a>                <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">p</span><span class="p">],</span>
+<a id="__codelineno-25-38" name="__codelineno-25-38" href="#__codelineno-25-38"></a>                    <span class="c1"># et ajouter objets[i] au sac</span>
+<a id="__codelineno-25-39" name="__codelineno-25-39" href="#__codelineno-25-39"></a>                    <span class="n">V</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">p</span> <span class="o">-</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;poids&#39;</span><span class="p">]]</span> <span class="o">+</span> <span class="n">objets</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;valeur&#39;</span><span class="p">])</span>
+<a id="__codelineno-25-40" name="__codelineno-25-40" href="#__codelineno-25-40"></a>    <span class="k">return</span> <span class="n">V</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">objets</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">poids_max</span><span class="p">]</span>
+<a id="__codelineno-25-41" name="__codelineno-25-41" href="#__codelineno-25-41"></a>
+<a id="__codelineno-25-42" name="__codelineno-25-42" href="#__codelineno-25-42"></a><span class="k">assert</span> <span class="n">sac_dynamique_bottom_up</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="o">==</span> <span class="mi">150</span>
+</code></pre></div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:4.1">
+<p>Cette méthode a été introduite au début des années 1950 par Richard Bellman.  Le terme "programmation" dans "programmation dynamique", ne doit pas s'entendre comme "utilisation d'un langage de programmation", mais comme synonyme de planification et ordonnancement.&#160;<a class="footnote-backref" href="#fnref:4.1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4.3">
+<p><span class="arithmatex">\(nb_i\)</span> est donné par la formule de récurrence <span class="arithmatex">\(nb_i = \underset{p \leq i}{\min}⁡ (1+ nb_{i-p})\)</span>.&#160;<a class="footnote-backref" href="#fnref:4.3" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Retour en haut de la page
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a> Mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.prune", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.instant", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "toc.integrate", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copi\u00e9 dans le presse-papier", "clipboard.copy": "Copier dans le presse-papier", "search.result.more.one": "1 de plus sur cette page", "search.result.more.other": "# de plus sur cette page", "search.result.none": "Aucun document trouv\u00e9", "search.result.one": "1 document trouv\u00e9", "search.result.other": "# documents trouv\u00e9s", "search.result.placeholder": "Taper pour d\u00e9marrer la recherche", "search.result.term.missing": "Non trouv\u00e9", "select.version": "S\u00e9lectionner la version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../javascripts/mathjax.js"></script>
+      
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
