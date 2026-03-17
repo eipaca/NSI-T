@@ -37,13 +37,13 @@ Les graphes trouvent de nombreuses applications en informatique, par exemple dan
         ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-A-dark-mode.png#only-dark){width="30%"}
     
 
-    === "voisisage de D dans un graphe orienté"
+    === "voisinage de D dans un graphe orienté"
         ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-D-light-mode.png#only-light){width="30%"}
         ![Voisinage de A dans un graphe orienté](assets/8-graphe-oriente-voisinage-D-dark-mode.png#only-dark){width="30%"}
 
     === "voisinage de D dans un graphe non orienté"
-        ![Voisisage de D dans un graphe non orienté](assets/8-graphe-non-oriente-voisinage-D-light-mode.png#only-light){width="30%"}
-        ![Voisisage de D dans un graphe non orienté](assets/8-graphe-non-oriente-voisinage-D-dark-mode.png#only-dark){width="30%"}
+        ![Voisinage de D dans un graphe non orienté](assets/8-graphe-non-oriente-voisinage-D-light-mode.png#only-light){width="30%"}
+        ![Voisinage de D dans un graphe non orienté](assets/8-graphe-non-oriente-voisinage-D-dark-mode.png#only-dark){width="30%"}
 
     Le **degré** d'un sommet est le nombre d'arêtes issues de ce sommet. La somme des degrés des sommets est le double du nombre d'arêtes du graphe[^8.1].
 
@@ -316,17 +316,6 @@ Exemple : le dictionnaire d'adjacence du graphe ci-contre :
  C: [B],
  D: [B, C]}
 ```
-L'ordre des voisins d'un sommet n'a pas d'importance, et on ne veut pas dupliquer les voisins, on peut préférer utiliser des ensembles[^8.3] : 
-
-``` py
-{A: {B, D}, 
- B: {D}, 
- C: {B},  
- D: {B, C}}
-
-```
-
-[^8.3]: Les ensembles Python, de type `set`, ne sont pas au programme de NSI. Un ensemble est une collection d'éléments non ordonnés, non indexés, qui n'accepte pas de contenir plusieurs fois le même élément. Les éléments d'un ensemble sont écrits entre accolades mais un ensemble est défini par la fonction `set()` (et pas par `{}` qui permet de définir un dictionnaire vide). On peut ajouter un élément avec la méthode `.add(`) et supprimer un élément avec `.remove()`. On peut utiliser la fonction `len()` et le mot clé `in` comme pour les autres types construits.
 
 Implémentons un graphe avec un dictionnaire d'adjacence dans une classe `Graphe` :
 
@@ -346,32 +335,33 @@ class Graphe:
     def __repr__(self):
         return str(self.A)
 
-    def ajouter_sommet(self, x):
-        if not x in self.A:
-            self.A[x] = set()
+    def ajouter_sommet(self, s):
+        if not s in self.A:
+            self.A[s] = []
 
-    def ajouter_arete(self, x, y):
-        """ Ajoute une arête entre les sommets x et y """
-        self.ajouter_sommet(x)
-        self.ajouter_sommet(y)
-        self.A[x].add(y)
-        if not self.oriente:
-            self.A[y].add(x)
+    def ajouter_arete(self, s1, s2):
+        """ Ajoute une arête entre les sommets s1 et s2 """
+        self.ajouter_sommet(s1)
+        self.ajouter_sommet(s2)
+        if s2 not in self.A[s1]:
+            self.A[s1].append(s2)
+        if not self.oriente:        
+            self.A[s2].append(s1)
 ``` 
 
 Ajoutons quelques méthodes :
 
 ``` py
-    def voisins(self, x):
-        """ Renvoie l'ensemble des voisins du sommet x """
-        return self.A[x]
+    def voisins(self, s):
+        """ Renvoie l'ensemble des voisins du sommet s """
+        return self.A[s]
 
-    def arete(self, x, y):
-        """ Renvoie True s'il existe une arête entre les sommets x et y """
-        return x in self.A[y] 
+    def arete(self, s1, s2):
+        """ Renvoie True s'il existe une arête entre les sommets s1 et s2 """
+        return s2 in self.A[s1] 
 ``` 
 
-Et créons maitenant le graphe orienté :
+Et créons maintenant le graphe orienté :
 
 ``` py
 g = Graphe()
@@ -381,17 +371,17 @@ g.ajouter_arete('B', 'D')
 g.ajouter_arete('C', 'B')
 g.ajouter_arete('D', 'B')
 g.ajouter_arete('D', 'C')
-print(g. A)
+print(g.A)
 ```
 
 On peut ajouter des méthodes qui renvoient les degrés d'un nœud et ses voisins :
 
 ``` py
-    def degre(self, x):
-        return len(self.A[x])
+    def degre(self, s):
+        return len(self.A[s])
 
-    def voisin(self, x):
-        return self.A[x]
+    def voisin(self, s):
+        return self.A[s]
 ``` 
 
 Avantages et Inconvénients de cette structure : 
