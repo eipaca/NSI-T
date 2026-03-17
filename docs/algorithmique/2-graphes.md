@@ -12,7 +12,7 @@ Nous utilisons la seconde mettant en œuvre un dictionnaire d'adjacence dans ce 
 ``` py
 class Graphe:
     """ """
-    def __init__(self, oriente = True):
+    def __init__(self, oriente=True):
         self.A = {}                # Dictionnaire d'adjacence
         self.oriente = oriente     # Graphe orienté ou pas
 
