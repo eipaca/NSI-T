@@ -25,22 +25,23 @@ class Graphe:
     def __repr__(self):
         return str(self.A)
 
-  def ajouter_sommet(self, x):
-        """ Ajoute un sommet x """
-        if not x in self.A:
-            self.A[x] = []
+    def ajouter_sommet(self, s):
+        if not s in self.A:
+            self.A[s] = []
 
-    def ajouter_arete(self, x, y):
-        """ Ajoute une arête entre les sommets x et y """
-        self.ajouter_sommet(x)
-        self.ajouter_sommet(y)
-        self.A[x].append(y)
-        if not self.oriente:
-            self.A[y].append(y)
+    def ajouter_arete(self, s1, s2):
+        """ Ajoute une arête entre les sommets s1 et s2 """
+        self.ajouter_sommet(s1)
+        self.ajouter_sommet(s2)
+        if s2 not in self.A[s1]:
+            self.A[s1].append(s2)
+        if not self.oriente:        
+            self.A[s2].append(s1)
 
-    def voisins(self, x):
-        """ Renvoie le tableau des voisins de x"""
-        return self.A[x]
+
+    def voisins(self, s):
+        """ Renvoie le tableau des voisins de s"""
+        return self.A[s]
 
 ``` 
 
@@ -60,14 +61,14 @@ G.ajouter_sommet("D")   # sommet D
 G.ajouter_sommet("E")   # sommet E
 G.ajouter_sommet("F")   # sommet F
 G.ajouter_sommet("G")   # sommet G
-G.ajouter_arc("A", "B")  
-G.ajouter_arc("A", "D")  
-G.ajouter_arc("B", "C")  
-G.ajouter_arc("C", "E")  
-G.ajouter_arc("C", "F")  
-G.ajouter_arc("D", "E")  
-G.ajouter_arc("E", "B")
-G.ajouter_arc("G", "C")  
+G.ajouter_arete("A", "B")  
+G.ajouter_arete("A", "D")  
+G.ajouter_arete("B", "C")  
+G.ajouter_arete("C", "E")  
+G.ajouter_arete("C", "F")  
+G.ajouter_arete("D", "E")  
+G.ajouter_arete("E", "B")
+G.ajouter_arete("G", "C")  
 ```
 
 A la différence des arbres binaires, dans les graphes il n'y a pas de notion de gauche ou droite ou d'un ordre quelconque entre les voisins d'un sommet,  ni de « racine » du graphe. On parcourt donc les voisins dans n'importe quel ordre. Selon l'ordre dans lequel on regardera les voisins de chaque sommet, on pourra faire des parcours complètement différents en partant d'un même sommet.
@@ -87,7 +88,7 @@ Le parcours en largeur du graphe ci-dessus est A-B-D-C-E-F, mais on peut aussi a
 Comme pour le parcours en largeur d'un arbre binaire, l'implémentation nécessite l'utilisation une structure de file : pour chaque sommet visité on met en attente dans une file (enfiler) les voisins qu'on n'a pas encore visités et qui ne sont pas déjà dans la file, puis on visite le premier sommet présent dans la file (défiler).
 
 
-![Etapes du parcours en largeur avec une file](assets/2-graphe-bfs-avec-file.png){width="100%" }
+![Étapes du parcours en largeur avec une file](assets/2-graphe-bfs-avec-file.png){width="100%" }
 
 
 
@@ -108,10 +109,10 @@ Voilà un exemple d'implémentation avec une file de type Python list.
         return parcours
 ```
 
-Chaque sommet entre une et une seule fois dans la file, la boucle ```while``` sera donc répétée $n$ fois ($n$ est l'ordre du graphe). Pour chaque sommet de la file : on suppose que le défilement  est à cout constant (ce qui n'est pas le cas avec ```.pop(0)``` sur le type ```list```)[^2.2]; alors la boucle ```for``` est répétée pour chaque voisin, donc une fois pour chaque arête. Si on nomme $m$ le nombre d'arête du graphe, **la complexité du parcours en largeur est en $O(n+m)$**.
+Chaque sommet entre une et une seule fois dans la file, la boucle ```while``` sera donc répétée $n$ fois ($n$ est l'ordre du graphe). Pour chaque sommet de la file : on suppose que le défilement  est à coût constant (ce qui n'est pas le cas avec ```.pop(0)``` sur le type ```list```)[^2.2]; alors la boucle ```for``` est répétée pour chaque voisin, donc une fois pour chaque arête. Si on nomme $m$ le nombre d'arête du graphe, **la complexité du parcours en largeur est en $O(n+m)$**.
 
 
-[^2.2]: Le type ```list``` n'est pas l'implémentation optimale d'une file car ```.pop(0)``` est en cout linéaire, une liste chaînée ou de la classe ```collections.deque``` serait mieux adaptée.
+[^2.2]: Le type ```list``` n'est pas l'implémentation optimale d'une file car ```.pop(0)``` est en coût linéaire, une liste chaînée ou de la classe ```collections.deque``` serait mieux adaptée.
 
 Il existe de nombreuses utilisations du parcours en largeur. Une première utilisation toute simple permet de vérifier si un graphe est fortement connexe[^2.3]  ou pas. Peut-on accéder à tous les sommets du graphe depuis de chaque sommet ?
 
@@ -183,7 +184,7 @@ Une autre utilisation typique du parcours en largeur est la coloration d'un grap
 ![Parcours en profondeur dans le graphe de l'exemple](assets/2-graphe-dfs-light-mode.png#only-light){width="80%" }
 ![Parcours en profondeur dans le graphe de l'exemple](assets/2-graphe-dfs-dark-mode.png#only-dark){width="80%" }
 
-Le parcours en profondeur du graphe ci-dessus est A-B-C-F-E-D, mais les arêtes étant choisies arbitrairement[^2.4], il faut s'attendre à des visites dans des ordres complétements différents. Ici, on pourrait tout aussi bien obtenir A-B-C-E-F-D ou A-D-E-B-C-F.
+Le parcours en profondeur du graphe ci-dessus est A-B-C-F-E-D, mais les arêtes étant choisies arbitrairement[^2.4], il faut s'attendre à des visites dans des ordres complètements différents. Ici, on pourrait tout aussi bien obtenir A-B-C-E-F-D ou A-D-E-B-C-F.
 
 [^2.4]: On peut aussi faire quelque chose de plus « fin » en utilisant un algorithme glouton qui va sélectionner le sommet non visité minimisant ou maximisant une fonction de score ou de coût. C'est le cas de A*, par exemple.
 
@@ -214,12 +215,12 @@ En cas d'un très grand nombre de sommets, la méthode récursive peut vite atte
 [^2.6]: 1000 par défaut en Python.
 
 
-![Etapes du parcours en profondeur avec une pile](assets/2-graphe-dfs-avec-pile.png){width="100%" }
+![Étapes du parcours en profondeur avec une pile](assets/2-graphe-dfs-avec-pile.png){width="100%" }
 
 
 Voilà un exemple d'implémentation avec une pile de type Python list[^2.7]. 
 
-[^2.7]: Ici, le type Python ```list``` est adapté à l'implémentation d'une pile car le cout des méthodes ```.append()``` et  ```.pop()``` est en $O(1)$.
+[^2.7]: Ici, le type Python ```list``` est adapté à l'implémentation d'une pile car le coût des méthodes ```.append()``` et  ```.pop()``` est en $O(1)$.
 
 ``` py
     def parcours_prof(self, depart):
@@ -246,7 +247,7 @@ Le parcours en profondeur est particulièrement bien adapté à la recherche de 
 
 ``` py
     def possede_cycle(self, depart):
-        """ Renvoie True si un cycle est detécté"""
+        """ Renvoie True si un cycle est détecté"""
         parcours = []
         pile = [depart]
         while pile != []:
