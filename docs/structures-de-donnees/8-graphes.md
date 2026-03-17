@@ -322,7 +322,7 @@ Implémentons un graphe avec un dictionnaire d'adjacence dans une classe `Graphe
 ``` py
 class Graphe:
     """ """
-    def __init__(self, oriente = True):
+    def __init__(self, oriente=True):
         self.A = {}                # Dictionnaire d'adjacence
         self.oriente = oriente     # Graphe orienté ou pas
 
