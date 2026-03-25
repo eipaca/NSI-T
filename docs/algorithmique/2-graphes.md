@@ -95,17 +95,17 @@ Comme pour le parcours en largeur d'un arbre binaire, l'implémentation nécessi
 Voilà un exemple d'implémentation avec une file de type Python list.
 
 ``` py
-    def parcours_larg(self, depart):
+    def BFS(self, depart):
         """ Renvoie le parcours en largeur à partir du sommet depart"""
         parcours = []   # liste des sommets visités
         file = [depart]   # file des sommets en attente
         while file != []:
-            s = file.pop(0)        # on défile
-            parcours.append(s)      # on l'ajoute au parcours
-            for v in self.voisins(s):
+            sommet = file.pop(0)        # on défile un sommet en attente
+            parcours.append(sommet)      # on ajoute le sommet au parcours
+            for voisin in self.voisins(sommet):
                 # on enfile les voisins qui n'ont pas été visités ou en attente
-                if v not in parcours and v not in file:
-                    file.append(v)
+                if voisin not in parcours and voisin not in file:
+                    file.append(voisin)
         return parcours
 ```
 
@@ -114,7 +114,7 @@ Chaque sommet entre une et une seule fois dans la file, la boucle ```while``` se
 
 [^2.2]: Le type ```list``` n'est pas l'implémentation optimale d'une file car ```.pop(0)``` est en coût linéaire, une liste chaînée ou de la classe ```collections.deque``` serait mieux adaptée.
 
-Il existe de nombreuses utilisations du parcours en largeur. Une première utilisation toute simple permet de vérifier si un graphe est fortement connexe[^2.3]  ou pas. Peut-on accéder à tous les sommets du graphe depuis de chaque sommet ?
+Il existe de nombreuses utilisations du parcours en largeur. Une première utilisation toute simple permet de vérifier si un graphe est fortement connexe[^2.3] ou pas. Peut-on accéder à tous les sommets du graphe depuis de chaque sommet ?
 
 [^2.3]: Un graphe orienté est fortement connexe si pour toute paire (x, y) de sommets, il existe un chemin de x à y et un chemin de y à x.
 
@@ -122,55 +122,47 @@ Il existe de nombreuses utilisations du parcours en largeur. Une première utili
     def fort_connexe(self):
         """ True si le graphe est fortement connexe"""
         for s in self.sommet:
-            if self.parcours_largeur(s) != self.ordre():
+            if self.BFS(s) != self.ordre():
                 return False
         return True
 ```
 
 ###	Application : Plus court chemin
 
-A l'issue du parcours en largeur, ``` parcours``` contient l'ensemble des sommets qui ont été visités, on peut ainsi vérifier facilement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. En revanche, l'ordre du parcours, donnant le chemin n'est pas mémorisé par ce type de parcours.
-
-Pour calculer la distance ou le plus court chemin entre deux sommets, il faut conserver le sommet qui permet d'accéder à chaque sommet, par exemple en utilisant  un dictionnaire ``` viens_de```  qui associe à chaque sommet visité au sommet qui a permis de l'atteindre (ou None pour au sommet de départ). Il suffit ensuite de partir de l'arrivée et de remonter jusqu'au sommet de départ pour calculer  la distance ou construire le chemin.
+A l'issue du parcours en largeur, ``` parcours``` contient l'ensemble des sommets qui ont été visités, on peut ainsi vérifier directement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Mais pour connaître quel est ce chemin il faut modifier l'algorithme pour conserver dans la file des sommets en attente le chemin qui a mené à chacun de ses sommets :
 
 ``` py
     def chemin(self, depart, arrivee):
-        """ Renvoie le chemin entre deux sommets"""
-        viens_de = {depart: None}  # dict des sommets avec le sommet qui permet d'y accéder
-        file = [depart]        # file des sommets en attente
-        while file != []:      # tant que la file n'est pas vide
-            s = file.pop(0)        # on défile le premier sommet
-            for v in self.voisins(s):
-                # on enfile les voisins qui n'ont pas été visités ou en attente
-                if v not in viens_de and v not in file:
-                    file.append(v)      # on l'enfile
-                    viens_de[v] = s     # et on note qu'on y accède depuis s
-        # on construit le chemin en partant d'arrivee
-        chemin = [arrivee]
-        if arrivee not in viens_de: return -1 # pas de chemin possible
-        s = viens_de[arrivee]
-        while s is not None:
-            chemin.insert(0, s)
-            s = viens_de[s]
-        return chemin
-``` 
+        """ Renvoie le chemin du sommet depart au sommet arrivee"""
+        parcours = []   # liste des sommet visités
+        file = [(depart, [])]   # file des couples (sommet, chemin) en attente
+        while file != []:
+            sommet, chemin = file.pop(0)        # on défile le couple (sommet, chemin)
+            parcours.append(sommet)      # on ajoute le sommet au parcours
+            # si on a trouvé un chemin qui mène à arrivee, inutile de continuer
+            if sommet == arrivee:
+                return chemin + [sommet]
 
-de même pour la distance:
+            for voisin in self.voisins(sommet):
+                # on enfile les voisins qui n'ont pas été visités ou en attente
+                if voisin not in parcours and voisin not in [s for s, c in file]:
+                    file.append((voisin, chemin  + [sommet]))
+        # si on n'a jamais trouvé le sommet arrivee, il n'y a pas de chemin
+        return None  
+```
+
+Comme l'algorithme explore les sommets niveau par niveau (d'abord tous les voisins directs, puis leurs voisins, etc.), il garantit de trouver le **chemin le plus court** , car il atteint toujours l'arrivée par le chemin le plus direct possible. La méthode `distance` entre deux sommets est donc tout simplement :
 
 ``` py
-   def distance(self, depart, arrivee):
-	….
-       # on calcule la distance en partant d'arrivee
-        distance = 0
-        if arrivee not in viens_de: return -1 # pas de chemin possible
-        s = viens_de[arrivee]
-        while s is not None:
-            distance = distance + 1
-            s = viens_de[s]
-        return distance
-``` 
+    def distance(self, depart, arrivee):
+        c = self.chemin(depart, arrivee)
+        if c is None:
+            return -1
+        else:
+            return len(c)
+```
 
-Une autre utilisation typique du parcours en largeur est la coloration d'un graphe: comment attribuer une « couleur » à chacun de ses sommets de manière que deux sommets reliés par une arête soient de couleurs différentes ?  On cherche souvent à utiliser le nombre minimal de couleurs, appelé nombre chromatique.
+
 
 ##	Parcours en profondeur (DFS)
 
@@ -193,7 +185,7 @@ Le parcours en profondeur du graphe ci-dessus est A-B-C-F-E-D, mais les arêtes 
 Comme pour les arbres, le parcours en  profondeur d'un graphe s'exprime naturellement de façon récursive, à la différence qu'**il faut marquer les sommets déjà visités** afin de ne pas y retourner depuis un autre sommet et risquer de « tourner en rond ». Le parcours termine lorsqu'il n'y a plus de sommets à parcourir.
 
 ``` py
-    def parcours_prof_rec(self, s, parcours=None):
+    def DFS_rec(self, s, parcours=None):
         """ Parcours en profondeur récursif à partir du sommet s
         parcours contient l'ensemble des sommets visités
         """
@@ -202,7 +194,7 @@ Comme pour les arbres, le parcours en  profondeur d'un graphe s'exprime naturell
         if s not in parcours:
             parcours.append(s)   # on l'ajoute au parcours
             for v in self.voisins(s):  # on parcourt chaque voisin
-                self.parcours_prof_rec(v, parcours)
+                self.DFS_rec(v, parcours)
         return parcours
 ```
 
@@ -223,42 +215,42 @@ Voilà un exemple d'implémentation avec une pile de type Python list[^2.7].
 [^2.7]: Ici, le type Python ```list``` est adapté à l'implémentation d'une pile car le coût des méthodes ```.append()``` et  ```.pop()``` est en $O(1)$.
 
 ``` py
-    def parcours_prof(self, depart):
+    def DFS(self, depart):
         """ Renvoie le parcours en profondeur au depart d'un sommet"""
         parcours = []   # listes des sommets visités
         pile = [depart]   # pile des sommets en attente
         while pile != []:
-            s = pile.pop()        # on dépile
-            parcours.append(s)  # on l'ajoute au parcours
-            for v in self.voisins(s):
+            sommet = pile.pop()        # on dépile un sommet
+            parcours.append(sommet)  # on ajoute le sommet au parcours
+            for voisin in self.voisins(sommet):
                 # on empile les voisins qui n'ont pas été visités ou en attente
-                if v not in parcours and v not in pile:
-                    pile.append(v)
+                if voisin not in parcours and voisin not in pile:
+                    pile.append(voisin)
         return parcours
 ```
 
 De la même façon que le parcours en largeur, la **complexité du parcours en profondeur est en $O(n+m)$** où $n$ est le nombre de sommets et $m$ le nombre d'arêtes.
 
-Comme pour le parcours en largeur, à la fin du parcours en profondeur, ```parcours``` contient l'ensemble des sommets qui ont été visités ce qui permet de vérifier facilement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Par contre, le parcours en profondeur est mal adapté pour déterminer la distance entre deux sommets ou le chemin le plus court entre deux sommets, car rien n'indique qu'un chemin trouvé est le plus court. 
+Comme pour le parcours en largeur, à la fin du parcours en profondeur, ```parcours``` contient l'ensemble des sommets qui ont été visités ce qui permet de vérifier facilement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Par contre, le parcours en profondeur est mal adapté pour déterminer la distance entre deux sommets ou  le plus court chemin entre deux sommets, car rien n'indique qu'un chemin trouvé est le plus court. 
 
 ###	Application : Recherche de cycles
 
 Le parcours en profondeur est particulièrement bien adapté à la recherche de cycles dans un graphe. Voici un exemple de détection de cycle qui utilise un parcours en profondeur (applicable aussi à un parcours en largeur). On empile les voisins jusqu'à ce qu'on retombe sur un sommet qui a déjà été parcouru
 
 ``` py
-    def possede_cycle(self, depart):
+    def cycle(self, depart):
         """ Renvoie True si un cycle est détecté"""
         parcours = []
         pile = [depart]
         while pile != []:
-            s = pile.pop()
-            if s in parcours:          # S a-t-il été parcouru ?
+            sommet = pile.pop()
+            if sommet in parcours:          # sommet a-t-il été parcouru ?
                 return True     # dans ce cas on a un cycle
-            parcours.append(s)
-            for v in self.voisins(s):
+            parcours.append(sommet)
+            for voisin in self.voisins(sommet):
                 # on empile les voisins qui n'ont pas été visités ou en attente
-                if v not in parcours:
-                    pile.append(v)
+                if voisin not in parcours:
+                    pile.append(voisin)
         return False
 
 ```

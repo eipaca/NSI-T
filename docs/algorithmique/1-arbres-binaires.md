@@ -43,7 +43,7 @@ arbre = AB(Noeud(5, n10, n6))
 
 De façon générale, pour calculer la taille d'un arbre, il suffit de compter le nombre de nœuds à partir de la racine en parcourant toutes les branches.
 
-Dans le cas d'un arbre binaire implémenté comme décrit ci-dessus, on peut créer une méthode récursive, `taille()`,  de la classe `Noeud`. Cette méthode renvoie la **1 plus somme des tailles des deux fils** d'un nœud. Ainsi on parcourt tout l'arbre en partant de sa racine.
+Dans le cas d'un arbre binaire implémenté comme décrit ci-dessus, on peut créer une méthode récursive, `taille()`,  de la classe `Noeud`. Cette méthode renvoie **1 plus somme des tailles des deux fils** d'un nœud. Ainsi on parcourt tout l'arbre en partant de sa racine.
 
 ![Un exemple de calcul de la taille d'arbre binaire](assets/1-ab-taille-light-mode.png#only-light){width="40%" align=right}
 ![Un exemple de calcul de la taille d'arbre binaire](assets/1-ab-taille-dark-mode.png#only-dark){width="40%" align=right}
@@ -102,7 +102,7 @@ Pour calculer la hauteur d'un arbre, il faut parcourir toutes ses branches à pa
 ![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-light-mode.png#only-light){width="40%" align=right}
 ![Un exemple de calcul de la hauteur d'arbre binaire](assets/1-ab-hauteur-dark-mode.png#only-dark){width="40%" align=right}
 
-Dans le cas arbre binaire implémenté comme décrit ci-dessus, on peut à nouveau créer une méthode récursive, `hauteur()`, de la classe `Noeud`. Cette méthode renvoie la **1 plus la plus grande hauteurs** de ses deux fils. :warning: Les feuilles hauteur ont une hauteur de 1 (avec la convention choisie ici).
+Dans le cas arbre binaire implémenté comme décrit ci-dessus, on peut à nouveau créer une méthode récursive, `hauteur()`, de la classe `Noeud`. Cette méthode renvoie **1 plus la plus grande hauteur** entre les deux fils d'un nœud. :warning: Les feuilles hauteur ont une hauteur de 1 (avec la convention choisie ici).
 
 Pour la classe `AB`, on ajoute une autre méthode appelée aussi `hauteur()` qui renvoie `0` pour l'arbre vide ou sinon la hauteur du Nœud racine.
 
@@ -338,7 +338,7 @@ Noter qu'il est aussi possible d'implémenter le parcours **préfixe** de façon
                 if n.gauche is not None: pile.append(n.gauche)  # on empile le fils gauche    
     ```
 
-Le parcours en largeur a un coût proportionnel à la taille du nombre de nœuds $n$ de l'arbre (pour chaque nœud supplémentaire, on rajoute 4 opérations). La **complexité du calcul de la hauteur est en $O(n)$**.
+Le parcours en profondeur a un coût proportionnel à la taille du nombre de nœuds $n$ de l'arbre (pour chaque nœud supplémentaire, on rajoute 4 opérations). La **complexité du parcours en profondeur est en $O(n)$**.
 
 ## 	Algorithmes sur les arbres binaires de recherche
 
