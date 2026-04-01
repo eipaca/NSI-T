@@ -85,7 +85,7 @@ G.ajouter_arete("G", "C")
 Un parcours en largeur du graphe ci-dessous est A-B-D-C-E-F, mais les voisins étant choisis arbitrairement ce n'est pas le seul, on peut aussi parcourir le graphe dans l'ordre A-D-B-E-C-F.
 
 
-Comme pour le parcours en largeur d'un arbre binaire, l'implémentation peut se faire avec une file : pour chaque sommet visité on enfile les voisins qui n'ont pas été encore visités et qui ne sont pas déjà dans la file, puis on defile le premier sommet de la file.
+Comme pour le parcours en largeur d'un arbre binaire, l'implémentation peut se faire avec une **file** : pour chaque sommet visité on enfile les voisins qui n'ont pas été encore visités et qui ne sont pas déjà dans la file, puis on defile le premier sommet de la file.
 
 
 ![Exemple de parcours en largeur d'un graphe avec une file](assets/2-graphe-bfs.gif){width="100%"}
@@ -207,7 +207,8 @@ Note : pour l'appel initial de la fonction avec le sommet de départ, ```parcour
 
 [^2.5]: Voir [https://docs.python.org/fr/3/tutorial/controlflow.html#default-argument-values](https://docs.python.org/fr/3/tutorial/controlflow.html#default-argument-values)
 
-En cas d'un très grand nombre de sommets, la méthode récursive peut vite atteindre sa limite[^2.6].  On peut alternativement utiliser une **approche itérative**, à l'aide d'une **pile*, de façon très similaire au parcours en largeur.
+
+En cas d'un très grand nombre de sommets, la méthode récursive peut vite atteindre sa limite[^2.6].  On peut alternativement utiliser une **approche itérative**, à l'aide d'une **pile**, de façon très similaire au parcours en largeur.
 
 [^2.6]: 1000 par défaut en Python.
 
