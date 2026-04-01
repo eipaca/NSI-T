@@ -88,8 +88,8 @@ Le parcours en largeur du graphe ci-dessus est A-B-D-C-E-F, mais on peut aussi a
 Comme pour le parcours en largeur d'un arbre binaire, l'implémentation nécessite l'utilisation une structure de file : pour chaque sommet visité on met en attente dans une file (enfiler) les voisins qu'on n'a pas encore visités et qui ne sont pas déjà dans la file, puis on visite le premier sommet présent dans la file (défiler).
 
 
-![Étapes du parcours en largeur avec une file](assets/2-graphe-bfs-avec-file.png){width="100%" }
 
+![Exemple de parcours en largeur d'un graphe avec une file](assets/2-graphe-bfs.gif){width="80%"}
 
 
 Voilà un exemple d'implémentation avec une file de type Python list.
@@ -182,6 +182,9 @@ Le parcours en profondeur du graphe ci-dessus est A-B-C-F-E-D, mais les arêtes 
 
 ![Parcours en profondeur dans le graphe de l'exemple qui tourne en rond](assets/2-graphe-dfs-tourne-en-rond-light-mode.png#only-light){width="40%" align=right }
 ![Parcours en profondeur dans le graphe de l'exemple qui tourne en rond](assets/2-graphe-dfs-tourne-en-rond-dark-mode.png#only-dark){width="40%" align=right }
+
+
+
 Comme pour les arbres, le parcours en  profondeur d'un graphe s'exprime naturellement de façon récursive, à la différence qu'**il faut marquer les sommets déjà visités** afin de ne pas y retourner depuis un autre sommet et risquer de « tourner en rond ». Le parcours termine lorsqu'il n'y a plus de sommets à parcourir.
 
 ``` py
@@ -207,7 +210,7 @@ En cas d'un très grand nombre de sommets, la méthode récursive peut vite atte
 [^2.6]: 1000 par défaut en Python.
 
 
-![Étapes du parcours en profondeur avec une pile](assets/2-graphe-dfs-avec-pile.png){width="100%" }
+![Exemple de parcours en profondeur d'un graphe avec une pile](assets/2-graphe-dfs.gif){width="80%"}
 
 
 Voilà un exemple d'implémentation avec une pile de type Python list[^2.7]. 
@@ -231,11 +234,11 @@ Voilà un exemple d'implémentation avec une pile de type Python list[^2.7].
 
 De la même façon que le parcours en largeur, la **complexité du parcours en profondeur est en $O(n+m)$** où $n$ est le nombre de sommets et $m$ le nombre d'arêtes.
 
-Comme pour le parcours en largeur, à la fin du parcours en profondeur, ```parcours``` contient l'ensemble des sommets qui ont été visités ce qui permet de vérifier facilement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Par contre, le parcours en profondeur est mal adapté pour déterminer la distance entre deux sommets ou  le plus court chemin entre deux sommets, car rien n'indique qu'un chemin trouvé est le plus court. 
+À la fin du parcours en profondeur, ```parcours``` contient l'ensemble des sommets qui ont été visités ce qui permet de vérifier facilement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Par contre, le parcours en profondeur est mal adapté pour déterminer la distance entre deux sommets ou  le plus court chemin entre deux sommets, car rien n'indique qu'un chemin trouvé est le plus court. 
 
 ###	Application : Recherche de cycles
 
-Le parcours en profondeur est particulièrement bien adapté à la recherche de cycles dans un graphe. Voici un exemple de détection de cycle qui utilise un parcours en profondeur (applicable aussi à un parcours en largeur). On empile les voisins jusqu'à ce qu'on retombe sur un sommet qui a déjà été parcouru
+Le parcours en profondeur est particulièrement bien adapté à la recherche de cycles dans un graphe. Voici un exemple de détection de cycle qui utilise un tel parcours : on empile les voisins jusqu'à ce qu'on retombe sur un sommet qui a déjà été parcouru.
 
 ``` py
     def cycle(self, depart):

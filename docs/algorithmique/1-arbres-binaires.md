@@ -160,6 +160,10 @@ L'implémentation se fait naturellement en utilisant une structure en file :
     - On note sa valeur dans le parcours
     - On enfile ses fils gauche et droite, dans cet ordre, s'ils existent. 
 
+![Parcours en largeur d'un AB avec une file](assets/1-ab-bfs.gif){width="80%"}
+
+
+
 La méthode est itérative, on n'utilise pas la récursivité de la classe `Noeud`, on peut donc l'ajouter au choix dans la classe `Noeud` ou dans la classe `AB` directement:
 
 ``` py
