@@ -203,10 +203,10 @@ Comme pour les arbres, le parcours en  profondeur d'un graphe s'exprime naturell
         return parcours
 ```
 
-Note : pour l'appel initial de la fonction avec le sommet de départ, ```parcours``` est vide. Si on veut définir une valeur par défaut par mot clé, on ne peut pas écrire ```def parcours_prof_rec(self, s, parcours=[])``` car le type list est de type muable ce qui engendrera des erreurs[^2.5]. 
+Note : pour l'appel initial de la fonction avec le sommet de départ, ```parcours``` est vide. Si on veut définir une valeur par défaut par mot clé, on ne peut pas écrire ```def DFS_rec(self, s, parcours=[])``` car le type list est de type muable ce qui engendrera des erreurs[^2.5]. 
 
 [^2.5]: Voir [https://docs.python.org/fr/3/tutorial/controlflow.html#default-argument-values](https://docs.python.org/fr/3/tutorial/controlflow.html#default-argument-values)
- 
+
 En cas d'un très grand nombre de sommets, la méthode récursive peut vite atteindre sa limite[^2.6].  On peut alternativement utiliser une **approche itérative**, à l'aide d'une **pile*, de façon très similaire au parcours en largeur.
 
 [^2.6]: 1000 par défaut en Python.
