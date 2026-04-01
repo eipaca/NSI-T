@@ -71,28 +71,27 @@ G.ajouter_arete("E", "B")
 G.ajouter_arete("G", "C")  
 ```
 
-A la différence des arbres binaires, dans les graphes il n'y a pas de notion de gauche ou droite ou d'un ordre quelconque entre les voisins d'un sommet,  ni de « racine » du graphe. On parcourt donc les voisins dans n'importe quel ordre. Selon l'ordre dans lequel on regardera les voisins de chaque sommet, on pourra faire des parcours complètement différents en partant d'un même sommet.
+À la différence des arbres binaires, dans les graphes il n'y a pas de notion de gauche ou droite ou d'un ordre quelconque entre les voisins d'un sommet,  ni de « racine » du graphe. On parcourt donc les voisins dans n'importe quel ordre. Selon l'ordre dans lequel on regardera les voisins de chaque sommet, on pourra faire des parcours complètement différents en partant d'un même sommet.
 
 ## Parcours en largeur (BFS)
 
 !!! abstract "Cours" 
     Le **parcours en largeur** ou **BFS** (*Breadth First Search*), consiste à visiter tous les sommets en « cercle concentriques » autour du sommet de départ : d'abord les sommets à une distance de 1, puis ceux à une distance de 2, etc. 
 
-A la différence du parcours en largeur dans un arbre binaire, il n'y a pas de notion de gauche et droite dans les sommets suivants, on les parcourt donc dans n'importe quel ordre.
 
-![Parcours en largeur dans le graphe de l'exemple](assets/2-graphe-bfs-light-mode.png#only-light){width="80%" }
-![Parcours en largeur dans le graphe de l'exemple](assets/2-graphe-bfs-dark-mode.png#only-dark){width="80%" }
+![Parcours en largeur dans le graphe de l'exemple](assets/2-graphe-bfs-light-mode.png#only-light){width="100%" }
+![Parcours en largeur dans le graphe de l'exemple](assets/2-graphe-bfs-dark-mode.png#only-dark){width="100%" }
 
-Le parcours en largeur du graphe ci-dessus est A-B-D-C-E-F, mais on peut aussi avoir A-D-B-E-C-F.
-
-Comme pour le parcours en largeur d'un arbre binaire, l'implémentation nécessite l'utilisation une structure de file : pour chaque sommet visité on met en attente dans une file (enfiler) les voisins qu'on n'a pas encore visités et qui ne sont pas déjà dans la file, puis on visite le premier sommet présent dans la file (défiler).
+Un parcours en largeur du graphe ci-dessous est A-B-D-C-E-F, mais les voisins étant choisis arbitrairement ce n'est pas le seul, on peut aussi parcourir le graphe dans l'ordre A-D-B-E-C-F.
 
 
+Comme pour le parcours en largeur d'un arbre binaire, l'implémentation peut se faire avec une file : pour chaque sommet visité on enfile les voisins qui n'ont pas été encore visités et qui ne sont pas déjà dans la file, puis on defile le premier sommet de la file.
 
-![Exemple de parcours en largeur d'un graphe avec une file](assets/2-graphe-bfs.gif){width="80%"}
+
+![Exemple de parcours en largeur d'un graphe avec une file](assets/2-graphe-bfs.gif){width="100%"}
 
 
-Voilà un exemple d'implémentation avec une file de type Python list.
+Voilà un exemple d'implémentation avec une file construite avec un tableau de type `list`.
 
 ``` py
     def BFS(self, depart):
@@ -129,7 +128,7 @@ Il existe de nombreuses utilisations du parcours en largeur. Une première utili
 
 ###	Application : Plus court chemin
 
-A l'issue du parcours en largeur, ``` parcours``` contient l'ensemble des sommets qui ont été visités, on peut ainsi vérifier directement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Mais pour connaître quel est ce chemin il faut modifier l'algorithme pour conserver dans la file des sommets en attente le chemin qui a mené à chacun de ses sommets :
+A l'issue du parcours en largeur, ``` parcours``` contient l'ensemble des sommets qui ont été visités, on peut ainsi vérifier directement s'il existe ou pas un chemin menant du sommet de départ vers un autre sommet. Mais pour connaître quel est ce chemin il faut modifier l'algorithme pour conserver dans la file des sommets en attente le chemin qui a mené à chacun des sommets :
 
 ``` py
     def chemin(self, depart, arrivee):
@@ -173,10 +172,13 @@ Comme l'algorithme explore les sommets niveau par niveau (d'abord tous les voisi
     L'exploration s'arrête quand tous les sommets ont été visités.
 
 
-![Parcours en profondeur dans le graphe de l'exemple](assets/2-graphe-dfs-light-mode.png#only-light){width="80%" }
-![Parcours en profondeur dans le graphe de l'exemple](assets/2-graphe-dfs-dark-mode.png#only-dark){width="80%" }
+Un parcours en profondeur du graphe ci-dessous est  A-B-C-F-E-D, mais les voisins étant choisis arbitrairement[^2.4] ce n'est pas le seul on peut aussi parcourir le graphe dans l'ordre A-B-C-E-F-D ou A-D-E-B-C-F.
 
-Le parcours en profondeur du graphe ci-dessus est A-B-C-F-E-D, mais les arêtes étant choisies arbitrairement[^2.4], il faut s'attendre à des visites dans des ordres complètements différents. Ici, on pourrait tout aussi bien obtenir A-B-C-E-F-D ou A-D-E-B-C-F.
+
+![Parcours en profondeur dans le graphe de l'exemple](assets/2-graphe-dfs-light-mode.png#only-light){width="100%" }
+![Parcours en profondeur dans le graphe de l'exemple](assets/2-graphe-dfs-dark-mode.png#only-dark){width="100%" }
+
+
 
 [^2.4]: On peut aussi faire quelque chose de plus « fin » en utilisant un algorithme glouton qui va sélectionner le sommet non visité minimisant ou maximisant une fonction de score ou de coût. C'est le cas de A*, par exemple.
 
@@ -210,7 +212,7 @@ En cas d'un très grand nombre de sommets, la méthode récursive peut vite atte
 [^2.6]: 1000 par défaut en Python.
 
 
-![Exemple de parcours en profondeur d'un graphe avec une pile](assets/2-graphe-dfs.gif){width="80%"}
+![Exemple de parcours en profondeur d'un graphe avec une pile](assets/2-graphe-dfs.gif){width="100%"}
 
 
 Voilà un exemple d'implémentation avec une pile de type Python list[^2.7]. 
