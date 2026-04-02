@@ -308,3 +308,150 @@ Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'app
     -   Une forme itérative ascendante de bas en haut, ou *bottom-up* :
         - On résout de façon **itérative** d'abord les sous-problèmes de la plus "petite taille", puis ceux de la taille "d'au dessus", etc. Au fur et à mesure on garde les résultats en mémoire.
         - On continue jusqu'à la taille voulue.
+
+##	Découpe d'une tige d'acier
+
+Problème : Soit une tige d'acier que l'on peut découper en plusieurs morceaux pour les revendre selon la grille de prix suivante :
+
+|Longueur (m)| 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|:--     |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-: |
+|Prix (€)   | 0 | 1 | 5 | 8 | 9 | 10| 17| 17| 20| 24| 30 |
+
+Comment découper la tige de façon optimale pour en tirer un revenu maximum ?
+
+Prenons, l'exemple d'une tige de longueur 4 m. On peut la découper de 8 façons différentes :
+
+![Découpe d'une tige de 4 m](assets/4-decoupe-tige-light-mode.png#only-light){width=80% }
+![Découpe d'une tige de 4 m](assets/4-decoupe-tige-dark-mode.png#only-dark){width=80% }
+
+On voit que le revenu maximum est donc 10 €, obtenu en découpant la tige en 2 morceaux de 2 m. Mais comment le calculer de façon systématique ? 
+
+Un algorithme glouton simple qui consiste à choisir en priorité les longueurs de morceaux les plus chers ne donne pas le meilleur revenu puisqu'il proposera toujours de garder les morceaux les plus longs possibles, ce sont les plus chers selon la grille de prix. Une approche plus fine consiste à prendre en compte le prix linéaire (ratio prix/longueur) pour optimiser les découpes. Reprenons la grille de prix de l'exemple précédant pour les morceaux jusqu'à 4 m :
+
+|Longueur (m)       | 0 | 1 |  2 | 3   | 4   |
+|:--                |:-:|:-:|:--:|:---:|:---:|
+|Prix (€)           | 0 | 1 |  5 | 8   | 9   |
+|Prix linéaire (€/m)| 0 | 1 | 2,5| 2,67| 2,25|
+
+Cet algorithme glouton commence par choisir le meilleur ratio prix/longueur, c'est une découpe d'un morceau de 3 m, mais ensuite il ne reste plus qu'un autre morceau de 1 m, qui lui a une très faible valeur linéaire ! C'est trop tard, l'algorithme ne peut pas revenir en arrière sur la découpe du premier morceau de 3 m, on obtient un revenu de 9 €, ce n'est pas le revenu maximum.
+
+ici encore, la programmation dynamique nous permet de trouver la solution optimale. 
+
+Appelons `R[n]` le revenu maximum d'une tige de longueur `n` et `Prix` le tableau de la grille de prix pour différentes longueurs. 
+
+Comment calculer `R[4]`, le revenu maximum pour découper une tige de longueur `4` m ?  On peut voir ce qu'il se passe si on fait une découpe d'un premier morceau de 1 m, ou bien de 2 m, ou encore de 3 m, ou même ne pas couper la tige, puis comparer le revenu obtenu dans chaque cas pour prendre le plus grand. `R[4]` est donc égal à la plus grande valeur entre :
+
+-	Le prix d'un morceau de longueur `1`  + le revenu maximum d'un tige de longueur `3` : `Prix[1] + R[3]`
+-	Le prix d'un morceau de longueur `2`  + le revenu maximum d'un tige de longueur `2` : `Prix[2] + R[2]`
+-	Le prix d'un morceau de longueur `3`  + le revenu maximum d'un tige de longueur `1` : `Prix[3] + R[1]`
+-	Le prix d'un morceau de longueur `4`  + le revenu maximum d'un tige de longueur `0`:  `Prix[4] + R[0]`
+
+![Découpe d'une tige de 4 m - éape 1](assets/4-decoupe-tige-arbre-1-light-mode.png#only-light){width=100% }
+![Découpe d'une tige de 4 m - étape 1](assets/4-decoupe-tige-arbre-1-dark-mode.png#only-dark){width=100% }
+
+La valeur de `R[0]` est immédiate, c'est le revenu maximum d'une tige de longueur de zéro, c'est-à-dire `0`. Mais comment calculer `R[1]`, `R[2]` et `R[3]` ? On applique le même principe.
+
+![Découpe d'une tige de 4 m - arbre complet](assets/4-decoupe-tige-arbre-2-light-mode.png#only-light){width=100% }
+![Découpe d'une tige de 4 m - arbre complet](assets/4-decoupe-tige-arbre-2-dark-mode.png#only-dark){width=100% }
+
+On voit qu'on a ici **découpé le problème en plusieurs sous-problèmes**. Par ailleurs, les résultats de certains sous-problèmes, par exemple le calcul de `R[2]`, sont réutilisés plusieurs fois. Les **sous-problèmes se chevauchent**. Ce sont les deux grands principes de la **programmation dynamique**.
+
+
+Généralisons cet algorithme à une tige de longueur `n ` pour écrire `R[n]` en considérant les deux cas :
+
+-	Si `n` est égal à `0`, alors la tige a une longueur de `0`, son revenu maximum est `0`.
+-   Sinon, `R[n]` est égal à la plus grande valeur entre les prix d'un morceau de longueur `i` (`prix[i]`) auquel on ajoute le revenu maximum d'une tige de longueur `n - i` (`R[n-i]`), calculés pour toutes les longueurs `i` possibles, c'est-à-dire toutes les valeurs de `i` allant de `1` à `n + 1` (exclus) sans dépasser la taille de la grille des prix :  `1 <= i < min(len(Prix), n + 1)`.
+
+On peut donc écrire la formule :  `R[n] = max(Prix[i] + R[n - i] pour 1 ≤ i  < min(len(Prix), n + 1)`  et `R[0] = 0`. 
+
+
+Traduisons maintenant cet algorithme de programmation dynamique en version descendante :
+
+``` py
+Prix = [0, 1 ,5, 8, 9, 10, 17, 17, 20, 24, 30]
+
+def R(n):
+    if n == 0: # Le revenu d'une tige de longueur 0 est 0
+        return 0
+
+    # Tableau des revenus max de toutes les découpes possibles de la grille de prix
+    decoupes = [Prix[i] + R(n - i) for i in range(1, min(len(Prix), n + 1))]
+
+    # On renvoie le plus grand revenu de toutes les découpes possibles
+    return max(decoupes)
+```
+
+
+Avec la programmation dynamique, tous les cas possibles ont été traités, et plusieurs cas ont renvoyé la même solution. On obtient donc une solution optimale au problème. 
+
+```
+>>> R(4)
+10
+```
+
+Mais testons maintenant cette fonction avec quelques valeurs plus grandes que `4`. Très vite la fonction prend beaucoup de temps pour s'exécuter. Essayons d'estimer la complexité temporelle de cette fonction.
+
+Si on appelle $T(n)$ le nombre d'opérations pour calculer le revenu maximum pour une tige de longueur $n$, il est égal aux nombres d'opérations de toutes les découpes de tiges de longueurs $n - i$, $T(n - i)$, pour toutes les valeurs de $i$ de la grille de prix, plus quelques opérations élémentaires.
+
+$T(n) = T(n-1) + T(n-2) + T(n-3) + ..T(n-i)+... + T(n - 10) + O(1)$,
+
+Si on suppose que pour les grandes valeurs de $n$, $i$ reste très petit en comparaison, par exemple ici il vaut entre 1 et 10, alors on peut écrire que :
+
+$T(n) \approx 10 \times T(n-1) + O(1)$
+
+A chaque fois que $n$ augmente de 1, le nombre d'opérations est multiplié par la taille de la grille de prix, plus quelques opérations. La complexité est donc exponentielle en $O(10^n)$ ici, ou de façon générale en $O({tailleGrillePrix}^n)$ pour une grille de prix de longueur $tailleGrillePrix$ . 
+
+Cette solution n'est donc pas utilisable pratiquement, mais on constate une fois de plus que les sous-problèmes se chevauchent, on peut donc garder les résultats des sous-problèmes en mémoire pour améliorer cette situation. Appliquons la technique de mémoïsation :
+
+```py
+Prix = [0, 1 ,5, 8, 9, 10, 17, 17, 20, 24, 30]
+
+memo = {0: 0}    # Le revenu d'une tige de longueur 0 est 0
+def R(n):
+    if n in memo:  return memo[n]
+        
+    # Tableau des revenus max de toutes les découpes possibles de la grille de prix
+    decoupes = [Prix[i] + R(n - i) for i in range(1, min(len(Prix), n + 1))]
+    
+    # On renvoie le plus grand revenu de toutes les découpes possibles
+    memo[n] = max(decoupes)
+    return memo[n]
+```
+
+L'ajout d'une variable globale dans la fonction permet de se convaincre facilement de l'effet sur la complexité temporelle :
+``` py
+
+cpt = 0
+def R(n):
+    global cpt
+    cpt + = 1
+    if n == 0: 
+        #...
+```
+
+Alors que la première fonction, sans mémoïsation, s'appelle 1024 fois pour le calcul de R(10) et 1 043 456 fois pour R(20), la version avec mémoïsation s'appelle seulement 56 et 156 pour les mêmes calculs ! Mais cela se fait aux dépends de la complexité spatiale.
+
+
+La version ascendante est une autre façon efficace de palier au problème de complexité temporelle :
+
+```py
+Prix = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30]
+
+revenus = {0: 0}    # dictionnaire {longueur m :  revenu max pour une tige de longueur m}
+
+def R(n):
+    # On remplit le dictionnaire pour toutes les longueurs m allant de 1 à n
+    for m in range(1, n + 1):
+        
+        # Tableau des revenus max de toutes les découpes possibles de m
+        decoupes = [Prix[i] + revenus[m - i] for i in range(1, min(len(Prix), m + 1))]
+        revenus[m] = max(decoupes)
+
+    return revenus[n]          # On renvoie la valeur pour la clé correspondant à la longueur n
+
+```
+
+
+Ici, aucun soucis avec la complexité de la fonction (ni de limite de pile d'appels récursifs), la fonction s'exécute instantanément même avec de très grandes valeurs de `n`. En effet, la fonction fait une double boucle imbriquée, sur la longueur de la tige $n$, et sur la longueur de la grille des prix. La complexité est donc simplement linéaire en $O(n \times tailleGrillePrix)$, ou plus simplement en $O(n)$ si on considère une grille de prix de petite taille.
+
+        
