@@ -366,11 +366,14 @@ Ce qui peut s'écrire en ordre de grandeur : $T_n = T_{n-1} + O(1)$. La complexi
 !!! abstract "Cours" 
     La complexité temporelle d'une fonction récursive se calcule en trouvant une relation entre le nombre d'opérations $T_n$ d'un problème de taille $n$ et $T_{n-1}$. Cette relation (de récurrence) permet de déduire $O(n)$.
 
-    |Relation entre Tn et Tn-1|	Complexité|	Désignation|
+|
+
+    |Relation entre Tn et Tn-1|	Complexité|	Exemple|
     |:-:|:-:|:-|
-    |$T_n  = T_{n-1}  + O(1)$|$O(n)$|Linéaire|
-    |$T_n  = T_{n-1}  + O(n)$|$O(n^2)$|Quadratique|
-    |$T_n  = 2 \times T_{n-1} + O(1)$|$O(2^n)$|Exponentielle|
+    |$T_n  = T_{n-1}  + O(1)$|Linéaire en $O(n)$|```def fact(n):```<br>&nbsp;&nbsp;&nbsp;&nbsp;```if n == 0:  return 1```<br>&nbsp;&nbsp;&nbsp;&nbsp;```return n * fact(n - 1)```|
+    |$T_n  = T_{n-1}  + O(n)$|Quadratique en $O(n^2)$|```def somme_carre(n):```<br>&nbsp;&nbsp;&nbsp;&nbsp;```if n == 0: return 0```<br>&nbsp;&nbsp;&nbsp;&nbsp;```n_carre = 0```<br>&nbsp;&nbsp;&nbsp;&nbsp;```for _ in range(n):```<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;```n_carre += n```<br>&nbsp;&nbsp;&nbsp;&nbsp;```return n_carre + somme_carre(n - 1)```|
+    |$T_n  = 2 \times T_{n-1} + O(1)$|Exponentielle $O(2^n)$|```def fibo(n):```<br>&nbsp;&nbsp;&nbsp;&nbsp;```if n <= 1: return n```<br>&nbsp;&nbsp;&nbsp;&nbsp;```return fibo(n - 1) + fibo(n - 2)```|
+
 
 
 
