@@ -110,8 +110,11 @@ et en notation textuelle :
 A noter :
 
 -	deux relations ne peuvent pas avoir le même nom dans une base de données (car une relation est identifiée par son nom), et
+
 -	deux attributs ne peuvent pas avoir le même nom dans une relation, mais
+
 -	deux attributs appartenant à des relations différentes peuvent avoir le même nom sans être liés. Par exemple on aurait pu utiliser Nom au lieu de Nom_pays dans la relation Pays.
+
  
 ## Les contraintes d'intégrité
 
@@ -121,16 +124,21 @@ A noter :
 ###	Contraintes d’entité ou unicité des clés
 
 !!! abstract "Cours"
-    Il ne peut y avoir de doublons dans une relation. Toute relation doit posséder un identifiant unique appelé clé primaire.
-
-Le problème typique est l'utilisation de l'attribut Nom dans notre entité Auteur. Cet attribut ne peut définir de manière unique un auteur car plusieurs auteurs peuvent avoir le même nom, ce ne peut pas être une clé primaire. On utilise un attribut Num_auteur qui doit être différent pour chaque tuple afin que chaque auteur soit identifié par un numéro unique. 
+    Chaque relation doit avoir une **clé primaire, qui identifie de façon unique chaque tuple** de la relation. 
+	
+Il ne peut pas y avoir de doublons dans une relation. Le problème typique est l'utilisation de l'attribut Nom dans notre entité Auteur. Cet attribut ne peut définir de manière unique un auteur car plusieurs auteurs peuvent avoir le même nom, ce ne peut pas être une clé primaire. On utilise un attribut Num_auteur qui doit être différent pour chaque tuple afin que chaque auteur soit identifié par un numéro unique. 
 
 ###	Contraintes référentielles
 
 Les clés primaires distinguent de manière unique chaque tuple mais peuvent également servir de références dans d’autres relations (clé étrangères). Il faut veiller à ce que les références soient effectives. 
 
 !!! abstract "Cours"
-    Il n'est pas possible de définir une entité qui fait référence par une clé étrangère à une entité qui n'existe pas.
+    Une clé étrangère doit correspondre à une valeur existante de la clé primaire de la table référencée.
+	
+Autrement dit on, on ne peut pas avoir de « références orphelines » :
+
+- On ne peut pas ajouter un tuple dans une relation qui possède une clé étrangère si elle fait référence à une clé primaire qui n'existe pas.
+- Et réciproquement, on ne peut pas supprimer un tuple d'une relation s'il existe des tuples dans une autre relation qui lui font référence.
 
 Reprenons la relation `Ecrit(Num_ISBN, Num_auteur)` où  `No_ISBN` et `Num_auteur` sont des clés étrangères. Tous les livres doivent avoir un auteur connu. Pour ajouter un nouveau livre, il faut que l’auteur soit existant et respectivement il doit être impossible de supprimer un auteur si un de ses livres est encore présent dans `Livre`.
 
@@ -146,12 +154,12 @@ Les noms des types de données peuvent varier d'un SGBD à l'autre, par exemple 
 !!! abstract "Cours"
     En plus du type de données, le **domaine peut contenir des contraintes supplémentaires ou contraites utilisateurs** sur les données afin d'éviter les erreurs de saisies. 
 
-Par exemple, le domaine :
+Par exemple, le domaine peut préciser :
 
-- une donnée doit appartenir à une liste (liste des communes de France par exemple) ; 
+- qu'une donnée doit appartenir à une liste (liste des communes de France par exemple) ; 
 
-- une donnée numérique doit être bornée (âge d'un personne) ; 
+- qu'une donnée numérique doit être bornée (âge d'un personne) ; 
 
-- possède un nombre de caractères défini à l'avance (numéro de sécurité sociale, code postal) ; 
+- qu'une donnée possède un nombre de caractères défini à l'avance (numéro de sécurité sociale, code postal) ; 
 
 - etc.
