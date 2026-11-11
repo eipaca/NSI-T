@@ -7,8 +7,8 @@
     
     Une liste (non vide) est composée de deux parties :
 
-    -	La **tête** (notée *car*[^3.2]), qui est le **dernier élément ajouté** à la liste ;
-    -   La **queue** (note *cdr*[^3.3] ), qui contient le reste de la liste, elle-même une liste.
+    -	La **tête** (parfois appelée *car*[^3.2]), qui est le **dernier élément ajouté** à la liste ;
+    -   La **queue** (parfois appelée *cdr*[^3.3] ), qui contient le reste de la liste, elle-même une liste.
 
     La **longueur** de la liste est le nombre d'éléments composant la liste. Une liste vide a une longueur zéro.
 
@@ -43,7 +43,7 @@ Il est possible d'ajouter quelques primitives supplémentaires, par exemple :
 
 ##	Implémentation
 
-La liste est un type abstrait, son implémentation peut se faire sous différentes formes, en particulier les tableaux et les listes chaînées.
+La liste est un type abstrait, son implémentation peut se faire sous de nombreuses formes, par exemple avec des p-uplets imbriqués, en utilisant un tableau ou une liste chaînée.
 
 :warning: **Attention à ne pas confondre type abstrait de données liste avec le type `list` de Python**. Le type `list` Python est en réalité un **tableau dynamique**, ce n'est qu'une forme d'implémentation particulière de la structure de données abstraite liste mais ce n'est pas la seule.
 
@@ -120,12 +120,12 @@ def chercher(L, elem):
 ```
 
 
-
+Pour aller plus loin, il est aussi possible d'écrire en programmation orientée objet une classe `Liste` avec des méthodes similaire.
 
 
 ###	Avec un tableau de taille fixe
 
-Un **tableau** en informatique est en général représenté par une suite de "cases mémoire", toutes de mêmes tailles, contenant les différents éléments du tableau.  Une plage d'adresses mémoire est réservée afin de stocker tous les éléments.
+Un **tableau** informatique est en général représenté par une suite de "cases mémoire", toutes de mêmes tailles, contenant les différents éléments du tableau.  Une plage d'adresses mémoire est réservée afin de stocker tous les éléments.
 
 ![Cases mémoire d'un tableau](assets/3-liste-tableau-cases-memoire-light-mode.png#only-light){width="50%"}
 ![Cases mémoire d'un tableau](assets/3-liste-tableau-cases-memoire-dark-mode.png#only-dark){width="50%"}
@@ -219,17 +219,20 @@ Il est aussi possible de rajouter quelques primitives pour :
 - 	insérer un élément en i-ème position ;
 -	etc.
 
-Pour aller plus loin, il est aussi possible d'écrire une classe `Liste` avec des méthodes similaire.
+Pour aller plus loin, il est aussi possible d'écrire en programmation orientée objet une classe `Liste` avec des méthodes similaire.
 
 ###  Avec le type `list` de Python
 
-Dans de nombreux langages informatiques, un tableau est une structure de données de taille fixe[^3.4]. Pour insérer des données supplémentaires, il faut créer un nouveau tableau plus grand et déplacer les éléments du premier tableau vers le second tout en ajoutant la donnée au bon endroit.  C'est la notion de **tableau dynamique**, c'est à dire un tableau dont la taille peut varier. 
+Dans de nombreux langages informatiques, un tableau est une structure de données de taille fixe[^3.4]. Pour insérer des données supplémentaires, 
+il faut créer un nouveau tableau plus grand et déplacer les éléments du premier tableau vers le second tout en ajoutant la donnée au bon endroit.  
+C'est la notion de **tableau dynamique**, c'est à dire un tableau dont la taille peut varier. 
 
 [^3.4]:
-    Par exemple pour déclarer un tableau de 4 entiers en C, il faut écrire `int myNumbers[4];`.
+    Par exemple pour déclarer un tableau `myNumbers` de 4 entiers en C, il faut écrire `int myNumbers[4];`.
 
 !!! abstract "Cours"
-    En Python le **type `list`** est un **tableau dynamique**. C'est une forme d'implémentation particulière de la structure de données abstraite de liste (mais ce n'est pas la seule). :warning: Attention de ne pas confondre les deux termes.
+    En Python le **type `list`** est un **tableau dynamique**. C'est une forme d'implémentation particulière de la structure de données abstraite 
+	de liste. :warning: Attention de ne pas confondre les deux termes.
 
 Le type `list` en Python offre toutes les primitives de base d'une liste :
 
@@ -254,12 +257,12 @@ True
 
 Notons qu'ici la tête est à la première position de `L`. 
 
-Le type `list` propose bien d'autres opérateurs que les listes : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc. Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
+Le type `list` Python propose bien d'autres opérateurs qu'une simple liste : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc. Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
 
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-light-mode.png#only-light){width="25%" align=right}
 ![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-dark-mode.png#only-dark){width="25%" align=right}
 
-Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position de ce tableau Python, avec la méthode `insert()` :
+Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position du tableau Python, avec la méthode `insert()` :
 
 ``` py
 >>> L
@@ -269,7 +272,7 @@ Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste
 ['e', 'd', 'c', 'b', 'a']
 ```
 
-c'est une opération qui est en réalité très couteuse, car elle consiste à :
+C'est une opération qui est en réalité très couteuse, car elle consiste à :
 
 1. agrandir le tableau ; 
 2. déplacer tous les éléments du tableau d'une case vers la droite, en commençant par la fin ; 
