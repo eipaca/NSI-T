@@ -132,7 +132,7 @@ Il faut parcourir tous les éléments de la pile, la complexité est en \(\mathc
 
 
 
-Souvent, il est nécessaire de créer une pile temporaire pour dépiler les éléments, puis les rempiler dans la pile initiale en gardant l'ordre du début. Par exemple, pour supprimer toutes les valeurs `a` de la pile `p`, on peut écrire le programme suivant :
+Souvent, il est nécessaire de créer une pile temporaire pour dépiler les éléments, puis les rempiler dans la pile initiale en gardant l'ordre du début. Par exemple, pour supprimer toutes les valeurs `'a'` de la pile `p`, on peut écrire le programme suivant :
 
 ``` py
 temp = Pile()
