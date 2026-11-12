@@ -14,7 +14,6 @@
 
 
 
-
 Le fonctionnement est donc celui d'une **pile d'assiettes** : on ajoute des assiettes sur la pile, et on les récupère dans l'ordre inverse, en commençant par la dernière ajoutée. 
 
 
@@ -56,81 +55,130 @@ La pile est un type abstrait, son implémentation peut se faire sous différente
 
 ###	Avec une liste chaînée
 
-Sur la même idée que la classe `ListeChainee` vue précédemment, il est possible de peut créer une classe `Pile` de toute pièce basée sur la class `Cellule`.
+Sur la même idée que les classes  `Maillon` et  `ListeChainee` vues précédemment, il est possible d'implémenter un pile avec deux classes `Cellule` et  `Pile`.
+
 
 ``` py
 class Cellule:
     '''Cellule de Pile '''
 
-    def __init__(self, v, d=None):
+    def __init__(self, valeur, dessous=None):
         self.valeur = v      # Valeur de la Cellule
-        self.dessous = d     # Cellule de dessous
+        self.dessous = d     #  None ou la cellule de dessous
 
 class Pile:
     '''Pile sous forme d'une liste chainee de cellules'''
+
     def __init__(self):
+        """ Crée une pile vide"""
         self.sommet = None
-        self._hauteur = 0          # Nombre d'élément de la Pile
 
     def est_vide(self):
+        """Renvoie True si la liste est vide, False sinon"""
         return self.sommet == None
 
-    def empiler(self, v):
-        self.sommet = Cellule(v, self.sommet)
-        self._hauteur += 1
+    def empiler(self, x):
+        """Empile la valeur x au sommet de la pile"""
+        self.sommet = Cellule(x, self.sommet)
+        
 
     def depiler(self):
-        if self.est_vide(): raise IndexError("la pile est vide")
+        """Depile le sommet et renvoie la valeur"""
+        if self.est_vide(): 
+            raise IndexError("la pile est vide")
         v = self.sommet.valeur
         self.sommet = self.sommet.dessous
-        self._hauteur -= 1
         return v
-
-    def taille(self):
-        return self._hauteur
 ```
 
+
+
+![Pile c, b, a en POO avec deux classes](assets/4-pile-light-mode.png#only-light){width="40%" align=right}
+![Pile c, b, a en POO avec deux classes](assets/4-pile-light-mode.png#only-dark){width="40%" align=right}
+
 Créons maintenant une instance de `Pile` :
+
 ``` py
 >>> p = Pile()
->>> p.taille()
-0
+>>> p.est_vide()
+True
 >>> p.empiler('a')
 >>> p.empiler('b')
 >>> p.empiler('c')
+```
+
+Puis dépilons le sommet :
+
+``` py
 >>> p.depiler()
 'c'
->>> p.taille()
-2
 ```
+
+
+
+On peut maintenant ajouter une méthode `taille(self)` qui parcourt la pile pour calculer son nombre d'éléments : 
+
+``` py
+    def taille(self):
+        """ Renvoie le nombre d'éléments de la pile"""
+        compteur = 0
+        actuel = self.sommet   # On commence au sommet
+        while actuel is not None:
+            compteur += 1
+            actuel = actuel.dessous  # On passe à l'élément en dessous
+        return compteur
+```
+Il faut parcourir tous les éléments de la pile, la complexité est en \(\mathcal{O}(n)\).
+
+
+
+Souvent, il est nécessaire de créer une pile temporaire pour dépiler les éléments, puis les rempiler dans la pile initiale en gardant l'ordre du début. Par exemple, pour supprimer toutes les valeurs `a` de la pile `p`, on peut écrire le programme suivant :
+
+``` py
+temp = Pile()
+# on depile toutes les valeurs p
+while not p.est_vide():
+    v = p.depiler()
+    # si la valeur n'est pas égale à 'a', on la garde en l'empilant dans temp
+    if v != 'a':     
+        temp.empiler()
+# on rempile toutes les valeurs de temp dans p
+while not temp.est_vide():
+    p.empiler(temp.depiler())
+```
+
+Pour aller plus loin,  il est possible de définir des méthodes pour vérifier la présence d'une valeur dans la pile, trier une pile, concaténer deux piles, etc. 
+
+
+
 ###	Avec le type `list` de Python
 
-Il est aussi possible de créer très facilement une classe `Pile` en utilisant le type `list` avec les méthodes `pop()` et `append()` :
+Il est aussi possible de créer très facilement une classe `Pile` en utilisant le type `list` de Python avec les méthodes `pop()` et `append()` :
 
 ``` py
 class Pile:
     ''' structure de Pile en utilisant le type list'''
 
     def __init__(self):
-        self.pile = []
+        self.P = []
 
     def est_vide(self):
-        return len(self.pile) == 0
+        return len(self.P) == 0
 
     def empiler(self, v):
-        self.pile.append(v)
+        self.P.append(v)
 
     def depiler(self):
         if self.est_vide(): raise IndexError("la pile est vide")
-        return self.pile.pop()
+        return self.P.pop()
 
     def taille(self):
-        return len(self.pile)
+        return len(self.P)
 
     def __str__(self):
         ch = ''
-        for v in self.pile:
-            ch = ch + "|\t" + str(v) + "\t|\n"   # Affiche les élements de la pile : |  v  |
+        for v in self.P:
+            ch = ch + "|\t" + str(v) + "\t|\n"   # Affiche les éléments de la pile : |  v  |
         ch = ch + "---------"
         return ch
 ```
@@ -156,7 +204,7 @@ False
 >>>
 ```
 
-Enregistons cette classe de `Pile` dans un fichier "pile.py", elle nous sera utile par la suite.
+Enregistrons cette classe de `Pile` dans un fichier "pile.py", elle nous sera utile par la suite.
 
 
 Pour faire encore plus simple, programmons une pile avec la même idée, mais sans utiliser la POO : 
@@ -165,22 +213,23 @@ Pour faire encore plus simple, programmons une pile avec la même idée, mais sa
 def creer():
     return  []
 
-def est_vide(p):
-    return len(p) == 0
+def est_vide(P):
+    return len(P) == 0
 
-def empiler(p, v):
-    p.append(v)         # Inutile de renvoyer p, le type list est muable
+def empiler(P, v):
+    P.append(v)         # Inutile de renvoyer P, le type list est muable
 
-def depiler(p):
-    if est_vide(p): raise IndexError("la pile est vide")
-    return p.pop()
+def depiler(P):
+    if est_vide(P):
+        raise IndexError("la pile est vide")
+    return P.pop()
 
-def taille(p):
-    return len(p)
+def taille(P):
+    return len(P)
 
-def afficher(p):
-    for v in p:
-        print("|\t", v, "\t|\n")   # Affiche les élements de la pile : |  v  |
+def afficher(P):
+    for v in P:
+        print("|\t", v, "\t|\n")   # Affiche les éléments de la pile : |  v  |
     print("---------")
         
 ```

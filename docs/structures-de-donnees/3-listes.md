@@ -407,7 +407,7 @@ Ajoutons immédiatement la première primitive qui vérifie si une liste est vid
 
 ``` py
     def est_vide(self):
-        """Renvoie True si la liste est vide"""
+        """Renvoie True si la liste est vide, False sinon"""
         return self.tete is None
 ```
 
@@ -462,7 +462,7 @@ Pour connaître la taille, il n'y a pas de raccourci : il faut démarrer à la t
 ![Taille d'une liste chaînée c, b, a en POO](assets/3-liste-chainee-6-dark-mode.png#only-dark){width="80%"}
 
 
-Il faut parcourir tous les élément de la liste, la complexité est en \(\mathcal{O}(n)\).
+Il faut parcourir tous les éléments de la liste, la complexité est en \(\mathcal{O}(n)\).
 
 
 De la même façon, la méthode `__str__()` permet d'afficher toute la liste avec `print()` en parcourant toute la liste :
