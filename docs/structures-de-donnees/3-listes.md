@@ -56,7 +56,7 @@ Une liste peut être implémentée sous la forme :
 
 Prenons par exemple une liste vide implémentée par le tuple `()`, et insérons l'élément `'a'` en tête, la nouvelle liste obtenue est `('a', ())`, sa tête est `'a'` et sa queue `()`. Insérons maintenant un élément `'b'` dans cette liste, la nouvelle liste obtenue est `('b', ('a', ()))`, sa tête est `'b'` et sa queue `('a', ())`. Puis insérons successivement les éléments `'c'` et `'d'`, la nouvelle liste  est `('d', ('d', ('b', ('a', ()))))`, la tête est `'d'` et la queue `('d', ('b', ('a', ())))`.
 
-Ecrivons en Python ces premières primitives de liste qui permettent de créer une liste vide puis d'insérer un élément en tête de liste :
+Écrivons en Python ces premières primitives de liste qui permettent de créer une liste vide puis d'insérer un élément en tête de liste :
 
 
 ``` py
@@ -66,14 +66,14 @@ def creer():
 def est_vide(L):
     return L == ()
 
-def inserer_tete(L, e):
-    return (e, L)
+def inserer_tete(L, x):
+    return (x, L)
 
-ma_liste = creer()
-ma_liste = inserer_tete(ma_liste, 'a')
-ma_liste = inserer_tete(ma_liste, 'b')
-ma_liste = inserer_tete(ma_liste, 'c')
-ma_liste = inserer_tete(ma_liste, 'd')
+l = creer()
+l = inserer_tete(l, 'a')
+l = inserer_tete(l, 'b')
+l = inserer_tete(l, 'c')
+l = inserer_tete(l, 'd')
 ```
 
 Ajoutons quelques primitives supplémentaires :
@@ -156,22 +156,24 @@ def creer_liste(longueur):
 La primitive pour insérer un élément en tête de liste est alors :
 
 ``` py
-def inserer_tete(L, elem):
-    # verifions si la liste est pleine
-    if L[0] == len(L) - 1: raise IndexError('La liste est déjà pleine')
+def inserer_tete(L, x):
+    # Vérifions si la liste est pleine
+    if L[0] == len(L) - 1: 
+        raise IndexError('La liste est déjà pleine')
     else:
         for i in range(L[0], 0, -1):
-            L[i+1]= L[i]
-        L[1] = elem
+            L[i + 1] = L[i]
+        L[1] = x
         L[0] += 1
 ```
 
 A noter qu'il est inutile de renvoyer la valeur de `L` car c'est une variable de type `list`, donc muable.
 
 ``` py
-inserer_tete(L, 'a')
-inserer_tete(L, 'b')
-inserer_tete(L, 'c')
+>>> l =  creer_liste(4)
+>>> inserer_tete(l, 'a')
+>>> inserer_tete(l, 'b')
+>>> inserer_tete(l, 'c')
 ```
 
 Une fonction pour afficher la liste s'écrit :
@@ -179,7 +181,7 @@ Une fonction pour afficher la liste s'écrit :
 ``` py
 def afficher(L):
     for i in range(1, L[0] + 1):
-        print(L[i], end = "-")
+        print(L[i], end="-")
     print("")
 ```
 
@@ -187,11 +189,12 @@ Ajoutons une primitive permettant de supprimer la tête de la liste :
 
 ``` py
 def supprimer_tete(L):
-    # vérifions d'abord que la liste n'est pas vide
-    if L[0] == 0: raise IndexError('La liste est déjà vide')
+    # Vérifions d'abord que la liste n'est pas vide
+    if L[0] == 0: 
+        raise IndexError('La liste est déjà vide')
     else:
         for i in range(1, L[0] ):
-            L[i]= L[i+1]
+            L[i]= L[i + 1]
         L[L[0]] = None
         L[0] -= 1
 ```
@@ -199,17 +202,17 @@ def supprimer_tete(L):
 Testons le résultat :
 
 ``` py
-L = creer_liste(5)
-inserer_tete(L, 'a')
-inserer_tete(L, 'b')
-inserer_tete(L, 'c')
-inserer_tete(L, 'd')
-inserer_tete(L, 'e')
-afficher(L)
-supprimer_tete(L)
-supprimer_tete(L)
-supprimer_tete(L)
-afficher(L)
+>>> l = creer_liste(5)
+>>> inserer_tete(l, 'a')
+>>> inserer_tete(l, 'b')
+>>> inserer_tete(l, 'c')
+>>> inserer_tete(l, 'd')
+>>> inserer_tete(l, 'e')
+>>> afficher(l)
+>>> supprimer_tete(l)
+>>> supprimer_tete(l)
+>>> supprimer_tete(l)
+>>> afficher(l)
 ```
 
 Il est aussi possible de rajouter quelques primitives pour :
@@ -223,8 +226,8 @@ Pour aller plus loin, il est aussi possible d'écrire en programmation orientée
 
 ###  Avec le type `list` de Python
 
-Dans de nombreux langages informatiques, un tableau est une structure de données de taille fixe[^3.4]. Pour insérer des données supplémentaires, 
-il faut créer un nouveau tableau plus grand et déplacer les éléments du premier tableau vers le second tout en ajoutant la donnée au bon endroit.  
+Dans de nombreux langages informatiques, un tableau est une structure de données de taille fixe[^3.4]. Pour insérer des données supplémentaires, il faut créer un nouveau tableau plus grand et déplacer les éléments du premier tableau vers le second tout en ajoutant la donnée au bon endroit.  
+
 C'est la notion de **tableau dynamique**, c'est à dire un tableau dont la taille peut varier. 
 
 [^3.4]:
@@ -237,42 +240,42 @@ C'est la notion de **tableau dynamique**, c'est à dire un tableau dont la taill
 Le type `list` en Python offre toutes les primitives de base d'une liste :
 
 ``` py
->>> L = []       # creer une liste 
->>> L == []       # est_vide()
+>>> l = []       # creer une liste 
+>>> l == []       # est_vide()
 True
->>> L.insert(0, 'a')         # inserer_tete()
->>> L.insert(0, 'b')         # inserer_tete()
->>> L.insert(0, 'c')         # inserer_tete()
->>> L.insert(0, 'd')         # inserer_tete()
->>> L.insert(0, 'e')         # inserer_tete()
->>> len(L)       # taille()
+>>> l.insert(0, 'a')         # inserer_tete()
+>>> l.insert(0, 'b')         # inserer_tete()
+>>> l.insert(0, 'c')         # inserer_tete()
+>>> l.insert(0, 'd')         # inserer_tete()
+>>> l.insert(0, 'e')         # inserer_tete()
+>>> len(l)       # taille()
 5
->>> L.pop(0)       # supprimer_tete()
+>>> l.pop(0)       # supprimer_tete()
 'e'
->>> L[0]       # tete()
+>>> l[0]       # tete()
 'd'
->>> L[1:]       # queue()
+>>> l[1:]       # queue()
 ['c', 'b', 'a']
 ```
 
-Notons qu'ici la tête est à la première position de `L`. 
+Notons qu'ici la tête est à la première position de `l`. 
 
-Le type `list` Python propose bien d'autres opérateurs qu'une simple liste : extraction d'une sous-liste (`L[debut:fin]`), remplacement d'un élément (`L[i] = nouvelle_valeur`), tri (`L.sort()`), retournement (`L.reverse()`), suppression d'un élément (`L.pop(i)`), application d'une fonction (`map(fonction, L`), etc. Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
+Le type `list` Python propose bien d'autres opérateurs qu'une simple liste : extraction d'une sous-liste (`l[debut:fin]`), remplacement d'un élément (`l[i] = nouvelle_valeur`), tri (`l.sort()`), retournement (`l.reverse()`), suppression d'un élément (`l.pop(i)`), application d'une fonction (`map(fonction, l`), etc. Néanmoins, s'il peut sembler la solution miracle à de nombreux besoins, les tableaux dynamiques ne sont pas efficaces pour insérer ou supprimer un élément en plein milieu du tableau.
 
-![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-light-mode.png#only-light){width="25%" align=right}
-![Insérer un élement dans un tableau de type list Python](assets/3-inserer-tableau-list-python-dark-mode.png#only-dark){width="25%" align=right}
+![Insérer un élément dans un tableau de type list Python](assets/3-inserer-tableau-list-python-light-mode.png#only-light){width="25%" align=right}
+![Insérer un élément dans un tableau de type list Python](assets/3-inserer-tableau-list-python-dark-mode.png#only-dark){width="25%" align=right}
 
 Par exemple, lorsqu'une nouvelle valeur `'e'` est insérée en tête d'une liste `['d', 'c', 'b', 'a']`, c'est-à-dire à la première position du tableau Python, avec la méthode `insert()` :
 
 ``` py
->>> L
+>>> l
 ['d', 'c', 'b', 'a']
->>> L.insert(0, 'e')
->>> L
+>>> l.insert(0, 'e')
+>>> l
 ['e', 'd', 'c', 'b', 'a']
 ```
 
-C'est une opération qui est en réalité très couteuse, car elle consiste à :
+C'est une opération qui est en réalité très coûteuse, car elle consiste à :
 
 1. agrandir le tableau ; 
 2. déplacer tous les éléments du tableau d'une case vers la droite, en commençant par la fin ; 
@@ -281,12 +284,12 @@ C'est une opération qui est en réalité très couteuse, car elle consiste à :
 C'est donc la même chose que d'écrire :
 
 ``` py
->>> L = ['d, 'c', 'b', 'a']
->>> L.append(None)
->>> for i in range(len(L) -1, 0, -1):
-...     L[i] = L[i-1]
->>> L[0] = 'e'
->>> t
+>>> l = ['d, 'c', 'b', 'a']
+>>> l.append(None)
+>>> for i in range(len(l) - 1, 0, -1):
+...     l[i] = l[i - 1]
+>>> l[0] = 'e'
+>>> l
 ['e', 'd', 'b', 'c', 'a']
 ```
 
@@ -297,213 +300,246 @@ Le nombre d'opérations est proportionnel à la taille du tableau. Ajouter ou su
     ``` py
     import time
 
-    L = [i for i in range (100000)]  
+    l = [i for i in range (100000)]  
     start = time.time()
     for i in range(100):
-        L.insert(0, 0)
+        l.insert(0, 0)
     end = time.time()
     print((end - start) / 1000)
     ```
     Pour en savoir plus sur le coût des opérations sur les listes : [https://wiki.python.org/moin/TimeComplexity](https://wiki.python.org/moin/TimeComplexity)
 
 
-Le choix d'implémentation qui a été fait ici de placer la tête de liste en position 0 d'un tableau Python suis les implémentations précédentes, il aurait été judicieux d'inverser l'ordre de la liste dans le tableau et d'utiliser `L.append('a')` et `L.pop()` pour `inserer_tete` et `supprimer_tete`.
+Le choix d'implémentation qui a été fait ici de placer la tête de liste en position 0 d'un tableau Python suis les implémentations précédentes, il aurait été judicieux d'inverser l'ordre de la liste dans le tableau et d'utiliser `l.append('a')` et `l.pop()` pour `inserer_tete` et `supprimer_tete`.
 
 
 ### Avec une liste chaînée 
 
-La liste chainée apporte une solution au problème de coût d'insertion et suppression d'éléments des tableaux dynamiques.  Elle servira aussi de brique de base aux structures de données de piles et de files étudiées dans la suite de ce chapitre.
+Dans une liste chaînée, les éléments ne sont pas stockés côte à côte en mémoire comme dans un tableau, mais disséminés à différents endroits. les éléments de liste sont appelés des **maillons**, ou **cellules**, ou encore **Nœuds**.  Pour lier ces maillons entre eux, chaque maillon contient deux informations[^3.6] :
 
-Dans une liste chaînée, chaque élément de la liste est stocké dans une **cellule** contenant :
+-   une valeur (la donnée stockée) ;
+- 	un **pointeur** (ou référence) sur le maillon suivant. 
 
--   l'élément ;
-- 	un **pointeur** (ou référence) sur la cellule suivante ;
-- 	éventuellement (pour les listes doublement chaînées), un pointeur sur la cellule précédente.
+[^3.6]: Dans certains cas, on trouve aussi un pointeur vers le maillon précédent pour créer une liste doublement chaînées.
 
-Voilà ce que ça donne pour représenter la liste `'c'`, `'b'`, `'a'` :
-
-![Liste chaînée c, b, a](assets/3-liste-chainee-1-light-mode.png#only-light){width="60%"}
-![Liste chaînée c, b, a](assets/3-liste-chainee-1-dark-mode.png#only-dark){width="60%"}
+Notons que le dernier maillon n'a pas de maillon suivant.
 
 
-L'usage d'une liste chaînée est souvent préconisé pour des raisons de rapidité de traitement, lorsque les insertions et les suppressions d'éléments quelconques sont plus fréquentes que les accès. En effet, les insertions et les suppressions se font en temps constant car elles ne demandent au maximum que deux écritures. 
+Exemple de la liste `'c'`, `'b'`, `'a'` :
 
-Voici par exemple comment insérer l'élément `'z'` entre les éléments `'c'` et `'b'` :
+![Liste chaînée c, b, a](assets/3-liste-chainee-1-light-mode.png#only-light){width="80%"}
+![Liste chaînée c, b, a](assets/3-liste-chainee-1-dark-mode.png#only-dark){width="80%"}
+
+
+Les listes chaînées sont particulièrement efficace pour supprimer ou insérer un élément de la liste. 
+
+Par exemple, pour supprimer l'élément `'b'` de la liste `'c'`, `'b'`, `'a'`, il suffit de remplacer le suivant de `'c'` par `'a'` au lieu de  `'b'` :
 
 ![Liste chaînée c, z, b, a](assets/3-liste-chainee-2-light-mode.png#only-light){width="80%"}
 ![Liste chaînée c, z, b, a](assets/3-liste-chainee-2-dark-mode.png#only-dark){width="80%"}
 
+De même, pour insérer un élément `'z'` entre `'b'`, `'a'` dans la liste `'c'`, `'b'`, `'a'`, il suffit de créer un nouveau maillon `'z'` dont le suivant `'a'` et de remplacer le suivant de `'b'` par ce nouveau maillon :
 
-En revanche, la liste chaînée présente deux inconvénients :
+![Liste chaînée c, z, b, a](assets/3-liste-chainee-3-light-mode.png#only-light){width="80%"}
+![Liste chaînée c, z, b, a](assets/3-liste-chainee-3-dark-mode.png#only-dark){width="80%"}
 
-- elle prend beaucoup de place, puisqu'il faut rajouter un pointeur pour chaque élément ;
+
+En revanche, les listes chaînées présentent deux inconvénients :
+
+- elles prennent beaucoup de place, puisqu'il faut rajouter un pointeur pour chaque élément ;
 
 - l'accès à un élément est relativement long et est proportionnel à l'indice de l'élément, puisqu'il faut parcourir la liste depuis le début (ou la fin) pour atteindre l'élément voulu.
 
 
 Implémentons une telle liste chaînée en programmation orientée objet.
 
-Commençons par la classe d'objets `Cellule` dont les instances ont deux attributs `valeur` et `suivante`. `suivante` pointe sur la cellule suivante d'une cellule ou sur `None` pour la dernière cellule de la liste chaînée.
+Commençons par la classe d'objets `Maillon` dont les instances ont deux attributs `valeur` et `suivant` qui pointe sur le maillon suivant ou sur `None` pour la dernier maillon de la liste.
 
 ``` py
-class Cellule:
-    ''' une cellule de liste chainée
+class Maillon:
+    ''' Un maillon de liste chaînée
     '''
 
-    def __init__(self, v, s):
-        self.valeur = v
-        self.suivante = s 
+    def __init__(self, valeur, suivant):
+        self.valeur = valeur     # la donnée stockée
+        self.suivant = suivant   # référence au maillon suivant ou None
 ```
 
-Il est déjà possible de construire la liste `'c'`, `'b'`, `'a'` :
+Il est déjà possible de construire les premier maillons de la liste `'c'`, `'b'`, `'a'` :
 
 ``` py
-lst = Cellule('c', Cellule('b', Cellule('a', None)))
-
->>> lst
-<__main__.Cellule object at 0x03633BE0>
+>>> a = Maillon('a', None)
+>>> b = Maillon('b', a)
+>>> c = Maillon('c', b)
 ```
 
-
-![Trois cellules 'c', 'b', 'a'](assets/3-liste-chainee-3-light-mode.png#only-light){width="50%" align=right}
-![Trois cellules 'c', 'b', 'a'](assets/3-liste-chainee-3-dark-mode.png#only-dark){width="50%" align=right}
-
-
-Ajoutons une méthode pour afficher la valeur d'une cellule en utilisant `__str__()` qui renvoie une chaine de caractère permettant d'afficher un objet avec la fonction `print()`. 
+ou même directement toute la liste :
 
 ``` py
-    def __str__(self):
-        return 'valeur:' + self.valeur
+>>> l = Maillon('c', Maillon('b', Maillon('a', None)))
 ```
 
-Créons maintenant la classe `ListeChainee` pour représenter une liste chaînée par :
+Bien sûr, on pourrait se contenter de cette structure de plusieurs objets `Maillon` liés les uns aux autres et construire les primitives d'une liste : lire la tête (`l.valeur`), obtenir la queue (`l.suivant`), etc. Mais elle montre certaines limites, par exemple elle ne permet pas de créer une liste vide. Habituellement, on ajoute une classe `ListeChainee` avec un attribut `tete` qui peut prendre les valeurs :
 
 - `None` si la liste est vide ; ou 
--  une instance de `Cellule` qui contient la tête avec un attribut `suivant` qui pointe vers une autre liste, la queue.
-
-On retrouve la défintion **récursive** d'une liste.
+-  une instance de `Maillon` qui est la tête de la liste.
 
 
 ``` py
 class ListeChainee:
-    ''' liste chainée    '''
+    ''' Liste chaînée    '''
+
     def __init__(self):
-        self.tete = None
+        """Crée une liste vide"""
+        self.tete = None    # None ou le Maillon de tête
 ```
 
-![Cellule de tête](assets/3-liste-chainee-4-light-mode.png#only-light){width="20%" align=right}
-![Cellule de tête](assets/3-liste-chainee-4-dark-mode.png#only-dark){width="20%" align=right}
+![Liste chaînée vide en POO](assets/3-liste-chainee-4-light-mode.png#only-light){width="20%" align=right}
+![Liste chaînée vide en POO](assets/3-liste-chainee-4-dark-mode.png#only-dark){width="20%" align=right}
 
-et une première instance de liste chainée vide :
+Créons une liste chaînée vide :
 
 ``` py
-lst = ListeChainee()
+>>> l = ListeChainee()
 ```
 
 Ajoutons immédiatement la première primitive qui vérifie si une liste est vide ou non :
 
 ``` py
     def est_vide(self):
-        if self.tete is None: return True                   
-        else: return False
+        """Renvoie True si la liste est vide"""
+        return self.tete is None
 ```
 
-Maintenant ajoutons une primitive pour insérer une `Cellule` en tête de liste :
+... et une primitive pour insérer un premier `Maillon` en tête de liste :
 
 ``` py
-    def inserer_tete(self, v):
-        self.tete= Cellule(v, self.tete)
+    def inserer_tete(self, x):
+        """Insère l'élément x au début de la liste"""
+        # On crée un nouveau maillon dont le suivant est l'ancienne tête
+        nouveau = Maillon(x, self.tete)
+        # La nouvelle tête devient ce nouveau maillon
+        self.tete = nouveau
 ```
 
-Comme attendu, la liste n'est plus vide : 
+Comme attendu, la liste n'est plus vide quand on insère un premier élément : 
 
 ``` py
->>> lst = ListeChainee()
->>> lst.inserer_tete('a')
->>> lst.est_vide()
+>>> l.inserer_tete('a')
+>>> l.est_vide()
 False
 ```
 
-Ajoutons les deux autres éléments à cette liste :
+Ajoutons deux autres éléments à cette liste :
 
 ``` py 
->>> lst.inserer_tete('b')
->>> lst.inserer_tete('c')
+>>> l.inserer_tete('b')
+>>> l.inserer_tete('c')
 ```
 
-La longueur de la liste peut constituer un attribut privé de la classe avec un accesseur pour l'obtenir :
 
-``` py
-class ListeChainee:
-    ''' liste chainee     '''
-    def __init__(self):
-        self.tete = None
-        self._longueur = 0
+![Liste chaînée c, b, a en POO avec deux classes](assets/3-liste-chainee-5-light-mode.png#only-light){width="80%"}
+![Liste chaînée c, b, a en POO avec deux classes](assets/3-liste-chainee-5-dark-mode.png#only-dark){width="80%"}
 
-    def longueur(self):
-        return self._longueur
+Ajoutons maintenant quelques primitives utiles. 
+
+Pour connaître la taille, il n'y a pas de raccourci : il faut démarrer à la tête et compter les maillons suivants les uns après les autres jusqu'à arriver à `None`.
+
+``` python
+    def taille(self):
+        """ Renvoie le nombre d'éléments de la liste"""
+        compteur = 0
+        actuel = self.tete   # On commence à la tête
+        while actuel is not None:
+            compteur += 1
+            actuel = actuel.suivant  # On passe au maillon suivant
+        return compteur
 ```
 
-Affichons la tête de liste :
 
-``` py
->>> print(lst.tete)
-valeur:c
-```
 
-Une primitive `get` permet de lire l'élément en position `n` :
+![Taille d'une liste chaînée c, b, a en POO](assets/3-liste-chainee-6-light-mode.png#only-light){width="80%"}
+![Taille d'une liste chaînée c, b, a en POO](assets/3-liste-chainee-6-dark-mode.png#only-dark){width="80%"}
 
-``` py
-    def get(self, n):
-        cellule = self.tete
-        for i in range(n):
-            cellule = cellule.suivante
-        return cellule
-```
 
-En moyenne, s'il est immédiat de trouver l'élément de tête, il faut $n$ opérations pour trouver le dernier élément dans une liste de longueur $n$, donc en moyenne $n/2$, la complexité est en $O(n)$ ce qui est très coûteux en comparaison d'un tableau dynamique.  
+Il faut parcourir tous les élément de la liste, la complexité est en \(\mathcal{O}(n)\).
 
-Ajoutons une assertion sur la valeur de `n` dans le cas où `n` est supérieur à `_longueur`  :
-``` py
-        assert n < self._longueur, "n doit être inférieur à la taille de la liste"
-```
-Ou alors la primitive peut renvoyer un code erreur, `-1` par exmple :
 
-``` py
-        if n >= self._longueur: return -1
-```
-
-La méthode `__str__()` permet d'afficher toute la liste avec `print()` en parcourant toute la liste :
+De la même façon, la méthode `__str__()` permet d'afficher toute la liste avec `print()` en parcourant toute la liste :
 
 ``` py
     def __str__(self):
-        affiche = ''
-        cellule = self.tete
-        for i in range(self._longueur):
-            affiche += cellule.valeur + ';'
-            cellule = cellule.suivante
-        return affiche
-
-print (lst)
+        """Affiche les éléments avec print"""
+        affichage = ""
+        actuel = self.tete   # On commence à la tête
+        while actuel is not None:
+            affichage = affichage + str(actuel.valeur) + "-"
+            actuel = actuel.suivant   # On passe au maillon suivant
+        return affichage
+```
+Les éléments sont affichés simplement avec la fonction `print()` : 
+```
+>>> print(l)
+c-b-a-
 ```
 
-Complétons l'interface avec une primitive pour ajouter un élément en position `n`, (comme l'élément `'z'` entre `'c'` et `'b'` dans l'exemple ci-dessus) :
+
+On peut faire de même pour trouver l'élément en position `n` dans la liste :
+
+``` python
+    def get(self, n):
+        position = 0
+        actuel = self.tete   # On commence à la tête
+        while actuel is not None:
+            if position == n:
+                return actuel
+            position += 1
+            actuel = actuel.suivant    # On passe au maillon suivant
+        raise IndexError("Index hors limite")
+``` 
+
+
+En moyenne, s'il est immédiat de trouver l'élément de tête, il faut $n$ opérations pour trouver le dernier élément dans une liste de longueur $n$, donc en moyenne $n/2$, la complexité est en $O(n)$ ce qui est très coûteux en comparaison d'un tableau dynamique.  
+
+
+
+Complétons l'interface avec une primitive pour insérer un élément en position `n`, (comme l'élément `'z'` entre `'b'` et `'a'` dans l'exemple précédant) :
 
 ``` py
-    def inserer(self, v, n):
-        if n > self._longueur: return -1
-        if n == 0: self.tete = Cellule(v,self.tete)
+        """Insérer la valeur x en position n."""
+        # Cas de l'insertion en tête 
+        if n == 0:
+            self.tete = Maillon(x, self.tete)
+        # Autres cas
         else:
-            old = self.get_element(n - 1)
-            new = Cellule(v, old.suivante)
-            old.suivante = new
-        self._longueur += 1
+            position = 1
+            actuel = self.tete   # On commence à la tête
+            while position < n and actuel is not None:
+                position += 1
+                actuel = actuel.suivant    # On passe au maillon suivant
+            if actuel is None:
+                raise IndexError("Index hors limite")
+            else:
+                actuel.suivant = Maillon(x, actuel.suivant)
 ```
 
-En moyenne, comme pour la recherche , un élément est ajouté immédiatement en tête de liste, et après $n$ opérations en dernière position dans une liste de longueur $n$, donc en moyenne après $n/2$ opérations. La complexité est en $O(n)$ est comparable au tableau dynamique, mais le nombre d'écritures est grandement réduit.
+En moyenne, comme pour la recherche , un élément est ajouté immédiatement en tête de liste, et après $n$ opérations en dernière position dans une liste de longueur $n$, donc en moyenne après $n/2$ opérations. La complexité est en \(\mathcal{O}(n)\) est comparable au tableau dynamique, mais le nombre d'écritures est grandement réduit.
 
 Pour aller plus loin,  il est possible de définir une méthode pour supprimer l'élément en position `n`, vérifier la présence d'une valeur dans la liste, trier une liste, concaténer deux listes, etc.
 
-Noter que cette implémentation permet de créer une liste muable (*mutable* en anglais) ce qui permet par exemple d'insérer un élément en tête de liste ou même au milieu.
+Noter que cette implémentation crée une liste muable, comme le type `list` Python.
 
 
+
+### Comparaison : Liste Chaînée vs Tableau dynamique
+
+Les tableaux dynamique Python (type `list`) sont très puissants et facile à utiliser. Mais ce n'est pas toujours l'implémentation d'une liste la plus adaptée. Comparons la complexité temporelle d'un tableau dynamique avec une liste chaînée.
+
+|Opération|	Tableau Dynamique (`list` Python)|	Liste Chaînée|
+|:-|:-|:-|
+|Accès à un élément par son index|	\(\mathcal{O}(1)\) (Instantané)	|\(\mathcal{O}(n)\) (Il faut parcourir la liste depuis le début)|
+|Insertion / Suppression en TÊTE	|\(\mathcal{O}(n)\) (Il faut décaler tous les éléments)	|\(\mathcal{O}(1)\) (Instantané)|
+|Insertion / Suppression en FIN	|\(\mathcal{O}(1)\) (Instantané)|	\(\mathcal{O}(n)\) |
+|Rechercher une valeur	|\(\mathcal{O}(n)\) |	\(\mathcal{O}(n)\)  |
+
+La liste chaînée est extrêmement efficace pour insérer ou supprimer des éléments au début sans rien déplacer en mémoire, mais elle est lente pour accéder à un élément précis au milieu (pas d'accès direct/indexé).
